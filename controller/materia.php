@@ -14,7 +14,7 @@
             $nombreMateria = $_POST['nombreMateria'];
             $grupoMateria = $_POST['grupoMateria'];
             $alumnosMateria = $_POST['alumnosMateria'];
-            $data = array('nombreMateria' => $nombreMateria, 'grupoMateria' => $grupoMateria, 'alumnosMateria'=>$alumnosMateria, 'color_materia'=>$color_materia);
+            $data = array('nombreMateria' => $nombreMateria, 'grupoMateria' => $grupoMateria, 'alumnosMateria'=>$alumnosMateria);
 
             require 'model/materiaDAO.php';
             $this->loadModel('materiaDAO');
@@ -29,19 +29,19 @@
             $id = $_POST['idMateriaActualizar'];
             $data = array('nombreMateriaActualizar' => $nombre, 'grupoMateriaActualizar' => $grupo, 'alumnosMateriaActualizar'=>$alumnos, 'idMateriaActualizar'=>$id);
 
-            require 'model/ComputadoraDAO.php';
-            $this->loadModel('ComputadoraDAO');
-            $ComputadoraDAO = new ComputadoraDAO();
-            $ComputadoraDAO->update($data);
+            require 'model/materiaDAO.php';
+            $this->loadModel('materiaDAO');
+            $materiaDAO = new materiaDAO();
+            $materiaDAO->update($data);
         }
 
         function delete(){
-            $matricula = $_POST['idEliminarComputadora'];
+            $id = $_POST['idEliminarMateria'];
 
-            require 'model/ComputadoraDAO.php';
-            $this->loadModel('ComputadoraDAO');
-            $ComputadoraDAO = new ComputadoraDAO();
-            $ComputadoraDAO->delete($matricula);
+            require 'model/materiaDAO.php';
+            $this->loadModel('materiaDAO');
+            $materiaDAO = new materiaDAO();
+            $materiaDAO->delete($id);
         }
 
         function read() {

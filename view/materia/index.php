@@ -1,7 +1,7 @@
 <?php
     require 'view/menu.php';
     $menu = new Menu();
-    $menu->header('Materia');
+    $menu->header('materia');
 ?>
 <section class="content">
     <div class="container-fluid">
@@ -261,6 +261,7 @@
     var obtenerdatosDT = function (table) {
         $('#dataTableMateria tbody').on('click', 'tr', function() {
             var data = table.row(this).data();
+
             var idEliminar = $('#idEliminarMateria').val(data.id_materia);
 
             var idActualizar = $("#idMateriaActualizar").val(data.id_materia);
@@ -269,7 +270,7 @@
             var alumnosmateriaactualizar =$("#alumnosMateriaActualizar").val(data.alumnos_materia);
 
             var idConsulta = $("#idMateriaConsultar").val(data.id_materia);
-            var nombreConsulta = $("#nombreMateriaConsultar").val(data.nombre);
+            var nombreConsulta = $("#nombreMateriaConsultar").val(data.nombre_materia);
             var grupomateriaconsultar = $("#grupoMateriaConsultar").val(data.grupo_materia);
             var alumnosmateriaconsultar =$("#alumnosMateriaConsultar").val(data.alumnos_materia);
         });
