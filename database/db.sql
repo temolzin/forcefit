@@ -13,10 +13,11 @@ CREATE TABLE computer(
 	color_computer varchar(10)
 );
 
-CREATE TABLE alumno(
-    id_alumno int primary key auto_increment,
-    nombre_alumno varchar(50),
-    apellidos_alumno varchar(50)
+CREATE TABLE materia(
+    id_materia int primary key auto_increment,
+    nombre_materia varchar(50),
+    grupo_materia varchar(50),
+	alumnos_materia int
 );
 
 CREATE TABLE maestro(
