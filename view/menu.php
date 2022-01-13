@@ -259,6 +259,14 @@
                             </a>
                           </li>
                           <li class="nav-item">
+                            <a id="materia" name="materia" href="'.constant('URL').'materia" class="nav-link">
+                              <i class="nav-icon fas fa-laptop"></i>
+                              <p>
+                                Materia
+                              </p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
                             <a href="pages/widgets.html" class="nav-link">
                               <i class="nav-icon fas fa-th"></i>
                               <p>
