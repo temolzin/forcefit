@@ -234,14 +234,13 @@
         var tableMateria = $('#dataTableMateria').DataTable({
             "processing": true,
             "ajax": {
-                "url": "<?php echo constant('URL');?>computer/read"
+                "url": "<?php echo constant('URL');?>materia/read"
             },
             "columns": [
-                { "data": "id_computer" },
-                { "data": "name_computer" },
-                { "data": "price_computer" },
-                { "data": "model_computer" },
-                { "data": "color_computer" },
+                { "data": "id_materia" },
+                { "data": "nombre_materia" },
+                { "data": "grupo_materia" },
+                { "data": "alumnos_materia" },
                 {data:null,
                     "defaultContent":
                         `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleMateria' title="Ver Detalles"><i class="fa fa-eye"></i></button>
@@ -262,15 +261,17 @@
     var obtenerdatosDT = function (table) {
         $('#dataTableMateria tbody').on('click', 'tr', function() {
             var data = table.row(this).data();
-            var idEliminar = $('#idEliminarMateria').val(data.idMateria);
+            var idEliminar = $('#idEliminarMateria').val(data.id_materia);
 
-            // var idActualizar = $("#matriculaActualizar").val(data.idMateria);
-            var name_computer_update = $("#name_computer_update").val(data.name_computer_update);
-            var apellido = $("#apellidoActualizar").val(data.apellido);
+            var idActualizar = $("#idMateriaActualizar").val(data.id_materia);
+            var nombremateriaactualizar = $("#nombreMateriaActualizar").val(data.nombre_materia);
+            var grupomateriaactualizar = $("#grupoMateriaActualizar").val(data.grupo_materia);
+            var alumnosmateriaactualizar =$("#alumnosMateriaActualizar").val(data.alumnos_materia);
 
-            var idConsulta = $("#matriculaConsultar").val(data.idMateria);
-            var nombreConsulta = $("#nombreConsultar").val(data.nombre);
-            var apellidoConsulta = $("#apellidoConsultar").val(data.apellido);
+            var idConsulta = $("#idMateriaConsultar").val(data.id_materia);
+            var nombreConsulta = $("#nombreMateriaConsultar").val(data.nombre);
+            var grupomateriaconsultar = $("#grupoMateriaConsultar").val(data.grupo_materia);
+            var alumnosmateriaconsultar =$("#alumnosMateriaConsultar").val(data.alumnos_materia);
         });
     }
 
@@ -280,21 +281,21 @@
                 var datos = $('#formRegistrarMateria').serialize();
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo constant('URL');?>computer/insert",
+                    url: "<?php echo constant('URL');?>materia/insert",
                     data: datos,
                     success: function (data) {
                         if (data == 'ok') {
                             Swal.fire(
                                 "¡Éxito!",
-                                "La Materia ha sido registrado de manera correcta",
+                                "La Materia ha sido registrada de manera correcta",
                                 "success"
                             ).then(function () {
-                                window.location = "<?php echo constant('URL');?>computer";
+                                window.location = "<?php echo constant('URL');?>materia";
                             })
                         } else {
                             Swal.fire(
                                 "¡Error!",
-                                "Ha ocurrido un error al registrar el Materia. " + data,
+                                "Ha ocurrido un error al registrar la Materia. " + data,
                                 "error"
                             );
                         }
@@ -354,21 +355,21 @@
                 var datos = $('#formActualizarMateria').serialize();
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo constant('URL');?>computer/update",
+                    url: "<?php echo constant('URL');?>materia/update",
                     data: datos,
                     success: function (data) {
                         if (data == 'ok') {
                             Swal.fire(
                                 "¡Éxito!",
-                                "La Materia ha sido Actualizado de manera correcta",
+                                "La Materia ha sido Actualizada de manera correcta",
                                 "success"
                             ).then(function () {
-                                window.location = "<?php echo constant('URL');?>computer";
+                                window.location = "<?php echo constant('URL');?>materia";
                             })
                         } else {
                             Swal.fire(
                                 "¡Error!",
-                                "Ha ocurrido un error al Actualizar el Materia. " + data,
+                                "Ha ocurrido un error al Actualizar la Materia. " + data,
                                 "error"
                             );
                         }
@@ -421,16 +422,16 @@
             var datos = $('#formEliminarMateria').serialize();
             $.ajax({
                 type: "POST",
-                url: "<?php echo constant('URL');?>computer/delete",
+                url: "<?php echo constant('URL');?>materia/delete",
                 data: datos,
                 success: function (data) {
                     if (data == 'ok') {
                         Swal.fire(
                             "¡Éxito!",
-                            "La Materia ha sido eliminado correctamente",
+                            "La Materia ha sido eliminada correctamente",
                             "success"
                         ).then(function () {
-                            window.location = "<?php echo constant('URL');?>Materia";
+                            window.location = "<?php echo constant('URL');?>materia";
                         })
                     } else {
                         Swal.fire (
