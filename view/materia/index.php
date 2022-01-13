@@ -305,34 +305,25 @@
         });
         $('#formRegistrarMateria').validate({
             rules: {
-                name_computer: {
+                nombreMateria: {
                     required: true
                 },
-                price_computer: {
+                grupoMateria: {
                     required: true
                 },
-                price_computer: {
-                    required: true
-                },
-                model_computer: {
-                    required: true
-                },
-                color_computer: {
+                alumnosMateria: {
                     required: true
                 }
             },
             messages: {
-                name_computer: {
-                    required: "Ingresa un nombre"
+                nombreMateria: {
+                    required: "INGRESA UN NOMBRE"
                 },
-                price_computer: {
-                    required: "Ingresa un precio"
+                grupoMateria: {
+                    required: "INGRESA UN GRUPO"
                 },
-                model_computer: {
-                    required: "Ingresa un modelo"
-                },
-                color_computer: {
-                    required: "Ingresa un color"
+                alumnosMateria: {
+                    required: "INGRESA UN # DE ALUMNOS"
                 }
             },
             errorElement: 'span',
@@ -379,27 +370,29 @@
         });
         $('#formActualizarMateria').validate({
             rules: {
-                matriculaActualizar: {
+                idmatriculaActualizar: {
                     required: true,
                     number: true
                 },
-                nombreActualizar: {
+                nombreMateriaActualizar: {
                     required: true
                 },
-                apellidoActualizar: {
+                grupoMateriaActualizar: {
+                    required: true
+                },
+                alumnosMateriaActualizar: {
                     required: true
                 }
             },
             messages: {
-                matriculaActualizar: {
-                    required: "Ingresa una matrícula",
-                    number: "Sólo números"
+                nombreMateriaActualizar: {
+                    required: "INGRESA UN NOMBRE"
                 },
-                nombreActualizar: {
-                    required: "Ingresa un nombre"
+                grupoMateriaActualizar: {
+                    required: "INGRESA UN GRUPO"
                 },
-                apellidoActualizar: {
-                    required: "Ingresa un apellido"
+                alumnosMateriaActualizar: {
+                    required: "INGRESA UN # DE ALUMNOS"
                 }
             },
             errorElement: 'span',

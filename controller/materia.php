@@ -11,23 +11,23 @@
         }
 
         function insert() {
-            $name_computer = $_POST['name_computer'];
-            $price_computer = $_POST['price_computer'];
-            $model_computer = $_POST['model_computer'];
-            $color_computer = $_POST['color_computer'];
-            $data = array('name_computer' => $name_computer, 'price_computer' => $price_computer, 'model_computer'=>$model_computer, 'color_computer'=>$color_computer);
+            $nombreMateria = $_POST['nombreMateria'];
+            $grupoMateria = $_POST['grupoMateria'];
+            $alumnosMateria = $_POST['alumnosMateria'];
+            $data = array('nombreMateria' => $nombreMateria, 'grupoMateria' => $grupoMateria, 'alumnosMateria'=>$alumnosMateria, 'color_materia'=>$color_materia);
 
-            require 'model/computerDAO.php';
-            $this->loadModel('ComputerDAO');
-            $computerDAO = new ComputerDAO();
-            $computerDAO->insert($data);
+            require 'model/materiaDAO.php';
+            $this->loadModel('materiaDAO');
+            $materiaDAO = new materiaDAO();
+            $materiaDAO->insert($data);
         }
 
         function update() {
-            $nombre = $_POST['nombreActualizar'];
-            $apellido = $_POST['apellidoActualizar'];
-            $matricula = $_POST['matriculaActualizar'];
-            $data = array('nombre' => $nombre, 'apellido' => $apellido, 'matricula'=>$matricula);
+            $nombre = $_POST['nombreMateriaActualizar'];
+            $grupo = $_POST['grupoMateriaActualizar'];
+            $alumnos = $_POST['alumnosMateriaActualizar'];
+            $id = $_POST['idMateriaActualizar'];
+            $data = array('nombreMateriaActualizar' => $nombre, 'grupoMateriaActualizar' => $grupo, 'alumnosMateriaActualizar'=>$alumnos, 'idMateriaActualizar'=>$id);
 
             require 'model/ComputadoraDAO.php';
             $this->loadModel('ComputadoraDAO');
@@ -45,10 +45,10 @@
         }
 
         function read() {
-            require 'model/computerDAO.php';
-            $this->loadModel('computerDAO');
-            $computerDAO = new ComputerDAO();
-            $computerDAO = $computerDAO->read();
-            echo $computerDAO;
+            require 'model/materiaDAO.php';
+            $this->loadModel('materiaDAO');
+            $materiaDAO = new materiaDAO();
+            $materiaDAO = $materiaDAO->read();
+            echo $materiaDAO;
         }
     }
