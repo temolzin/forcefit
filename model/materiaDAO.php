@@ -21,8 +21,8 @@
 
         public function delete($id)
         {
-            $query = $this->db->conectar()->prepare('DELETE FROM materia where id_materia = :idMateriaActualizar');
-            $query->execute([':idMateriaActualizar' => $id]);
+            $query = $this->db->conectar()->prepare('DELETE FROM materia where id_materia = :idMateriaEliminar');
+            $query->execute([':idMateriaEliminar' => $id]);
             echo 'ok';
         }
 
