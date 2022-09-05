@@ -243,10 +243,26 @@
                             </a>
                           </li>
                           <li class="nav-item">
+                            <a id="alumno" name="maestro" href="'.constant('URL').'maestro" class="nav-link">
+                              <i class="nav-icon fas fa-user"></i>
+                              <p>
+                                Maestro
+                              </p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
                             <a id="computer" name="computer" href="'.constant('URL').'computer" class="nav-link">
                               <i class="nav-icon fas fa-laptop"></i>
                               <p>
                                 Computadora
+                              </p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a id="materia" name="materia" href="'.constant('URL').'materia" class="nav-link">
+                              <i class="nav-icon fas fa-laptop"></i>
+                              <p>
+                                Materia
                               </p>
                             </a>
                           </li>

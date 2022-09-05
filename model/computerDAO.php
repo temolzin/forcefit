@@ -8,7 +8,7 @@
         public function insert($data)
         {
             $query = $this->db->conectar()->prepare('INSERT INTO computer values (:id_computer, :name_computer, :price_computer, :model_computer, :color_computer)');
-            $query->execute([':id_computer' => null, ':name_computer' => $data['name_computer'],':price_computer' => $data['price_computer'],':model_computer' => $data['model_computer'], ':color_computer' => $data['color_computer']]);
+            $query->execute([':id_computer'  => null, ':name_computer' => $data['name_computer'],':price_computer' => $data['price_computer'],':model_computer' => $data['model_computer'], ':color_computer' => $data['color_computer']]);
             echo 'ok';
         }
 
