@@ -1,9 +1,9 @@
 create database estructuramvc;
 use estructuramvc;
 create table alumno (
-    matricula int primary key auto_increment,
-    nombre varchar(30),
-    apellido varchar(30)
+    id_alumno int primary key auto_increment,
+    nombre_alumno varchar(30),
+    apellidos_alumno varchar(30)
 );
 CREATE TABLE computer(
 	id_computer int primary key auto_increment,
@@ -26,4 +26,9 @@ CREATE TABLE maestro(
 	apppat_maestro varchar(30),
 	appmat_maestro varchar(30),
 	edad_maestro varchar(2)
+);
+
+CREATE TABLE categoria(
+    id_categoria int primary key auto_increment,
+    nombre_categoria varchar(30)
 );
