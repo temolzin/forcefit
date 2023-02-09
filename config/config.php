@@ -1,7 +1,7 @@
 <?php
-    define('URL', 'http://localhost/crudphpmvcestadia/');
+    define('URL', 'http://localhost/crudphpmvcestadiagym/');
     define('HOST', 'localhost');
-    define('DB', 'estructuramvc');
+    define('DB', 'gestiongym');
     define('USER', 'root');
     define('PASSWORD', '');
     define('CHARSET', 'utf8mb4');

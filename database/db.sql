@@ -1,40 +1,130 @@
-create database estructuramvc;
-use estructuramvc;
-create table alumno (
-    id_alumno int primary key auto_increment,
-    nombre_alumno varchar(30),
-    apellidos_alumno varchar(30)
-);
-CREATE TABLE computer(
-	id_computer int primary key auto_increment,
-	name_computer varchar(30),
-	price_computer varchar(30),
-	model_computer varchar(30),
-	color_computer varchar(10)
+CREATE TABLE rol (
+	id_rol INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	descripcion VARCHAR(30)
 );
 
-CREATE TABLE materia(
-    id_materia int primary key auto_increment,
-    nombre_materia varchar(50),
-    grupo_materia varchar(50),
-	alumnos_materia int
+CREATE TABLE usuario (
+	id_usuario INT PRIMARY KEY NOT NULL,
+	apellido_paterno VARCHAR(30),
+	apellido_materno VARCHAR(30),
+	nombre VARCHAR(30),
+	email VARCHAR (30),
+	password VARCHAR(30),
+	imagen TEXT,
+	id_rol INT NOT NULL AUTO_INCREMENT,
+	KEY id_rol (id_rol),
+	CONSTRAINT rol_FK FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
 );
 
-CREATE TABLE maestro(
-	id_maestro int primary key auto_increment,
-	nombre_maestro varchar(30),
-	apppat_maestro varchar(30),
-	appmat_maestro varchar(30),
-	edad_maestro varchar(2)
+CREATE TABLE modulo (
+	id_modulo INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	nombre_modulo VARCHAR (30),
+	icono TEXT
 );
 
-CREATE TABLE categoria(
-    id_categoria int primary key auto_increment,
-    nombre_categoria varchar(30)
+CREATE TABLE permiso (
+	id_rol INT NOT NULL,
+	KEY id_rol (id_rol),
+	CONSTRAINT idrol_FK FOREIGN KEY (id_rol) REFERENCES rol (id_rol),
+	id_modulo INT NOT NULL,
+	KEY id_modulo (id_modulo),
+	CONSTRAINT modulo_FK FOREIGN KEY (id_modulo) REFERENCES modulo (id_modulo),
+	PRIMARY KEY (id_rol,id_modulo)
 );
-CREATE TABLE sucursal(
-    id_sucursal int primary key auto_increment,
-    nombre_sucursal varchar(50),
-	numero_sucursal varchar(30),
-	descripcion_sucursal varchar(50)
+
+CREATE TABLE submodulo (
+	id_submodulo INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	nombre_submodulo VARCHAR (30),
+	icono TEXT,
+	id_modulo INT NOT NULL,
+	KEY id_modulo (id_modulo),
+	CONSTRAINT idmodulo_FK FOREIGN KEY (id_modulo) REFERENCES modulo (id_modulo)
 );
+
+CREATE TABLE plan_sistema (
+	id_plan_sistema INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	nombre_plan_sistema VARCHAR (30),
+	descripcion_plan_sistema VARCHAR (30),
+	costo INT
+);
+
+CREATE TABLE pago_plan_sistema (
+	id_pago INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	fecha_hora_pago DATETIME,
+	vencimiento DATE,
+	id_plan_sistema INT NOT NULL,
+	KEY id_plan_sistema (id_plan_sistema),
+	CONSTRAINT plan_sistema_FK FOREIGN KEY (id_plan_sistema) REFERENCES plan_sistema (id_plan_sistema),
+	id_usuario INT NOT NULL,
+	KEY id_usuario (id_usuario),
+	CONSTRAINT usuario_FK FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario)
+);
+
+CREATE TABLE gimnasio(
+	id_gimnasio INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	nombre_gimnasio VARCHAR (40),
+	telefono VARCHAR (10),
+	imagen TEXT
+);
+
+CREATE TABLE usuario_gimnasio (
+	id_usuario INT NOT NULL,
+	KEY id_usuario (id_usuario),
+	CONSTRAINT idusuario_FK FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
+	id_gimnasio INT NOT NULL AUTO_INCREMENT,
+	KEY id_gimnasio (id_gimnasio),
+	CONSTRAINT gimnasio_FK FOREIGN KEY (id_gimnasio) REFERENCES gimnasio (id_gimnasio),
+	fecha_inicio DATE,
+	fecha_termino DATE,
+	status VARCHAR (20)
+);
+
+CREATE TABLE cliente(
+	id_cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	nombre_cliente VARCHAR (30),
+	apellido_paterno VARCHAR (30),
+	apellido_materno VARCHAR (30),
+	direccion_cliente VARCHAR (60),
+	numero_cliente VARCHAR (10),
+	imagen TEXT
+);
+
+CREATE TABLE entrada_salida (
+	id_cliente INT NOT NULL,
+	KEY id_cliente (id_cliente),
+	CONSTRAINT idcliente_FK FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
+	tipo VARCHAR (15),
+	fecha_hora DATETIME,
+	PRIMARY KEY (id_cliente)
+);
+
+CREATE TABLE plan_gym (
+	id_plan INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	nombre_plan VARCHAR (30),
+	descripcion VARCHAR (100),
+	costo INT
+);
+
+CREATE TABLE pago_plan_gym_cliente (
+	id_pago INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	cantidad_pago INT,
+	fecha_hora_pago DATETIME,
+	vencimiento DATE,
+	id_cliente INT NOT NULL,
+	KEY id_cliente (id_cliente),
+	CONSTRAINT cliente_FK FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
+	id_plan INT NOT NULL,
+	KEY id_plan (id_plan),
+	CONSTRAINT plan_FK FOREIGN KEY (id_plan) REFERENCES plan_gym (id_plan)
+);
+
+CREATE TABLE gimnasio_cliente (
+	id_gimnasio INT NOT NULL,
+	KEY id_gimnasio (id_gimnasio),
+	CONSTRAINT idgimnasio_FK FOREIGN KEY (id_gimnasio) REFERENCES gimnasio (id_gimnasio),
+	id_cliente INT NOT NULL,
+	KEY id_cliente (id_cliente),
+	CONSTRAINT id_cliente_FK FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
+	PRIMARY KEY (id_gimnasio,id_cliente)
+);
+

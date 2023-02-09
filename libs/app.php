@@ -1,5 +1,5 @@
 <?php
-	require_once 'controller/errorcontroller.php';
+	require_once 'controller/errorPage.php';
 	require_once 'libs/interfaceCRUD.php';
 
 	class App {
@@ -29,7 +29,7 @@
 				    if(method_exists($controller, $url[1])) {
                         $controller->{$url[1]}();
                     } else {
-                        $controller = new ErrorController();
+                        $controller = new ErrorPage();
                     }
 
 				} else {
@@ -41,7 +41,7 @@
                 }
 
 			} else {
-				$controller = new ErrorController();
+				$controller = new ErrorPage();
 			}
 
 
