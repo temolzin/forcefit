@@ -13,5 +13,9 @@
 		function aboutUs(){
 			$this->view->render('dashboard/aboutUs');
 		}
+
+		function formRegisterAdmins(){
+			$this ->view->render('dashboard/formRegisterAdmins');
+		}
 	}
 ?>

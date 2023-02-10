@@ -60,6 +60,9 @@
                                             <li><a><i class="fa fa-home"></i> Dashboard</a>
                                             </li>
                                         </ul>
+                                        <ul class="nav side-menu">
+                                        <li><a href="dashboard/formAdmins.php" ><i class="fa fa-edit"></i>Registro administradores</a></li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <!-- /menu footer buttons -->
