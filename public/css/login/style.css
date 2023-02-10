@@ -7926,7 +7926,8 @@ button.bg-dark:focus {
   text-align: right !important; }
 
 .text-center {
-  text-align: center !important; }
+  text-align: center !important;
+  font-size: 50px; }
 
 @media (min-width: 576px) {
   .text-sm-left {
@@ -8183,7 +8184,7 @@ h1, h2, h3, h4, h5,
   padding-bottom: 0; }
 
 .heading-section {
-  font-size: 28px;
+  font-size: 100px;
   color: #fff; }
 
 .img {
