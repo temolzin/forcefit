@@ -1,13 +1,13 @@
 <?php
-	/**
-	 * 
-	 */
-	class Model
+/**
+ * 
+ */
+class Model
+{
+
+	function __construct()
 	{
-		
-		function __construct()
-		{
-		    $this->db = Conexion::getInstance();
-        }
+		$this->db = Conexion::getInstance();
 	}
+}
 ?>

@@ -1,7 +1,7 @@
 <?php
     class LoginDTO implements JsonSerializable {
-        private $email;
-        private $password;
+        private $strEmail;
+        private $strPassword;
 
         public function __get($property){
             if(property_exists($this, $property)) {
