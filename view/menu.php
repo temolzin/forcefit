@@ -1,10 +1,10 @@
 <?php
 
-    class Menu
+class Menu
+{
+    function header($title)
     {
-        function header($title)
-        {
-            echo '<!DOCTYPE html>
+        echo '<!DOCTYPE html>
             <html lang="en">
             
             <head>
@@ -60,6 +60,9 @@
                                             <li><a><i class="fa fa-home"></i> Dashboard</a>
                                             </li>
                                         </ul>
+                                        <ul class="nav side-menu">
+                                        <li><a href="' . constant('URL') . 'formRegisterAdmins" ><i class="fa fa-edit"></i>Registro administradores</a></li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <!-- /menu footer buttons -->
@@ -94,11 +97,11 @@
                                 </nav>
                             </div>
                         </div>';
-        }
+    }
 
-        function footer()
-        {
-            echo '            <!-- footer content -->
+    function footer()
+    {
+        echo '            <!-- footer content -->
             <footer>
                 <div class="pull-right">
                     Force Fit Support System by <a href="https://www.rootheim.com/">Root Heim Company</a>
@@ -122,6 +125,6 @@
 </body>
 
 </html>';
-        }
     }
+}
 ?>

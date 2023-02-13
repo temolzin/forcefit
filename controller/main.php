@@ -6,9 +6,5 @@
 			parent::__construct();
 			$this->view->render('main/index');
 		}
-
-		function saludo() {
-			echo "METODO SALUDO";
-		}
 	}
 ?>
