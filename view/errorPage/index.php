@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>CodePen - Neon - 404 Page Not Found</title>
     <link rel="stylesheet" href="public/css/error404/style.css">
+    <link rel="shortcut icon" href="public/img/logos/iconoAzul.png">
 </head>
 
 <body>
