@@ -15,7 +15,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1">
             
                 <title>FORCE FIT</title>
-                <link rel="shortcut icon" href="public/img/logos/iconoRojo.png">
+                <link rel="shortcut icon" href="public/img/logos/iconoAzul.png">
 
             
                 <!-- Bootstrap -->
@@ -35,7 +35,7 @@
                         <div class="col-md-3 left_col">
                             <div class="left_col scroll-view">
                                 <div class="navbar nav_title" style="border: 0;">
-                                    <a href="index.html" class="site_title"><img src= "public/img/logos/iconoRojo.png"> <span>Force Fit</span></a>
+                                    <a href="index.html" class="site_title"><img src= "public/img/logos/iconoAzul.png"> <span>Force Fit</span></a>
                                 </div>
             
                                 <div class="clearfix"></div>
@@ -103,7 +103,7 @@
             echo '            <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    Force Fit Support System by <a href="https://www.rootheim.com/">Root Heim Company</a>
+                    POWER BY  <a href="https://www.rootheim.com/">ROOT HEIM COMPANY</a>
                 </div>
                 <div class="clearfix"></div>
             </footer>
