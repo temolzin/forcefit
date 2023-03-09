@@ -107,7 +107,7 @@ class Menu
 
                                                 <a class="dropdown-item" href="javascript:;"><i class="fa fa-user pull-right"></i>Perfil</a>
 
-                                                <a class="dropdown-item" href="javascript:;"><i class="fa fa-info-circle pull-right"></i>Acerca de</a>
+                                                <a class="dropdown-item" href="'.constant('URL') . 'aboutUs"><i class="fa fa-info-circle pull-right"></i>Acerca de</a>
 
                                                 <a class="dropdown-item" href="#"><i class="fa fa-sign-out pull-right"></i>Cerrar sesión</a>
                                                 
