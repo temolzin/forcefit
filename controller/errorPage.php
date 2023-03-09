@@ -1,10 +1,10 @@
 <?php
-	class ErrorPage extends Controller
+class ErrorPage extends Controller
+{
+	function __construct()
 	{
-		function __construct()
-		{
-			parent::__construct();
-			$this->view->render('errorPage/index');
-		}
+		parent::__construct();
+		$this->view->render('errorPage/index');
 	}
+}
 ?>

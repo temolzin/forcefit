@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>CodePen - Neon - 404 Page Not Found</title>
+    <title>404 Page Not Found</title>
     <link rel="stylesheet" href="public/css/error404/style.css">
 </head>
 
