@@ -1,5 +1,5 @@
 <?php
-    define('URL', 'http://localhost/crudphpmvcestadiagym/');
+    define('URL', 'http://localhost/forcefit/');
     define('HOST', 'localhost');
     define('DB', 'gestiongym');
     define('USER', 'root');

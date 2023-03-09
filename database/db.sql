@@ -1,19 +1,25 @@
 CREATE TABLE rol (
 	id_rol INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	descripcion VARCHAR(30)
+	nombreRol VARCHAR(60),
+	descripcion VARCHAR(60)
 );
 
 CREATE TABLE usuario (
-	id_usuario INT PRIMARY KEY NOT NULL,
-	apellido_paterno VARCHAR(30),
-	apellido_materno VARCHAR(30),
-	nombre VARCHAR(30),
-	email VARCHAR (30),
-	password VARCHAR(30),
-	imagen TEXT,
-	id_rol INT NOT NULL AUTO_INCREMENT,
-	KEY id_rol (id_rol),
-	CONSTRAINT rol_FK FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
+    id_usuario INT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(30),
+    apellido_paterno VARCHAR(30),
+    apellido_materno VARCHAR(30),
+    email VARCHAR (30),
+    password VARCHAR(30),
+    imagen TEXT,
+    calle TEXT,
+    estado TEXT,
+    municipio TEXT,
+    colonia TEXT,
+    CP INT,
+    id_rol INT NOT NULL,
+    KEY id_rol (id_rol),
+    CONSTRAINT rol_FK FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
 );
 
 CREATE TABLE modulo (
@@ -23,13 +29,17 @@ CREATE TABLE modulo (
 );
 
 CREATE TABLE permiso (
-	id_rol INT NOT NULL,
+	id_permiso INT PRIMARY KEY AUTO_INCREMENT,
+	id_rol INT,
 	KEY id_rol (id_rol),
-	CONSTRAINT idrol_FK FOREIGN KEY (id_rol) REFERENCES rol (id_rol),
-	id_modulo INT NOT NULL,
+	CONSTRAINT id_rolFK FOREIGN KEY (id_rol) REFERENCES rol (id_rol),
+	id_modulo INT,
 	KEY id_modulo (id_modulo),
-	CONSTRAINT modulo_FK FOREIGN KEY (id_modulo) REFERENCES modulo (id_modulo),
-	PRIMARY KEY (id_rol,id_modulo)
+	CONSTRAINT id_moduloFK FOREIGN KEY (id_modulo) REFERENCES modulo (id_modulo),
+	c INT,
+	r INT,
+	u INT,
+	d INT
 );
 
 CREATE TABLE submodulo (
