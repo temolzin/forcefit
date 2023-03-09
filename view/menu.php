@@ -81,6 +81,8 @@ class Menu
                                                 </ul>
                                             </li>
                                             <li><a href="' . constant('URL') .'plan_sistema"><i class="fa fa-book"></i> Planes del sistema </a></li>
+                                            <li><a href="' . constant('URL') .'cliente"><i class="fa fa-user"></i> Clientes </a></li>
+
                                         </ul>
                                     </div>
                                 </div>
