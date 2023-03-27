@@ -81,6 +81,7 @@ class Menu
                                                 </ul>
                                             </li>
                                             <li><a href="' , constant('URL') , 'plan_sistema"><i class="fa fa-pencil"></i> Plan de Sistema </a></li>
+                                            <li><a href="' , constant('URL') , 'plan_gym"><i class="fa fa-pencil"></i> Plan de Gimnasios </a></li>
                                             <li><a href="' , constant('URL') , 'cliente"><i class="fa fa-user"></i> Clientes </a></li>
 
                                         </ul>
@@ -136,6 +137,8 @@ class Menu
     <!-- jQuery -->
     <script src="public/vendors/jquery/dist/jquery.min.js"></script>
     <script src="public/js/jquery-ui.min.js"></script>
+    <script src="public/js/adminlte.js"></script>
+
     <!-- Bootstrap -->
 
     <script src="public/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
