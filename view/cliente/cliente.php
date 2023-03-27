@@ -11,8 +11,8 @@ $menu->header('cliente');
                     <h2>Tabla de Clientes</h2>
                     <div class="row">
                         <div class="col-lg-12 text-right">
-                            <button class="btn btn-success" data-toggle='modal' data-target='#modalRegistrarCliente'> <i
-                                    class="fa fa-edit"></i> Registrar Cliente 
+                            <button class="btn btn-primary" data-toggle='modal' data-target='#modalRegistrarCliente'> <i
+                                    class="fa fa-edit"></i> Registrar Cliente
                             </button>
                         </div>
                     </div>
@@ -22,8 +22,8 @@ $menu->header('cliente');
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
-                                <table id="dataTableCliente" name="dataTableCliente" class="table table-striped table-bordered"
-                                    style="width:100%">
+                                <table id="dataTableCliente" name="dataTableCliente"
+                                    class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -55,99 +55,129 @@ $menu->header('cliente');
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="card-success">
+            <div class="card-primary">
                 <div class="card-header">
                     <div class="d-sm-flex align-items-center justify-content-between ">
                         <h4 class="card-title">Cliente <small> &nbsp;(*) Campos requeridos</small></h4>
                         <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
                             aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <!---->
                 </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form" id="formRegistrarCliente" name="formRegistrarCliente" method="post">
+                <form role="form" id="formRegistrarCliente" enctype="multipart/form-data" name="formRegistrarCliente"
+                    method="post">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Nombre (*)</label>
-                                    <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente"
-                                        placeholder="Nombre del cliente" />
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Datos del Cliente</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Apellido Paterno (*)</label>
-                                    <input type="text" class="form-control" id="apellido_paterno_cliente" name="apellido_paterno_cliente"
-                                        placeholder="Apellido Paterno" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Apellido Materno (*)</label>
-                                    <input type="text" class="form-control" id="apellido_materno_cliente" name="apellido_materno_cliente"
-                                        placeholder="Apellido Materno" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Municipio (*)</label>
-                                    <input type="text" class="form-control" id="municipio_cliente" name="municipio_cliente"
-                                        placeholder="Municipio" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Colonia (*)</label>
-                                    <input type="text" class="form-control" id="colonia_cliente" name="colonia_cliente"
-                                        placeholder="Colonia" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Calle (*)</label>
-                                    <input type="text" class="form-control" id="calle_cliente" name="calle_cliente"
-                                        placeholder="Calle" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Codigo Postal (*)</label>
-                                    <input type="text" class="form-control" id="codigo_postal_cliente" name="codigo_postal_cliente"
-                                        placeholder="Codigo Postal" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Numero (*)</label>
-                                    <input type="text" class="form-control" id="numero_cliente" name="numero_cliente"
-                                        placeholder="Numero telefonico" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <span><label>Imagen del Cliente (*)</label></span>
-                                <div class="form-group input-group">
-                                    <div class="custom-file">
-                                        <input type="file" accept="image/*" class="custom-file-input form-control"
-                                            name="imagen_cliente" id="imagen_cliente" lang="es" />
-                                        <label class="custom-file-label" for="imagen">Seleccione
-                                            Imagen</label>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <span><label>Imagen del usuario (*)</label></span>
+                                        <div class="form-group input-group">
+                                            <div class="custom-file">
+                                                <input type="file" accept="image/*" class="custom-file-input"
+                                                    name="imagen_cliente" id="imagen_cliente" lang="es">
+                                                <label class="custom-file-label" for="imagen">Seleccione
+                                                    Fotografía</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Nombre del Cliente (*)</label>
+                                            <input type="text" class="form-control" id="nombre_cliente"
+                                                name="nombre_cliente" placeholder="Nombre Cliente" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Apellido Paterno</label>
+                                            <input type="text" class="form-control" id="apellido_paterno_cliente"
+                                                name="apellido_paterno_cliente" placeholder="Apellido Paterno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Apellido Materno</label>
+                                            <input type="text" class="form-control" id="apellido_materno_cliente"
+                                                name="apellido_materno_cliente" placeholder="Apellido Materno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Teléfono (*)</label>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                            </div>
+                                            <input type="text" id="numero_cliente" name="numero_cliente"
+                                                class="form-control" data-inputmask='"mask": "(999) 999-9999"'
+                                                placeholder="Telefono">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Registrar</button>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Dirección</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Calle(*)</label>
+                                            <input class="form-control" id="calle_cliente" name="calle_cliente"
+                                                placeholder="Calle" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Municipio (*)</label>
+                                            <input id="municipio_cliente" name="municipio_cliente"
+                                                class="form-control municipio_cliente">
+                                            <option value="default">Municipio</option>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Colonia (*)</label>
+                                            <input name="colonia_cliente" id="colonia_cliente"
+                                                class="form-control colonia_cliente">
+                                            <option value="default">Colonia</option>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Codigo Postal (*)</label>
+                                            <input type="text" class="form-control" id="codigo_postal_cliente"
+                                                name="codigo_postal_cliente" placeholder="Codigo Postal" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 <!--------------------------------------------------------- Modal Actualizar----------------------------------------------->
 <div class="modal fade" id="modalActualizarCliente" tabindex="-1" role="dialog" aria-labelledby="modalActualizarCliente"
     aria-hidden="true">
@@ -164,90 +194,129 @@ $menu->header('cliente');
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" id="formActualizarCliente" name="formActualizarCliente">
+                <form role="form" id="formActualizarCliente" enctype="multipart/form-data" name="formActualizarCliente"
+                    method="post">
                     <div class="card-body">
-                        <div class="row">
-                            <div style="display: none;" class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Id (*)</label>
-                                        <input type="text" class="form-control" id="id_clienteActualizar"
-                                            name="id_clienteActualizar" placeholder="Id" />
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Datos del Cliente</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div style="display: none;" class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Id (*)</label>
+                                                <input type="text" class="form-control" id="id_clienteActualizar"
+                                                    name="id_clienteActualizar" placeholder="Id" />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Nombre (*)</label>
-                                    <input type="text" class="form-control" id="nombre_clienteActualizar" name="nombre_clienteActualizar"
-                                        placeholder="Nombre del cliente" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Apellido Paterno (*)</label>
-                                    <input type="text" class="form-control" id="apellido_paterno_clienteActualizar" name="apellido_paterno_clienteActualizar"
-                                        placeholder="Apellido Paterno" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Apellido Materno (*)</label>
-                                    <input type="text" class="form-control" id="apellido_materno_clienteActualizar" name="apellido_materno_clienteActualizar"
-                                        placeholder="Apellido Materno" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Municipio (*)</label>
-                                    <input type="text" class="form-control" id="municipio_clienteActualizar" name="municipio_clienteActualizar"
-                                        placeholder="Municipio" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Colonia (*)</label>
-                                    <input type="text" class="form-control" id="colonia_clienteActualizar" name="colonia_clienteActualizar"
-                                        placeholder="Colonia" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Calle (*)</label>
-                                    <input type="text" class="form-control" id="calle_clienteActualizar" name="calle_clienteActualizar"
-                                        placeholder="Calle" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Codigo Postal (*)</label>
-                                    <input type="text" class="form-control" id="codigo_postal_clienteActualizar" name="codigo_postal_clienteActualizar"
-                                        placeholder="Codigo Postal" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Numero (*)</label>
-                                    <input type="text" class="form-control" id="numero_clienteActualizar" name="numero_clienteActualizar"
-                                        placeholder="Numero telefonico" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <span><label>Imagen del Cliente (*)</label></span>
-                                <div class="form-group input-group">
-                                    <div class="custom-file">
-                                        <input type="file" accept="image/*" class="custom-file-input form-control"
-                                            name="imagen_clienteActualizar" id="imagen_clienteActualizar" lang="es" />
-                                        <label class="custom-file-label" for="imagen">Seleccione
-                                            Imagen</label>
+                                    <div class="col-lg-12">
+                                        <span><label>Imagen del usuario (*)</label></span>
+                                        <div class="form-group input-group">
+                                            <div class="custom-file">
+                                                <input type="file" accept="image/*" class="custom-file-input"
+                                                    name="imagen_clienteActualizar" id="imagen_clienteActualizar"
+                                                    lang="es">
+                                                <label class="custom-file-label" for="imagen">Seleccione
+                                                    Fotografía</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Nombre del Cliente (*)</label>
+                                            <input type="text" class="form-control" id="nombre_clienteActualizar"
+                                                name="nombre_clienteActualizar" placeholder="Nombre Cliente" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Apellido Paterno</label>
+                                            <input type="text" class="form-control"
+                                                id="apellido_paterno_clienteActualizar"
+                                                name="apellido_paterno_clienteActualizar"
+                                                placeholder="Apellido Paterno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Apellido Materno</label>
+                                            <input type="text" class="form-control"
+                                                id="apellido_materno_clienteActualizar"
+                                                name="apellido_materno_clienteActualizar"
+                                                placeholder="Apellido Materno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Teléfono (*)</label>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                            </div>
+                                            <input type="text" id="numero_clienteActualizar"
+                                                name="numero_clienteActualizar" class="form-control"
+                                                data-inputmask='"mask": "(999) 999-9999"' placeholder="Telefono">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-warning">Actualizar</button>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Dirección</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Calle(*)</label>
+                                            <input class="form-control" id="calle_clienteActualizar"
+                                                name="calle_clienteActualizar" placeholder="Calle" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Municipio (*)</label>
+                                            <input id="municipio_clienteActualizar" name="municipio_clienteActualizar"
+                                                class="form-control municipio_cliente">
+                                            <option value="default">Municipio</option>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Colonia (*)</label>
+                                            <input name="colonia_clienteActualizar" id="colonia_clienteActualizar"
+                                                class="form-control colonia_cliente">
+                                            <option value="default">Colonia</option>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Codigo Postal (*)</label>
+                                            <input type="text" class="form-control" id="codigo_postal_clienteActualizar"
+                                                name="codigo_postal_clienteActualizar" placeholder="Codigo Postal" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -271,76 +340,118 @@ $menu->header('cliente');
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" id="formConsulta" name="formConsulta">
+                <form role="form" id="formConsulta" enctype="multipart/form-data" name="formConsulta" method="post">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Id (*)</label>
-                                    <input type="text" disabled class="form-control" id="id_clienteConsultar"
-                                        name="id_clienteConsultar" placeholder="id" />
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Datos del Cliente</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Nombre (*)</label>
-                                    <input type="text" class="form-control" id="nombre_clienteConsultar" name="nombre_clienteConsultar"
-                                        placeholder="Nombre del cliente" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Apellido Paterno (*)</label>
-                                    <input type="text" class="form-control" id="apellido_paterno_clienteConsultar" name="apellido_paterno_clienteConsultar"
-                                        placeholder="Apellido Paterno" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Apellido Materno (*)</label>
-                                    <input type="text" class="form-control" id="apellido_materno_clienteConsultar" name="apellido_materno_clienteConsultar"
-                                        placeholder="Apellido Materno" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Municipio (*)</label>
-                                    <input type="text" class="form-control" id="municipio_clienteConsultar" name="municipio_clienteConsultar"
-                                        placeholder="Municipio" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Colonia (*)</label>
-                                    <input type="text" class="form-control" id="colonia_clienteConsultar" name="colonia_clienteConsultar"
-                                        placeholder="Colonia" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Calle (*)</label>
-                                    <input type="text" class="form-control" id="calle_clienteConsultar" name="calle_clienteConsultar"
-                                        placeholder="Calle" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Codigo Postal (*)</label>
-                                    <input type="text" class="form-control" id="codigo_postal_clienteConsultar" name="codigo_postal_clienteConsultar"
-                                        placeholder="Codigo Postal" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Numero (*)</label>
-                                    <input type="text" class="form-control" id="numero_clienteConsultar" name="numero_clienteConsultar"
-                                        placeholder="Numero telefonico" />
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label>Id (*)</label>
+                                            <input type="text" disabled class="form-control" id="id_clienteConsultar"
+                                                name="id_clienteConsultar" placeholder="id" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label>Nombre del Cliente (*)</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="nombre_clienteConsultar" name="nombre_clienteConsultar"
+                                                placeholder="Nombre del cliente" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label>Apellido Paterno</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="apellido_paterno_clienteConsultar"
+                                                name="apellido_paterno_clienteConsultar"
+                                                placeholder="Apellido Paterno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Apellido Materno</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="apellido_materno_clienteConsultar"
+                                                name="apellido_materno_clienteConsultar"
+                                                placeholder="Apellido Materno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Teléfono (*)</label>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                            </div>
+                                            <input type="text" disabled class="form-control"
+                                                id="numero_clienteConsultar" name="numero_clienteConsultar"
+                                                data-inputmask='"mask": "(999) 999-9999"'
+                                                placeholder="Numero telefonico" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Dirección</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Calle(*)</label>
+                                            <input type="text" disabled class="form-control" id="calle_clienteConsultar"
+                                                name="calle_clienteConsultar" placeholder="Calle" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Municipio (*)</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="municipio_clienteConsultar" name="municipio_clienteConsultar"
+                                                placeholder="Municipio" />
+                                            <option value="default">Municipio</option>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Colonia (*)</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="colonia_clienteConsultar" name="colonia_clienteConsultar"
+                                                placeholder="Colonia" />
+                                            <option value="default">Colonia</option>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Codigo Postal (*)</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="codigo_postal_clienteConsultar"
+                                                name="codigo_postal_clienteConsultar" placeholder="Codigo Postal" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </form>
             </div>
@@ -442,24 +553,30 @@ var obtenerdatosDT = function(table) {
 
         var id_clienteActualizar = $("#id_clienteActualizar").val(data.id_cliente);
         var nombre_clienteActualizar = $("#nombre_clienteActualizar").val(data.nombre_cliente);
-        var apellido_paterno_clienteActualizar = $("#apellido_paterno_clienteActualizar").val(data.apellido_paterno_cliente);
-        var apellido_materno_clienteActualizar = $("#apellido_materno_clienteActualizar").val(data.apellido_materno_cliente);
+        var apellido_paterno_clienteActualizar = $("#apellido_paterno_clienteActualizar").val(data
+            .apellido_paterno_cliente);
+        var apellido_materno_clienteActualizar = $("#apellido_materno_clienteActualizar").val(data
+            .apellido_materno_cliente);
         var municipio_clienteActualizar = $("#municipio_clienteActualizar").val(data.municipio_cliente);
         var colonia_clienteActualizar = $("#colonia_clienteActualizar").val(data.colonia_cliente);
         var calle_clienteActualizar = $("#calle_clienteActualizar").val(data.calle_cliente);
-        var codigo_postal_clienteActualizar = $("#codigo_postal_clienteActualizar").val(data.codigo_postal_cliente);
+        var codigo_postal_clienteActualizar = $("#codigo_postal_clienteActualizar").val(data
+            .codigo_postal_cliente);
         var numero_clienteActualizar = $("#numero_clienteActualizar").val(data.numero_cliente);
         var imagen_clienteActualizar = $("#imagen_clienteActualizar").val(data.imagen_cliente);
 
 
         var id_clienteConsultar = $("#id_clienteConsultar").val(data.id_cliente);
         var nombre_clienteConsultar = $("#nombre_clienteConsultar").val(data.nombre_cliente);
-        var apellido_paterno_clienteConsultar = $("#apellido_paterno_clienteConsultar").val(data.apellido_paterno_cliente);
-        var apellido_materno_clienteConsultar = $("#apellido_materno_clienteConsultar").val(data.apellido_materno_cliente);
+        var apellido_paterno_clienteConsultar = $("#apellido_paterno_clienteConsultar").val(data
+            .apellido_paterno_cliente);
+        var apellido_materno_clienteConsultar = $("#apellido_materno_clienteConsultar").val(data
+            .apellido_materno_cliente);
         var municipio_clienteConsultar = $("#municipio_clienteConsultar").val(data.municipio_cliente);
         var colonia_clienteConsultar = $("#colonia_clienteConsultar").val(data.colonia_cliente);
         var calle_clienteConsultar = $("#calle_clienteConsultar").val(data.calle_cliente);
-        var codigo_postal_clienteConsultar = $("#codigo_postal_clienteConsultar").val(data.codigo_postal_cliente);
+        var codigo_postal_clienteConsultar = $("#codigo_postal_clienteConsultar").val(data
+            .codigo_postal_cliente);
         var numero_clienteConsultar = $("#numero_clienteConsultar").val(data.numero_cliente);
         var imagen_clienteConsultar = $("#imagen_clienteConsultar").val(data.imagen_cliente);
 
@@ -591,7 +708,8 @@ var enviarFormularioActualizar = function() {
                     } else {
                         Swal.fire(
                             "¡Error!",
-                            "Ha ocurrido un error al Actualizar al cliente. " + data,
+                            "Ha ocurrido un error al Actualizar al cliente. " +
+                            data,
                             "error"
                         );
                     }
