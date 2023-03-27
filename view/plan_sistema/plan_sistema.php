@@ -11,8 +11,8 @@ $menu->header('plan_sistema');
                     <h2>Tabla Planes del Sistema</h2>
                     <div class="row">
                         <div class="col-lg-12 text-right">
-                            <button class="btn btn-success" data-toggle='modal' data-target='#modalRegistrarPlan_sistema'> <i
-                                    class="fa fa-edit"></i> Registrar Plan 
+                            <button class="btn btn-primary" data-toggle='modal'
+                                data-target='#modalRegistrarPlan_sistema'> <i class="fa fa-edit"></i> Registrar Plan
                             </button>
                         </div>
                     </div>
@@ -22,8 +22,8 @@ $menu->header('plan_sistema');
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
-                                <table id="dataTablePlan_sistema" name="dataTablePlan_sistema" class="table table-striped table-bordered"
-                                    style="width:100%">
+                                <table id="dataTablePlan_sistema" name="dataTablePlan_sistema"
+                                    class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -45,11 +45,11 @@ $menu->header('plan_sistema');
 
 <!--*****************************************MODALS****************************************-->
 <!--------------------------------------------------------- Modal Registrar----------------------------------------------->
-<div class="modal fade" id="modalRegistrarPlan_sistema" tabindex="-1" role="dialog" aria-labelledby="modalRegistrarPlan_sistema"
-    aria-hidden="true">
+<div class="modal fade" id="modalRegistrarPlan_sistema" tabindex="-1" role="dialog"
+    aria-labelledby="modalRegistrarPlan_sistema" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="card-success">
+            <div class="card-primary">
                 <div class="card-header">
                     <div class="d-sm-flex align-items-center justify-content-between ">
                         <h4 class="card-title">Plan del Sistema <small> &nbsp;(*) Campos requeridos</small></h4>
@@ -60,36 +60,60 @@ $menu->header('plan_sistema');
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" id="formRegistrarPlan_sistema" name="formRegistrarPlan_sistema" method="post">
+                <form role="form" id="formRegistrarPlan_sistema" enctype="multipart/form-data"
+                    name="formRegistrarPlan_sistema" method="post">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Nombre (*)</label>
-                                    <input type="text" class="form-control" id="nombre_plan_sistema" name="nombre_plan_sistema"
-                                        placeholder="Nombre del plan" />
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Datos del Plan</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Descripcion (*)</label>
-                                    <input type="text" class="form-control" id="descripcion_plan_sistema" name="descripcion_plan_sistema"
-                                        placeholder="Descripcion del plan" />
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Nombre (*)</label>
+                                            <input type="text" class="form-control" id="nombre_plan_sistema"
+                                                name="nombre_plan_sistema" placeholder="Nombre del plan" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Costo (*)</label>
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="costo" name="costo"
+                                                    placeholder="Costo del plan" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Descripcion (*)</label>
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-edit"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="descripcion_plan_sistema"
+                                                    name="descripcion_plan_sistema"
+                                                    placeholder="Descripcion del plan" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Costo (*)</label>
-                                    <input type="text" class="form-control" id="costo" name="costo"
-                                        placeholder="Costo del plan" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Registrar</button>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -97,8 +121,8 @@ $menu->header('plan_sistema');
 </div>
 
 <!--------------------------------------------------------- Modal Actualizar----------------------------------------------->
-<div class="modal fade" id="modalActualizarPlan_sistema" tabindex="-1" role="dialog" aria-labelledby="modalActualizarPlan_sistema"
-    aria-hidden="true">
+<div class="modal fade" id="modalActualizarPlan_sistema" tabindex="-1" role="dialog"
+    aria-labelledby="modalActualizarPlan_sistema" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="card-warning">
@@ -112,44 +136,68 @@ $menu->header('plan_sistema');
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" id="formActualizarPlan_sistema" name="formActualizarPlan_sistema">
+                <form role="form" id="formActualizarPlan_sistema" enctype="multipart/form-data"
+                    name="formActualizarPlan_sistema" method="post">
                     <div class="card-body">
-                        <div class="row">
-                            <div style="display: none;" class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Id (*)</label>
-                                        <input type="text" class="form-control" id="id_plan_sistemaActualizar"
-                                            name="id_plan_sistemaActualizar" placeholder="Id" />
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Datos del Plan</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div style="display: none;" class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Id (*)</label>
+                                                <input type="text" class="form-control" id="id_plan_sistemaActualizar"
+                                                    name="id_plan_sistemaActualizar" placeholder="Id" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Nombre (*)</label>
+                                            <input type="text" class="form-control" id="nombre_plan_sistemaActualizar"
+                                                name="nombre_plan_sistemaActualizar" placeholder="Nombre del plan" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Costo (*)</label>
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="costoActualizar"
+                                                    name="costoActualizar" placeholder="Costo del plan" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Descripcion (*)</label>
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-edit"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control"
+                                                    id="descripcion_plan_sistemaActualizar"
+                                                    name="descripcion_plan_sistemaActualizar"
+                                                    placeholder="Descripcion del plan" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Nombre (*)</label>
-                                    <input type="text" class="form-control" id="nombre_plan_sistemaActualizar"
-                                        name="nombre_plan_sistemaActualizar" placeholder="Nombre" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Descripcion (*)</label>
-                                    <input type="text" class="form-control" id="descripcion_plan_sistemaActualizar"
-                                        name="descripcion_plan_sistemaActualizar" placeholder="Descripcion del plan" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Costo (*)</label>
-                                    <input type="text" class="form-control" id="costoActualizar" name="costoActualizar"
-                                        placeholder="Costo del plan" />
-                                </div>
-                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-warning">Actualizar</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -158,8 +206,8 @@ $menu->header('plan_sistema');
 </div>
 
 <!--------------------------------------------------------- Modal Detalle Plan Sistema----------------------------------------------->
-<div class="modal fade" id="modalDetallePlan_sistema" tabindex="-1" role="dialog" aria-labelledby="modalDetallePlan_sistema"
-    aria-hidden="true">
+<div class="modal fade" id="modalDetallePlan_sistema" tabindex="-1" role="dialog"
+    aria-labelledby="modalDetallePlan_sistema" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="card-primary">
@@ -173,41 +221,66 @@ $menu->header('plan_sistema');
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" id="formConsulta" name="formConsulta">
+                <form role="form" id="formConsulta" enctype="multipart/form-data" name="formConsulta" method="post">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Id (*)</label>
-                                    <input type="text" disabled class="form-control" id="id_plan_sistemaConsultar"
-                                        name="id_plan_sistemaConsultar" placeholder="id" />
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Datos del Plan</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Nombre (*)</label>
-                                    <input type="text" disabled class="form-control" id="nombre_plan_sistemaConsultar"
-                                        name="nombre_plan_sistemaConsultar" placeholder="Nombre" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Descripcion (*)</label>
-                                    <input type="text" disabled class="form-control" id="descripcion_plan_sistemaConsultar"
-                                        name="descripcion_plan_sistemaConsultar" placeholder="Descripcion del plan" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Costo (*)</label>
-                                    <input type="text" class="form-control" id="costoConsultar" name="costoConsultar"
-                                        placeholder="Costo del plan" />
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label>Id (*)</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="id_plan_sistemaConsultar" name="id_plan_sistemaConsultar"
+                                                placeholder="id" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label>Nombre (*)</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="nombre_plan_sistemaConsultar" name="nombre_plan_sistemaConsultar"
+                                                placeholder="Nombre" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label>Costo (*)</label>
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                                </div>
+                                                <input type="text" disabled class="form-control" id="costoConsultar"
+                                                    name="costoConsultar" placeholder="Costo del plan" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Descripcion (*)</label>
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-edit"></i></span>
+                                                </div>
+                                                <input type="text" disabled class="form-control"
+                                                    id="descripcion_plan_sistemaConsultar"
+                                                    name="descripcion_plan_sistemaConsultar"
+                                                    placeholder="Descripcion del plan" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </form>
             </div>
@@ -216,8 +289,8 @@ $menu->header('plan_sistema');
 </div>
 
 <!-- ****************************** Modal Eliminar Rol *************************************************-->
-<div class="modal fade" id="modalEliminarPlan_sistema" tabindex="-1" role="dialog" aria-labelledby="modalEliminarPlan_sistema"
-    aria-hidden="true">
+<div class="modal fade" id="modalEliminarPlan_sistema" tabindex="-1" role="dialog"
+    aria-labelledby="modalEliminarPlan_sistema" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-danger">
@@ -290,14 +363,17 @@ var obtenerdatosDT = function(table) {
         var idEliminar = $('#idEliminarplan_sistema').val(data.id_plan_sistema);
 
         var id_plan_sistemaActualizar = $("#id_plan_sistemaActualizar").val(data.id_plan_sistema);
-        var nombre_plan_sistemaActualizar = $("#nombre_plan_sistemaActualizar").val(data.nombre_plan_sistema);
-        var descripcion_plan_sistemaActualizar = $("#descripcion_plan_sistemaActualizar").val(data.descripcion_plan_sistema);
+        var nombre_plan_sistemaActualizar = $("#nombre_plan_sistemaActualizar").val(data
+            .nombre_plan_sistema);
+        var descripcion_plan_sistemaActualizar = $("#descripcion_plan_sistemaActualizar").val(data
+            .descripcion_plan_sistema);
         var costoActualizar = $("#costoActualizar").val(data.costo);
 
 
         var id_plan_sistemaConsultar = $("#id_plan_sistemaConsultar").val(data.id_plan_sistema);
         var nombre_plan_sistemaConsultar = $("#nombre_plan_sistemaConsultar").val(data.nombre_plan_sistema);
-        var descripcion_plan_sistemaConsultar = $("#descripcion_plan_sistemaConsultar").val(data.descripcion_plan_sistema);
+        var descripcion_plan_sistemaConsultar = $("#descripcion_plan_sistemaConsultar").val(data
+            .descripcion_plan_sistema);
         var costoConsultar = $("#costoConsultar").val(data.costo);
 
     });

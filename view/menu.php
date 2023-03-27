@@ -80,7 +80,7 @@ class Menu
                                                     <li><a href="' . constant('URL') . 'rol">Roles</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="' . constant('URL') .'plan_sistema"><i class="fa fa-book"></i> Planes del sistema </a></li>
+                                            <li><a href="' , constant('URL') , 'plan_sistema"><i class="fa fa-pencil"></i> Plan de Sistema </a></li>
                                             <li><a href="' . constant('URL') .'cliente"><i class="fa fa-user"></i> Clientes </a></li>
 
                                         </ul>
