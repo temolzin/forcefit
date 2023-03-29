@@ -13,7 +13,8 @@
                 <meta charset="utf-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
-            
+                <link rel="shortcut icon" href="public/img/logos/iconoAzul.png" type="image/x-icon">
+
                 <title>FORCE FIT</title>
             
                 <!-- Bootstrap -->
@@ -33,7 +34,8 @@
                         <div class="col-md-3 left_col">
                             <div class="left_col scroll-view">
                                 <div class="navbar nav_title" style="border: 0;">
-                                    <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Force Fit</span></a>
+                                <a href="index.html" class="site_title"><img src= "public/img/logos/iconoAzul.png"> <span>Force Fit</span></a>
+
                                 </div>
             
                                 <div class="clearfix"></div>
