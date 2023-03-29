@@ -10,8 +10,5 @@
 			$this->view->render('dashboard/index');
 		}
 
-		function aboutUs(){
-			$this->view->render('dashboard/aboutUs');
-		}
 	}
 ?>
