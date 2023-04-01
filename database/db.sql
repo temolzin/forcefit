@@ -1,19 +1,25 @@
 CREATE TABLE rol (
 	id_rol INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	descripcion VARCHAR(30)
+	nombreRol VARCHAR(60),
+	descripcion VARCHAR(60)
 );
 
 CREATE TABLE usuario (
-	id_usuario INT PRIMARY KEY NOT NULL,
-	apellido_paterno VARCHAR(30),
-	apellido_materno VARCHAR(30),
-	nombre VARCHAR(30),
-	email VARCHAR (30),
-	password VARCHAR(30),
-	imagen TEXT,
-	id_rol INT NOT NULL AUTO_INCREMENT,
-	KEY id_rol (id_rol),
-	CONSTRAINT rol_FK FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
+    id_usuario INT PRIMARY KEY NOT NULL,
+    nombreUsuario VARCHAR(30),
+    apellidoPaternoUsuario VARCHAR(30),
+    apellidoMaternoUsuario VARCHAR(30),
+    emailUsuario VARCHAR (30),
+    passwordUsuario VARCHAR(30),
+    imagen TEXT,
+    calleUsuario TEXT,
+    estadoUsuario TEXT,
+    municipioUsuario TEXT,
+    coloniaUsuario TEXT,
+    codigoPostalUsuario INT,
+    id_rol INT NOT NULL,
+    KEY id_rol (id_rol),
+    CONSTRAINT rol_FK FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
 );
 
 CREATE TABLE modulo (
@@ -23,13 +29,17 @@ CREATE TABLE modulo (
 );
 
 CREATE TABLE permiso (
-	id_rol INT NOT NULL,
+	id_permiso INT PRIMARY KEY AUTO_INCREMENT,
+	id_rol INT,
 	KEY id_rol (id_rol),
-	CONSTRAINT idrol_FK FOREIGN KEY (id_rol) REFERENCES rol (id_rol),
-	id_modulo INT NOT NULL,
+	CONSTRAINT id_rolFK FOREIGN KEY (id_rol) REFERENCES rol (id_rol),
+	id_modulo INT,
 	KEY id_modulo (id_modulo),
-	CONSTRAINT modulo_FK FOREIGN KEY (id_modulo) REFERENCES modulo (id_modulo),
-	PRIMARY KEY (id_rol,id_modulo)
+	CONSTRAINT id_moduloFK FOREIGN KEY (id_modulo) REFERENCES modulo (id_modulo),
+	c INT,
+	r INT,
+	u INT,
+	d INT
 );
 
 CREATE TABLE submodulo (
@@ -80,13 +90,16 @@ CREATE TABLE usuario_gimnasio (
 );
 
 CREATE TABLE cliente(
-	id_cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	nombre_cliente VARCHAR (30),
-	apellido_paterno VARCHAR (30),
-	apellido_materno VARCHAR (30),
-	direccion_cliente VARCHAR (60),
-	numero_cliente VARCHAR (10),
-	imagen TEXT
+    id_cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nombre_cliente VARCHAR (30),
+    apellido_paterno_cliente VARCHAR (30),
+    apellido_materno_cliente VARCHAR (30),
+    municipio_cliente VARCHAR (60),
+    colonia_cliente VARCHAR(30),
+    calle_cliente VARCHAR (30),
+    codigo_postal_cliente VARCHAR (30),
+    numero_cliente VARCHAR (10),
+    imagen_cliente TEXT
 );
 
 CREATE TABLE entrada_salida (
@@ -99,10 +112,10 @@ CREATE TABLE entrada_salida (
 );
 
 CREATE TABLE plan_gym (
-	id_plan INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	nombre_plan VARCHAR (30),
-	descripcion VARCHAR (100),
-	costo INT
+    id_planGym INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nombrePlanGym VARCHAR (30),
+    descripcionPlanGym VARCHAR (100),
+    costoPlanGym INT
 );
 
 CREATE TABLE pago_plan_gym_cliente (
