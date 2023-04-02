@@ -16,6 +16,8 @@ class Menu
                 <meta name="viewport" content="width=device-width, initial-scale=1">
             
                 <title>FORCE FIT</title>
+                <link rel="shortcut icon" href="public/img/logos/iconoAzul.png">
+
             
                 <!-- Bootstrap -->
                 <link href="public/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -50,7 +52,7 @@ class Menu
                         <div class="col-md-3 left_col">
                             <div class="left_col scroll-view">
                                 <div class="navbar nav_title" style="border: 0;">
-                                    <a href="' . constant('URL') . 'dashboard" class="site_title"><i class="fa fa-paw"></i> <span>Force Fit</span></a>
+                                <a href="index.html" class="site_title"><img src= "public/img/logos/iconoAzul.png"> <span>Force Fit</span></a>
                                 </div>
             
                                 <div class="clearfix"></div>
@@ -58,7 +60,7 @@ class Menu
                                 <!-- menu profile quick info -->
                                 <div class="profile clearfix">
                                     <div class="profile_pic">
-                                        <img src="public/img/gentella/img.jpg" alt="..." class="img-circle profile_img">
+                                        <img src="public/img/avatar.png" alt="..." class="img-circle profile_img">
                                     </div>
                                     <div class="profile_info">
                                         <span>Bienvenido,</span>
@@ -99,7 +101,7 @@ class Menu
                                         <li class="nav-item dropdown open" style="padding-left: 15px;">
                                             <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
                                                 id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                                <img src="public/img/gentella/img.jpg" alt="">John Doe
+                                                <img src="public/img/avatar.png" alt="">John Doe
                                             </a>
                                             <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
 
@@ -192,4 +194,3 @@ class Menu
     }
 }
 ?>
-
