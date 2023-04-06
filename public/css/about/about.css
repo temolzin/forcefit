@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+  }
+  
+  html {
+    box-sizing: border-box;
+  }
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  
+  .column {
+    float: left;
+    width: 33.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+  }
+  
+  
+  
+  .about-section {
+    padding: 5px;
+    text-align: center;
+    background-color: #2d3853;
+    color: rgb(255, 255, 255);
+  }
+  
+  
+  .about-section-2 {
+    padding: 15px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    background-image: url(../img/about/fondo2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .about-section-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 15px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    background-image: url(../img/about/fondo2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .about-section-4 {
+    padding: 50px;
+    text-align: center;
+    background-color: #2d3853;
+    color: white;
+  }
+  
+  .parrafo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    font-size: 15px;
+    text-align: justify;
+  }
+  
+  p {
+    font-size: 1.1em;
+    line-height: 1.5em;
+    max-width: 500px;
+    width: 100%;
+    text-align: justify;
+  }
+  
+  
+  .container::after,
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  
+  
+  @media screen and (max-width: 650px) {
+    .column {
+      width: 100%;
+      display: block;
+      justify-content: center;
+    }
+  }
+  
+  /* Estilos para pantallas grandes */
+  .about-section-3 {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .col-izq {
+    width: 33%;
+    margin-left: 2%;
+  }
+  
+  .col-der {
+    width: 33%;
+    margin-right: 2%;
+  }
+  
+  .col-med {
+    width: 29%;
+  }
+  
+  /* Estilos para pantallas medianas */
+  @media screen and (max-width: 768px) {
+    .about-section-3 {
+      flex-wrap: wrap;
+    }
+  
+    .col-izq, .col-der {
+      width: 100%;
+      margin: 0;
+    }
+  }
+  
+  /* Estilos para pantallas pequeñas */
+  @media screen and (max-width: 480px) {
+    .col-izq, .col-der {
+      width: 100%;
+      margin: 0;
+    }
+  
+    .col-med {
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+
+  
