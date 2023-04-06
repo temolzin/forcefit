@@ -54,3 +54,4 @@ class Rol extends Controller
 		echo $rolDAO;
 	}
 }
+

@@ -1,3 +1,4 @@
+
 <?php
     class RolDAO extends Model implements CRUD {
         public function __construct()
@@ -42,3 +43,4 @@
         }
     }
 ?>
+
