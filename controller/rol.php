@@ -28,7 +28,7 @@ class Rol extends Controller
 		$nombreRol = $_POST['nombreRolActualizar'];
 		$descripcion = $_POST['descripcionRolActualizar'];
 		$idRol = $_POST['idRolActualizar'];
-		$data = array('nombreRol' => $nombreRol, 'descripcion' => $descripcion,'idRolActualizar'=>$idRol);
+		$data = array('nombreRol' => $nombreRol, 'descripcion' => $descripcion, 'idRolActualizar' => $idRol);
 
 		require 'model/rolDAO.php';
 		$this->loadModel('rolDAO');

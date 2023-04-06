@@ -223,8 +223,9 @@ $menu->header('rol');
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-edit"></i></span>
                                                 </div>
-                                                <input type="text" disabled class="form-control" id="descripcionRolConsultar"
-                                                    name="descripcionRolConsultar" placeholder="Descripcion del rol" />
+                                                <input type="text" disabled class="form-control"
+                                                    id="descripcionRolConsultar" name="descripcionRolConsultar"
+                                                    placeholder="Descripcion del rol" />
                                             </div>
                                         </div>
                                     </div>
@@ -313,20 +314,20 @@ $menu->footer();
 ?>
 
 <script>
-$(document).ready(function() {
-    mostrarRoles();
-    enviarFormularioRegistrar();
-    enviarFormularioActualizar();
-    eliminarRegistro();
-});
+    $(document).ready(function () {
+        mostrarRoles();
+        enviarFormularioRegistrar();
+        enviarFormularioActualizar();
+        eliminarRegistro();
+    });
 
-var mostrarRoles = function() {
-    var tableRol = $('#dataTableRol').DataTable({
-        "processing": true,
-        "ajax": {
-            "url": "<?php echo constant('URL'); ?>rol/read"
-        },
-        "columns": [{
+    var mostrarRoles = function () {
+        var tableRol = $('#dataTableRol').DataTable({
+            "processing": true,
+            "ajax": {
+                "url": "<?php echo constant('URL'); ?>rol/read"
+            },
+            "columns": [{
                 "data": "id_rol"
             },
             {
@@ -342,179 +343,179 @@ var mostrarRoles = function() {
                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarRol' title="Editar Datos"><i class="fa fa-edit"></i></button>
                         <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarRol' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>`
             }
-        ],
-        responsive: true,
-        autoWidth: false,
-        language: idiomaDataTable,
-        lengthChange: true,
-        buttons: ['copy', 'excel', 'csv', 'pdf'],
-        dom: 'Bfltip'
-    });
-    obtenerdatosDT(tableRol);
-}
+            ],
+            responsive: true,
+            autoWidth: false,
+            language: idiomaDataTable,
+            lengthChange: true,
+            buttons: ['copy', 'excel', 'csv', 'pdf'],
+            dom: 'Bfltip'
+        });
+        obtenerdatosDT(tableRol);
+    }
 
-var obtenerdatosDT = function(table) {
-    $('#dataTableRol tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var idEliminar = $('#idEliminarRol').val(data.id_rol);
+    var obtenerdatosDT = function (table) {
+        $('#dataTableRol tbody').on('click', 'tr', function () {
+            var data = table.row(this).data();
+            var idEliminar = $('#idEliminarRol').val(data.id_rol);
 
-        var idRolActualizar = $("#idRolActualizar").val(data.id_rol);
-        var nombreRolActualizar = $("#nombreRolActualizar").val(data.nombreRol);
-        var descripcionRolActualizar = $("#descripcionRolActualizar").val(data.descripcion);
+            var idRolActualizar = $("#idRolActualizar").val(data.id_rol);
+            var nombreRolActualizar = $("#nombreRolActualizar").val(data.nombreRol);
+            var descripcionRolActualizar = $("#descripcionRolActualizar").val(data.descripcion);
 
-        var idRolConsultar = $("#idRolConsultar").val(data.id_rol);
-        var nombreRolConsultar = $("#nombreRolConsultar").val(data.nombreRol);
-        var descripcionRolConsulta = $("#descripcionRolConsultar").val(data.descripcion);
-    });
-}
+            var idRolConsultar = $("#idRolConsultar").val(data.id_rol);
+            var nombreRolConsultar = $("#nombreRolConsultar").val(data.nombreRol);
+            var descripcionRolConsulta = $("#descripcionRolConsultar").val(data.descripcion);
+        });
+    }
 
-var enviarFormularioRegistrar = function() {
-    $.validator.setDefaults({
-        submitHandler: function() {
-            var datos = $('#formRegistrarRol').serialize();
-            $.ajax({
-                type: "POST",
-                url: "<?php echo constant('URL'); ?>rol/insert",
-                data: datos,
-                success: function(data) {
-                    if (data.trim() == 'ok') {
-                        Swal.fire(
-                            "¡Éxito!",
-                            "El rol se ha sido registrado de manera correcta",
-                            "success"
-                        ).then(function() {
-                            window.location =
-                                "<?php echo constant('URL'); ?>rol";
-                        })
-                    } else {
-                        Swal.fire(
-                            "¡Error!",
-                            "Ha ocurrido un error al registrar el Rol. " + data,
-                            "error"
-                        );
-                    }
+    var enviarFormularioRegistrar = function () {
+        $.validator.setDefaults({
+            submitHandler: function () {
+                var datos = $('#formRegistrarRol').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo constant('URL'); ?>rol/insert",
+                    data: datos,
+                    success: function (data) {
+                        if (data.trim() == 'ok') {
+                            Swal.fire(
+                                "¡Éxito!",
+                                "El rol se ha sido registrado de manera correcta",
+                                "success"
+                            ).then(function () {
+                                window.location =
+                                    "<?php echo constant('URL'); ?>rol";
+                            })
+                        } else {
+                            Swal.fire(
+                                "¡Error!",
+                                "Ha ocurrido un error al registrar el Rol. " + data,
+                                "error"
+                            );
+                        }
+                    },
+                });
+            }
+        });
+        $('#formRegistrarRol').validate({
+            rules: {
+                nombreRol: {
+                    required: true
                 },
-            });
-        }
-    });
-    $('#formRegistrarRol').validate({
-        rules: {
-            nombreRol: {
-                required: true
-            },
-            descripcion: {
-                required: true
-            },
-        },
-        messages: {
-            nombreRol: {
-                required: "Ingrese el nombre del rol"
-            },
-            descripcion: {
-                required: "Ingrese la descripcion"
-            }
-        },
-        errorElement: 'span',
-        errorPlacement: function(error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
-        }
-    });
-}
-
-var enviarFormularioActualizar = function() {
-    $.validator.setDefaults({
-        submitHandler: function() {
-            var datos = $('#formActualizarRol').serialize();
-            $.ajax({
-                type: "POST",
-                url: "<?php echo constant('URL'); ?>rol/update",
-                data: datos,
-                success: function(data) {
-                    if (data.trim() == 'ok') {
-                        Swal.fire(
-                            "¡Éxito!",
-                            "El rol se ha sido Actualizado de manera correcta",
-                            "success"
-                        ).then(function() {
-                            window.location =
-                                "<?php echo constant('URL'); ?>rol";
-                        })
-                    } else {
-                        Swal.fire(
-                            "¡Error!",
-                            "Ha ocurrido un error al Actualizar el Rol. " + data,
-                            "error"
-                        );
-                    }
+                descripcion: {
+                    required: true
                 },
-            });
-        }
-    });
-    $('#formActualizarRol').validate({
-        rules: {
-            nombreRolActualizar: {
-                required: true
             },
-            descripcionActualizar: {
-                required: true
-            }
-        },
-        messages: {
-            nombreRolActualizar: {
-                required: "Ingrese el nombre del rol"
-            },
-            descripcionActualizar: {
-                required: "Ingrese el rol"
-            }
-        },
-        errorElement: 'span',
-        errorPlacement: function(error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
-        }
-    });
-}
-
-var eliminarRegistro = function() {
-    $("#formEliminarRol").submit(function(event) {
-        event.preventDefault();
-        var datos = $('#formEliminarRol').serialize();
-        $.ajax({
-            type: "POST",
-            url: "<?php echo constant('URL'); ?>rol/delete",
-            data: datos,
-            success: function(data) {
-                if (data.trim() == 'ok') {
-                    Swal.fire(
-                        "¡Éxito!",
-                        "El rol ha sido eliminado correctamente",
-                        "success"
-                    ).then(function() {
-                        window.location = "<?php echo constant('URL'); ?>rol";
-                    })
-                } else {
-                    Swal.fire(
-                        "¡Error!",
-                        "Ha ocurrido un error al eliminar el rol. " + data,
-                        "error"
-                    );
+            messages: {
+                nombreRol: {
+                    required: "Ingrese el nombre del rol"
+                },
+                descripcion: {
+                    required: "Ingrese la descripcion"
                 }
             },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
         });
-    });
-}
+    }
+
+    var enviarFormularioActualizar = function () {
+        $.validator.setDefaults({
+            submitHandler: function () {
+                var datos = $('#formActualizarRol').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo constant('URL'); ?>rol/update",
+                    data: datos,
+                    success: function (data) {
+                        if (data.trim() == 'ok') {
+                            Swal.fire(
+                                "¡Éxito!",
+                                "El rol se ha sido Actualizado de manera correcta",
+                                "success"
+                            ).then(function () {
+                                window.location =
+                                    "<?php echo constant('URL'); ?>rol";
+                            })
+                        } else {
+                            Swal.fire(
+                                "¡Error!",
+                                "Ha ocurrido un error al Actualizar el Rol. " + data,
+                                "error"
+                            );
+                        }
+                    },
+                });
+            }
+        });
+        $('#formActualizarRol').validate({
+            rules: {
+                nombreRolActualizar: {
+                    required: true
+                },
+                descripcionActualizar: {
+                    required: true
+                }
+            },
+            messages: {
+                nombreRolActualizar: {
+                    required: "Ingrese el nombre del rol"
+                },
+                descripcionActualizar: {
+                    required: "Ingrese el rol"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    }
+
+    var eliminarRegistro = function () {
+        $("#formEliminarRol").submit(function (event) {
+            event.preventDefault();
+            var datos = $('#formEliminarRol').serialize();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo constant('URL'); ?>rol/delete",
+                data: datos,
+                success: function (data) {
+                    if (data.trim() == 'ok') {
+                        Swal.fire(
+                            "¡Éxito!",
+                            "El rol ha sido eliminado correctamente",
+                            "success"
+                        ).then(function () {
+                            window.location = "<?php echo constant('URL'); ?>rol";
+                        })
+                    } else {
+                        Swal.fire(
+                            "¡Error!",
+                            "Ha ocurrido un error al eliminar el rol. " + data,
+                            "error"
+                        );
+                    }
+                },
+            });
+        });
+    }
 </script>
 
