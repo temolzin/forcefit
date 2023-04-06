@@ -55,7 +55,7 @@ CREATE TABLE plan_sistema (
 	id_plan_sistema INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	nombre_plan_sistema VARCHAR (30),
 	descripcion_plan_sistema VARCHAR (30),
-	costo INT
+	costo decimal(9,2);
 );
 
 CREATE TABLE pago_plan_sistema (
@@ -115,7 +115,8 @@ CREATE TABLE plan_gym (
     id_planGym INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nombrePlanGym VARCHAR (30),
     descripcionPlanGym VARCHAR (100),
-    costoPlanGym INT
+    costoPlanGym decimal(9,2);
+
 );
 
 CREATE TABLE pago_plan_gym_cliente (
