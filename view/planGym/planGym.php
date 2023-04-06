@@ -327,7 +327,10 @@ var mostrarPlanGym = function() {
                 "data": "descripcionPlanGym"
             },
             {
-                "data": "costoPlanGym"
+                "data": "costoPlanGym",
+                "render": function(data, type, row) {
+                    return "<i class='fa fa-dollar'></i> " + data;
+                }
             },
             {
                 data: null,
