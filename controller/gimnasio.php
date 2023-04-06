@@ -1,17 +1,18 @@
 <?php
 class Gimnasio extends Controller
 {
-	function __construct()
-	{
-		parent::__construct();
-	}
+    function __construct()
+    {
+        parent::__construct();
+    }
 
-	function index()
-	{
-		$this->view->render('gimnasio/index');
-	}
+    function index()
+    {
+        $this->view->render('gimnasio/index');
+    }
 
-    function insert(){
+    function insert()
+    {
         $nombre_gimnasio = $_POST['nombreGimnasio'];
         $telefono = $_POST['telefono'];
         $nombreImagen = "";
@@ -21,11 +22,11 @@ class Gimnasio extends Controller
             $tipoImagen = $imagen["type"];
             $ruta_provisional = $imagen["tmp_name"];
             $fullname = $nombre_gimnasio . "_" . $telefono;
-            $carpeta ="public/gimnasio/" . $fullname . "/";
-            if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif'){
+            $carpeta = "public/gimnasio/" . $fullname . "/";
+            if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
                 echo 'errorimagen';
             } else {
-                if (!file_exists($carpeta)){
+                if (!file_exists($carpeta)) {
                     mkdir($carpeta, 0777, true);
                 }
                 copy($ruta_provisional, $carpeta . $nombreImagen);
@@ -34,7 +35,7 @@ class Gimnasio extends Controller
                     'nombre_gimnasio' => $nombre_gimnasio,
                     'telefono' => $telefono,
                     'imagen' => $nombreImagen,
-                    'nombreImagen'  => $nombreImagen
+                    'nombreImagen' => $nombreImagen
                 );
                 require 'model/gimnasioDAO.php';
                 $this->loadModel('GimnasioDAO');
@@ -76,7 +77,7 @@ class Gimnasio extends Controller
                         mkdir($carpeta, 0777, true);
                     }
                     copy($ruta_provisional, $carpeta . $nombreImagen);
-                    $arrayActualizar['imagen'] =  $nombreImagen;
+                    $arrayActualizar['imagen'] = $nombreImagen;
                 }
             }
         }
@@ -85,27 +86,27 @@ class Gimnasio extends Controller
         $this->loadModel('GimnasioDAO');
         $gimnasioDAO = new GimnasioDAO();
         $gimnasioDAO->update($arrayActualizar);
-        }
+    }
 
-	function delete()
-	{
-		$idEliminar = $_POST['idEliminarGimnasio'];
-		require 'model/gimnasioDAO.php';
-		$this->loadModel('GimnasioDAO');
-		$gimnasioDAO = new GimnasioDAO();
-		$gimnasioDAO->delete($idEliminar);
-	}
+    function delete()
+    {
+        $idEliminar = $_POST['idEliminarGimnasio'];
+        require 'model/gimnasioDAO.php';
+        $this->loadModel('GimnasioDAO');
+        $gimnasioDAO = new GimnasioDAO();
+        $gimnasioDAO->delete($idEliminar);
+    }
 
-	function read()
-	{
-		require 'model/gimnasioDAO.php';
-		$this->loadModel('GimnasioDAO');
-		$gimnasioDAO = new GimnasioDAO();
-		$gimnasioDAO = $gimnasioDAO->read();
-		echo $gimnasioDAO;
-	}
+    function read()
+    {
+        require 'model/gimnasioDAO.php';
+        $this->loadModel('GimnasioDAO');
+        $gimnasioDAO = new GimnasioDAO();
+        $gimnasioDAO = $gimnasioDAO->read();
+        echo $gimnasioDAO;
+    }
 
-	function readTable()
+    function readTable()
     {
         require 'model/gimnasioDAO.php';
         $this->loadModel('GimnasioDAO');
