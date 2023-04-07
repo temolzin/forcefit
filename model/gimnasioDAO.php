@@ -22,7 +22,6 @@ class GimnasioDAO extends Model implements CRUD
 
     public function update($data)
     {
-
         $imagen = '';
 
         $arrayActualizar = [];
