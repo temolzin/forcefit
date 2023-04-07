@@ -8,7 +8,7 @@ class PlanSistema extends Controller
 
 	function index()
 	{
-		$this->view->render('planSistema/planSistema');
+		$this->view->render('planSistema/index');
 	}
 
 	function insert()
