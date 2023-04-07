@@ -8,7 +8,7 @@ class PlanGym extends Controller
 
 	function index()
 	{
-		$this->view->render('planGym/planGym');
+		$this->view->render('planGym/index');
 	}
 
 	function insert()
