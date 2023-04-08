@@ -125,7 +125,7 @@ class Menu
         echo '            <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    Force Fit Support System by <a href="https://www.rootheim.com/">Root Heim Company</a>
+                    Force Fit by <a href="https://www.rootheim.com/">Root Heim Company</a>
                 </div>
                 <div class="clearfix"></div>
             </footer>
