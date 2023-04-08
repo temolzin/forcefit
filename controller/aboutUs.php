@@ -8,7 +8,7 @@ class AboutUs extends Controller
     }
     function index()
     {
-        $this->view->render('aboutUs/aboutUs');
+        $this->view->render('aboutUs/index');
     }
 }
 ?>
