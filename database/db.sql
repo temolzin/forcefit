@@ -116,7 +116,6 @@ CREATE TABLE plan_gym (
     nombrePlanGym VARCHAR (30),
     descripcionPlanGym VARCHAR (100),
     costoPlanGym decimal(9,2)
-
 );
 
 CREATE TABLE pago_plan_gym_cliente (
