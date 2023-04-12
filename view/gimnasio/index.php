@@ -206,7 +206,7 @@ $menu->header('gimnasio');
             <div class="card-primary">
                 <div class="card-header">
                     <div class="d-sm-flex align-items-center justify-content-between ">
-                        <h4 class="card-title">Rol <small> &nbsp;(*) Campos requeridos</small></h4>
+                        <h4 class="card-title">Gimnasio <small> &nbsp;(*) Campos requeridos</small></h4>
                         <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
                             aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
@@ -273,7 +273,7 @@ $menu->header('gimnasio');
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-danger">
-                <h5 class="modal-title" id="exampleModalLabel">Eliminar Registro</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Gimnasio</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

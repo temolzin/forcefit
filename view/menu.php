@@ -82,6 +82,11 @@ class Menu
                                                     <li><a href="' . constant('URL') . 'usuarios">Usuarios</a></li>
                                                     <li><a href="' . constant('URL') . 'rol">Roles</a></li>
                                                 </ul>
+                                                <li><a href="' , constant('URL') , 'cliente"><i class="fa fa-user"></i> Clientes </a></li>
+                                                <li><a href="' , constant('URL') , 'gimnasio"><i class="fa fa-building"></i> Gimnasio </a></li>
+                                                <li><a href="' , constant('URL') , 'planGym"><i class="fa fa-clipboard"></i> Plan de Gimnasios </a></li>
+                                                <li><a href="' , constant('URL') , 'planSistema"><i class="fa fa-clipboard"></i> Plan de Sistema </a></li>
+    
                                             </li>
                                         </ul>
                                     </div>
@@ -194,4 +199,3 @@ class Menu
     }
 }
 ?>
-

@@ -7,8 +7,8 @@
 }
 
 .img{
-  width: 600px;
-  height: 650px;
+  width: 650px;
+  height: 680px;
   overflow: hidden;
   padding: 70px 0;
   position: relative;
@@ -19,15 +19,15 @@
   background-size: 55%;
   background-color: #ffffff;
   overflow: hidden;
-  padding: 20px 0;
+  padding: 87px 0;
   position: relative;
 }
 
 .inner-container{
-  width: 55%;
+  width: 50%;
   float: right;
   background-color: #fbfbfb;
-  padding: 100px;
+  padding: 10px;
 }
 
 .inner-container h1{
