@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="public/css/login/style.css">
+    <link rel="stylesheet" href="public/css/login/sweetalert2.css">
 
 </head>
 
@@ -35,7 +36,8 @@
                                     class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="form-control btn btn-primary submit px-3">Inicia
+                                <button type="button" class="form-control btn btn-primary submit px-3"
+                                    id="btnLogin">Inicia
                                     sesión</button>
                             </div>
                         </form>
@@ -50,17 +52,30 @@
     <script src="public/js/login/bootstrap.min.js"></script>
     <script src="public/js/login/main.js"></script>
     <script src="public/js/login/backgroundImage.js"></script>
-
+    <script src="public/js/login/sweetalert2.js"></script>
 </body>
 
 <script>
-var obtenerdatosDT = function(table) {
-    $('#dataTableLogin tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-
-        var emailConsulta = $("#email").val(data.email);
-        var passwordConsulta = $("#password").val(data.password);
-    });
-}
+    $(document).ready(function () {
+        $('#btnLogin').on('click', function () {
+            var datos = $('#loginUsuario').serialize();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo constant('URL'); ?>usuario/login",
+                data: datos,
+                success: function (data) {
+                    console.log(data)
+                    if (data == false) {
+                        Swal.fire(
+                            "¡Error!",
+                            "Usuario y Contraseña incorrectos" + data,
+                            "error"
+                        );
+                    } else if (data == true) {
+                        window.location = "<?php echo constant('URL'); ?>dashboard";
+                    }
+                },
+            });
+        })
+    })
 </script>
-

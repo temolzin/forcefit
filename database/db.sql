@@ -5,7 +5,7 @@ CREATE TABLE rol (
 );
 
 CREATE TABLE usuario (
-    id_usuario INT PRIMARY KEY NOT NULL,
+    id_usuario INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nombreUsuario VARCHAR(30),
     apellidoPaternoUsuario VARCHAR(30),
     apellidoMaternoUsuario VARCHAR(30),

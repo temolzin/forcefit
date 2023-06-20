@@ -1,9 +1,27 @@
 <?php
-
 class Menu
 {
     function header($title)
     {
+        $nombre = $_SESSION['nombreUsuario'];
+        $foto = $_SESSION['imagen'];
+        $appaterno = $_SESSION['apellidoPaternoUsuario'];
+        $fotoruta = constant('URL') . 'public/usuario/' . $nombre . '_' . $appaterno  . '/' . $foto;
+        $menuElements ='';
+
+        foreach ($_SESSION['permisos'] as $permiso) {
+            if ($permiso["r"] === 1) {
+                $menuElements .= "<li><a href=" . constant('URL') . $permiso["modulo"] . "><i class='" . $permiso["icono"] . "'></i>" . $permiso["modulo"];
+                if (!empty($permiso['submodulos'])) {
+                    $menuElements .= "<ul>";
+                    foreach ($permiso['submodulos'] as $submodulo) {
+                        $menuElements .= "<li><a href=" . constant('URL') . $submodulo['submodulo'] . "><i class='" . $submodulo['subicono'] . "'></i>" . $submodulo['submodulo'] . "</a></li>";
+                    }
+                    $menuElements .= "</ul>";
+                }
+                $menuElements .= "</a></li>";
+            }
+        }
         echo '<!DOCTYPE html>
             <html lang="en">
             
@@ -60,11 +78,11 @@ class Menu
                                 <!-- menu profile quick info -->
                                 <div class="profile clearfix">
                                     <div class="profile_pic">
-                                        <img src="public/img/avatar.png" alt="..." class="img-circle profile_img">
+                                    <img src="'.$fotoruta.'" alt="..." class="img-circle profile_img">
                                     </div>
                                     <div class="profile_info">
-                                        <span>Bienvenido,</span>
-                                        <h2>John Doe</h2>
+                                        <span>Bienvenid@,</span>
+                                        <h2>'.$_SESSION['nombreUsuario'].' '.$_SESSION['apellidoPaternoUsuario'].'</h2>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -76,18 +94,7 @@ class Menu
                                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                                     <div class="menu_section">
                                         <ul class="nav side-menu">
-                                            <li><a><i class="fa fa-home"></i> Dashboard </a></li>
-                                            <li><a><i class="fa fa-users"></i> Usuarios <span class="fa fa-chevron-down"></span></a>
-                                                <ul class="nav child_menu">
-                                                    <li><a href="' . constant('URL') . 'usuarios">Usuarios</a></li>
-                                                    <li><a href="' . constant('URL') . 'rol">Roles</a></li>
-                                                </ul>
-                                                <li><a href="' , constant('URL') , 'cliente"><i class="fa fa-user"></i> Clientes </a></li>
-                                                <li><a href="' , constant('URL') , 'gimnasio"><i class="fa fa-building"></i> Gimnasio </a></li>
-                                                <li><a href="' , constant('URL') , 'planGym"><i class="fa fa-clipboard"></i> Plan de Gimnasios </a></li>
-                                                <li><a href="' , constant('URL') , 'planSistema"><i class="fa fa-clipboard"></i> Plan de Sistema </a></li>
-    
-                                            </li>
+                                        '.$menuElements.'
                                         </ul>
                                     </div>
                                 </div>
@@ -106,7 +113,8 @@ class Menu
                                         <li class="nav-item dropdown open" style="padding-left: 15px;">
                                             <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
                                                 id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                                <img src="public/img/avatar.png" alt="">John Doe
+                                                <img src="'.$fotoruta.'" alt="">
+                                                '.$_SESSION['nombreUsuario'].' '.$_SESSION['apellidoPaternoUsuario'].'
                                             </a>
                                             <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
 
@@ -114,7 +122,7 @@ class Menu
 
                                                 <a class="dropdown-item" href="' . constant('URL') . 'aboutUs"><i class="fa fa-info-circle pull-right"></i>Acerca de</a>
 
-                                                <a class="dropdown-item"><i class="fa fa-sign-out pull-right"></i>Cerrar sesión</a>
+                                                <a class="dropdown-item" href="' . constant('URL') . 'Usuario/logout"><i class="fa fa-sign-out pull-right"></i>Cerrar sesión</a>
                                                 
                                             </div>
                                         </li>
@@ -199,4 +207,3 @@ class Menu
     }
 }
 ?>
-
