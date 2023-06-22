@@ -8,6 +8,7 @@ class Dashboard extends Controller
 		if (!isset($_SESSION['login'])) {
 			header('location: ' . constant('URL'));
 		}
+
 	}
 
 	function index()

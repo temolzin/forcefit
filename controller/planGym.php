@@ -69,6 +69,5 @@ class PlanGym extends Controller
 		echo $planGymDAO;
 	}
 }
-
 ?>
 

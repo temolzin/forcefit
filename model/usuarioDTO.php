@@ -15,7 +15,6 @@ class UsuarioDTO implements JsonSerializable
     private $codigoPostalUsuario;
     private $id_rol;
 
-
     public function __get($property)
     {
         if (property_exists($this, $property)) {
@@ -43,4 +42,3 @@ class UsuarioDTO implements JsonSerializable
     }
 }
 ?>
-

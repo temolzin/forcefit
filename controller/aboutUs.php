@@ -5,8 +5,8 @@ class AboutUs extends Controller
     {
         parent::__construct();
         session_start();
-		if (!isset($_SESSION['login'])) {
-			header('location: ' . constant('URL'));
+        if (!isset($_SESSION['login'])) {
+            header('location: ' . constant('URL'));
 		}
 
     }

@@ -266,8 +266,6 @@ $menu->header('rol');
 </div>
 
 <!--***************************************Modal permisos Rol******************************************-->
-
-
 <div class="modal fade " id="modalPermisoRol" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-xl">

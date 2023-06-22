@@ -35,8 +35,6 @@ class PermisoDAO extends Model implements CRUD
     {
     }
 
-
-
     public function read()
     {
     }
@@ -81,5 +79,4 @@ class PermisoDAO extends Model implements CRUD
         }
     }
 }
-
 ?>

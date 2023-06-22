@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="public/css/login/sweetalert2.css">
 
 </head>
-
 <body onload="cambiar()" class="img js-fullheight" id="ia" style="background-image: url(public/img/login/gym1.jpg);">
     <section class="ftco-section">
         <div class="container">

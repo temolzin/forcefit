@@ -69,6 +69,5 @@ class PlanSistema extends Controller
 		echo $planSistemaDAO;
 	}
 }
-
 ?>
 

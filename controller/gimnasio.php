@@ -128,4 +128,3 @@ class Gimnasio extends Controller
         echo json_encode($obj);
     }
 }
-

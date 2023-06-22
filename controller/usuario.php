@@ -4,7 +4,6 @@ class Usuario extends Controller
 	function __construct()
 	{
 		parent::__construct();
-
 	}
 
 	function index()
@@ -164,7 +163,6 @@ class Usuario extends Controller
 		echo json_encode($obj);
 	}
 
-
 	function login()
 	{
 		$emailUsuario = $_POST['email'];
@@ -185,5 +183,5 @@ class Usuario extends Controller
 		header('location: ' . constant('URL'));
 	}
 }
-
 ?>
+

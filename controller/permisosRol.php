@@ -51,12 +51,5 @@ class PermisosRol extends Controller
 			$permisosDAO = $permisosDAO->insertPermisos($id_rol, $idmodulo, $c, $r, $u, $d);
 		}
 	}
-	function getPermisoModulos(int $idmodulo)
-	{
-		require_once 'model/PermisoDAO.php';
-		$objPermisos = new PermisoDAO();
-		$idrol = $_SESSION['id_rol'];
-		$arrPermisos = $objPermisos->getPermisosModulos($idrol);
-	}
-
 }
+?>

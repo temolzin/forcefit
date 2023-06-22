@@ -1,5 +1,3 @@
-
-
 <?php
 class PermisoDTO implements JsonSerializable
 {
@@ -39,6 +37,4 @@ class PermisoDTO implements JsonSerializable
     }
 }
 ?>
-
-
 

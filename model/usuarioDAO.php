@@ -204,5 +204,4 @@ class UsuarioDAO extends Model implements CRUD
         return $arrPermisos;
     }
 }
-
 ?>

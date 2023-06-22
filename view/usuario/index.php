@@ -2,7 +2,6 @@
 require 'view/menu.php';
 $menu = new Menu();
 $menu->header('usuario');
-
 ?>
 <section class="content">
     <div class="right_col" role="main">
@@ -376,7 +375,6 @@ $menu->header('usuario');
 
 
 <!--------------------------------------------------------- Modal Detalle Usuario----------------------------------------------->
-
 <div class="modal fade" id="modalDetalleUsuario" tabindex="-1" role="dialog" aria-labelledby="modalDetalleUsuario"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -553,7 +551,6 @@ $menu->header('usuario');
         </div>
     </div>
 </div>
-
 <?php
 $menu->footer();
 ?>
@@ -566,7 +563,6 @@ $menu->footer();
         eliminarRegistro();
         rutaImagen();
     });
-
 
     $(".custom-file-input").on("change", function () {
         var fileName = $(this).val().split("\\").pop();
@@ -646,8 +642,6 @@ $menu->footer();
                 "data": "id_rol"
             },
             {
-
-
                 "defaultContent": `
                         
                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarUsuario' title="Editar Datos"><i class="fa fa-edit"></i></button>
@@ -669,43 +663,31 @@ $menu->footer();
             var data = table.row(this).data();
             var idEliminar = $('#idEliminarUsuario').val(data.id_usuario);
 
-
             var id_usuarioActualizar = $("#id_usuarioActualizar").val(data.id_usuario);
             var nombreUsuarioActualizar = $("#nombreUsuarioActualizar").val(data.nombreUsuario);
-            var apellidoPaternoUsuarioActualizar = $("#apellidoPaternoUsuarioActualizar").val(data
-                .apellidoPaternoUsuario);
-            var apellidoMaternoUsuarioActualizar = $("#apellidoMaternoUsuarioActualizar").val(data
-                .apellidoMaternoUsuario);
-            var EmailUsuarioActualizar = $("#EmailUsuarioActualizar").val(data
-                .emailUsuario);
-            var contraseñaUsuarioActualizar = $("#contraseñaUsuarioActualizar").val(data
-                .passwordUsuario);
+            var apellidoPaternoUsuarioActualizar = $("#apellidoPaternoUsuarioActualizar").val(data.apellidoPaternoUsuario);
+            var apellidoMaternoUsuarioActualizar = $("#apellidoMaternoUsuarioActualizar").val(data.apellidoMaternoUsuario);
+            var EmailUsuarioActualizar = $("#EmailUsuarioActualizar").val(data.emailUsuario);
+            var contraseñaUsuarioActualizar = $("#contraseñaUsuarioActualizar").val(data.passwordUsuario);
             var calleUsuarioActualizar = $("#calleUsuarioActualizar").val(data.calleUsuario);
             var estadoUsuarioActualizar = $("#estadoUsuarioActualizar").val(data.estadoUsuario);
             var municipioUsuarioActualizar = $("#municipioUsuarioActualizar").val(data.municipioUsuario);
-            var coloniaUsuarioActualizar = $("#coloniaUsuarioActualizar").val(data
-                .coloniaUsuario);
+            var coloniaUsuarioActualizar = $("#coloniaUsuarioActualizar").val(data.coloniaUsuario);
             var codigopostalUsuarioActualizar = $("#codigopostalUsuarioActualizar").val(data.codigoPostalUsuario);
             var rolUsuarioActualizar = $("#rolUsuarioActualizar").val(data.id_rol);
             var imagenUsuarioActualizar = $("#imagenUsuarioActualizar").val(data.imagen);
 
-
             var idConsultar = $('#id_usuarioConsultar').val(data.id_usuario);
             var nombreUsuarioConsultar = $("#nombreUsuarioConsultar").val(data.nombreUsuario);
-            var apellidoPaternoUsuarioConsultar = $("#apellidoPaternoUsuarioConsultar").val(data
-                .apellidoPaternoUsuario);
-            var apellidoMaternoUsuarioConsultar = $("#apellidoMaternoUsuarioConsultar").val(data
-                .apellidoMaternoUsuario);
-            var emailUsuarioConsultar = $("#emailUsuarioConsultar").val(data
-                .emailUsuario);
+            var apellidoPaternoUsuarioConsultar = $("#apellidoPaternoUsuarioConsultar").val(data.apellidoPaternoUsuario);
+            var apellidoMaternoUsuarioConsultar = $("#apellidoMaternoUsuarioConsultar").val(data.apellidoMaternoUsuario);
+            var emailUsuarioConsultar = $("#emailUsuarioConsultar").val(data.emailUsuario);
             var calleUsuarioConsultar = $("#calleUsuarioConsultar").val(data.calleUsuario);
             var estadoUsuarioConsultar = $("#estadoUsuarioConsultar").val(data.estadoUsuario);
             var municipioUsuarioConsultar = $("#municipioUsuarioConsultar").val(data.municipioUsuario);
-            var coloniaUsuarioConsultar = $("#coloniaUsuarioConsultar").val(data
-                .coloniaUsuario);
+            var coloniaUsuarioConsultar = $("#coloniaUsuarioConsultar").val(data.coloniaUsuario);
             var codigopostalUsuarioConsultar = $("#codigoPostalUsuarioConsultar").val(data.codigoPostalUsuario);
             var rolUsuarioConsultar = $("#rolUsuarioConsultar").val(data.id_rol);
-
 
         });
     }
@@ -770,7 +752,6 @@ $menu->footer();
                             contentType: false,
                             processData: false,
                             data: form_data,
-                            // data: datos +"&id_usuario="+id_usuario,
                             success: function (data) {
                                 if (data.trim() == 'ok') {
                                     Swal.fire(
@@ -834,8 +815,6 @@ $menu->footer();
                 rolUsuario: {
                     required: true
                 },
-
-
             },
             messages: {
                 nombreUsuario: {
@@ -1058,5 +1037,4 @@ $menu->footer();
                 });
             });
         }
-
 </script>
