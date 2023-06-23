@@ -1,0 +1,1040 @@
+<?php
+require 'view/menu.php';
+$menu = new Menu();
+$menu->header('usuario');
+?>
+<section class="content">
+    <div class="right_col" role="main">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tabla de Usuarios</h2>
+                    <div class="row">
+                        <div class="col-lg-12 text-right">
+                            <button class="btn btn-primary" data-toggle='modal' data-target='#modalRegistrarUsuario'> <i
+                                    class="fa fa-edit"></i> Registrar Usuario
+                            </button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+                                <table id="dataTableUsuario" name="dataTableUsuario"
+                                    class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Imagen</th>
+                                            <th>Nombre del usuario</th>
+                                            <th>Apellido Paterno</th>
+                                            <th>Apellido Materno</th>
+                                            <th>Correo</th>
+                                            <th>Rol</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--*****************************************MODALS****************************************-->
+<!--------------------------------------------------------- Modal Registrar usuario----------------------------------------------->
+<div class="modal fade" id="modalRegistrarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalRegistrarUsuario"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="card-primary">
+                <div class="card-header">
+                    <div class="d-sm-flex align-items-center justify-content-between ">
+                        <h4 class="card-title">Usuario <small> &nbsp;(*) Campos requeridos</small></h4>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
+                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <form role="form" id="formRegistrarUsuario" enctype="multipart/form-data" name="formRegistrarUsuario"
+                    method="post">
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Datos del Cliente</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <span><label>Imagen del usuario (*)</label></span>
+                                        <div class="form-group input-group">
+                                            <div class="custom-file">
+                                                <input type="file" accept="image/*" class="custom-file-input"
+                                                    name="imagen" id="imagen" lang="es">
+                                                <label class="custom-file-label" for="imagen">Seleccione
+                                                    Fotografía</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Nombre del Usuario (*)</label>
+                                            <input type="text" class="form-control" id="nombreUsuario"
+                                                name="nombreUsuario" placeholder="Nombre Usuario" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Apellido Paterno</label>
+                                            <input type="text" class="form-control" id="apellidoPaternoUsuario"
+                                                name="apellidoPaternoUsuario" placeholder="Apellido Paterno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Apellido Materno</label>
+                                            <input type="text" class="form-control" id="apellidoMaternoUsuario"
+                                                name="apellidoMaternoUsuario" placeholder="Apellido Materno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Correo (*)</label>
+                                        <div class="input-group-prepend">
+                                            <input type="email" id="correoUsuario" name="correoUsuario"
+                                                class="form-control" placeholder="Correo">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Contraseña (*)</label>
+                                        <div class="input-group-prepend">
+                                            <input type="password" id="password" name="password" class="form-control"
+                                                placeholder="Contraseña">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Dirección</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Calle(*)</label>
+                                            <input type="text" class="form-control" id="calleUsuario"
+                                                name="calleUsuario" placeholder="Calle" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Estado (*)</label>
+                                            <input type="text" name="estadoUsuario" id="estadoUsuario"
+                                                class="form-control" placeholder="estado">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Municipio (*)</label>
+                                            <input type="text" id="municipioUsuario" name="municipioUsuario"
+                                                class="form-control" placeholder="Municipio">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Colonia (*)</label>
+                                            <input type="text" id="coloniaUsuario" name="coloniaUsuario"
+                                                class="form-control" placeholder="Colonia">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Codigo Postal (*)</label>
+                                            <input type="text" class="form-control" id="codigoPostalUsuario"
+                                                name="codigoPostalUsuario" placeholder="Codigo Postal">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>ID ROL (*)</label>
+                                            <input type="text" class="form-control" id="rolUsuario" name="rolUsuario"
+                                                placeholder="ROL">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--------------------------------------------------------- Modal Actualizar usuario----------------------------------------------->
+<div class="modal fade" id="modalActualizarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalActualizarUsuario"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="card-warning">
+                <div class="card-header">
+                    <div class="d-sm-flex align-items-center justify-content-between ">
+                        <h4 class="card-title">Usuario <small> &nbsp;(*) Campos requeridos</small></h4>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
+                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <!---->
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" id="formActualizarUsuario" enctype="multipart/form-data" name="formActualizarUsuario"
+                    method="post">
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+
+                                <h3 class="card-title">Datos del Usuario</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div style="display: none;" class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Id (*)</label>
+                                                <input type="text" class="form-control" id="id_usuarioActualizar"
+                                                    name="id_usuarioActualizar" placeholder="Id" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span><label>Imagen del usuario (*)</label></span>
+                                        <div class="form-group input-group">
+                                            <div class="custom-file">
+                                                <input type="file" accept="image/*" class="custom-file-input"
+                                                    name="imagenUsuarioActualizar" id="imagenUsuarioActualizar"
+                                                    lang="es">
+                                                <label class="custom-file-label" for="imagen">Seleccione
+                                                    Fotografía</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Nombre del Usuario (*)</label>
+                                            <input type="text" class="form-control" id="nombreUsuarioActualizar"
+                                                name="nombreUsuarioActualizar" placeholder="Nombre Usuario" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Apellido Paterno</label>
+                                            <input type="text" class="form-control"
+                                                id="apellidoPaternoUsuarioActualizar"
+                                                name="apellidoPaternoUsuarioActualizar"
+                                                placeholder="Apellido Paterno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Apellido Materno</label>
+                                            <input type="text" class="form-control"
+                                                id="apellidoMaternoUsuarioActualizar"
+                                                name="apellidoMaternoUsuarioActualizar"
+                                                placeholder="Apellido Materno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" class="form-control" id="EmailUsuarioActualizar"
+                                                name="EmailUsuarioActualizar" placeholder="Email" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Contraseña</label>
+                                            <input type="text" class="form-control" id="contrasenaUsuarioActualizar"
+                                                name="contrasenaUsuarioActualizar" placeholder="Contraseña" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Dirección</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Calle</label>
+                                            <input type="text" class="form-control" id="calleUsuarioActualizar"
+                                                name="calleUsuarioActualizar" placeholder="Calle" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Estado</label>
+                                            <input type="text" class="form-control" id="estadoUsuarioActualizar"
+                                                name="estadoUsuarioActualizar" placeholder="Estado" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Municipio</label>
+                                            <input type="text" class="form-control" id="municipioUsuarioActualizar"
+                                                name="municipioUsuarioActualizar" placeholder="Municipio" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Colonia</label>
+                                            <input type="text" class="form-control" id="coloniaUsuarioActualizar"
+                                                name="coloniaUsuarioActualizar" placeholder="Colonia" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Codigo Postal</label>
+                                            <input type="text" class="form-control" id="codigopostalUsuarioActualizar"
+                                                name="codigopostalUsuarioActualizar" placeholder="Codigo Postal" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Rol</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Rol</label>
+                                        <input type="text" class="form-control" id="rolUsuarioActualizar"
+                                            name="rolUsuarioActualizar" placeholder="ROL" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!--------------------------------------------------------- Modal Detalle Usuario----------------------------------------------->
+<div class="modal fade" id="modalDetalleUsuario" tabindex="-1" role="dialog" aria-labelledby="modalDetalleUsuario"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="card-primary">
+                <div class="card-header">
+                    <div class="d-sm-flex align-items-center justify-content-between ">
+                        <h4 class="card-title"> Usuario <small> &nbsp;(*) Campos requeridos</small></h4>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
+                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <!---->
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" id="formConsulta" enctype="multipart/form-data" name="formConsulta" method="post">
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Datos del Usuario</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label>Id (*)</label>
+                                            <input type="text" disabled class="form-control" id="id_usuarioConsultar"
+                                                name="id_usuarioConsultar" placeholder="id" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label>Nombre del Usuario (*)</label>
+                                            <input type="text" disabled class="form-control" id="nombreUsuarioConsultar"
+                                                name="nombreUsuarioConsultar" placeholder="Nombre del usuario" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label>Apellido Paterno</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="apellidoPaternoUsuarioConsultar"
+                                                name="apellidoPaternoUsuarioConsultar" placeholder="Apellido Paterno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Apellido Materno</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="apellidoMaternoUsuarioConsultar"
+                                                name="apellidoMaternoUsuarioConsultar" placeholder="Apellido Materno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" disabled class="form-control" id="emailUsuarioConsultar"
+                                                name="emailUsuarioConsultar" placeholder="Email" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Dirección</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Calle(*)</label>
+                                            <input type="text" disabled class="form-control" id="calleUsuarioConsultar"
+                                                name="calleUsuarioConsultar" placeholder="Calle" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Estado (*)</label>
+                                            <input type="text" disabled class="form-control" id="estadoUsuarioConsultar"
+                                                name="estadoUsuarioConsultar" placeholder="estado" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Municipio (*)</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="municipioUsuarioConsultar" name="municipioUsuarioConsultar"
+                                                placeholder="Municipio" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Colonia (*)</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="coloniaUsuarioConsultar" name="coloniaUsuarioConsultar"
+                                                placeholder="Colonia" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Codigo Postal (*)</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="codigoPostalUsuarioConsultar" name="codigoPostalUsuarioConsultar"
+                                                placeholder="Codigo Postal" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Rol</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Rol (*)</label>
+                                            <input type="text" disabled class="form-control" id="rolUsuarioConsultar"
+                                                name="rolUsuarioConsultar" placeholder="Rol" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ****************************** Modal Eliminar Usuario*************************************************-->
+<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalEliminarUsuario"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Usuario</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form role="form" id="formEliminarUsuario" name="formEliminarUsuario">
+                <input type="text" hidden id="idEliminarUsuario" name="idEliminarUsuario">
+                <div class="modal-body text-center text-danger">¿Realmente deseas eliminar este usuario?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php
+$menu->footer();
+?>
+
+<script>
+    $(document).ready(function () {
+        mostrarUsuario();
+        enviarFormularioRegistrar();
+        enviarFormularioActualizar();
+        eliminarRegistro();
+        rutaImagen();
+    });
+
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    const rutaImagen = () => {
+        $.ajax({
+            type: "GET",
+            url: "<?php echo constant('URL'); ?>usuario/read",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $.each(data, function (key, registro) {
+                    var id = registro.id_usuario;
+                    var nombre = registro.nombreUsuario;
+                    var apellido = registro.apellidoPaternoUsuario;
+                    var imagen = registro.imagen;
+                    var fullnameImagen = nombre + '' + apellido + '/' + imagen;
+                    var fotoConsulta = '<?php echo constant('URL') ?>public/usuario/' +
+                        fullnameImagen;
+                    $(".id_usuario").append('<option value=' + id + '>' + fotoConsulta +
+                        '</option>');
+                    $('#foto_usuarioConsultar').attr(fotoConsulta);
+                });
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+
+    var mostrarUsuario = function () {
+        var tableUsuario = $('#dataTableUsuario').DataTable({
+            "processing": true,
+            "ajax": {
+                "url": "<?php echo constant('URL'); ?>usuario/readTable"
+            },
+            "columns": [{
+                "data": "id_usuario"
+            },
+            {
+                defaultContent: "",
+                'render': function (data, type, JsonResultRow, meta) {
+                    var fullnameImagen = JsonResultRow.nombreUsuario + '_' + JsonResultRow
+                        .apellidoPaternoUsuario + '/' + JsonResultRow.imagen;
+                    var urlImg = '<?php echo constant('URL'); ?>public/usuario/' + fullnameImagen;
+                    if (JsonResultRow.imagen == null || JsonResultRow.imagen ==
+                        '') {
+                        var urlImg = '<?php echo constant('URL'); ?>public/img/avatar.png';
+                    } else {
+                        var urlImg = '<?php echo constant('URL'); ?>public/usuario/' +
+                            fullnameImagen;
+                    }
+                    return '<center><img src="' + urlImg +
+                        '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;"/></center>';
+                }
+            },
+            {
+                defaultContent: "",
+                "render": function (data, type, full) {
+                    return full['nombreUsuario'];
+                }
+            },
+            {
+                defaultContent: "",
+                "render": function (data, type, full) {
+                    return full['apellidoPaternoUsuario'];
+                }
+            },
+            {
+                "data": "apellidoMaternoUsuario"
+            },
+            {
+                "data": "emailUsuario"
+            },
+            {
+                "data": "id_rol"
+            },
+            {
+                "defaultContent": `
+                        
+                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarUsuario' title="Editar Datos"><i class="fa fa-edit"></i></button>
+                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarUsuario' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
+                        <button class='eliminar btn btn-secondary' title="Generar Credencial"> <i class="fa fa-credit-card"> </i> </button>`
+            }
+            ],
+            responsive: true,
+            autoWidth: false,
+            language: idiomaDataTable,
+            lengthChange: true,
+            buttons: ['copy', 'excel', 'csv', 'pdf'],
+            dom: 'Bfltip'
+        });
+        obtenerdatosDT(tableUsuario);
+    }
+    var obtenerdatosDT = function (table) {
+        $('#dataTableUsuario tbody').on('click', 'tr', function () {
+            var data = table.row(this).data();
+            var idEliminar = $('#idEliminarUsuario').val(data.id_usuario);
+
+            var id_usuarioActualizar = $("#id_usuarioActualizar").val(data.id_usuario);
+            var nombreUsuarioActualizar = $("#nombreUsuarioActualizar").val(data.nombreUsuario);
+            var apellidoPaternoUsuarioActualizar = $("#apellidoPaternoUsuarioActualizar").val(data.apellidoPaternoUsuario);
+            var apellidoMaternoUsuarioActualizar = $("#apellidoMaternoUsuarioActualizar").val(data.apellidoMaternoUsuario);
+            var EmailUsuarioActualizar = $("#EmailUsuarioActualizar").val(data.emailUsuario);
+            var contraseñaUsuarioActualizar = $("#contraseñaUsuarioActualizar").val(data.passwordUsuario);
+            var calleUsuarioActualizar = $("#calleUsuarioActualizar").val(data.calleUsuario);
+            var estadoUsuarioActualizar = $("#estadoUsuarioActualizar").val(data.estadoUsuario);
+            var municipioUsuarioActualizar = $("#municipioUsuarioActualizar").val(data.municipioUsuario);
+            var coloniaUsuarioActualizar = $("#coloniaUsuarioActualizar").val(data.coloniaUsuario);
+            var codigopostalUsuarioActualizar = $("#codigopostalUsuarioActualizar").val(data.codigoPostalUsuario);
+            var rolUsuarioActualizar = $("#rolUsuarioActualizar").val(data.id_rol);
+            var imagenUsuarioActualizar = $("#imagenUsuarioActualizar").val(data.imagen);
+
+            var idConsultar = $('#id_usuarioConsultar').val(data.id_usuario);
+            var nombreUsuarioConsultar = $("#nombreUsuarioConsultar").val(data.nombreUsuario);
+            var apellidoPaternoUsuarioConsultar = $("#apellidoPaternoUsuarioConsultar").val(data.apellidoPaternoUsuario);
+            var apellidoMaternoUsuarioConsultar = $("#apellidoMaternoUsuarioConsultar").val(data.apellidoMaternoUsuario);
+            var emailUsuarioConsultar = $("#emailUsuarioConsultar").val(data.emailUsuario);
+            var calleUsuarioConsultar = $("#calleUsuarioConsultar").val(data.calleUsuario);
+            var estadoUsuarioConsultar = $("#estadoUsuarioConsultar").val(data.estadoUsuario);
+            var municipioUsuarioConsultar = $("#municipioUsuarioConsultar").val(data.municipioUsuario);
+            var coloniaUsuarioConsultar = $("#coloniaUsuarioConsultar").val(data.coloniaUsuario);
+            var codigopostalUsuarioConsultar = $("#codigoPostalUsuarioConsultar").val(data.codigoPostalUsuario);
+            var rolUsuarioConsultar = $("#rolUsuarioConsultar").val(data.id_rol);
+
+        });
+    }
+
+    var enviarFormularioRegistrar = function () {
+        $.validator.setDefaults({
+            submitHandler: function () {
+                var datos = $('#formRegistrarUsuario').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo constant('URL'); ?>usuario/insert",
+                    async: false,
+                    data: datos,
+                    success: function (data) {
+                        console.log("data", data)
+                        var id_usuario = data;
+                        var idusuario = id_usuario;
+                        var form_data = new FormData();
+                        imagen = $('#imagen').prop('files')[0];
+                        $urlImagenBasica =
+                            '<?php echo constant('URL'); ?>public/img/avatar.png';
+                        if ($('#imagen').val() == null) {
+                            imagen =
+                                $urlImagenBasica
+                        }
+                        var imagen = '<?php echo constant('URL'); ?>public/img/avatar.png';
+                        if ($('#imagen').val() != null) {
+                            imagen = $('#imagen').prop('files')[0];
+                        } else {
+                            imagen = "images/default-profile.jpg";
+                        }
+                        form_data.append('imagen', imagen);
+                        form_data.append('nombreUsuario', document.getElementById(
+                            'nombreUsuario').value);
+                        form_data.append('apellidoPaternoUsuario', document.getElementById(
+                            'apellidoPaternoUsuario').value);
+                        form_data.append('apellidoMaternoUsuario', document.getElementById(
+                            'apellidoMaternoUsuario').value);
+                        form_data.append('correoUsuario', document.getElementById(
+                            'correoUsuario').value);
+                        form_data.append('password', document.getElementById(
+                            'password').value);
+
+                        form_data.append('calleUsuario', document.getElementById(
+                            'calleUsuario').value);
+                        form_data.append('estadoUsuario', document.getElementById(
+                            'estadoUsuario').value);
+                        form_data.append('municipioUsuario', document.getElementById(
+                            'municipioUsuario').value);
+                        form_data.append('coloniaUsuario', document.getElementById(
+                            'coloniaUsuario').value);
+                        form_data.append('codigoPostalUsuario', document.getElementById(
+                            'codigoPostalUsuario').value);
+                        form_data.append('rolUsuario', document.getElementById(
+                            'rolUsuario').value);
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo constant('URL'); ?>usuario/insert",
+                            async: false,
+                            dataType: 'text',
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: form_data,
+                            success: function (data) {
+                                if (data.trim() == 'ok') {
+                                    Swal.fire(
+                                        "¡Éxito!",
+                                        "El usuario ha sido registrado de manera correcta",
+                                        "success"
+                                    ).then(function () {
+                                        window.location =
+                                            "<?php echo constant('URL'); ?>usuario";
+                                    })
+                                } else {
+                                    Swal.fire(
+                                        "¡Error!",
+                                        "Ha ocurrido un error al registrar el usuario." +
+                                        data,
+                                        "error"
+                                    );
+                                }
+                            },
+                        });
+
+                    },
+                });
+            }
+        });
+        $('#formRegistrarUsuario').validate({
+            rules: {
+                nombreUsuario: {
+                    required: true
+                },
+                apellidoPaternoUsuario: {
+                    required: true
+                },
+                apellidoMaternoUsuario: {
+                    required: true
+                },
+                correoUsuario: {
+                    required: true
+                },
+                password: {
+                    required: true
+                },
+                imagen: {
+                    required: true
+                },
+                calleUsuario: {
+                    required: true
+                },
+                estadoUsuario: {
+                    required: true
+                },
+                municipioUsuario: {
+                    required: true
+                },
+                coloniaUsuario: {
+                    required: true
+                },
+                codigoPostalUsuario: {
+                    required: true
+                },
+                rolUsuario: {
+                    required: true
+                },
+            },
+            messages: {
+                nombreUsuario: {
+                    required: "Ingrese el nombre del usuario"
+                },
+                apellidoPaternoUsuario: {
+                    required: "Ingrese apellido paterno"
+                },
+                apellidoMaternoUsuario: {
+                    required: "Ingrese apellido materno"
+                },
+                correoUsuario: {
+                    required: "Ingrese correo del usuario"
+                },
+                password: {
+                    required: "Ingrese contraseña"
+                },
+                imagen: {
+                    required: "Ingrese una imagen"
+                },
+                calleUsuario: {
+                    required: "Ingrese calle"
+                },
+                estadoUsuario: {
+                    required: "Ingrese Estado "
+                },
+                municipioUsuario: {
+                    required: "Ingrese Municipio"
+                },
+                coloniaUsuario: {
+                    required: "Ingrese colonia"
+                },
+                codigoPostalUsuario: {
+                    required: "Ingrese Codigo Postal"
+                },
+                rolUsuario: {
+                    required: "Ingrese rol"
+                },
+
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    }
+
+    var datosActualizar = null;
+    $('#formActualizarUsuario').on('submit', function (e) {
+        datosActualizar = new FormData(this);
+    });
+    var enviarFormularioActualizar = function () {
+        $.validator.setDefaults({
+            submitHandler: function (e) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo constant('URL'); ?>usuario/update",
+                    data: datosActualizar,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function () {
+                        $('.submit').attr("disabled", "disabled");
+                        $('#formActualizarUsuario').css("opacity", ".5");
+                    },
+                    success: function (data) {
+                        console.log("data ", data)
+                        if (data.trim() == 'ok') {
+                            Swal.fire(
+                                "¡Éxito!",
+                                "El  usuario ha sido actualizado de manera correcta",
+                                "success"
+                            ).then(function () {
+                                window.location =
+                                    "<?php echo constant('URL'); ?>usuario";
+                            })
+                        } else {
+                            Swal.fire(
+                                "¡Error!",
+                                "Ha ocurrido un error al actualizar el usuario." + data,
+                                "error"
+                            );
+                        }
+                    },
+                });
+            }
+        });
+        $('#formActualizarUsuario').validate({
+            rules: {
+                id_usuarioActualizar: {
+                    required: true,
+                    number: true
+                },
+                nombreUsuarioActualizar: {
+                    required: true
+                },
+                apellidoPaternoUsuarioActualizar: {
+                    required: true
+                },
+                apellidoMaternoUsuarioActualizar: {
+                    required: true
+                },
+                EmailUsuarioActualizar: {
+                    required: true
+                },
+                contraseñaUsuarioActualizar: {
+                    required: true
+                },
+                imagenUsuarioActualizar: {
+                    required: true
+                },
+                calleUsuarioActualizar: {
+                    required: true
+                },
+                estadoUsuarioActualizar: {
+                    required: true
+                },
+                municipioUsuarioActualizar: {
+                    required: true
+                },
+                coloniaUsuarioActualizar: {
+                    required: true
+                },
+                codigopostalUsuarioActualizar: {
+                    required: true
+                },
+                rolUsuarioActualizar: {
+                    required: true
+                }
+            },
+            messages: {
+                id_usuarioActualizar: {
+                    required: "Ingrese id"
+                },
+
+                nombreUsuarioActualizar: {
+                    required: "Ingrese el nombre del usuario"
+                },
+                apellidoPaternoUsuarioActualizar: {
+                    required: "Ingrese apellido paterno"
+                },
+                apellidoMaternoUsuarioActualizar: {
+                    required: "Ingrese apellido materno"
+                },
+                EmailUsuarioActualizar: {
+                    required: "Ingrese correo del usuario"
+                },
+                contraseñaUsuarioActualizar: {
+                    required: "Ingrese contraseña"
+                },
+                imagenUsuarioActualizar: {
+                    required: "Ingrese una imagen"
+                },
+                calleUsuarioActualizar: {
+                    required: "Ingrese calle"
+                },
+                estadoUsuarioActualizar: {
+                    required: "Ingrese Estado"
+                },
+                municipioUsuarioActualizar: {
+                    required: "Ingrese Municipio"
+                },
+                coloniaUsuarioActualizar: {
+                    required: "Ingrese el nombre del cliente"
+                },
+                codigopostalUsuarioActualizar: {
+                    required: "Ingrese Codigo Postal"
+                },
+                rolUsuarioActualizar: {
+                    required: "Ingrese rol"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    }
+
+    var eliminarRegistro = function () {
+        $("#formEliminarUsuario").submit(function (event) {
+            event.preventDefault();
+            var datos = $('#formEliminarUsuario').serialize();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo constant('URL'); ?>usuario/delete",
+                    data: datos,
+                    success: function (data) {
+                        if (data.trim() == 'ok') {
+                            Swal.fire(
+                                "¡Éxito!",
+                                "El Usuario ha sido eliminado correctamente",
+                                "success"
+                            ).then(function () {
+                                window.location = "<?php echo constant('URL'); ?>usuario";
+                            })
+                        } else {
+                            Swal.fire(
+                                "¡Error!",
+                                "Ha ocurrido un error al eliminar el usuario. " + data,
+                                "error"
+                            );
+                        }
+                    },
+                });
+            });
+        }
+</script>

@@ -264,51 +264,51 @@ $menu->header('rol');
         </div>
     </div>
 </div>
-<!--***************************************Modal permisos Rol******************************************-->
-<div class="modal fade" id="modalPermisoRol" tabindex="-1" role="dialog" aria-labelledby="modalPermisoRol"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="card-success">
-                <div class="card-header">
-                    <div class="d-sm-flex align-items-center justify-content-between ">
-                        <h4 class="card-title">Permisos Rol</h4>
-                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
-                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <!---->
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form" id="formPermisoRol" name="formPermisoRol" method="post">
-                    <div class="card-body">
-                        <table id="dataTablePermiso" name="dataTablePermiso" class="table table-striped table-bordered"
-                            style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Módulo</th>
-                                    <th>Ver</th>
-                                    <th>Crear</th>
-                                    <th>Actualizar</th>
-                                    <th>Eliminar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
 
-                            </tbody>
-                        </table>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
-                        </div>
+<!--***************************************Modal permisos Rol******************************************-->
+<div class="modal fade " id="modalPermisoRol" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title h4">Permisos Roles de Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <form action="" id="formPermisos" name="formPermisos">
+                            <input type="hidden" id="idrol" name="idrol" required="">
+                            <div class="table-responsive">
+                                <table class="table" id="dataTablePermiso">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Módulo</th>
+                                            <th>Crear</th>
+                                            <th>Ver</th>
+                                            <th>Actualizar</th>
+                                            <th>Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success"
+                                    onclick="enviarFormularioRegistrarPermiso">Guardar</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <?php
 $menu->footer();
 ?>
@@ -319,13 +319,27 @@ $menu->footer();
         enviarFormularioRegistrar();
         enviarFormularioActualizar();
         eliminarRegistro();
+        mostrarModulos();
+        enviarFormularioRegistrarPermiso();
     });
 
     var mostrarRoles = function () {
         var tableRol = $('#dataTableRol').DataTable({
             "processing": true,
             "ajax": {
-                "url": "<?php echo constant('URL'); ?>rol/read"
+                "url": "<?php echo constant('URL'); ?>rol/read",
+                dataSrc: function (json) {
+                    let customData = [];
+                    json.data.forEach(element => {
+                        customData = [...customData, {
+                            ...element, option: `
+                              <button class='permiso btn btn-secondary' data-rolId="${element.id_rol}" title="Permisos"><i class="fa fa-key"></i></i></button>
+                              <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleRol' title="Ver Detalles"><i class="fa fa-eye"></i></button>
+                              <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarRol' title="Editar Datos"><i class="fa fa-edit"></i></button>
+                              <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarRol' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>`}]
+                    })
+                    return customData;
+                }
             },
             "columns": [{
                 "data": "id_rol"
@@ -337,11 +351,7 @@ $menu->footer();
                 "data": "descripcion"
             },
             {
-                data: null,
-                "defaultContent": `
-                <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleRol' title="Ver Detalles"><i class="fa fa-eye"></i></button>
-                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarRol' title="Editar Datos"><i class="fa fa-edit"></i></button>
-                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarRol' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>`
+                data: "option",
             }
             ],
             responsive: true,
@@ -352,6 +362,125 @@ $menu->footer();
             dom: 'Bfltip'
         });
         obtenerdatosDT(tableRol);
+    }
+
+    var mostrarModulos = function () {
+        $.ajax({
+            url: "<?php echo constant('URL'); ?>permisosRol/readModulo",
+            type: 'GET',
+            DataType: 'json',
+            success: function (data) {
+                const { data: ModuleArray } = JSON.parse(data);
+                $(".permiso").on("click", function (e) {
+                    $.ajax({
+                        url: "<?php echo constant('URL'); ?>permisosRol/readPermiso",
+                        type: 'POST',
+                        data: "rolId=" + ($(this).attr("data-rolId")),
+                        success: function (data) {
+                            const { data: permisoArray } = JSON.parse(data);
+                            let txt = "";
+                            ModuleArray.forEach((element, index) => {
+                                const permisoFind = permisoArray.find(item => item.id_modulo === element.id_modulo);
+                                let checkboxC = "";
+                                let checkboxR = "";
+                                let checkboxU = "";
+                                let checkboxD = "";
+                                if (permisoFind) {
+                                    checkboxC = permisoFind.c == '1' ? 'ON' : 'OFF';
+                                    checkboxR = permisoFind.r == '1' ? 'ON' : 'OFF';
+                                    checkboxU = permisoFind.u == '1' ? 'ON' : 'OFF';
+                                    checkboxD = permisoFind.d == '1' ? 'ON' : 'OFF';
+                                }
+                                txt += `<tr>
+                                    <td>${element.id_modulo}
+                                    <input type="hidden" name="idmodulo" value="${element.id_modulo}" required >
+                                    </td>
+                                    <td>${element.nombre_modulo}</td>
+                                    <td>
+                                        <div class="toggle-flip">
+                                        <label>
+                                            <input type="checkbox" data-moduloId="C${element.id_modulo}"  name="c" class="checkPermiso" data-permiso="C" ${checkboxC == 'ON' ? 'checked' : ''}>
+                                            <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                                        </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="toggle-flip">
+                                        <label>
+                                            <input type="checkbox" data-moduloId="R${element.id_modulo}"   name="r" class="checkPermiso" data-permiso="R" ${checkboxR == 'ON' ? 'checked' : ''}>
+                                            <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                                        </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="toggle-flip">
+                                        <label>
+                                            <input type="checkbox" data-moduloId="U${element.id_modulo}"  name="u" class="checkPermiso" data-permiso="U" ${checkboxU == 'ON' ? 'checked' : ''}>
+                                            <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                                        </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="toggle-flip">
+                                        <label>
+                                            <input type="checkbox" data-moduloId="D${element.id_modulo}"s name="d" class="checkPermiso" data-permiso="D" ${checkboxD == 'ON' ? 'checked' : ''}>
+                                            <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                                        </label>
+                                        </div>
+                                    </td>
+                                    </tr>`;
+                            });
+                            $("#dataTablePermiso tbody").html(txt);
+                        }
+                    });
+                    $('#modalPermisoRol').modal('show');
+                });
+                $(".checkPermiso").on("click", function () {
+                });
+            }
+        });
+    }
+
+    var enviarFormularioRegistrarPermiso = function () {
+        $('#formPermisos').submit(function (e) {
+            e.preventDefault();
+            var datos = $('#formPermisos').serializeArray();
+            const [rolObject, ...data] = datos;
+            const objToSend = { idrol: rolObject.value, modules: [] };
+            let auxIdModulo = '';
+            data.forEach(({ name, value }) => {
+                if (name === 'idmodulo') {
+                    objToSend['modules'] = [...objToSend['modules'], { idModule: value }];
+                    auxIdModulo = value;
+                } else {
+                    objToSend['modules'] = objToSend['modules'].map((item) =>
+                        item.idModule === auxIdModulo ? { ...item, [name]: value } : item
+                    );
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "<?php echo constant('URL'); ?>permisosRol/setPermisos",
+                data: JSON.stringify(objToSend),
+                success: function (data) {
+                    if (data.includes('ok')) {
+                        Swal.fire(
+                            "¡Éxito!",
+                            "Los permisos se asignaron correctamente",
+                            "success"
+                        ).then(function () {
+                            window.location = "<?php echo constant('URL'); ?>rol";
+                        });
+                    } else {
+                        Swal.fire(
+                            "¡Error!",
+                            "Ha ocurrido un error al registrar los permisos. " + data,
+                            "error"
+                        );
+                    }
+                },
+            });
+        });
     }
 
     var obtenerdatosDT = function (table) {
@@ -366,6 +495,8 @@ $menu->footer();
             var idRolConsultar = $("#idRolConsultar").val(data.id_rol);
             var nombreRolConsultar = $("#nombreRolConsultar").val(data.nombreRol);
             var descripcionRolConsulta = $("#descripcionRolConsultar").val(data.descripcion);
+
+            var idpermiso = $('#idrol').val(data.id_rol);
         });
     }
 
@@ -518,4 +649,3 @@ $menu->footer();
         });
     }
 </script>
-
