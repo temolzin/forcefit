@@ -8,12 +8,7 @@ class Usuario extends Controller
 
 	function index()
 	{
-		session_start();
-		if (isset($_SESSION['login'])) {
-			$this->view->render('usuario/index');
-		} else {
-			header('location: ' . constant('URL'));
-		}
+		$this->view->render('usuario/index');
 	}
 
 	function insert()
@@ -173,14 +168,6 @@ class Usuario extends Controller
 		$this->loadModel('UsuarioDAO');
 		$usuarioDAO = new UsuarioDAO();
 		$usuarioDAO->login($data);
-	}
-
-	function logout()
-	{
-		session_start();
-		session_unset();
-		session_destroy();
-		header('location: ' . constant('URL'));
 	}
 }
 ?>

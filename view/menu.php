@@ -122,7 +122,7 @@ class Menu
 
                                                 <a class="dropdown-item" href="' . constant('URL') . 'aboutUs"><i class="fa fa-info-circle pull-right"></i>Acerca de</a>
 
-                                                <a class="dropdown-item" href="' . constant('URL') . 'Usuario/logout"><i class="fa fa-sign-out pull-right"></i>Cerrar sesión</a>
+                                                <a class="dropdown-item" href="' . constant('URL') . 'logout.php"><i class="fa fa-sign-out pull-right"></i>Cerrar sesión</a>
                                                 
                                             </div>
                                         </li>
