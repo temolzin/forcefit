@@ -1,4 +1,8 @@
-<?php
+<?php session_start();
+if (!isset($_SESSION['login'])) {
+    header('location: ' . constant('URL'));
+ }
+ 
 require 'view/menu.php';
 $menu = new Menu();
 $menu->header('dashboard');
