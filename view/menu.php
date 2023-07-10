@@ -7,19 +7,30 @@ class Menu
         $foto = $_SESSION['imagen'];
         $appaterno = $_SESSION['apellidoPaternoUsuario'];
         $fotoruta = constant('URL') . 'public/usuario/' . $nombre . '_' . $appaterno  . '/' . $foto;
+        if ($foto != null){
+            $fotoruta ='public/usuario/' . $nombre . '_' . $appaterno  . '/' . $foto;
+            if(!file_exists($fotoruta)){
+              $fotoruta= constant('URL') . 'public/img/avatar.png';
+            }else{
+                $fotoruta = constant('URL') . 'public/usuario/' . $nombre . '_' . $appaterno  . '/' . $foto;
+            }
+          }else{
+            $fotoruta= constant('URL') . 'public/img/avatar.png';
+          }
         $menuElements ='';
-
+        $claseMenu= "nav child_menu";
+        $claseSpan= "fa fa-chevron-down";
         foreach ($_SESSION['permisos'] as $permiso) {
             if ($permiso["r"] === 1) {
-                $menuElements .= "<li><a href=" . constant('URL') . $permiso["modulo"] . "><i class='" . $permiso["icono"] . "'></i>" . $permiso["modulo"];
+                $menuElements .= !empty($permiso['submodulos']) ? "<li><a> <i class='" . $permiso["icono"] . "'></i>" . $permiso["modulo"] ."<span class='".$claseSpan."'></span></a>":  "<li><a href=" .constant('URL') .strtolower($permiso["modulo"] ). "><i class='" . $permiso["icono"] . "'></i>" . $permiso["modulo"] . "</a>"  ;
                 if (!empty($permiso['submodulos'])) {
-                    $menuElements .= "<ul>";
+                    $menuElements .= "<ul class='".$claseMenu."'>";
                     foreach ($permiso['submodulos'] as $submodulo) {
-                        $menuElements .= "<li><a href=" . constant('URL') . $submodulo['submodulo'] . "><i class='" . $submodulo['subicono'] . "'></i>" . $submodulo['submodulo'] . "</a></li>";
+                        $menuElements .= "<li><a href=" . constant('URL') .strtolower($submodulo['submodulo']). ">" . $submodulo['submodulo'] ."</a></li>";
                     }
                     $menuElements .= "</ul>";
                 }
-                $menuElements .= "</a></li>";
+                $menuElements .= "</li>";
             }
         }
         echo '<!DOCTYPE html>
