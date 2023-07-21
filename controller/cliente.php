@@ -160,7 +160,7 @@ class Cliente extends Controller
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();
-		$clienteDAO = $clienteDAO->getDatos($cliente, $id_cliente);
+		$clienteDAO = $clienteDAO->readFullDataById($cliente, $id_cliente);
 
 		$css = file_get_contents('./public/css/credencial/styles.css');
 		$mpdf = new \Mpdf\Mpdf([ 'margin_left' => 5, 'margin_right' => 20,'margin_top' => 5,'margin_bottom' => 20,]);
@@ -171,7 +171,6 @@ class Cliente extends Controller
 		$plantillaBack= getPlantillaBack($cliente);
 		$mpdf->WriteHTML($plantillaBack,\Mpdf\HTMLParserMode::HTML_BODY);
 		$mpdf->Output();
-		//$mpdf->Output('credencial.pdf', 'D');
 	}
 }
 ?>
