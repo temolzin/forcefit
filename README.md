@@ -26,5 +26,6 @@ git clone https://github.com/temolzin/forcefit.git
 - Para ejecutarlo inicializas el servidor, si tienes **xampp** activas apache y MySQL
 - Para la instalación de la Base de Datos encontrarás una carpeta con el nombre de **database** la cual contiene el archivo con la base de datos.
 - Posteriormente instalas la base de datos.
+- Para que el proyecto funcione correctamente ejecuta este comando en la carpeta raíz **composer install**
 
 ### End
