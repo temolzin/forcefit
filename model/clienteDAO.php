@@ -113,7 +113,7 @@ class ClienteDAO extends Model implements CRUD
         return $objCliente;
     }
 
-    public function getDatos(&$cliente, $id_cliente)
+    public function readFullDataById(&$cliente, $id_cliente)
     {
         $query = $this->db->conectar()->prepare("SELECT c.nombre_cliente, c.apellido_paterno_cliente, c.apellido_materno_cliente, c.municipio_cliente, c.colonia_cliente, c.calle_cliente, c.codigo_postal_cliente, c.numero_cliente, c.imagen_cliente, g.nombre_gimnasio, g.telefono, g.imagen
         FROM cliente AS c INNER JOIN gimnasio g ON c.id_gimnasio = g.id_gimnasio WHERE c.id_cliente =:id_cliente");
