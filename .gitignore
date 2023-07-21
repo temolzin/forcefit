@@ -2,3 +2,4 @@ config/config.php
 public/cliente
 public/gimnasio
 public/usuario
+vendor/

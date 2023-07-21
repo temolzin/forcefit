@@ -511,11 +511,23 @@ $menu->footer();
     }
 
     var mostrarCliente = function () {
-        var tableCliente = $('#dataTableCliente').DataTable({
-            "processing": true,
-            "ajax": {
-                "url": "<?php echo constant('URL'); ?>cliente/readTable"
-            },
+    var tableCliente = $('#dataTableCliente').DataTable({
+        "processing": true,
+        "ajax": {
+            "url": "<?php echo constant('URL'); ?>cliente/readTable",
+            dataSrc: function (json) {
+                let customData = [];
+                json.data.forEach(element => {
+                    customData = [...customData, {
+                        ...element, option: `
+                        <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleCliente' title="Ver Detalles"><i class="fa fa-eye"></i></button>
+                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarCliente' title="Editar Datos"><i class="fa fa-edit"></i></button>
+                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarCliente' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
+                        <a class='eliminar btn btn-secondary' href="<?php echo constant('URL'); ?>cliente/generarGafete?id_cliente=${element.id_cliente}" title="Generar Credencial"> <i class="fa fa-credit-card"> </i> </a>`}]
+                })
+                return customData;
+            }
+        },
             "columns": [{
                 "data": "id_cliente"
             },
@@ -555,11 +567,7 @@ $menu->footer();
                 "data": "numero_cliente"
             },
             {
-                data: null,
-                "defaultContent": `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleCliente' title="Ver Detalles"><i class="fa fa-eye"></i></button>
-                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarCliente' title="Editar Datos"><i class="fa fa-edit"></i></button>
-                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarCliente' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
-                        <button class='eliminar btn btn-secondary' title="Generar Credencial"> <i class="fa fa-credit-card"> </i> </button>`
+                data: "option",
             }
             ],
             responsive: true,
