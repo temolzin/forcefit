@@ -147,6 +147,29 @@ class Cliente extends Controller
 		}
 		echo json_encode($obj);
 	}
+	function generarGafete()
+	{
+        require_once( './view/cliente/credencial/plantilla.php');
+		require_once __DIR__ . '/../vendor/autoload.php';
+
+		$cliente = array();
+		$id_cliente = $_GET['id_cliente'];
+		require 'model/clienteDAO.php';
+		$this->loadModel('ClienteDAO');
+		$clienteDAO = new ClienteDAO();
+		$clienteDAO = $clienteDAO->getDatos($cliente, $id_cliente);
+
+		$css = file_get_contents('./public/css/credencial/styles.css');
+		$mpdf = new \Mpdf\Mpdf([ 'margin_left' => 5, 'margin_right' => 20,'margin_top' => 5,'margin_bottom' => 20,]);
+		$plantillaFront= getPlantillaFront($cliente);
+		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+		$mpdf->writeHtml($plantillaFront,\Mpdf\HTMLParserMode::HTML_BODY);
+		$mpdf->AddPage();
+		$plantillaBack= getPlantillaBack($cliente);
+		$mpdf->WriteHTML($plantillaBack,\Mpdf\HTMLParserMode::HTML_BODY);
+		$mpdf->Output();
+		//$mpdf->Output('credencial.pdf', 'D');
+	}
 }
 ?>
 
