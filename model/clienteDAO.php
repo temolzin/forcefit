@@ -113,6 +113,32 @@ class ClienteDAO extends Model implements CRUD
         return $objCliente;
     }
 
+    public function readDataByIdUsuario($id_usuario)
+    {
+        require_once 'clienteDTO.php';
+        $query = "SELECT * FROM cliente
+        WHERE id_cliente IN (
+            SELECT id_cliente FROM cliente
+            WHERE id_gimnasio IN(SELECT DISTINCT id_gimnasio FROM usuario_gimnasio
+            WHERE id_usuario=".$id_usuario."))";
+        $objCliente = array();
+        foreach ($this->db->consultar($query) as $key => $value) {
+            $cliente = new ClienteDTO();
+            $cliente->id_cliente = $value['id_cliente'];
+            $cliente->nombre_cliente = $value['nombre_cliente'];
+            $cliente->apellido_paterno_cliente = $value['apellido_paterno_cliente'];
+            $cliente->apellido_materno_cliente = $value['apellido_materno_cliente'];
+            $cliente->municipio_cliente = $value['municipio_cliente'];
+            $cliente->colonia_cliente = $value['colonia_cliente'];
+            $cliente->calle_cliente = $value['calle_cliente'];
+            $cliente->codigo_postal_cliente = $value['codigo_postal_cliente'];
+            $cliente->numero_cliente = $value['numero_cliente'];
+            $cliente->imagen_cliente = $value['imagen_cliente'];
+            array_push($objCliente, $cliente);
+        }
+        return $objCliente;
+    }
+
     public function getDatos(&$cliente, $id_cliente)
     {
         $query = $this->db->conectar()->prepare("SELECT c.nombre_cliente, c.apellido_paterno_cliente, c.apellido_materno_cliente, c.municipio_cliente, c.colonia_cliente, c.calle_cliente, c.codigo_postal_cliente, c.numero_cliente, c.imagen_cliente, g.nombre_gimnasio, g.telefono, g.imagen
