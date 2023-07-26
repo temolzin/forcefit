@@ -1,14 +1,14 @@
 ## Bienvedido al repositorio de forcefit 🏋️‍
 ![](https://github.com/temolzin/forcefit/blob/master/public/img/forcefit.png)
 
-##Forecefit
+## Forcefit
 Sistema para la administración y gestón de gimnasios, que ayuda al gimnasio a tener un control de usuario y de esta manera ofrecer servicios de alta calidad y una mejor experiencia a los usuarios.
 
 ## Preview
 ![](https://github.com/temolzin/forcefit/blob/master/public/img/preview1.png)
 ![](https://github.com/temolzin/forcefit/blob/master/public/img/preview2.png)
 
-###requisitos previos a la instalacion📋
+### requisitos previos a la instalacion📋
 Para ejecutar este proyecto necesitas.
 
 - Servidor PHP(xampp, wamp, lamp)

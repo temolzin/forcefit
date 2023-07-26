@@ -178,7 +178,7 @@ class UsuarioDAO extends Model implements CRUD
         $query = "SELECT p.id_rol, p.id_modulo, m.nombre_modulo AS modulo, m.icono, p.c, p.r, p.u, p.d, s.id_submodulo, s.nombre_submodulo AS submodulo, s.icono AS subicono
         FROM permiso p
         INNER JOIN modulo m ON p.id_modulo = m.id_modulo
-        LEFT JOIN submodulo s ON s.id_modulo = m.id_modulo WHERE p.id_rol = " . $idrol . "";
+        LEFT JOIN submodulo s ON s.id_modulo = m.id_modulo WHERE p.id_rol = " . $idrol . " ORDER BY m.posicion";
         $sql = $this->db->consultar($query);
         $arrPermisos = array();
         for ($i = 0; $i < count($sql); $i++) {
