@@ -136,8 +136,6 @@ class Cliente extends Controller
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();
-		$id_usuario= $_POST['id_usuario'];
-		$id_usuario= $_POST['id_usuario'];
 		$clienteDAO = $clienteDAO->readDataByIdUsuario($id_usuario);
 
 		$obj = null;

@@ -116,11 +116,9 @@ class ClienteDAO extends Model implements CRUD
     public function readDataByIdUsuario($id_usuario)
     {
         require_once 'clienteDTO.php';
-        $query = "SELECT * FROM cliente
-        WHERE id_cliente IN (
-            SELECT id_cliente FROM cliente
-            WHERE id_gimnasio IN(SELECT DISTINCT id_gimnasio FROM usuario_gimnasio
-            WHERE id_usuario=".$id_usuario."))";
+        $query = "SELECT c.* FROM cliente AS c
+        INNER JOIN usuario_gimnasio AS ug ON c.id_gimnasio = ug.id_gimnasio
+        WHERE ug.id_usuario = ".$id_usuario."";
         $objCliente = array();
         foreach ($this->db->consultar($query) as $key => $value) {
             $cliente = new ClienteDTO();
