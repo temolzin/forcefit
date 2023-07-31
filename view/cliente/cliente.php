@@ -511,10 +511,15 @@ $menu->footer();
     }
 
     var mostrarCliente = function () {
+    var id_usuario = "<?php echo $_SESSION['id_usuario']; ?>"
     var tableCliente = $('#dataTableCliente').DataTable({
         "processing": true,
         "ajax": {
+            type: "POST",
             "url": "<?php echo constant('URL'); ?>cliente/readTable",
+            data: {
+                id_usuario: id_usuario
+            },
             dataSrc: function (json) {
                 let customData = [];
                 json.data.forEach(element => {

@@ -132,10 +132,11 @@ class Cliente extends Controller
 
 	function readTable()
 	{
+		$id_usuario= $_POST['id_usuario'];
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();
-		$clienteDAO = $clienteDAO->read();
+		$clienteDAO = $clienteDAO->readDataByIdUsuario($id_usuario);
 
 		$obj = null;
 		if (is_array($clienteDAO) || is_object($clienteDAO)) {
