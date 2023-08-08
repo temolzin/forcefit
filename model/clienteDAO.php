@@ -149,6 +149,22 @@ class ClienteDAO extends Model implements CRUD
         $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
         $cliente = $resultados[0];
     }
+
+    public function readClientes($id_usuario,$q)
+    {
+        require_once 'clienteDTO.php';
+        $query = "SELECT c.id_cliente, c.nombre_cliente, c.apellido_paterno_cliente FROM cliente AS c
+        INNER JOIN usuario_gimnasio AS ug ON c.id_gimnasio = ug.id_gimnasio
+        WHERE ug.id_usuario = ".$id_usuario." ";
+            if (!empty($q)) {
+                $query .= " AND (c.nombre_cliente LIKE '%".$q."%' OR c.apellido_paterno_cliente LIKE '%".$q."%')";
+            }
+        $objCliente = array();
+        foreach ($this->db->consultar($query) as $key => $value) {
+            array_push($objCliente, array("id"=>$value['id_cliente'],"text" => array($value['nombre_cliente'] .' '. $value['apellido_paterno_cliente'])));
+        }
+        return $objCliente;
+    }
 }
 ?>
 
