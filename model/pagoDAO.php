@@ -8,7 +8,7 @@ class PagoDAO extends Model implements CRUD
 
     public function insert($data)
     {
-        $query = $this->db->conectar()->prepare('INSERT INTO pago_plan_gym_cliente (`id_pago`, `cantidad_pago`, `fecha_hora_pago`, `vencimiento`, `id_cliente`, `id_planGym`, `tipo_dePago`) 
+        $query = $this->db->conectar()->prepare('INSERT INTO pago_plan_gym_cliente (`id_pago`, `cantidad_pago`, `fecha_hora_pago`, `vencimiento`, `id_cliente`, `id_planGym`, `tipo_Pago`)
             values (null, 
             :cantidadPago,
             NOW(), 
@@ -36,7 +36,7 @@ class PagoDAO extends Model implements CRUD
             vencimiento = :vencimientoPago, 
             id_cliente = :idCliente, 
             id_planGym = :idPlanGym, 
-            tipo_dePago = :tipoPago 
+            tipo_Pago = :tipoPago
             WHERE id_pago = :id_pago');
         $query->execute([
             ':id_pago' => $data['id_PagoActualizar'],
@@ -58,21 +58,28 @@ class PagoDAO extends Model implements CRUD
 
     public function read()
     {
+
+    }
+
+    public function readPagoByIdgimnasio($id_gimnasio)
+    {
         require_once 'pagoDTO.php';
-        $query = "SELECT pg.id_pago, pg.cantidad_pago, pg.fecha_hora_pago, pg.vencimiento, c.nombre_cliente, plg.nombrePlanGym, pg.tipo_dePago
+        $query ="SELECT pg.id_pago, plg.nombrePlanGym, c.nombre_cliente, pg.cantidad_pago, pg.fecha_hora_pago, pg.vencimiento, pg.tipo_Pago
         FROM pago_plan_gym_cliente pg
-        JOIN cliente c ON pg.id_cliente = c.id_cliente
-        JOIN plan_gym plg ON pg.id_planGym = plg.id_planGym";
+        INNER JOIN cliente c ON pg.id_cliente = c.id_cliente
+        INNER JOIN usuario_gimnasio ug ON c.id_gimnasio = ug.id_gimnasio
+        INNER JOIN plan_gym plg ON pg.id_planGym = plg.id_planGym
+        WHERE ug.id_gimnasio = ".$id_gimnasio."";
         $objPago = array();
         foreach ($this->db->consultar($query) as $key => $value) {
             $pago = new PagoDTO();
             $pago->id_pago = $value['id_pago'];
+            $pago->nombrePlanGym = $value['nombrePlanGym'];
+            $pago->nombre_cliente = $value['nombre_cliente'];
             $pago->cantidad_pago = $value['cantidad_pago'];
             $pago->fecha_hora_pago = $value['fecha_hora_pago'];
             $pago->vencimiento = $value['vencimiento'];
-            $pago->nombre_cliente = $value['nombre_cliente'];
-            $pago->nombrePlanGym = $value['nombrePlanGym'];
-            $pago->tipo_dePago = $value['tipo_dePago'];
+            $pago->tipo_Pago = $value['tipo_Pago'];
             $objPago['data'][] = $pago;
         }
         

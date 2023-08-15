@@ -71,28 +71,24 @@ class Pago extends Controller
 		$pagoDAO = $pagoDAO->read();
     }
 
+	function readPagoByIdgimnasio()
+    {
+		$id_gimnasio = $_GET['id_gimnasio'];
+        require 'model/pagoDAO.php';
+		$this->loadModel('PagoDAO');
+		$pagoDAO = new PagoDAO();
+		$pagoDAO = $pagoDAO->readPagoByIdgimnasio($id_gimnasio);
+    }
+
     function readClientes()
 	{
-		$q =$_GET["q"];
 		$id_usuario= $_GET["id_user"];
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();
-		$clienteDAO = $clienteDAO->readClientes($id_usuario,$q);
-		$data = array("results" =>$clienteDAO);
-		header("Content-Type: application/json"); echo json_encode($data);
+		$clienteDAO = $clienteDAO->readClientes($id_usuario);
+        echo json_encode($clienteDAO);
 		
-	}
-
-    function readPlanGym()
-	{
-		
-		require 'model/planGymDAO.php';
-		$this->loadModel('PlanGymDAO');
-		$planGymDAO = new PlanGymDAO();
-		$planGymDAO = $planGymDAO->readPlanGym();
-		$data = array("results" =>$planGymDAO);
-		header("Content-Type: application/json"); echo json_encode($data);
 	}
 
  

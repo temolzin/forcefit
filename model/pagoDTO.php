@@ -7,7 +7,7 @@ class PagoDTO implements JsonSerializable
     private $vencimiento;
     private $id_cliente;
     private $id_planGym;
-    private $tipo_dePago;
+    private $tipo_Pago;
     private $nombre_cliente;
     private $nombrePlanGym;
     

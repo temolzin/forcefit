@@ -31,11 +31,11 @@ $menu->header('Pago');
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>plan Gimnasio</th>
+                                            <th>Cliente</th>
                                             <th>Cantidad</th>
                                             <th>Fecha y hora de pago</th>
-                                            <th>Vencimiento</th>
-                                            <th>Cliente</th>
-                                            <th>plan Gimnasio</th>
+                                            <th>Fecha de vencimiento</th>
                                             <th>Forma de pago</th>
                                             <th>Opciones</th>
                                         </tr>
@@ -76,34 +76,38 @@ $menu->header('Pago');
                                 </div>
                             </div>
                             <div class="card-body">
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Cantidad (*)</label>
-                                            <input type="text" class="form-control" id="cantidadPago"
-                                                name="cantidadPago" placeholder="cantidad del Pago" />
+                                <div class="col-lg-4">
+                                    <label>Cantidad (*)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="cantidadPago" name="cantidadPago" placeholder="cantidad del Pago">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">.00</span>
                                         </div>
                                     </div>
+                                </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label>Fecha de vencimiento(*)</label>
-                                            <input type="text" class="form-control" id="vencimientoPago"
-                                                name="vencimientoPago" placeholder="Vencimiento de pago" />
+                                        <label>Fecha de vencimiento(*)</label>
+                                            <input type="date" class="form-control" id="vencimientoPago"name="vencimientoPago" placeholder="Vencimiento de pago" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-5">
                                     <div class="form-group">
-                                    <label>Cliente que realiza el pago (*)</label>
-                                        <div><select class="pagoRegistrarCliente" style="width: 100%" name="idCliente">
-                                        <option>Busque Cliente que realiza el pago</option>
-                                    </select></div>
+                                    <label>Cliente(*)</label>
+                                    <select name="idCliente" id="idCliente" class="form-control pagoRegistrarCliente" style="width:100%;">
+                                            <option value="default">Seleccione cliente</option>
+                                     </select>
                                     </div>
                                     </div>
                                     <div class="col-lg-6">
                                     <div class="form-group">
                                     <label>Plan Gimnasio(*)</label>
-                                        <div><select class="pagoRegistrarPlanGym" style="width: 100%" id="idPlanGym" name="idPlanGym">
-                                        <option>Seleccione Plan Gimnasio</option>
-                                    </select></div>
+                                    <select name="idPlanGym" id="idPlanGym" class="form-control pagoRegistrarPlanGym" style="width:100%;">
+                                            <option value="default">Seleccione plan gimnasio</option>
+                                     </select>
                                     </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -114,7 +118,6 @@ $menu->header('Pago');
                                                 <option>Tarjeta</option>
                                                 <option>Tranferencia</option>
                                                 <option>Efectivo</option>
-                                                <option>pay pal</option>
                                             </select>
                                         </div>
                                     </div>
@@ -169,29 +172,40 @@ $menu->header('Pago');
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>$ Cantidad (*)</label>
-                                            <input type="text" class="form-control" id="cantidadPagoActualizar" name="cantidadPagoActualizar" placeholder="Cantidad" />
+                                <div class="col-lg-4">
+                                    <label>Cantidad (*)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="cantidadPagoActualizar" name="cantidadPagoActualizar" placeholder="cantidad del Pago">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">.00</span>
                                         </div>
                                     </div>
+                                </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Fecha de Vencimineto</label>
-                                            <input type="text" class="form-control" id="vencimientoPagoActualizar" name="vencimientoPagoActualizar" placeholder="2023-05-07" />
+                                            <input type="date" class="form-control" id="vencimientoPagoActualizar" name="vencimientoPagoActualizar" placeholder="2023-05-07" />
                                         </div>
                                     </div>
-                                   <div class="col-lg-6">
+                                    <div class="col-lg-5">
                                     <div class="form-group">
-                                    <label>Cliente que realiza el pago (*)</label>
-                                        <div><select class="pagoActualizarCliente" style="width: 100%" id="idClientePagoActualizar" name="idClientePagoActualizar"></select></div>
+                                    <label>Cliente(*)</label>
+                                    <select name="idClientePagoActualizar" id="idClientePagoActualizar" class="form-control pagoActualizarCliente" style="width:100%;">
+                                            <option value="default">Seleccione cliente</option>
+                                     </select>
                                     </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                         <div class="form-group">
-                                        <label>plan Gimnasio (*)</label>
-                                            <div><select class="pagoActualizarPlanGym" style="width: 100%" id="idplanPagoGymActualizar" name="idplanPagoGymActualizar"></select></div>
-                                        </div>
+
+                                    <div class="col-lg-6">
+                                    <div class="form-group">
+                                    <label>Plan Gimnasio(*)</label>
+                                    <select name="idplanPagoGymActualizar" id="idplanPagoGymActualizar" class="form-control pagoRegistrarPlanGym" style="width:100%;">
+                                            <option value="default">Seleccione plan gimnasio</option>
+                                     </select>
+                                    </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -201,7 +215,6 @@ $menu->header('Pago');
                                                 <option>Tarjeta</option>
                                                 <option>Tranferencia</option>
                                                 <option>Efectivo</option>
-                                                <option>pay pal</option>
                                             </select>
                                         </div>
                                     </div>
@@ -336,59 +349,88 @@ $(document).ready(function() {
     enviarFormularioRegistrar();
     enviarFormularioActualizar();
     eliminarRegistro();
+    llenarCliente();
+    llenarplanGym();
 });
 
-
-function initializeSelect2($element, parentElement) {
-  $element.select2({
-    dropdownParent: parentElement,
-    ajax: {
-      url: "<?php echo constant('URL'); ?>pago/readClientes",
-      dataType: 'json',
-      data: function (params) {
-        var queryParameters = {
-          id_user: "<?php echo $_SESSION['id_usuario']; ?>",
-          q: params.term
+const llenarCliente = (selector, modal) => {
+    const id_user = "<?php echo $_SESSION['id_usuario']; ?>";
+    $.ajax({
+        type: "GET",
+        url: "<?php echo constant('URL'); ?>pago/readClientes",
+        data: {
+            id_user: id_user
+        },
+        async: false,
+        dataType: "json",
+        success: function(data) {
+            const $selector = $(selector);
+            data.forEach(registro => {
+                const id = registro.id_cliente;
+                const nombre = registro.nombre_cliente;
+                const apellidoPaterno=registro.apellido_paterno_cliente;
+                const apellidoMaterno=registro.apellido_materno_cliente;
+                $selector.append(`<option value='${id}'>${nombre} ${apellidoPaterno} ${apellidoMaterno}</option>`);
+            });
+        },
+        error: function(data) {
+            console.log(data);
         }
-        return queryParameters;
-      },
-    }
-  });
-}
+    });
+};
 
-initializeSelect2($('.pagoRegistrarCliente'), $('#modalRegistrarPago'));
-initializeSelect2($('.pagoActualizarCliente'), $('#modalActualizarPago'));
+$(document).ready(() => {
+    $('.pagoRegistrarCliente').select2({
+        dropdownParent: $('#modalRegistrarPago')
+    });
 
-function initializeSelects2($element, parentElement) {
-  $element.select2({
-    dropdownParent: parentElement,
-    ajax: {
-      url: "<?php echo constant('URL'); ?>pago/readPlanGym",
-      dataType: 'json',
-      data: function (params) {
-        var queryParameters = {
-          id_user: "<?php echo $_SESSION['id_usuario']; ?>",
-          q: params.term
+    $('.pagoActualizarCliente').select2({
+        dropdownParent: $('#modalActualizarPago')
+    });
+
+    llenarCliente(".pagoRegistrarCliente", "#modalRegistrarPago");
+    llenarCliente(".pagoActualizarCliente", "#modalActualizarPago");
+});
+
+const llenarplanGym = () => {
+    var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
+    $.ajax({
+        type: "GET",
+        url: "<?php echo constant('URL'); ?>planGym/readPlanGym",
+        data: {
+            id_gimnasio: id_gimnasio
+        },
+        async: false,
+        dataType: "json",
+        success: function(data) {
+            $.each(data, function(key, registro) {
+                var id = registro.id_planGym;
+                var nombre = registro.nombrePlanGym;
+                $(".pagoRegistrarPlanGym").append('<option value=' + id + '>' + nombre + '</option>');
+            });
+        },
+        error: function(data) {
+            console.log(data);
         }
-        return queryParameters;
-      },
-    }
-  });
+    });
 }
-
-initializeSelects2($('.pagoRegistrarPlanGym'), $('#modalRegistrarPago'));
-initializeSelects2($('.pagoActualizarPlanGym'), $('#modalActualizarPago'));
-
 
 var mostrarPago = function() {
+    var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
     var tablePago = $('#dataTablePago').DataTable({
         "processing": true,
         "ajax": {
-            "url": "<?php echo constant('URL'); ?>pago/read"
+            "url": "<?php echo constant('URL'); ?>pago/readPagoByIdgimnasio?id_gimnasio=" + id_gimnasio
         },
 
         "columns": [{
                 "data": "id_pago"
+            },
+            {
+                "data": "nombrePlanGym"
+            },
+            {
+                "data": "nombre_cliente"
             },
             {
                 "data": "cantidad_pago",
@@ -403,13 +445,7 @@ var mostrarPago = function() {
                 "data": "vencimiento"
             },
             {
-                "data": "nombre_cliente"
-            },
-            {
-                "data": "nombrePlanGym"
-            },
-            {
-                "data": "tipo_dePago"
+                "data": "tipo_Pago"
             },
             {
                 data: null,
@@ -438,7 +474,7 @@ var obtenerdatosDT = function(table) {
         var vencimientoPagoActualizar = $("#vencimientoPagoActualizar").val(data.vencimiento);
         var idClientePagoActualizar = $("#idClientePagoActualizar").val(data.nombre_cliente);
         var idplanPagoGymActualizar = $("#idplanPagoGymActualizar").val(data.nombrePlanGym);
-        var tipoPagoActualizar = $("#tipoPagoActualizar").val(data.tipo_dePago);
+        var tipoPagoActualizar = $("#tipoPagoActualizar").val(data.tipo_Pago);
 
 
         var id_pagoConsultar = $("#id_pagoConsultar").val(data.id_pago);
@@ -447,7 +483,7 @@ var obtenerdatosDT = function(table) {
         var vencimientoPagoConsultar = $("#vencimientoPagoConsultar").val(data.vencimiento);
         var idClientePagoConsultar = $("#idClientePagoConsultar").val(data.nombre_cliente);
         var idPlangymConsultar = $("#idPlangymConsultar").val(data.nombrePlanGym);
-        var formaPagoConsultar = $("#formaPagoConsultar").val(data.tipo_dePago);
+        var formaPagoConsultar = $("#formaPagoConsultar").val(data.tipo_Pago);
 
     });
 }

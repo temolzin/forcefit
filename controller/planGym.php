@@ -64,6 +64,16 @@ class PlanGym extends Controller
 		$planGymDAO = $planGymDAO->read();
 		echo $planGymDAO;
 	}
+
+	function readPlanGym()
+	{
+		$id_gimnasio = $_GET['id_gimnasio'];
+		require 'model/planGymDAO.php';
+		$this->loadModel('PlanGymDAO');
+		$planGymDAO = new PlanGymDAO();
+		$planGymDAO = $planGymDAO->readPlanGym($id_gimnasio);
+		echo json_encode($planGymDAO);
+	}
 }
 ?>
 

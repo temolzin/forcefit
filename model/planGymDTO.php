@@ -1,6 +1,7 @@
 <?php
     class PlanGymDTO implements JsonSerializable {
         private $id_planGym;
+        private $id_gimnasio;
         private $nombrePlanGym;
         private $descripcionPlanGym;
         private $costoPlanGym;
