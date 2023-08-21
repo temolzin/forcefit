@@ -83,9 +83,6 @@ $menu->header('Pago');
                                             <span class="input-group-text">$</span>
                                         </div>
                                         <input type="text" class="form-control" id="cantidadPago" name="cantidadPago" placeholder="cantidad del Pago">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">.00</span>
-                                        </div>
                                     </div>
                                 </div>
                                     <div class="col-lg-3">
@@ -179,9 +176,6 @@ $menu->header('Pago');
                                             <span class="input-group-text">$</span>
                                         </div>
                                         <input type="text" class="form-control" id="cantidadPagoActualizar" name="cantidadPagoActualizar" placeholder="cantidad del Pago">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">.00</span>
-                                        </div>
                                     </div>
                                 </div>
                                     <div class="col-lg-3">
