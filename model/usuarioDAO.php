@@ -147,11 +147,15 @@ class UsuarioDAO extends Model implements CRUD
     public function login($data)
     {
         require_once 'usuarioDTO.php';
-        $query = $this->db->consultar("SELECT * FROM usuario WHERE emailUsuario = '" . $data['emailUsuario'] . "' AND passwordUsuario ='" . $data['passwordUsuario'] . "'");
+        $query = $this->db->consultar("SELECT u.id_usuario, u.nombreUsuario, u.apellidoPaternoUsuario, u.apellidoMaternoUsuario,
+        u.emailUsuario, u.passwordUsuario, u.imagen, u.calleUsuario, u.estadoUsuario, u.municipioUsuario, u.coloniaUsuario,
+         u.codigoPostalUsuario, u.id_rol, ug.id_gimnasio FROM usuario AS u LEFT JOIN usuario_gimnasio AS ug ON u.id_usuario = ug.id_usuario
+          WHERE u.emailUsuario = '" . $data['emailUsuario'] . "' AND u.passwordUsuario ='" . $data['passwordUsuario'] . "'");
         session_start();
         if ($query != null) {
             foreach ($query as $key => $value) {
                 $_SESSION['id_usuario'] = $value['id_usuario'];
+                $_SESSION['id_gimnasio'] = $value['id_gimnasio'];
                 $_SESSION['nombreUsuario'] = $value['nombreUsuario'];
                 $_SESSION['apellidoPaternoUsuario'] = $value['apellidoPaternoUsuario'];
                 $_SESSION['apellidoMaternoUsuario'] = $value['apellidoMaternoUsuario'];

@@ -2,6 +2,7 @@
 class UsuarioDTO implements JsonSerializable
 {
     private $id_usuario;
+    private $id_gimnasio;
     private $nombreUsuario;
     private $apellidoPaternoUsuario;
     private $apellidoMaternoUsuario;

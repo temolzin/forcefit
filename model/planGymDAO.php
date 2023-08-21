@@ -62,6 +62,25 @@
             }
             echo json_encode($objplanGym, JSON_UNESCAPED_UNICODE);
         }
+
+        public function readPlanGym($id_gimnasio)
+        {
+            require_once 'planGymDTO.php';
+            $query = "SELECT pg.* FROM plan_gym pg JOIN usuario_gimnasio ug ON pg.id_gimnasio = ug.id_gimnasio
+            WHERE ug.id_gimnasio = ".$id_gimnasio." ";
+            $objplanGym = array();
+            if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
+                foreach ($this->db->consultar($query) as $key => $value) {
+                    $planGym = new planGymDTO();
+                    $planGym->id_planGym = $value['id_planGym'];
+                    $planGym->nombrePlanGym = $value['nombrePlanGym'];
+                    array_push($objplanGym, $planGym);
+                }
+            }else{
+                $objplanGym=null;
+            }
+            return $objplanGym;
+        }
     }
 ?>
 
