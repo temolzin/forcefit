@@ -165,9 +165,9 @@ class UsuarioDAO extends Model implements CRUD
             $usuario->municipioUsuario = $value['municipioUsuario'];
             $usuario->coloniaUsuario = $value['coloniaUsuario'];
             $usuario->codigoPostalUsuario = $value['codigoPostalUsuario'];
-            $usuario->id_rol = $value['Rol'];
-            $usuario-> id_gimnasio= $value['nombreGimnasio'];
-            $usuario->id_plan_sistema = $value['nombrePlanSistema'];
+            $usuario->nombreRol = $value['Rol'];
+            $usuario-> nombre_gimnasio= $value['nombreGimnasio'];
+            $usuario->nombre_plan_sistema = $value['nombrePlanSistema'];
             array_push($objUsuario, $usuario);
         }
 

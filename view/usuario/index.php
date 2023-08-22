@@ -759,13 +759,13 @@ const llenarPlanSistema = () => {
                 "data": "emailUsuario"
             },
             {
-                "data": "id_rol"
+                "data": "nombreRol"
             },
             {
-                "data": "id_gimnasio"
+                "data": "nombre_gimnasio"
             },
             {
-                "data": "id_plan_sistema"
+                "data": "nombre_plan_sistema"
             },
             {
                 "defaultContent": `
