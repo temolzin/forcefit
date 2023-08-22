@@ -9,6 +9,8 @@ class ClienteDAO extends Model implements CRUD
     public function insert($data)
     {
         $query = $this->db->conectar()->prepare('INSERT INTO cliente values (NULL, 
+                :id_gimnasio,
+                :id_planGym,
                 :nombre_cliente, 
                 :apellido_paterno_cliente, 
                 :apellido_materno_cliente, 
@@ -19,6 +21,8 @@ class ClienteDAO extends Model implements CRUD
                 :numero_cliente, 
                 :imagen_cliente)');
         $query->execute([
+            'id_gimnasio'=> $data['id_gimnasio'],
+            'id_planGym' =>$data['id_PlanGym'],
             ':nombre_cliente' => $data['nombreCliente'],
             ':apellido_paterno_cliente' => $data['apellidoPaternoCliente'],
             ':apellido_materno_cliente' => $data['apellidoMaternoCliente'],
@@ -117,13 +121,16 @@ class ClienteDAO extends Model implements CRUD
     public function readDataByIdUsuario($id_usuario)
     {
         require_once 'clienteDTO.php';
-        $query = "SELECT c.* FROM cliente AS c
+        $query = "SELECT c.*, pg.nombrePlanGym
+        FROM cliente AS c
         INNER JOIN usuario_gimnasio AS ug ON c.id_gimnasio = ug.id_gimnasio
+        INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
         WHERE ug.id_usuario = ".$id_usuario."";
         $objCliente = array();
         foreach ($this->db->consultar($query) as $key => $value) {
             $cliente = new ClienteDTO();
             $cliente->id_cliente = $value['id_cliente'];
+            $cliente->nombrePlanGym = $value['nombrePlanGym'];
             $cliente->nombre_cliente = $value['nombre_cliente'];
             $cliente->apellido_paterno_cliente = $value['apellido_paterno_cliente'];
             $cliente->apellido_materno_cliente = $value['apellido_materno_cliente'];

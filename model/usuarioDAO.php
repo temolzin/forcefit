@@ -39,6 +39,20 @@ class UsuarioDAO extends Model implements CRUD
         echo 'ok';
     }
 
+    public function insertG($data)
+    {
+        $query = $this->db->conectar()->prepare('INSERT INTO usuario_gimnasio
+            (id_usuario, id_gimnasio, id_plan_sistema, fecha_inicio, fecha_termino, estatus)
+            VALUES
+            (:id_usuario, :id_gimnasio, :id_plan_sistema, NOW(), NULL, NULL)');
+        $query->execute([
+            ':id_usuario' => $data['id_usuario'],
+            ':id_gimnasio' => $data['id_gimnasio'],
+            ':id_plan_sistema' => $data['id_plan_sistema'],
+        ]);
+        echo 'ok';
+    }
+
     public function update($data)
     {
         $imagen = '';
@@ -106,21 +120,35 @@ class UsuarioDAO extends Model implements CRUD
     public function read()
     {
         require_once 'usuarioDTO.php';
-        $query = "SELECT u.id_usuario AS 'ID',
-                         u.nombreUsuario,
-                         u.apellidoPaternoUsuario,
-                         u.apellidoMaternoUsuario,
-                         u.emailUsuario,
-                         u.passwordUsuario,
-                         u.imagen,
-                         u.calleUsuario,
-                         u.estadoUsuario,
-                         u.municipioUsuario,
-                         u.coloniaUsuario,
-                         u.codigoPostalUsuario,
-                         r.nombreRol AS 'Rol'
-                  FROM Usuario u
-                  JOIN Rol r ON u.id_rol = r.id_rol";
+        $query = "SELECT
+        u.id_usuario AS 'ID',
+        u.nombreUsuario,
+        u.apellidoPaternoUsuario,
+        u.apellidoMaternoUsuario,
+        u.emailUsuario,
+        u.passwordUsuario,
+        u.imagen,
+        u.calleUsuario,
+        u.estadoUsuario,
+        u.municipioUsuario,
+        u.coloniaUsuario,
+        u.codigoPostalUsuario,
+        r.nombreRol AS 'Rol',
+        CASE
+            WHEN r.nombreRol = 'Administrador' THEN 'No aplica'
+            WHEN ug.id_gimnasio IS NULL THEN 'Aun no se le asigna'
+            ELSE g.nombre_gimnasio
+        END AS nombreGimnasio,
+        CASE
+            WHEN r.nombreRol = 'Administrador' THEN 'No aplica'
+            WHEN ug.id_plan_sistema IS NULL THEN 'Aun no se le asigna'
+            ELSE ps.nombre_plan_sistema
+        END AS nombrePlanSistema
+    FROM usuario u
+    LEFT JOIN usuario_gimnasio ug ON u.id_usuario = ug.id_usuario
+    LEFT JOIN gimnasio g ON ug.id_gimnasio = g.id_gimnasio
+    LEFT JOIN plan_sistema ps ON ug.id_plan_sistema = ps.id_plan_sistema
+    JOIN rol r ON u.id_rol = r.id_rol";
 
         $objUsuario = array();
         foreach ($this->db->consultar($query) as $key => $value) {
@@ -138,6 +166,8 @@ class UsuarioDAO extends Model implements CRUD
             $usuario->coloniaUsuario = $value['coloniaUsuario'];
             $usuario->codigoPostalUsuario = $value['codigoPostalUsuario'];
             $usuario->id_rol = $value['Rol'];
+            $usuario-> id_gimnasio= $value['nombreGimnasio'];
+            $usuario->id_plan_sistema = $value['nombrePlanSistema'];
             array_push($objUsuario, $usuario);
         }
 

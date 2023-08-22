@@ -316,10 +316,11 @@ $(document).ready(function() {
 });
 
 var mostrarPlanGym = function() {
+    var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
     var tablePlanGym = $('#dataTablePlanGym').DataTable({
         "processing": true,
         "ajax": {
-            "url": "<?php echo constant('URL'); ?>planGym/read"
+            "url": "<?php echo constant('URL'); ?>planGym/readPlanGymByIdGimnasio?id_gimnasio=" + id_gimnasio
         },
         "columns": [{
                 "data": "id_planGym"
@@ -372,9 +373,11 @@ var obtenerdatosDT = function(table) {
 }
 
 var enviarFormularioRegistrar = function() {
+    var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
     $.validator.setDefaults({
         submitHandler: function() {
             var datos = $('#formRegistrarPlanGym').serialize();
+            datos += '&id_gimnasio=' + encodeURIComponent(id_gimnasio);
             $.ajax({
                 type: "POST",
                 url: "<?php echo constant('URL'); ?>planGym/insert",

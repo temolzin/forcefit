@@ -9,15 +9,17 @@
         {
             $query = $this->db->conectar()->prepare('INSERT INTO plan_gym 
             values (
-                :id_planGym, 
-                :nombrePlanGym, 
+                :id_planGym,
+                :id_gimnasio,
+                :nombrePlanGym,
                 :descripcionPlanGym, 
                 :costoPlanGym)');
 
             $query->execute([
-                ':id_planGym' => null, 
-                ':nombrePlanGym' => $data['nombrePlanGym'], 
-                ':descripcionPlanGym' => $data['descripcionPlanGym'], 
+                ':id_planGym' => null,
+                ':id_gimnasio' => $data['id_gimnasio'],
+                ':nombrePlanGym' => $data['nombrePlanGym'],
+                ':descripcionPlanGym' => $data['descripcionPlanGym'],
                 ':costoPlanGym' => $data['costoPlanGym']
             ]);
             echo 'ok';
@@ -49,8 +51,13 @@
 
         public function read()
         {
+        }
+
+        public function readPlanGymByIdGimnasio($id_gimnasio)
+        {
             require_once 'planGymDTO.php';
-            $query = "SELECT * FROM plan_gym";
+            $query = "SELECT pg.* FROM plan_gym pg JOIN usuario_gimnasio ug ON pg.id_gimnasio = ug.id_gimnasio
+            WHERE ug.id_gimnasio = ".$id_gimnasio." ";
             $objplanGym = array();
             foreach ($this->db->consultar($query) as $key => $value) {
                 $planGym = new PlanGymDTO();
