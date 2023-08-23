@@ -91,7 +91,7 @@ class Menu
                                 <!-- menu profile quick info -->
                                 <div class="profile clearfix">
                                     <div class="profile_pic">
-                                    <img src="'.$fotoruta.'" alt="..." class="img-circle profile_img">
+                                    <img src="'.$fotoruta.'" alt="..." class="img-circle profile_img" style="width: 70px; height: 70px;">
                                     </div>
                                     <div class="profile_info">
                                         <span>Bienvenid@,</span>

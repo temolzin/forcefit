@@ -13,11 +13,13 @@ class PlanGym extends Controller
 
 	function insert()
 	{
+		$id_gimnasio= $_POST['id_gimnasio'];
 		$nombrePlanGym = $_POST['nombrePlanGym'];
 		$descripcionPlanGym = $_POST['descripcionPlanGym'];
         $costoPlanGym = $_POST['costoPlanGym'];
 
 		$data = array(
+			'id_gimnasio' => $id_gimnasio,
 			'nombrePlanGym' => $nombrePlanGym, 
 			'descripcionPlanGym' => $descripcionPlanGym, 
 			'costoPlanGym' => $costoPlanGym);
@@ -58,11 +60,15 @@ class PlanGym extends Controller
 
 	function read()
 	{
+	}
+
+	function readPlanGymByIdGimnasio()
+	{
+		$id_gimnasio = $_GET['id_gimnasio'];
 		require 'model/planGymDAO.php';
 		$this->loadModel('PlanGymDAO');
 		$planGymDAO = new PlanGymDAO();
-		$planGymDAO = $planGymDAO->read();
-		echo $planGymDAO;
+		$planGymDAO = $planGymDAO->readPlanGymByIdGimnasio($id_gimnasio);
 	}
 
 	function readPlanGym()

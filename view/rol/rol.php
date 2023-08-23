@@ -330,7 +330,7 @@ $menu->footer();
         var tableRol = $('#dataTableRol').DataTable({
             "processing": true,
             "ajax": {
-                "url": "<?php echo constant('URL'); ?>rol/read",
+                "url": "<?php echo constant('URL'); ?>rol/readTable",
                 dataSrc: function (json) {
                     let customData = [];
                     json.data.forEach(element => {

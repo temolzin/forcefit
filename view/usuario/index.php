@@ -33,10 +33,10 @@ $menu->header('usuario');
                                             <th>ID</th>
                                             <th>Imagen</th>
                                             <th>Nombre del usuario</th>
-                                            <th>Apellido Paterno</th>
-                                            <th>Apellido Materno</th>
                                             <th>Correo</th>
                                             <th>Rol</th>
+                                            <th>Gimnasio</th>
+                                            <th>Plan Sistema</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
@@ -69,7 +69,7 @@ $menu->header('usuario');
                     <div class="card-body">
                         <div class="card">
                             <div class="card-header py-2 bg-secondary">
-                                <h3 class="card-title">Datos del Cliente</h3>
+                                <h3 class="card-title">Datos del Usuario</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fa fa-minus"></i></button>
@@ -174,12 +174,13 @@ $menu->header('usuario');
                                                 name="codigoPostalUsuario" placeholder="Codigo Postal">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>ID ROL (*)</label>
-                                            <input type="text" class="form-control" id="rolUsuario" name="rolUsuario"
-                                                placeholder="ROL">
-                                        </div>
+                                    <div class="col-lg-6">
+                                    <div class="form-group">
+                                    <label>Id Rol(*)</label>
+                                    <select name="rolUsuario" id="rolUsuario" class="form-control pagoRegistrarRol" style="width:100%;">
+                                            <option value="default">Seleccione Rol</option>
+                                     </select>
+                                    </div>
                                     </div>
 
                                 </div>
@@ -354,12 +355,13 @@ $menu->header('usuario');
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Rol</label>
-                                        <input type="text" class="form-control" id="rolUsuarioActualizar"
-                                            name="rolUsuarioActualizar" placeholder="ROL" />
+                                    <label>Id Rol(*)</label>
+                                    <select name="rolUsuarioActualizar" id="rolUsuarioActualizar" class="form-control pagoRegistrarRol" style="width:100%;">
+                                            <option value="default">Seleccione Rol</option>
+                                     </select>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -555,6 +557,70 @@ $menu->header('usuario');
         </div>
     </div>
 </div>
+
+<!-- ****************************** Modal Para asignar signasio y plan sistema*************************************************-->
+<div class="modal fade" id="modalAsignarGimnasioYPlanSistema" tabindex="-1" role="dialog" aria-labelledby="modalAsignarGimnasioYPlanSistema" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" >
+            <div class="card-success">
+                <div class="card-header">
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <h4 class="card-title">Asignar Gimnasio y Plan Sistema <small> &nbsp;(*) Campos requeridos</small></h4>
+                        <button type="button" class="close d-sm-inline-block text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <form role="form" id="formAsignarGimnasioPlanSistema" enctype="multipart/form-data" name="formAsignarGimnasioPlanSistema" method="post">
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Datos </h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div  style="display: none;" class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Id (*)</label>
+                                                <input type="text" class="form-control" id="id_usuarioAsignar" name="id_usuarioAsignar" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Seleccione Gimnasio(*)</label>
+                                            <select name="id_gimnasioAsignar" id="id_gimnasioAsignar" class="form-control asignarGimnasio" style="width:100%;">
+                                                <option value="default">Seleccione Gimnasio</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Seleccione Plan Sistema(*)</label>
+                                            <select name="id_planSistemaAsignar" id="id_planSistemaAsignar" class="form-control asignarPlanSistema" style="width:100%;">
+                                                <option value="default">Seleccione Plan Sistema</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <?php
 $menu->footer();
 ?>
@@ -566,7 +632,65 @@ $menu->footer();
         enviarFormularioActualizar();
         eliminarRegistro();
         rutaImagen();
+        enviarFormularioAsignarGimnasioPlanSistema();
+        llenarRol();
+        llenarGimasio();
+        llenarPlanSistema();
     });
+
+    const llenarRol = () => {
+    $.ajax({
+        type: "GET",
+        url: "<?php echo constant('URL'); ?>rol/readTable",
+        dataType: "json",
+        success: function(data) {
+            $.each(data.data, function(key, registro) {
+                var id = registro.id_rol;
+                var nombre = registro.nombreRol;
+                $(".pagoRegistrarRol").append('<option value="' + id + '">' + nombre + '</option>');
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log("Error en la solicitud AJAX:", status, error);
+        }
+    });
+};
+
+const llenarGimasio = () => {
+    $.ajax({
+        type: "GET",
+        url: "<?php echo constant('URL'); ?>gimnasio/readTable",
+        dataType: "json",
+        success: function(data) {
+            $.each(data.data, function(key, registro) {
+                var id = registro.id_gimnasio;
+                var nombre = registro.nombre_gimnasio;
+                $(".asignarGimnasio").append('<option value="' + id + '">' + nombre + '</option>');
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log("Error en la solicitud AJAX:", status, error);
+        }
+    });
+};
+const llenarPlanSistema = () => {
+    $.ajax({
+        type: "GET",
+        url: "<?php echo constant('URL'); ?>PlanSistema/readTable",
+        dataType: "json",
+        success: function(data) {
+            $.each(data.data, function(key, registro) {
+                var id = registro.id_plan_sistema;
+                var nombre = registro.nombre_plan_sistema;
+                $(".asignarPlanSistema").append('<option value="' + id + '">' + nombre + '</option>');
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log("Error en la solicitud AJAX:", status, error);
+        }
+    });
+};
+
 
     $(".custom-file-input").on("change", function () {
         var fileName = $(this).val().split("\\").pop();
@@ -625,32 +749,31 @@ $menu->footer();
                 }
             },
             {
-                defaultContent: "",
-                "render": function (data, type, full) {
-                    return full['nombreUsuario'];
+                "data": "nombreUsuario",
+                "render": function (data, type, JsonResultRow, meta) {
+                    var nombreCompleto = JsonResultRow.nombreUsuario + ' ' + JsonResultRow.apellidoPaternoUsuario + ' ' + JsonResultRow.apellidoMaternoUsuario;
+                    return nombreCompleto;
                 }
-            },
-            {
-                defaultContent: "",
-                "render": function (data, type, full) {
-                    return full['apellidoPaternoUsuario'];
-                }
-            },
-            {
-                "data": "apellidoMaternoUsuario"
             },
             {
                 "data": "emailUsuario"
             },
             {
-                "data": "id_rol"
+                "data": "nombreRol"
+            },
+            {
+                "data": "nombre_gimnasio"
+            },
+            {
+                "data": "nombre_plan_sistema"
             },
             {
                 "defaultContent": `
-                        
+                        <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleUsuario' title="Ver Detalles"><i class="fa fa-eye"></i></button>
                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarUsuario' title="Editar Datos"><i class="fa fa-edit"></i></button>
                         <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarUsuario' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
-                        <button class='eliminar btn btn-secondary' title="Generar Credencial"> <i class="fa fa-credit-card"> </i> </button>`
+                        <button class='asignacion btn btn-primary' data-toggle='modal' data-target='#modalAsignarGimnasioYPlanSistema' title="Asignar Gimnasio y Plan Sistema"><i class="fa fa-plus"></i> Asignar</button>
+                        `
             }
             ],
             responsive: true,
@@ -667,6 +790,20 @@ $menu->footer();
             var data = table.row(this).data();
             var idEliminar = $('#idEliminarUsuario').val(data.id_usuario);
 
+            var id_usuarioAsignar= $("#id_usuarioAsignar").val(data.id_usuario);
+
+            var idConsultar = $('#id_usuarioConsultar').val(data.id_usuario);
+            var nombreUsuarioConsultar = $("#nombreUsuarioConsultar").val(data.nombreUsuario);
+            var apellidoPaternoUsuarioConsultar = $("#apellidoPaternoUsuarioConsultar").val(data.apellidoPaternoUsuario);
+            var apellidoMaternoUsuarioConsultar = $("#apellidoMaternoUsuarioConsultar").val(data.apellidoMaternoUsuario);
+            var emailUsuarioConsultar = $("#emailUsuarioConsultar").val(data.emailUsuario);
+            var calleUsuarioConsultar = $("#calleUsuarioConsultar").val(data.calleUsuario);
+            var estadoUsuarioConsultar = $("#estadoUsuarioConsultar").val(data.estadoUsuario);
+            var municipioUsuarioConsultar = $("#municipioUsuarioConsultar").val(data.municipioUsuario);
+            var coloniaUsuarioConsultar = $("#coloniaUsuarioConsultar").val(data.coloniaUsuario);
+            var codigopostalUsuarioConsultar = $("#codigoPostalUsuarioConsultar").val(data.codigoPostalUsuario);
+            var rolUsuarioConsultar = $("#rolUsuarioConsultar").val(data.id_rol);
+
             var id_usuarioActualizar = $("#id_usuarioActualizar").val(data.id_usuario);
             var nombreUsuarioActualizar = $("#nombreUsuarioActualizar").val(data.nombreUsuario);
             var apellidoPaternoUsuarioActualizar = $("#apellidoPaternoUsuarioActualizar").val(data.apellidoPaternoUsuario);
@@ -681,18 +818,67 @@ $menu->footer();
             var rolUsuarioActualizar = $("#rolUsuarioActualizar").val(data.id_rol);
             var imagenUsuarioActualizar = $("#imagenUsuarioActualizar").val(data.imagen);
 
-            var idConsultar = $('#id_usuarioConsultar').val(data.id_usuario);
-            var nombreUsuarioConsultar = $("#nombreUsuarioConsultar").val(data.nombreUsuario);
-            var apellidoPaternoUsuarioConsultar = $("#apellidoPaternoUsuarioConsultar").val(data.apellidoPaternoUsuario);
-            var apellidoMaternoUsuarioConsultar = $("#apellidoMaternoUsuarioConsultar").val(data.apellidoMaternoUsuario);
-            var emailUsuarioConsultar = $("#emailUsuarioConsultar").val(data.emailUsuario);
-            var calleUsuarioConsultar = $("#calleUsuarioConsultar").val(data.calleUsuario);
-            var estadoUsuarioConsultar = $("#estadoUsuarioConsultar").val(data.estadoUsuario);
-            var municipioUsuarioConsultar = $("#municipioUsuarioConsultar").val(data.municipioUsuario);
-            var coloniaUsuarioConsultar = $("#coloniaUsuarioConsultar").val(data.coloniaUsuario);
-            var codigopostalUsuarioConsultar = $("#codigoPostalUsuarioConsultar").val(data.codigoPostalUsuario);
-            var rolUsuarioConsultar = $("#rolUsuarioConsultar").val(data.id_rol);
 
+        });
+    }
+
+    var enviarFormularioAsignarGimnasioPlanSistema = function() {
+    $.validator.setDefaults({
+        submitHandler: function() {
+            var datos = $('#formAsignarGimnasioPlanSistema').serialize();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo constant('URL'); ?>usuario/insertG",
+                data: datos,
+                success: function(data) {
+                    if (data.trim() == 'ok') {
+                        Swal.fire(
+                            "¡Éxito!",
+                            "La asignasion se ha registrado de manera correcta",
+                            "success"
+                        ).then(function() {
+                            window.location =
+                                "<?php echo constant('URL'); ?>usuario";
+                        })
+                    } else {
+                        Swal.fire(
+                            "¡Error!",
+                            "Ha ocurrido un error al Asignar gimnasio y plan Sistema. " + data,
+                            "error"
+                        );
+                    }
+                },
+            });
+        }
+    });
+    $('#formAsignarGimnasioPlanSistema').validate({
+        rules: {
+            id_gimnasioAsignar: {
+                required: true
+            },
+            id_planSistemaAsignar: {
+                required: true
+            },
+        },
+        messages: {
+            id_gimnasioAsignar: {
+                required: "Ingrese Gimnasio"
+            },
+            id_planSistemaAsignar: {
+                required: "Ingrese plan sistema"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
         });
     }
 

@@ -36,6 +36,7 @@ $menu->header('cliente');
                                             <th>Apellido Paterno</th>
                                             <th>Apellido Materno</th>
                                             <th>Teléfono</th>
+                                            <th>Plan Gimnasio</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
@@ -114,6 +115,14 @@ $menu->header('cliente');
                                             <input type="text" id="numeroCliente" name="numeroCliente"
                                                 class="form-control" placeholder="Telefono">
                                         </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                      <div class="form-group">
+                                        <label>Plan Gimnasio(*)</label>
+                                        <select name="id_PlanGym" id="id_PlanGym" class="form-control pagoRegistrarPlanGym" style="width:100%;">
+                                            <option value="default">Seleccione plan gimnasio</option>
+                                        </select>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
@@ -258,6 +267,14 @@ $menu->header('cliente');
                                                 data-inputmask='"mask": "(999) 999-9999"' placeholder="Telefono">
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                      <div class="form-group">
+                                        <label>Plan Gimnasio(*)</label>
+                                         <select name="id_PlanGymActualizar" id="id_PlanGymActualizar" class="form-control pagoRegistrarPlanGym" style="width:100%;">
+                                            <option value="default">Seleccione plan gimnasio</option>
+                                         </select>
+                                      </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -385,6 +402,13 @@ $menu->header('cliente');
                                                 placeholder="Número telefonico" />
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <label>Plan Gimnasio (*)</label>
+                                        <div class="input-group-prepend">
+                                            <input type="text" disabled class="form-control" id="PlanGymClienteConsultar"
+                                                name="PlanGymClienteConsultar" placeholder="Plan gym" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -478,7 +502,31 @@ $menu->footer();
         enviarFormularioActualizar();
         eliminarRegistro();
         rutaImagen();
+        llenarplanGym();
     });
+    const llenarplanGym = () => {
+    var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
+    $.ajax({
+        type: "GET",
+        url: "<?php echo constant('URL'); ?>planGym/readPlanGym",
+        data: {
+            id_gimnasio: id_gimnasio
+        },
+        async: false,
+        dataType: "json",
+        success: function(data) {
+            $.each(data, function(key, registro) {
+                var id = registro.id_planGym;
+                var nombre = registro.nombrePlanGym;
+                $(".pagoRegistrarPlanGym").append('<option value=' + id + '>' + nombre + '</option>');
+            });
+        },
+        error: function(data) {
+            console.log(data);
+        }
+    });
+}
+
 
     $(".custom-file-input").on("change", function () {
         var fileName = $(this).val().split("\\").pop();
@@ -572,6 +620,9 @@ $menu->footer();
                 "data": "numero_cliente"
             },
             {
+                "data": "nombrePlanGym"
+            },
+            {
                 data: "option",
             }
             ],
@@ -590,6 +641,17 @@ $menu->footer();
             var data = table.row(this).data();
             var idEliminar = $('#idEliminarcliente').val(data.id_cliente);
 
+            var id_clienteConsultar = $("#id_clienteConsultar").val(data.id_cliente);
+            var nombreClienteConsultar = $("#nombreClienteConsultar").val(data.nombre_cliente);
+            var apellidoPaternoClienteConsultar = $("#apellidoPaternoClienteConsultar").val(data.apellido_paterno_cliente);
+            var apellidoMaternoClienteConsultar = $("#apellidoMaternoClienteConsultar").val(data.apellido_materno_cliente);
+            var municipioClienteConsultar = $("#municipioClienteConsultar").val(data.municipio_cliente);
+            var coloniaClienteConsultar = $("#coloniaClienteConsultar").val(data.colonia_cliente);
+            var calleClienteConsultar = $("#calleClienteConsultar").val(data.calle_cliente);
+            var codigoPostalClienteConsultar = $("#codigoPostalClienteConsultar").val(data.codigo_postal_cliente);
+            var numeroClienteConsultar = $("#numeroClienteConsultar").val(data.numero_cliente);
+            var PlanGymClienteConsultar = $("#PlanGymClienteConsultar").val(data.nombrePlanGym);
+
             var id_clienteActualizar = $("#id_clienteActualizar").val(data.id_cliente);
             var nombreClienteActualizar = $("#nombreClienteActualizar").val(data.nombre_cliente);
             var apellidoPaternoClienteActualizar = $("#apellidoPaternoClienteActualizar").val(data
@@ -604,19 +666,6 @@ $menu->footer();
             var numeroClienteActualizar = $("#numeroClienteActualizar").val(data.numero_cliente);
             var imagenClienteActualizar = $("#imagenClienteActualizar").val(data.imagen_cliente);
 
-
-            var id_clienteConsultar = $("#id_clienteConsultar").val(data.id_cliente);
-            var nombreClienteConsultar = $("#nombreClienteConsultar").val(data.nombre_cliente);
-            var apellidoPaternoClienteConsultar = $("#apellidoPaternoClienteConsultar").val(data
-                .apellido_paterno_cliente);
-            var apellidoMaternoClienteConsultar = $("#apellidoMaternoClienteConsultar").val(data
-                .apellido_materno_cliente);
-            var municipioClienteConsultar = $("#municipioClienteConsultar").val(data.municipio_cliente);
-            var coloniaClienteConsultar = $("#coloniaClienteConsultar").val(data.colonia_cliente);
-            var calleClienteConsultar = $("#calleClienteConsultar").val(data.calle_cliente);
-            var codigoPostalClienteConsultar = $("#codigoPostalClienteConsultar").val(data
-                .codigo_postal_cliente);
-            var numeroClienteConsultar = $("#numeroClienteConsultar").val(data.numero_cliente);
         });
     }
 
@@ -624,6 +673,7 @@ $menu->footer();
         return arg !== value;
     }, "Selecciona un valor");
     var enviarFormularioRegistrar = function () {
+        var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
         $.validator.setDefaults({
             submitHandler: function () {
                 var datos = $('#formRegistrarCliente').serialize();
@@ -637,6 +687,7 @@ $menu->footer();
                         var id_cliente = data;
                         var idCliente = id_cliente;
                         var form_data = new FormData();
+                        form_data.append('id_gimnasio', id_gimnasio);
                         imagen = $('#imagen').prop('files')[
                             0]; // Aqui obtienes la imagen del usuario de BBDD
                         $urlImagenBasica =
@@ -668,6 +719,8 @@ $menu->footer();
                             'codigoPostalCliente').value);
                         form_data.append('numeroCliente', document.getElementById(
                             'numeroCliente').value);
+                            form_data.append('id_PlanGym', document.getElementById(
+                            'id_PlanGym').value);
                         $.ajax({
                             type: "POST",
                             url: "<?php echo constant('URL'); ?>cliente/insert",
@@ -732,6 +785,9 @@ $menu->footer();
                 numeroCliente: {
                     required: true
                 },
+                id_PlanGym: {
+                    required: true
+                },
             },
             messages: {
                 nombreCliente: {
@@ -760,6 +816,9 @@ $menu->footer();
                 },
                 numeroCliente: {
                     required: "Ingresa el numero telefonico"
+                },
+                id_PlanGym: {
+                    required: "Ingresa plan de gimnasio"
                 },
             },
             errorElement: 'span',

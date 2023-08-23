@@ -321,7 +321,7 @@ var mostrarPlanSistema = function() {
     var tablePlanSistema = $('#dataTablePlanSistema').DataTable({
         "processing": true,
         "ajax": {
-            "url": "<?php echo constant('URL'); ?>planSistema/read"
+            "url": "<?php echo constant('URL'); ?>planSistema/readTable"
         },
         "columns": [{
                 "data": "id_plan_sistema"

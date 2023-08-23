@@ -57,9 +57,9 @@
                 $planSistema->nombre_plan_sistema = $value['nombre_plan_sistema'];
                 $planSistema->descripcion_plan_sistema = $value['descripcion_plan_sistema'];
                 $planSistema->costo = $value['costo'];
-                $objplanSistema['data'][] = $planSistema;
+                array_push($objplanSistema, $planSistema);
             }
-            echo json_encode($objplanSistema, JSON_UNESCAPED_UNICODE);
+            return $objplanSistema;
         }
     }
 ?>

@@ -53,4 +53,22 @@ class Rol extends Controller
 		$rolDAO = $rolDAO->read();
 		echo $rolDAO;
 	}
+
+	function readTable()
+	{
+		require 'model/rolDAO.php';
+		$this->loadModel('RolDAO');
+		$rolDAO = new RolDAO();
+		$rolDAO = $rolDAO->read();
+
+		$obj = null;
+		if (is_array($rolDAO ) || is_object($rolDAO )) {
+			foreach ($rolDAO  as $key => $value) {
+				$obj["data"][] = $value;
+			}
+		} else {
+			$obj = array();
+		}
+		echo json_encode($obj);;
+	}
 }

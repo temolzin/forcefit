@@ -169,6 +169,23 @@ class Usuario extends Controller
 		$usuarioDAO = new UsuarioDAO();
 		$usuarioDAO->login($data);
 	}
+
+	function insertG()
+	{
+		$id_usuario = $_POST['id_usuarioAsignar'];
+		$id_gimnasio = $_POST['id_gimnasioAsignar'];
+		$id_plan_sistema = $_POST['id_planSistemaAsignar'];
+
+				$data = array(
+					'id_usuario' => $id_usuario,
+					'id_gimnasio' => $id_gimnasio,
+					'id_plan_sistema' => $id_plan_sistema
+				);
+				require 'model/usuarioDAO.php';
+				$this->loadModel('UsuarioDAO');
+				$usuarioDAO = new UsuarioDAO();
+				$usuarioDAO->insertG($data);
+	}
 }
 ?>
 

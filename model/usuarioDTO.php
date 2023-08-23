@@ -14,7 +14,13 @@ class UsuarioDTO implements JsonSerializable
     private $municipioUsuario;
     private $coloniaUsuario;
     private $codigoPostalUsuario;
-    private $id_rol;
+    private $nombreRol;
+    private $nombre_gimnasio;
+    private $nombre_plan_sistema;
+    private $id_plan_sistema;
+    private $fecha_inicio;
+    private $fecha_termino;
+    private $status;
 
     public function __get($property)
     {

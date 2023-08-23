@@ -37,9 +37,9 @@ class RolDAO extends Model implements CRUD
             $rol->id_rol = $value['id_rol'];
             $rol->nombreRol = $value['nombreRol'];
             $rol->descripcion = $value['descripcion'];
-            $objRol['data'][] = $rol;
+            array_push($objRol, $rol);
         }
-        echo json_encode($objRol, JSON_UNESCAPED_UNICODE);
+        return $objRol;
     }
 }
 ?>

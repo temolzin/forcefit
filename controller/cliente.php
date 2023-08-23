@@ -13,6 +13,8 @@ class Cliente extends Controller
 
 	function insert()
 	{
+		$id_gimnasio = $_POST['id_gimnasio'];
+		$id_PlanGym = $_POST['id_PlanGym'];
 		$nombre_cliente = $_POST['nombreCliente'];
 		$apellido_paterno_cliente = $_POST['apellidoPaternoCliente'];
 		$apellido_materno_cliente = $_POST['apellidoMaternoCliente'];
@@ -38,6 +40,8 @@ class Cliente extends Controller
 				copy($ruta_provisional, $carpeta . $nombreImagen);
 
 				$data = array(
+					'id_gimnasio' =>$id_gimnasio,
+					'id_PlanGym' =>$id_PlanGym,
 					'nombreCliente' => $nombre_cliente,
 					'apellidoPaternoCliente' => $apellido_paterno_cliente,
 					'apellidoMaternoCliente' => $apellido_materno_cliente,

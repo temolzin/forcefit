@@ -64,6 +64,24 @@ class PlanSistema extends Controller
 		$planSistemaDAO = $planSistemaDAO->read();
 		echo $planSistemaDAO;
 	}
+
+	function readTable()
+	{
+		require 'model/planSistemaDAO.php';
+		$this->loadModel('PlanSistemaDAO');
+		$planSistemaDAO = new PlanSistemaDAO();
+		$planSistemaDAO = $planSistemaDAO->read();
+
+		$obj = null;
+		if (is_array($planSistemaDAO) || is_object($planSistemaDAO)) {
+			foreach ($planSistemaDAO as $key => $value) {
+				$obj["data"][] = $value;
+			}
+		} else {
+			$obj = array();
+		}
+		echo json_encode($obj);
+	}
 }
 ?>
 
