@@ -676,7 +676,7 @@ const llenarGimasio = () => {
 const llenarPlanSistema = () => {
     $.ajax({
         type: "GET",
-        url: "<?php echo constant('URL'); ?>PlanSistema/readTable",
+        url: "<?php echo constant('URL'); ?>planSistema/readTable",
         dataType: "json",
         success: function(data) {
             $.each(data.data, function(key, registro) {
@@ -828,7 +828,7 @@ const llenarPlanSistema = () => {
             var datos = $('#formAsignarGimnasioPlanSistema').serialize();
             $.ajax({
                 type: "POST",
-                url: "<?php echo constant('URL'); ?>usuario/insertG",
+                url: "<?php echo constant('URL'); ?>usuario/insertGymAndPlanSistema",
                 data: datos,
                 success: function(data) {
                     if (data.trim() == 'ok') {

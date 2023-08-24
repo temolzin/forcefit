@@ -22,11 +22,11 @@ class Menu
         $claseSpan= "fa fa-chevron-down";
         foreach ($_SESSION['permisos'] as $permiso) {
             if ($permiso["r"] === 1) {
-                $menuElements .= !empty($permiso['submodulos']) ? "<li><a> <i class='" . $permiso["icono"] . "'></i>" . $permiso["modulo"] ."<span class='".$claseSpan."'></span></a>":  "<li><a href=" .constant('URL') .strtolower($permiso["modulo"] ). "><i class='" . $permiso["icono"] . "'></i>" . $permiso["modulo"] . "</a>"  ;
+                $menuElements .= !empty($permiso['submodulos']) ? "<li><a> <i class='" . $permiso["icono"] . "'></i>" . $permiso["modulo"] ."<span class='".$claseSpan."'></span></a>":  "<li><a href=" .constant('URL') .lcfirst($permiso["modulo"] ). "><i class='" . $permiso["icono"] . "'></i>" . $permiso["modulo"] . "</a>"  ;
                 if (!empty($permiso['submodulos'])) {
                     $menuElements .= "<ul class='".$claseMenu."'>";
                     foreach ($permiso['submodulos'] as $submodulo) {
-                        $menuElements .= "<li><a href=" . constant('URL') .strtolower($submodulo['submodulo']). ">" . $submodulo['submodulo'] ."</a></li>";
+                        $menuElements .= "<li><a href=" . constant('URL') .lcfirst($submodulo['submodulo']). ">" . $submodulo['submodulo'] ."</a></li>";
                     }
                     $menuElements .= "</ul>";
                 }

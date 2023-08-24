@@ -39,7 +39,7 @@ class UsuarioDAO extends Model implements CRUD
         echo 'ok';
     }
 
-    public function insertG($data)
+    public function insertGymAndPlanSistema($data)
     {
         $query = $this->db->conectar()->prepare('INSERT INTO usuario_gimnasio
             (id_usuario, id_gimnasio, id_plan_sistema, fecha_inicio, fecha_termino, estatus)
