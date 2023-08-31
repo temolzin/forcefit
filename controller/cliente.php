@@ -158,7 +158,7 @@ class Cliente extends Controller
 		require_once __DIR__ . '/../vendor/autoload.php';
 
 		$cliente = array();
-		$id_cliente = $_GET['id_cliente'];
+		$id_cliente = $_POST['id_cliente'];
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();

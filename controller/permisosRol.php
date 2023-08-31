@@ -1,5 +1,5 @@
 <?php
-class PermisosRol extends Controller
+class permisosRol extends Controller
 {
 	function __construct()
 	{
@@ -13,7 +13,7 @@ class PermisosRol extends Controller
 
 	function readModulo()
 	{
-		require 'model/PermisoDAO.php';
+		require 'model/permisoDAO.php';
 		$this->loadModel('PermisoDAO');
 		$moduloDAO = new PermisoDAO();
 		$moduloDAO = $moduloDAO->readModulo();
@@ -22,7 +22,7 @@ class PermisosRol extends Controller
 	function readPermiso()
 	{
 		$id_rol = $_POST['rolId'];
-		require 'model/PermisoDAO.php';
+		require 'model/permisoDAO.php';
 		$this->loadModel('PermisoDAO');
 		$moduloDAO = new PermisoDAO();
 		$moduloDAO = $moduloDAO->readPermiso($id_rol);
@@ -32,7 +32,7 @@ class PermisosRol extends Controller
 	{
 		$data = json_decode(file_get_contents('php://input'), true);
 		$id_rol = $data['idrol'];
-		require 'model/PermisoDAO.php';
+		require 'model/permisoDAO.php';
 		$this->loadModel('PermisoDAO');
 		$permisoDAO = new PermisoDAO();
 		$permisoDAO = $permisoDAO->delete($id_rol);

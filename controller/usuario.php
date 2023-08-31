@@ -170,7 +170,7 @@ class Usuario extends Controller
 		$usuarioDAO->login($data);
 	}
 
-	function insertG()
+	function insertGymAndPlanSistema()
 	{
 		$id_usuario = $_POST['id_usuarioAsignar'];
 		$id_gimnasio = $_POST['id_gimnasioAsignar'];
@@ -184,7 +184,7 @@ class Usuario extends Controller
 				require 'model/usuarioDAO.php';
 				$this->loadModel('UsuarioDAO');
 				$usuarioDAO = new UsuarioDAO();
-				$usuarioDAO->insertG($data);
+				$usuarioDAO->insertGymAndPlanSistema($data);
 	}
 }
 ?>

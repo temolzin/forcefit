@@ -576,7 +576,7 @@ $menu->footer();
                         <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleCliente' title="Ver Detalles"><i class="fa fa-eye"></i></button>
                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarCliente' title="Editar Datos"><i class="fa fa-edit"></i></button>
                         <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarCliente' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
-                        <a class='eliminar btn btn-secondary' href="<?php echo constant('URL'); ?>cliente/generarGafete?id_cliente=${element.id_cliente}" title="Generar Credencial"> <i class="fa fa-credit-card"> </i> </a>`}]
+                        <button class='generar-credencial btn btn-secondary' data-id-cliente="${element.id_cliente}" title="Generar Credencial"><i class="fa fa-credit-card"></i></button>`}]
                 })
                 return customData;
             }
@@ -635,6 +635,34 @@ $menu->footer();
         });
         obtenerdatosDT(tableCliente);
     }
+
+    $(document).on('click', '.generar-credencial', function (event) {
+    event.preventDefault();
+    var id_cliente = $(this).data('id-cliente');
+    var url = "<?php echo constant('URL'); ?>cliente/generarGafete";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        xhrFields: {
+            responseType: 'blob'
+        },
+        data: {
+            id_cliente: id_cliente
+        },
+        success: function (json) {
+            var a = document.createElement('a');
+            var url = window.URL.createObjectURL(json);
+            a.href = url;
+            a.download = 'credencial.pdf';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        },
+        error: function () {
+            console.error("Error generando el PDF");
+        }
+    });
+});
 
     var obtenerdatosDT = function (table) {
         $('#dataTableCliente tbody').on('click', 'tr', function () {
