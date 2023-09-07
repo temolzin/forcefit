@@ -29,3 +29,5 @@ git clone https://github.com/temolzin/forcefit.git
 - Para que el proyecto funcione correctamente ejecuta este comando en la carpeta raíz **composer install**
 
 ### End
+
+### PRUEBA
