@@ -19,7 +19,8 @@ class ClienteDAO extends Model implements CRUD
                 :calle_cliente, 
                 :codigo_postal_cliente, 
                 :numero_cliente, 
-                :imagen_cliente)');
+                :imagen_cliente,
+                1)');
         $query->execute([
             'id_gimnasio'=> $data['id_gimnasio'],
             'id_planGym' =>$data['id_PlanGym'],
@@ -121,11 +122,15 @@ class ClienteDAO extends Model implements CRUD
     public function readDataByIdUsuario($id_usuario)
     {
         require_once 'clienteDTO.php';
-        $query = "SELECT c.*, pg.nombrePlanGym
-        FROM cliente AS c
-        INNER JOIN usuario_gimnasio AS ug ON c.id_gimnasio = ug.id_gimnasio
-        INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
-        WHERE ug.id_usuario = ".$id_usuario."";
+        $query = "SELECT c.*, pg.nombrePlanGym,
+            (CASE
+            WHEN (SELECT MIN(ppgc.vencimiento) FROM pago_plan_gym_cliente ppgc WHERE ppgc.id_cliente = c.id_cliente) > CURDATE() THEN 1
+            ELSE 0
+            END) as is_active
+            FROM cliente AS c
+            INNER JOIN usuario_gimnasio AS ug ON c.id_gimnasio = ug.id_gimnasio
+            INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
+            WHERE ug.id_usuario = " . $id_usuario;
         $objCliente = array();
         foreach ($this->db->consultar($query) as $key => $value) {
             $cliente = new ClienteDTO();
@@ -140,6 +145,7 @@ class ClienteDAO extends Model implements CRUD
             $cliente->codigo_postal_cliente = $value['codigo_postal_cliente'];
             $cliente->numero_cliente = $value['numero_cliente'];
             $cliente->imagen_cliente = $value['imagen_cliente'];
+            $cliente->is_active = $value['is_active'];
             array_push($objCliente, $cliente);
         }
         return $objCliente;

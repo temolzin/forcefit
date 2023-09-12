@@ -1,0 +1,116 @@
+@page {
+  sheet-size: 18cm 26cm;
+  background-image: url('public/img/fondoFacturaP.png');
+  background-image-resize: 6;
+  background-image-opacity: 1;
+  background-image-position-x: center;
+  background-image-position-y: center;
+  background-image-repeat: no-repeat;
+  background-image-scale: uniform;
+}
+#page_pdf {
+  margin: 20px;
+  position: relative;
+  width: 100%;
+  max-width: 20cm; 
+  padding: 15px; 
+}
+p, label, span, table{
+  font-family: 'BrixSansRegular';
+  font-size: 11pt;
+}
+.h2{
+  font-family: 'BrixSansBlack';
+  font-size: 16pt;
+}
+.h3{
+  font-family: 'BrixSansBlack';
+  font-size: 15pt;
+  display: block;
+  color: #0B1C80;
+  text-align: center;
+  padding: 3px;
+  margin-bottom: 5px;
+}
+#factura_cliente,
+#factura_detalle {
+  width: 100%;
+  margin: 10px;
+  border: 1px solid #0B1C80;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-height: calc(100% - 40px); 
+  overflow-y: auto; 
+}
+.info_empresa{
+  width: 50%;
+  text-align: center;
+}
+.info_factura{
+  border: 1px solid #0B1C80;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+.info_cliente{
+  width: 100%;
+}
+.datos_cliente{
+  width: 100%;
+  padding: 15px;
+}
+.datos_cliente{
+  padding:  5px 20px 5px 20px;
+}
+.datos_cliente label{
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.datos_cliente p{
+  font-weight: normal; 
+  margin-right: 10px; 
+}
+.textleft{
+  text-align: left;
+}
+.textcenter{
+  text-align: center;
+  font-size: 13pt;
+}
+.textright{
+  text-align: center;
+  font-size: 13pt;
+}
+
+#factura_detalle{
+  border-collapse: collapse;
+}
+#factura_detalle thead th{
+  background: #0B1C80;
+  color: #FFF;
+  padding: 5px;
+}
+#detalle_productos tr:nth-child(even) {
+  background: #ededed;
+}
+.info_Eabajo{
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  position: absolute;
+  bottom: 20px; 
+  left: 20px; 
+  right: 20px; 
+}
+.text_infoE {
+  text-align: center;
+  font-size: 10pt;
+}
+.logo {
+  width: 5cm;
+  height: 5cm;
+  border-radius: 5%;
+  object-fit: cover;
+  position: absolute;
+}

@@ -91,7 +91,30 @@ class Pago extends Controller
 		
 	}
 
- 
+	function mostrarClientesConPagos() {
+		$id_usuario = $_GET['id_usuario'];
+		require 'model/pagoDAO.php';
+		$this->loadModel('PagoDAO');
+		$pagoDAO = new PagoDAO();
+		$clientes = $pagoDAO->getClientesConPagosPorUsuario($id_usuario);
+		echo json_encode($clientes);
+	}
+
+	function generateInvoice()
+	{
+		require_once('./view/pago/factura/plantilla.php');
+		require_once __DIR__ . '/../vendor/autoload.php';
+		$cliente = array();
+		$id_cliente = $_POST['idCliente'];
+		require 'model/pagoDAO.php';
+		$this->loadModel('PagoDAO');
+		$pagoDAO = new PagoDAO();
+		$pagoDAO = $pagoDAO->getPaymentsByCustomerId($cliente, $id_cliente);
+		$css = file_get_contents('./public/css/factura/styles.css');
+		$mpdf = new \Mpdf\Mpdf(['margin_left' => 5, 'margin_right' => 20, 'margin_top' => 5, 'margin_bottom' => 20,]);
+		$plantillaFront = getPlantillaFront($cliente);
+		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+		$mpdf->writeHtml($plantillaFront, \Mpdf\HTMLParserMode::HTML_BODY);
+		$mpdf->Output();
+	}
 }
-
-
