@@ -717,7 +717,7 @@ var eliminarRegistro = function() {
 
 $(document).ready(function () {
     $.ajax({
-        url: 'pago/mostrarClientesConPagos?id_usuario=<?php echo $_SESSION['id_usuario']; ?>',
+        url: 'pago/showCustomersWithPayments?id_usuario=<?php echo $_SESSION['id_usuario']; ?>',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -734,7 +734,7 @@ $(document).ready(function () {
 $(document).on('click', '#generarFacturaBtn', function (event) {
     event.preventDefault();
     var id_cliente = $('#cliente_id').val();
-    var url = "<?php echo constant('URL'); ?>pago/generateInvoice";
+    var url = "<?php echo constant('URL'); ?>pago/generatePaymentReport";
 
     $.ajax({
         type: "POST",
@@ -749,12 +749,12 @@ $(document).on('click', '#generarFacturaBtn', function (event) {
             var a = document.createElement('a');
             var url = window.URL.createObjectURL(json);
             a.href = url;
-            a.download = 'factura.pdf';
+            a.download = 'Reporte de Pagos.pdf';
             a.click();
             window.URL.revokeObjectURL(url);
         },
         error: function () {
-            console.error("Error generando la factura");
+            console.error("Error generando el reporte");
         }
     });
 });

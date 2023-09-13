@@ -1,6 +1,12 @@
 <?php
 function getPlantillaFront($cliente)
 {
+    if (isset($cliente['pagos']) && is_array($cliente['pagos']) && !empty($cliente['pagos'])) {
+        $pagos = $cliente['pagos'];
+    } else {
+        $pagos = array(); // Define un arreglo vacío si no hay datos de pagos
+    }
+    
     $plantillaFront = '
             <div id="page_pdf">
                 <div class="logo">
@@ -10,15 +16,15 @@ function getPlantillaFront($cliente)
                     <tr>
                         <td class="info_empresa">
                             <div>
-                                <span class="h2">FORCE FIT</span>
-                                <p>Teléfono: +52 56 2364 0302</p>
-                                <p>Email: info@rootheim.com</p>
+                                <span class="h2">FORCE FIT</span><br>
+                                <a class="link_Whats" href="https://wa.me/525623640302">WhatsApp: +52 56 2364 0302</a><br>
+                                <a class="link_Email" href="mailto:info@rootheim.com">Email: info@rootheim.com</a>
                             </div>
                         </td>
                         <td class="info_factura">
                             <div class="round">
                                 <span class="h3">Reporte de Pagos</span>
-                                <p>Fecha y Hora: ' . $cliente['fecha_hora_pago'] . '</p>
+                                <p>Fecha y Hora: ' . $cliente['pagos'][0]['fecha_hora_pago'] . '</p>
                             </div>
                         </td>
                     </tr>
@@ -30,8 +36,8 @@ function getPlantillaFront($cliente)
                                 <span class="h3">Cliente</span>
                                 <table class="datos_cliente">
                                     <tr>
-                                        <td><label>Nombre:</label> <p> ' . $cliente['nombre_cliente'] . ' ' . $cliente['apellido_paterno_cliente'] . ' ' . $cliente['apellido_materno_cliente'] . '</p></td>
-                                        <td><label>Teléfono:</label> <p>' . $cliente['numero_cliente'] . '</p></td>
+                                        <td><label>Nombre:</label> <p> ' . $cliente['pagos'][0]['nombre_cliente'] . ' ' . $cliente['pagos'][0]['apellido_paterno_cliente'] . ' ' . $cliente['pagos'][0]['apellido_materno_cliente'] . '</p></td>
+                                        <td><label>Teléfono:</label> <p>' . $cliente['pagos'][0]['numero_cliente'] . '</p></td>
                                     </tr>
                                 </table>
                             </div>
@@ -48,14 +54,18 @@ function getPlantillaFront($cliente)
                                 <th class="textright" width="150px"> Cantidad</th>
                             </tr>
                         </thead>
-                        <tbody id="detalle_productos">
-                            <tr>
-                                <td class="textcenter">' . $cliente['id_cliente'] . '</td>
-                                <td class="textright">' . $cliente['nombrePlanGym'] . '</td>
-                                <td class="textright">' . $cliente['fecha_hora_pago'] . '</td>			
-                                <td class="textright">' . $cliente['tipo_Pago'] . '</td>
-                                <td class="textright">' . $cliente['cantidad_pago'] . '</td>
-                            </tr>
+                        <tbody id="detalle_productos">';
+                foreach ($pagos as $pago) {
+                    $plantillaFront .= '
+                                        <tr>
+                                            <td class="textcenter">' . $pago['id_pago'] . '</td>
+                                            <td class="textright">' . $pago['nombrePlanGym'] . '</td>
+                                            <td class="textright">' . $pago['fecha_hora_pago'] . '</td>			
+                                            <td class="textright">' . $pago['tipo_Pago'] . '</td>
+                                            <td class="textright">' . $pago['cantidad_pago'] . '</td>
+                                        </tr>';
+                }
+    $plantillaFront .= '
                         </tbody>
                 </table>
             </div>

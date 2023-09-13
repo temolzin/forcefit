@@ -86,7 +86,7 @@ class PagoDAO extends Model implements CRUD
         echo json_encode($objPago, JSON_UNESCAPED_UNICODE);
     }
 
-    public function getClientesConPagosPorUsuario($id_usuario) {
+    public function getCustomersWithPaymentsPerUser($id_usuario) {
         $query = $this->db->conectar()->prepare("
             SELECT DISTINCT c.id_cliente, c.nombre_cliente
             FROM cliente c
@@ -101,10 +101,10 @@ class PagoDAO extends Model implements CRUD
 
     public function getPaymentsByCustomerId(&$cliente, $id_cliente)
     {
-        $query = $this->db->conectar()->prepare("SELECT c.*, ppgc.*, pg.*
+        $query = $this->db->conectar()->prepare("SELECT c.*, ppgc.*, pg.nombrePlanGym
             FROM cliente AS c
             LEFT JOIN pago_plan_gym_cliente AS ppgc ON c.id_cliente = ppgc.id_cliente
-            LEFT JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
+            LEFT JOIN plan_gym AS pg ON ppgc.id_planGym = pg.id_planGym
             WHERE c.id_cliente = :id_cliente
         ");
 
@@ -112,6 +112,6 @@ class PagoDAO extends Model implements CRUD
         $query->execute();
 
         $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
-        $cliente = $resultados[0];
+        $cliente['pagos'] = $resultados;
     }
 }
