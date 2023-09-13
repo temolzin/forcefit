@@ -12,6 +12,7 @@ class ClienteDTO implements JsonSerializable
     private $codigo_postal_cliente;
     private $numero_cliente;
     private $imagen_cliente;
+    private $vencimiento;
 
     public function __get($property)
     {
