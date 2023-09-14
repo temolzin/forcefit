@@ -16,13 +16,13 @@ class Dashboard extends Controller
 		$this->view->render('dashboard/aboutUs');
 	}
 
-	function readPagoByIdgimnasio()
+	function readPaymentByIdgimnasio()
     {
 		$id_gimnasio = $_GET['id_gimnasio'];
-        require 'model/dashboardDAO.php';
+		require 'model/dashboardDAO.php';
 		$this->loadModel('DashboardDAO');
 		$dashboardDAO = new DashboardDAO();
-		$dashboardDAO = $dashboardDAO->gananciasByIdgimnasio($id_gimnasio);
+		$dashboardDAO = $dashboardDAO->readPaymentByIdgimnasio($id_gimnasio);
     }
 }
 ?>

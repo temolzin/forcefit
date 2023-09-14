@@ -21,8 +21,8 @@ class ClienteDAO extends Model implements CRUD
                 :numero_cliente, 
                 :imagen_cliente)');
         $query->execute([
-            'id_gimnasio' => $data['id_gimnasio'],
-            'id_planGym' => $data['id_PlanGym'],
+            'id_gimnasio'=> $data['id_gimnasio'],
+            'id_planGym' =>$data['id_PlanGym'],
             ':nombre_cliente' => $data['nombreCliente'],
             ':apellido_paterno_cliente' => $data['apellidoPaternoCliente'],
             ':apellido_materno_cliente' => $data['apellidoMaternoCliente'],
@@ -125,7 +125,7 @@ class ClienteDAO extends Model implements CRUD
         FROM cliente AS c
         INNER JOIN usuario_gimnasio AS ug ON c.id_gimnasio = ug.id_gimnasio
         INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
-        WHERE ug.id_usuario = " . $id_usuario . "";
+        WHERE ug.id_usuario = ".$id_usuario."";
         $objCliente = array();
         foreach ($this->db->consultar($query) as $key => $value) {
             $cliente = new ClienteDTO();
@@ -162,7 +162,7 @@ class ClienteDAO extends Model implements CRUD
         require_once 'clienteDTO.php';
         $query = "SELECT c.id_cliente, c.nombre_cliente, c.apellido_paterno_cliente,apellido_materno_cliente FROM cliente AS c
         INNER JOIN usuario_gimnasio AS ug ON c.id_gimnasio = ug.id_gimnasio
-        WHERE ug.id_usuario = " . $id_usuario . " ";
+        WHERE ug.id_usuario = ".$id_usuario." ";
         $objCliente = array();
         if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
             foreach ($this->db->consultar($query) as $key => $value) {
@@ -173,26 +173,22 @@ class ClienteDAO extends Model implements CRUD
                 $cliente->apellido_materno_cliente = $value['apellido_materno_cliente'];
                 array_push($objCliente, $cliente);
             }
-        } else {
-            $objCliente = null;
+        }else{
+            $objCliente=null;
         }
         return $objCliente;
     }
 
-    public function readExpireTable($id_gimnasio)
+    public function readExpireCustomer($id_gimnasio)
 {
-    $fechaActual = date("Y-m-d");
-    // $fechaActual = '2023-09-10';
-    $objCliente = array(); // Inicializa el arreglo fuera del bucle
+    $objCliente = array();
     require_once 'clienteDTO.php';
-    
-    for ($i = 4; $i > -1; $i--) {
-        $fechaRestada = date("Y-m-d", strtotime("-$i days", strtotime($fechaActual)));
         $query = "SELECT DISTINCT c.*, pg.nombrePlanGym, ppg.vencimiento
         FROM cliente AS c
         INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
         INNER JOIN pago_plan_gym_cliente AS ppg ON c.id_cliente = ppg.id_cliente
-        WHERE ppg.vencimiento = '$fechaRestada%' AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio)";
+        WHERE ppg.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+        AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio)";
         if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
         foreach ($this->db->consultar($query) as $key => $value) {
             $cliente = new ClienteDTO();
@@ -210,15 +206,13 @@ class ClienteDAO extends Model implements CRUD
             $cliente->vencimiento = $value['vencimiento'];
             $objCliente[$cliente->id_cliente] = $cliente;
         }}else{
-            continue;
             $objCliente=null;
         }
-    }
-
-    
+        
     $objCliente = array_values($objCliente);
     
     return $objCliente;
 }
 
 }
+?>

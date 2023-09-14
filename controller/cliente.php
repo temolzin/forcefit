@@ -175,15 +175,13 @@ class Cliente extends Controller
 		$mpdf->Output();
 	}
 
-	function readExpireTable()
+	function readExpireCustomer()
 	{
-		// $fechaActual = date('Y-m-d');
 		$id_gimnasio= $_POST['id_gimnasio'];
-		// $fechaActualFormateada= $_POST['fechaActualFormateada'];
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();
-		$clienteDAO = $clienteDAO->readExpireTable($id_gimnasio);
+		$clienteDAO = $clienteDAO->readExpireCustomer($id_gimnasio);
 
 		$obj = null;
 		if (is_array($clienteDAO) || is_object($clienteDAO)) {

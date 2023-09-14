@@ -11,12 +11,13 @@ $menu->header('dashboard');
 <div class="right_col" role="main">
     <div class="page-title">
         <div class="title_left">
-            <h3>Plain Page</h3>
+            <h3>Dashboard</h3>
         </div>
     </div>
     <div class="clearfix"></div>
-
+    <!-- Graficas-->
     <div class="row">
+        <!-- Grafica de Ganancia semanal -->
         <div class="col-md-6 col-sm-6">
             <div class="x_panel">
                 <div class="x_title">
@@ -25,35 +26,53 @@ $menu->header('dashboard');
                             <h2>Ganancia semanal</h2>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p>De Tal fecha a Tal fecha</p>
+                            <p id="tituloSemanal"></p>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
+                    <!-- Etiqueta para mostrar la grafica -->
                     <canvas id="semanal" width="auto" height="auto"></canvas>
                 </div>
             </div>
         </div>
-
+        <!-- grafica de Ganancia mensual -->
         <div class="col-md-6 col-sm-6">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Ganancia Mensual</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2>Ganancia mensual</h2>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <p id="tituloMensual"></p>
+                        </div>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
+                    <!-- Etiqueta para mostrar la grafica -->
                     <canvas id="mensual" width="auto" height="auto"></canvas>
                 </div>
             </div>
         </div>
     </div>
-
+                    <!-- Tabla de Membresías por expirar en 5 días -->
     <div class="row">
         <div class="col-sm-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Membresías por expirar</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2>Membresías por expirar</h2>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a href="<?php echo constant("URL"); ?>cliente" class="btn btn-primary">
+                                <i class="fa fa-user"></i>Ver Clientes
+                            </a>
+                        </div>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="card-box table-responsive">
@@ -62,13 +81,12 @@ $menu->header('dashboard');
                             <tr>
                                 <th>ID</th>
                                 <th>Imagen</th>
-                                <th>Nombre del cliente</th>
+                                <th>Nombre del Cliente</th>
                                 <th>Apellido Paterno</th>
                                 <th>Apellido Materno</th>
                                 <th>Teléfono</th>
                                 <th>Plan Gimnasio</th>
-                                <th>vencimiento</th>
-                                <th>Opciones</th>
+                                <th>Fecha de Vencimiento</th>
                             </tr>
                         </thead>
                     </table>
@@ -82,14 +100,12 @@ $menu->header('dashboard');
 <!-- JavaScript para configurar y mostrar la gráfica -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> -->
-
 
 <script>
-    var mes;
-    var semana;
-    var dia;
-    var meses;
+    // var mes;
+    // var semana;
+    // var dia;
+    // var meses;
     $(document).ready(function() {
         traerDatos();
         mostrarCliente();
@@ -99,7 +115,7 @@ $menu->header('dashboard');
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
         $.ajax({
             type: "GET",
-            url: "<?php echo constant('URL'); ?>dashboard/readPagoByIdgimnasio",
+            url: "<?php echo constant('URL'); ?>dashboard/readPaymentByIdgimnasio",
             data: {
                 id_gimnasio: id_gimnasio,
             },
@@ -109,13 +125,20 @@ $menu->header('dashboard');
                 console.log(data.mes);
                 console.log(data.semana);
                 console.log(data.dia);
-                mes = data.mes;
-                semana = data.semana;
-                dia = data.dia;
-                meses = data.meses;
-                console.log(meses)
+                console.log(data.meses);
+                console.log(data.semanaPasada);
+                console.log(data.anioPasado);
+                console.log(data.fechaActual);
+                // mes = data.mes;
+                // semana = data.semana;
+                // dia = data.dia;
+                // meses = data.meses;
 
-                inicializarGrafico();
+                // Mostrar las fechas en el título de las gráficas
+                $("#tituloSemanal").text("Ganancia semanal del día " + data.semanaPasada + " al día" + data.fechaActual + "");
+                $("#tituloMensual").text("Ganancia mensual del día(" + data.anioPasado + " al día " + data.fechaActual + "");
+
+                inicializarGrafico(data);
             },
             error: function(xhr, status, error) {
                 // Imprimir el mensaje de error en la consola
@@ -124,7 +147,7 @@ $menu->header('dashboard');
         });
     }
 
-    function inicializarGrafico() {
+    function inicializarGrafico(data) {
         //colores de las barras
         const colores = [
             'rgba(255, 99, 132, 0.2)',
@@ -155,15 +178,15 @@ $menu->header('dashboard');
             'rgb(75, 192, 192)',
             'rgb(54, 162, 235)'
         ];
-        const dias = dia;
+        // const dias = data.dia;
         const semanal = document.getElementById('semanal');
         new Chart(semanal, {
             type: 'bar',
             data: {
-                labels: dias,
+                labels: data.dia,
                 datasets: [{
-                    label: '# of Votes',
-                    data: semana,
+                    label: 'Ganancia $',
+                    data: data.semana,
                     backgroundColor: colores,
                     borderColor: bordes,
                     borderWidth: 1
@@ -187,10 +210,10 @@ $menu->header('dashboard');
         new Chart(mensual, {
             type: 'bar',
             data: {
-                labels: meses,
+                labels: data.meses,
                 datasets: [{
-                    label: '# of Votes',
-                    data: mes,
+                    label: 'Ganancia $',
+                    data: data.mes,
                     backgroundColor: colores,
                     borderColor: bordes,
                     borderWidth: 1
@@ -220,7 +243,7 @@ $menu->header('dashboard');
             "processing": true,
             "ajax": {
                 type: "POST",
-                "url": "<?php echo constant('URL'); ?>cliente/readExpireTable",
+                "url": "<?php echo constant('URL'); ?>cliente/readExpireCustomer",
                 data: {
                     id_gimnasio: id_gimnasio
                 },
@@ -229,12 +252,6 @@ $menu->header('dashboard');
                     json.data.forEach(element => {
                         customData = [...customData, {
                             ...element,
-                            option: `
-                            <div class="d-flex justify-content-center align-items-center text-center"> 
-        <a href="<?php echo constant("URL"); ?>cliente" class="btn btn-primary"> 
-        <i class="fa fa-user"></i>Clientes 
-        </a> 
-        </div>`
                         }]
                     })
                     return customData;
@@ -283,17 +300,21 @@ $menu->header('dashboard');
                 },
                 {
                     "data": "vencimiento"
-                },
-                {
-                    data: "option",
                 }
             ],
             responsive: true,
             autoWidth: false,
             language: idiomaDataTable,
             lengthChange: true,
-            buttons: ['copy', 'excel', 'csv', 'pdf'],
-            dom: 'Bfltip'
+            buttons: [
+                'copy', 'excel', 'csv', 'pdf'
+            ],
+            dom: '<"row"<"col-md-12"B>>' +
+                '<"row"<"col-md-12"f>>' +
+                '<"row"<"col-md-12"l>>' +
+                '<"row"<"col-md-12"t>>' +
+                '<"row"<"col-md-12"<"float-left"i>><"col-md-12 text-right"p>>',
+
         });
         // obtenerdatosDT(tableCliente);
     }
