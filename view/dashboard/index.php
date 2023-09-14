@@ -1,13 +1,12 @@
 <?php session_start();
 if (!isset($_SESSION['login'])) {
     header('location: ' . constant('URL'));
-}
+ }
 
 require 'view/menu.php';
 $menu = new Menu();
 $menu->header('dashboard');
 ?>
-<!-- page content -->
 <div class="right_col" role="main">
     <div class="page-title">
         <div class="title_left">
@@ -15,9 +14,7 @@ $menu->header('dashboard');
         </div>
     </div>
     <div class="clearfix"></div>
-    <!-- Graficas-->
     <div class="row">
-        <!-- Grafica de Ganancia semanal -->
         <div class="col-md-6 col-sm-6">
             <div class="x_panel">
                 <div class="x_title">
@@ -32,12 +29,10 @@ $menu->header('dashboard');
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <!-- Etiqueta para mostrar la grafica -->
                     <canvas id="semanal" width="auto" height="auto"></canvas>
                 </div>
             </div>
         </div>
-        <!-- grafica de Ganancia mensual -->
         <div class="col-md-6 col-sm-6">
             <div class="x_panel">
                 <div class="x_title">
@@ -52,13 +47,11 @@ $menu->header('dashboard');
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <!-- Etiqueta para mostrar la grafica -->
                     <canvas id="mensual" width="auto" height="auto"></canvas>
                 </div>
             </div>
         </div>
     </div>
-                    <!-- Tabla de Membresías por expirar en 5 días -->
     <div class="row">
         <div class="col-sm-12">
             <div class="x_panel">
@@ -95,61 +88,41 @@ $menu->header('dashboard');
         </div>
     </div>
 </div>
-<!-- /page content -->
 
-<!-- JavaScript para configurar y mostrar la gráfica -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // var mes;
-    // var semana;
-    // var dia;
-    // var meses;
     $(document).ready(function() {
-        traerDatos();
-        mostrarCliente();
+        getMonthlyAndWeeklyRevenueData();
+        getCustomersAboutToExpireMembership();
     });
 
-    var traerDatos = function() {
+    var getMonthlyAndWeeklyRevenueData = function() {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
         $.ajax({
             type: "GET",
-            url: "<?php echo constant('URL'); ?>dashboard/readPaymentByIdgimnasio",
+            url: "<?php echo constant('URL'); ?>dashboard/getMonthlyAndWeeklyRevenueData",
             data: {
                 id_gimnasio: id_gimnasio,
             },
             async: false,
             dataType: "json",
             success: function(data) {
-                console.log(data.mes);
-                console.log(data.semana);
-                console.log(data.dia);
-                console.log(data.meses);
-                console.log(data.semanaPasada);
-                console.log(data.anioPasado);
-                console.log(data.fechaActual);
-                // mes = data.mes;
-                // semana = data.semana;
-                // dia = data.dia;
-                // meses = data.meses;
 
-                // Mostrar las fechas en el título de las gráficas
-                $("#tituloSemanal").text("Ganancia semanal del día " + data.semanaPasada + " al día" + data.fechaActual + "");
-                $("#tituloMensual").text("Ganancia mensual del día(" + data.anioPasado + " al día " + data.fechaActual + "");
+                initialize_profit_charts(data);
 
-                inicializarGrafico(data);
             },
             error: function(xhr, status, error) {
-                // Imprimir el mensaje de error en la consola
                 console.error("Error " + error);
             }
         });
     }
 
-    function inicializarGrafico(data) {
-        //colores de las barras
-        const colores = [
+    function initialize_profit_charts(data) {
+        $("#tituloSemanal").text("Ganancia semanal del día " + data.last_week + " al día" + data.current_date + "");
+        $("#tituloMensual").text("Ganancia mensual del día(" + data.last_year + " al día " + data.current_date + "");
+        const barFillColor  = [
             'rgba(255, 99, 132, 0.2)',
             'rgba(255, 159, 64, 0.2)',
             'rgba(255, 205, 86, 0.2)',
@@ -163,8 +136,7 @@ $menu->header('dashboard');
             'rgba(75, 192, 192, 0.2)',
             'rgba(54, 162, 235, 0.2)'
         ];
-        //colores de los bordes de las graficas
-        const bordes = [
+        const barBorderColor  = [
             'rgb(255, 99, 132)',
             'rgb(255, 159, 64)',
             'rgb(255, 205, 86)',
@@ -178,17 +150,16 @@ $menu->header('dashboard');
             'rgb(75, 192, 192)',
             'rgb(54, 162, 235)'
         ];
-        // const dias = data.dia;
-        const semanal = document.getElementById('semanal');
-        new Chart(semanal, {
+        const idWeeklyChart  = document.getElementById('semanal');
+        new Chart(idWeeklyChart, {
             type: 'bar',
             data: {
-                labels: data.dia,
+                labels: data.order_of_the_days_of_the_week,
                 datasets: [{
                     label: 'Ganancia $',
-                    data: data.semana,
-                    backgroundColor: colores,
-                    borderColor: bordes,
+                    data: data.daily_Payment_Totals,
+                    backgroundColor: barFillColor ,
+                    borderColor: barBorderColor ,
                     borderWidth: 1
                 }]
             },
@@ -200,22 +171,22 @@ $menu->header('dashboard');
                 },
                 plugins: {
                     legend: {
-                        display: false // Oculta la leyenda
+                        display: false
                     }
                 }
             }
         });
 
-        const mensual = document.getElementById('mensual');
-        new Chart(mensual, {
+        const idMonthlyChart  = document.getElementById('mensual');
+        new Chart(idMonthlyChart , {
             type: 'bar',
             data: {
-                labels: data.meses,
+                labels: data.order_of_the_month_of_the_year,
                 datasets: [{
                     label: 'Ganancia $',
-                    data: data.mes,
-                    backgroundColor: colores,
-                    borderColor: bordes,
+                    data: data.monthly_Payment_Totals,
+                    backgroundColor: barFillColor ,
+                    borderColor: barBorderColor ,
                     borderWidth: 1
                 }]
             },
@@ -228,7 +199,7 @@ $menu->header('dashboard');
                 plugins: {
                     legend: {
 
-                        display: false // Oculta la leyenda
+                        display: false
                     }
                 }
             }
@@ -237,13 +208,13 @@ $menu->header('dashboard');
     }
 
 
-    var mostrarCliente = function() {
+    var getCustomersAboutToExpireMembership = function() {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
         var tableCliente = $('#dataTableCliente').DataTable({
             "processing": true,
             "ajax": {
                 type: "POST",
-                "url": "<?php echo constant('URL'); ?>cliente/readExpireCustomer",
+                "url": "<?php echo constant('URL'); ?>cliente/getCustomersWithUpcomingMembershipExpiry",
                 data: {
                     id_gimnasio: id_gimnasio
                 },
@@ -306,20 +277,13 @@ $menu->header('dashboard');
             autoWidth: false,
             language: idiomaDataTable,
             lengthChange: true,
-            buttons: [
-                'copy', 'excel', 'csv', 'pdf'
-            ],
-            dom: '<"row"<"col-md-12"B>>' +
-                '<"row"<"col-md-12"f>>' +
-                '<"row"<"col-md-12"l>>' +
-                '<"row"<"col-md-12"t>>' +
-                '<"row"<"col-md-12"<"float-left"i>><"col-md-12 text-right"p>>',
-
+            buttons: ['copy', 'excel', 'csv', 'pdf'],
+            dom: 'Bfltip',
         });
-        // obtenerdatosDT(tableCliente);
     }
 </script>
 
 <?php
 $menu->footer();
 ?>
+

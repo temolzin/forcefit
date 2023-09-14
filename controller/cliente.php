@@ -175,13 +175,13 @@ class Cliente extends Controller
 		$mpdf->Output();
 	}
 
-	function readExpireCustomer()
+	function getCustomersWithUpcomingMembershipExpiry()
 	{
 		$id_gimnasio= $_POST['id_gimnasio'];
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();
-		$clienteDAO = $clienteDAO->readExpireCustomer($id_gimnasio);
+		$clienteDAO = $clienteDAO->getCustomersWithUpcomingMembershipExpiry($id_gimnasio);
 
 		$obj = null;
 		if (is_array($clienteDAO) || is_object($clienteDAO)) {

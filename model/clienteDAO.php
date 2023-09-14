@@ -179,7 +179,7 @@ class ClienteDAO extends Model implements CRUD
         return $objCliente;
     }
 
-    public function readExpireCustomer($id_gimnasio)
+    public function getCustomersWithUpcomingMembershipExpiry($id_gimnasio)
 {
     $objCliente = array();
     require_once 'clienteDTO.php';
@@ -208,11 +208,12 @@ class ClienteDAO extends Model implements CRUD
         }}else{
             $objCliente=null;
         }
-        
+
     $objCliente = array_values($objCliente);
-    
+
     return $objCliente;
 }
 
 }
 ?>
+
