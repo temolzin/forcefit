@@ -7,6 +7,7 @@ require 'view/menu.php';
 $menu = new Menu();
 $menu->header('dashboard');
 ?>
+<!-- page content -->
 <div class="right_col" role="main">
     <div class="page-title">
         <div class="title_left">
@@ -14,6 +15,7 @@ $menu->header('dashboard');
         </div>
     </div>
     <div class="clearfix"></div>
+    <!-- Charts -->
     <div class="row">
         <div class="col-md-6 col-sm-6">
             <div class="x_panel">
@@ -52,6 +54,8 @@ $menu->header('dashboard');
             </div>
         </div>
     </div>
+    <!-- /Charts -->
+    <!-- Table of customers with membership expiring in the next 5 days -->
     <div class="row">
         <div class="col-sm-12">
             <div class="x_panel">
@@ -87,8 +91,9 @@ $menu->header('dashboard');
             </div>
         </div>
     </div>
+    <!-- /Table of customers with membership expiring in the next 5 days -->
 </div>
-
+<!-- /page content -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -109,9 +114,7 @@ $menu->header('dashboard');
             async: false,
             dataType: "json",
             success: function(data) {
-
                 initialize_profit_charts(data);
-
             },
             error: function(xhr, status, error) {
                 console.error("Error " + error);
@@ -198,15 +201,12 @@ $menu->header('dashboard');
                 },
                 plugins: {
                     legend: {
-
                         display: false
                     }
                 }
             }
         });
-
     }
-
 
     var getCustomersAboutToExpireMembership = function() {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"

@@ -17,12 +17,12 @@ class Dashboard extends Controller
 	}
 
 	function getMonthlyAndWeeklyRevenueData()
-    {
+	{
 		$id_gimnasio = $_GET['id_gimnasio'];
 		require 'model/dashboardDAO.php';
 		$this->loadModel('DashboardDAO');
 		$dashboardDAO = new DashboardDAO();
 		$dashboardDAO = $dashboardDAO->getMonthlyAndWeeklyRevenueData($id_gimnasio);
-    }
+	}
 }
 ?>

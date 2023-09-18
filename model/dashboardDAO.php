@@ -10,7 +10,6 @@ class DashboardDAO extends Model implements CRUD
     {
     }
 
-
     public function update($data)
     {
     }
