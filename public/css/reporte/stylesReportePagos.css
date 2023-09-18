@@ -17,7 +17,7 @@
   padding: 15px; 
 }
 
-#factura_head {
+#reporte_head {
   margin: 50;
   margin-bottom: 10px;
 }
@@ -42,8 +42,8 @@ p, label, span, table{
   margin-bottom: 5px;
 }
 
-#factura_cliente,
-#factura_detalle {
+#reporte_cliente,
+#reporte_detalle {
   width: 100%;
   margin: 10px;
   border: 1px solid #0B1C80;
@@ -58,7 +58,7 @@ p, label, span, table{
   text-align: center;
 }
 
-.info_factura{
+.info_reporte{
   border: 1px solid #0B1C80;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -103,11 +103,11 @@ p, label, span, table{
   font-size: 13pt;
 }
 
-#factura_detalle{
+#reporte_detalle{
   border-collapse: collapse;
 }
 
-#factura_detalle thead th{
+#reporte_detalle thead th{
   background: #0B1C80;
   color: #FFF;
   padding: 5px;

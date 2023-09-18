@@ -718,7 +718,7 @@ var eliminarRegistro = function() {
 $(document).ready(function () {
     $.ajax({
         url: 'pago/showCustomersWithPayments?id_usuario=<?php echo $_SESSION['id_usuario']; ?>',
-        type: 'GET',
+        type: 'POST',
         dataType: 'json',
         success: function (data) {
             data.forEach(function (cliente) {

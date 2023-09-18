@@ -86,7 +86,8 @@ class PagoDAO extends Model implements CRUD
         echo json_encode($objPago, JSON_UNESCAPED_UNICODE);
     }
 
-    public function getCustomersWithPaymentsPerUser($id_usuario) {
+    public function getCustomersWithPaymentsPerUser($id_usuario)
+    {
         $query = $this->db->conectar()->prepare("
             SELECT DISTINCT c.id_cliente, c.nombre_cliente
             FROM cliente c

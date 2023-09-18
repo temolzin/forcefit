@@ -4,7 +4,7 @@ function getPlantillaFront($cliente)
     if (isset($cliente['pagos']) && is_array($cliente['pagos']) && !empty($cliente['pagos'])) {
         $pagos = $cliente['pagos'];
     } else {
-        $pagos = array(); // Define un arreglo vacío si no hay datos de pagos
+        $pagos = array();
     }
     
     $plantillaFront = '
@@ -12,7 +12,7 @@ function getPlantillaFront($cliente)
                 <div class="logo">
                     <img src="public/img/forcefit.png">
                 </div>
-                <table id="factura_head">
+                <table id="reporte_head">
                     <tr>
                         <td class="info_empresa">
                             <div>
@@ -21,7 +21,7 @@ function getPlantillaFront($cliente)
                                 <a class="link_Email" href="mailto:info@rootheim.com">Email: info@rootheim.com</a>
                             </div>
                         </td>
-                        <td class="info_factura">
+                        <td class="info_reporte">
                             <div class="round">
                                 <span class="h3">Reporte de Pagos</span>
                                 <p>Fecha y Hora: ' . $cliente['pagos'][0]['fecha_hora_pago'] . '</p>
@@ -29,7 +29,7 @@ function getPlantillaFront($cliente)
                         </td>
                     </tr>
                 </table>
-                <table id="factura_cliente">
+                <table id="reporte_cliente">
                     <tr>
                         <td class="info_cliente">
                             <div class="round">
@@ -44,7 +44,7 @@ function getPlantillaFront($cliente)
                         </td>
                     </tr>
                 </table>
-                <table id="factura_detalle">
+                <table id="reporte_detalle">
                         <thead>
                             <tr>
                                 <th width="50px">ID</th>

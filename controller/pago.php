@@ -91,7 +91,8 @@ class Pago extends Controller
 		
 	}
 
-	function showCustomersWithPayments() {
+	function showCustomersWithPayments()
+	{
 		$id_usuario = $_GET['id_usuario'];
 		require 'model/pagoDAO.php';
 		$this->loadModel('PagoDAO');
@@ -102,7 +103,7 @@ class Pago extends Controller
 
 	function generatePaymentReport()
 	{
-		require_once('./view/pago/reporte/plantilla.php');
+		require_once('./view/pago/reporte/plantillaReportePagos.php');
 		require_once __DIR__ . '/../vendor/autoload.php';
 		$cliente = array();
 		$id_cliente = $_POST['idCliente'];
@@ -110,8 +111,8 @@ class Pago extends Controller
 		$this->loadModel('PagoDAO');
 		$pagoDAO = new PagoDAO();
 		$pagoDAO = $pagoDAO->getPaymentsByCustomerId($cliente, $id_cliente);
-		$css = file_get_contents('./public/css/reporte/styles.css');
-		$mpdf = new \Mpdf\Mpdf(['margin_left' => 5, 'margin_right' => 20, 'margin_top' => 5, 'margin_bottom' => 20,]);
+		$css = file_get_contents('./public/css/reporte/stylesReportePagos.css');
+		$mpdf = new \Mpdf\Mpdf(['format' => 'letter', 'margin_left' => 5, 'margin_right' => 20, 'margin_top' => 5, 'margin_bottom' => 20,]);
 		$plantillaFront = getPlantillaFront($cliente);
 		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
 		$mpdf->writeHtml($plantillaFront, \Mpdf\HTMLParserMode::HTML_BODY);

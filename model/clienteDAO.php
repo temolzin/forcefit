@@ -20,7 +20,7 @@ class ClienteDAO extends Model implements CRUD
                 :codigo_postal_cliente, 
                 :numero_cliente, 
                 :imagen_cliente,
-                1)');
+                0)');
         $query->execute([
             'id_gimnasio'=> $data['id_gimnasio'],
             'id_planGym' =>$data['id_PlanGym'],
