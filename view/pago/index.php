@@ -15,6 +15,9 @@ $menu->header('Pago');
                     <h2>Tabla de Pagos</h2>
                     <div class="row">
                         <div class="col-lg-12 text-right">
+                            <button class="btn btn-primary" data-toggle='modal' data-target='#modalMostrarPagoCliente'> <i
+                                    class="fa fa-users"></i> Pagos de los cliente
+                            </button>
                             <button class="btn btn-primary" data-toggle='modal' data-target='#modalRegistrarPago'> <i
                                     class="fa fa-edit"></i> Registrar Pago
                             </button>
@@ -51,6 +54,51 @@ $menu->header('Pago');
 </section>
 
 <!--*****************************************MODALS****************************************-->
+<!--------------------------------------------------------- Modal Seleccionar cliente Factura----------------------------------------------->
+<div class="modal fade" id="modalMostrarPagoCliente" tabindex="-1" role="dialog" aria-labelledby="modalMostrarPagoCliente"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="card-primary">
+                <div class="card-header">
+                    <div class="d-sm-flex align-items-center justify-content-between ">
+                        <h4 class="card-title">Pagos <small> &nbsp;(*) Campos requeridos</small></h4>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
+                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <form role="form" id="formFacturaClientes" name="formFacturaClientes" method="post">
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header py-2 bg-secondary">
+                                <h3 class="card-title">Seleccione el cliente</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Cliente(*)</label>
+                                        <select name="cliente_id" id="cliente_id" class="form-control" style="width:100%;">
+                                            <option value="">Selecciona un cliente</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="generarFacturaBtn">Generar Reporte de pagos</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!--------------------------------------------------------- Modal Registrar pago----------------------------------------------->
 <div class="modal fade" id="modalRegistrarPago" tabindex="-1" role="dialog" aria-labelledby="modalRegistrarPago"
     aria-hidden="true">
@@ -666,5 +714,50 @@ var eliminarRegistro = function() {
         });
     });
 }
+
+$(document).ready(function () {
+    $.ajax({
+        url: 'pago/showCustomersWithPayments?id_usuario=<?php echo $_SESSION['id_usuario']; ?>',
+        type: 'POST',
+        dataType: 'json',
+        success: function (data) {
+            data.forEach(function (cliente) {
+                $('#cliente_id').append('<option value="' + cliente.id_cliente + '">' + cliente.nombre_cliente + '</option>');
+            });
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+});
+
+$(document).on('click', '#generarFacturaBtn', function (event) {
+    event.preventDefault();
+    var id_cliente = $('#cliente_id').val();
+    var url = "<?php echo constant('URL'); ?>pago/generatePaymentReport";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        xhrFields: {
+            responseType: 'blob'
+        },
+        data: {
+            idCliente: id_cliente
+        },
+        success: function (json) {
+            var a = document.createElement('a');
+            var url = window.URL.createObjectURL(json);
+            a.href = url;
+            a.download = 'Reporte de Pagos.pdf';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        },
+        error: function () {
+            console.error("Error generando el reporte");
+        }
+    });
+});
+
 </script>
 
