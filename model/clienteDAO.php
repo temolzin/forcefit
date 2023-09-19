@@ -1,6 +1,8 @@
 <?php
 class ClienteDAO extends Model implements CRUD
 {
+    const CUSTOMER_INACTIVE = 0;
+
     public function __construct()
     {
         parent::__construct();
@@ -20,7 +22,7 @@ class ClienteDAO extends Model implements CRUD
                 :codigo_postal_cliente, 
                 :numero_cliente, 
                 :imagen_cliente,
-                1)');
+                :is_active)');
         $query->execute([
             'id_gimnasio'=> $data['id_gimnasio'],
             'id_planGym' =>$data['id_PlanGym'],
@@ -32,7 +34,8 @@ class ClienteDAO extends Model implements CRUD
             ':calle_cliente' => $data['calleCliente'],
             ':codigo_postal_cliente' => $data['codigoPostalCliente'],
             ':numero_cliente' => $data['numeroCliente'],
-            ':imagen_cliente' => $data['imagen']
+            ':imagen_cliente' => $data['imagen'],
+            ':is_active' => self::CUSTOMER_INACTIVE
         ]);
         echo 'ok';
     }

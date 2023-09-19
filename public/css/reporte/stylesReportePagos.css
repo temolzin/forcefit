@@ -1,5 +1,5 @@
 @page {
-  sheet-size: 18cm 26cm;
+  sheet-size: 21.59cm 27.94cm;
   background-image: url('public/img/fondoFacturaP.png');
   background-image-resize: 6;
   background-image-opacity: 1;
@@ -8,23 +8,32 @@
   background-image-repeat: no-repeat;
   background-image-scale: uniform;
 }
+
 #page_pdf {
-  margin: 20px;
+  margin: 50;
   position: relative;
   width: 100%;
-  max-width: 20cm; 
-  padding: 15px; 
+  max-width: 20cm;
+  padding: 15px;
 }
+
+#reporte_head {
+  margin: 50;
+  margin-bottom: 10px;
+}
+
 p, label, span, table{
-  font-family: 'BrixSansRegular';
-  font-size: 11pt;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12pt;
 }
+
 .h2{
-  font-family: 'BrixSansBlack';
-  font-size: 16pt;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17pt;
 }
+
 .h3{
-  font-family: 'BrixSansBlack';
+  font-family: 'Montserrat', sans-serif;
   font-size: 15pt;
   display: block;
   color: #0B1C80;
@@ -32,8 +41,9 @@ p, label, span, table{
   padding: 3px;
   margin-bottom: 5px;
 }
-#factura_cliente,
-#factura_detalle {
+
+#reporte_cliente,
+#reporte_detalle {
   width: 100%;
   margin: 10px;
   border: 1px solid #0B1C80;
@@ -42,58 +52,78 @@ p, label, span, table{
   max-height: calc(100% - 40px); 
   overflow-y: auto; 
 }
+
 .info_empresa{
   width: 50%;
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
-.info_factura{
+
+.info_reporte{
   border: 1px solid #0B1C80;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #fff;
+  font-family: 'Montserrat', sans-serif;
 }
+
 .info_cliente{
   width: 100%;
 }
+
 .datos_cliente{
   width: 100%;
   padding: 15px;
 }
+
 .datos_cliente{
   padding:  5px 20px 5px 20px;
 }
+
 .datos_cliente label{
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
+
 .datos_cliente p{
   font-weight: normal; 
   margin-right: 10px; 
 }
-.textleft{
-  text-align: left;
-}
-.textcenter{
+
+.textable{
   text-align: center;
-  font-size: 13pt;
-}
-.textright{
-  text-align: center;
-  font-size: 13pt;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12pt;
+  color: #FFF;
 }
 
-#factura_detalle{
+.textcenter{
+  text-align: center;
+  font-size: 12pt;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.textright{
+  text-align: center;
+  font-size: 12pt;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#reporte_detalle{
   border-collapse: collapse;
 }
-#factura_detalle thead th{
+
+#reporte_detalle thead th{
   background: #0B1C80;
   color: #FFF;
   padding: 5px;
 }
+
 #detalle_productos tr:nth-child(even) {
   background: #ededed;
 }
+
 .info_Eabajo{
   text-align: center;
   margin-top: 20px;
@@ -103,14 +133,27 @@ p, label, span, table{
   left: 20px; 
   right: 20px; 
 }
+
 .text_infoE {
   text-align: center;
-  font-size: 10pt;
+  font-size: 12pt;
+  font-family: 'Montserrat', sans-serif;
 }
+
 .logo {
   width: 5cm;
   height: 5cm;
   border-radius: 5%;
   object-fit: cover;
   position: absolute;
+}
+
+.link_Whats,
+.link_Email {
+  display: inline-block;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-family: 'Montserrat', sans-serif;
 }
