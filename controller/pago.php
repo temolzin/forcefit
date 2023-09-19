@@ -112,7 +112,7 @@ class Pago extends Controller
 		$pagoDAO = new PagoDAO();
 		$pagoDAO = $pagoDAO->getPaymentsByCustomerId($cliente, $id_cliente);
 		$css = file_get_contents('./public/css/reporte/stylesReportePagos.css');
-		$mpdf = new \Mpdf\Mpdf(['format' => 'letter', 'margin_left' => 5, 'margin_right' => 20, 'margin_top' => 5, 'margin_bottom' => 20,]);
+		$mpdf = new \Mpdf\Mpdf(['margin_left' => 0, 'margin_right' => 20, 'margin_top' => 0, 'margin_bottom' => 20,]);
 		$plantillaFront = getPlantillaFront($cliente);
 		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
 		$mpdf->writeHtml($plantillaFront, \Mpdf\HTMLParserMode::HTML_BODY);

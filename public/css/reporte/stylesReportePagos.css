@@ -1,5 +1,5 @@
 @page {
-  sheet-size: 18cm 26cm;
+  sheet-size: 21.59cm 27.94cm;
   background-image: url('public/img/fondoFacturaP.png');
   background-image-resize: 6;
   background-image-opacity: 1;
@@ -13,8 +13,8 @@
   margin: 50;
   position: relative;
   width: 100%;
-  max-width: 20cm; 
-  padding: 15px; 
+  max-width: 20cm;
+  padding: 15px;
 }
 
 #reporte_head {
@@ -23,17 +23,17 @@
 }
 
 p, label, span, table{
-  font-family: 'BrixSansRegular';
-  font-size: 11pt;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12pt;
 }
 
 .h2{
-  font-family: 'BrixSansBlack';
-  font-size: 16pt;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17pt;
 }
 
 .h3{
-  font-family: 'BrixSansBlack';
+  font-family: 'Montserrat', sans-serif;
   font-size: 15pt;
   display: block;
   color: #0B1C80;
@@ -56,6 +56,7 @@ p, label, span, table{
 .info_empresa{
   width: 50%;
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .info_reporte{
@@ -63,6 +64,7 @@ p, label, span, table{
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #fff;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .info_cliente{
@@ -89,18 +91,23 @@ p, label, span, table{
   margin-right: 10px; 
 }
 
-.textleft{
-  text-align: left;
+.textable{
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12pt;
+  color: #FFF;
 }
 
 .textcenter{
   text-align: center;
-  font-size: 13pt;
+  font-size: 12pt;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .textright{
   text-align: center;
-  font-size: 13pt;
+  font-size: 12pt;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #reporte_detalle{
@@ -129,7 +136,8 @@ p, label, span, table{
 
 .text_infoE {
   text-align: center;
-  font-size: 10pt;
+  font-size: 12pt;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .logo {
@@ -146,5 +154,6 @@ p, label, span, table{
   padding: 10px;
   text-decoration: none;
   border-radius: 5px;
-  margin-right: 10px;       
+  margin-right: 10px;
+  font-family: 'Montserrat', sans-serif;
 }

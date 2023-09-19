@@ -10,7 +10,7 @@ function getPlantillaFront($cliente)
     $plantillaFront = '
             <div id="page_pdf">
                 <div class="logo">
-                    <img src="public/img/forcefit.png">
+                    <img src="public/img/logos/logotipoAzulBlanco.png">
                 </div>
                 <table id="reporte_head">
                     <tr>
@@ -47,11 +47,11 @@ function getPlantillaFront($cliente)
                 <table id="reporte_detalle">
                         <thead>
                             <tr>
-                                <th width="50px">ID</th>
-                                <th  class="textright" width="150px">Plan del Gimnacio</th>
-                                <th  class="textright" width="150px">Fecha y hora del pago</th>
-                                <th class="textright" width="150px">Formato de pago</th>
-                                <th class="textright" width="150px"> Cantidad</th>
+                                <th class="textable">Id</th>
+                                <th class="textable">Plan del gimnasio</th>
+                                <th class="textable">Fecha y hora del pago</th>
+                                <th class="textable">Formato de pago</th>
+                                <th class="textable">Cantidad</th>
                             </tr>
                         </thead>
                         <tbody id="detalle_productos">';
