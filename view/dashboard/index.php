@@ -94,8 +94,11 @@ $menu->header('dashboard');
     <!-- /Table of customers with membership expiring in the next 5 days -->
 </div>
 <!-- /page content -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+
+<?php
+$menu->footer();
+?>
 
 <script>
     $(document).ready(function() {
@@ -283,7 +286,4 @@ $menu->header('dashboard');
     }
 </script>
 
-<?php
-$menu->footer();
-?>
 
