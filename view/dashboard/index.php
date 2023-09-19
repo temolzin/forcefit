@@ -94,12 +94,11 @@ $menu->header('dashboard');
     <!-- /Table of customers with membership expiring in the next 5 days -->
 </div>
 <!-- /page content -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-
 <?php
 $menu->footer();
 ?>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <script>
     $(document).ready(function() {
         getMonthlyAndWeeklyRevenueData();
