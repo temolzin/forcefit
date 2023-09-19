@@ -203,7 +203,7 @@ class ClienteDAO extends Model implements CRUD
                 $cliente->codigo_postal_cliente = $value['codigo_postal_cliente'];
                 $cliente->numero_cliente = $value['numero_cliente'];
                 $cliente->imagen_cliente = $value['imagen_cliente'];
-                $cliente->vencimiento = $value['vencimiento'];
+                $cliente->fecha_vencimiento = $value['vencimiento'];
                 $objCliente[$cliente->id_cliente] = $cliente;
             }
         }else{

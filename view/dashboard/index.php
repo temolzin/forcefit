@@ -272,7 +272,7 @@ $menu->footer();
                     "data": "nombrePlanGym"
                 },
                 {
-                    "data": "vencimiento"
+                    "data": "fecha_vencimiento"
                 }
             ],
             responsive: true,
