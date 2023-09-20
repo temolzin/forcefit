@@ -14,6 +14,7 @@ class ClienteDTO implements JsonSerializable
     private $imagen_cliente;
     // Dato tomado de la tabla pago_plan_gym_cliente
     private $fecha_vencimiento;
+    private $is_active;
 
     public function __get($property)
     {

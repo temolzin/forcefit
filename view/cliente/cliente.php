@@ -37,6 +37,7 @@ $menu->header('cliente');
                                             <th>Apellido Materno</th>
                                             <th>Teléfono</th>
                                             <th>Plan Gimnasio</th>
+                                            <th>Estatus del cliente</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
@@ -621,6 +622,16 @@ $menu->footer();
             },
             {
                 "data": "nombrePlanGym"
+            },
+            {
+                "data": "is_active",
+                "render": function (data, type, row) {
+                    if (data === 1) {
+                        return '<span style="color: green;">Activo</span>';
+                    } else {
+                        return '<span style="color: red;">Inactivo</span>';
+                    }
+                }
             },
             {
                 data: "option",
