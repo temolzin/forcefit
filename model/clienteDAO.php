@@ -187,6 +187,42 @@ class ClienteDAO extends Model implements CRUD
         }
         return $objCliente;
     }
+
+    public function getCustomersWithUpcomingMembershipExpiry($id_gimnasio)
+    {
+        $objCliente = array();
+        require_once 'clienteDTO.php';
+        $query = "SELECT DISTINCT c.*, pg.nombrePlanGym, ppg.vencimiento
+        FROM cliente AS c
+        INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
+        INNER JOIN pago_plan_gym_cliente AS ppg ON c.id_cliente = ppg.id_cliente
+        WHERE ppg.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+        AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio)";
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
+            foreach ($this->db->consultar($query) as $key => $value) {
+                $cliente = new ClienteDTO();
+                $cliente->id_cliente = $value['id_cliente'];
+                $cliente->nombrePlanGym = $value['nombrePlanGym'];
+                $cliente->nombre_cliente = $value['nombre_cliente'];
+                $cliente->apellido_paterno_cliente = $value['apellido_paterno_cliente'];
+                $cliente->apellido_materno_cliente = $value['apellido_materno_cliente'];
+                $cliente->municipio_cliente = $value['municipio_cliente'];
+                $cliente->colonia_cliente = $value['colonia_cliente'];
+                $cliente->calle_cliente = $value['calle_cliente'];
+                $cliente->codigo_postal_cliente = $value['codigo_postal_cliente'];
+                $cliente->numero_cliente = $value['numero_cliente'];
+                $cliente->imagen_cliente = $value['imagen_cliente'];
+                $cliente->fecha_vencimiento = $value['vencimiento'];
+                $objCliente[$cliente->id_cliente] = $cliente;
+            }
+        }else{
+            $objCliente=null;
+        }
+
+        $objCliente = array_values($objCliente);
+        return $objCliente;
+    }
+
 }
 ?>
 

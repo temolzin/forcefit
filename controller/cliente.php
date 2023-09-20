@@ -174,6 +174,25 @@ class Cliente extends Controller
 		$mpdf->WriteHTML($plantillaBack,\Mpdf\HTMLParserMode::HTML_BODY);
 		$mpdf->Output();
 	}
+
+	function getCustomersWithUpcomingMembershipExpiry()
+	{
+		$id_gimnasio= $_POST['id_gimnasio'];
+		require 'model/clienteDAO.php';
+		$this->loadModel('ClienteDAO');
+		$clienteDAO = new ClienteDAO();
+		$clienteDAO = $clienteDAO->getCustomersWithUpcomingMembershipExpiry($id_gimnasio);
+
+		$obj = null;
+		if (is_array($clienteDAO) || is_object($clienteDAO)) {
+			foreach ($clienteDAO as $key => $value) {
+				$obj["data"][] = $value;
+			}
+		} else {
+			$obj = array();
+		}
+		echo json_encode($obj);
+	}
 }
 ?>
 
