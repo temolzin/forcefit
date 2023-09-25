@@ -1,0 +1,95 @@
+@page {
+    sheet-size: 21.59cm 27.94cm;
+    background-image: url('public/img/FondoReciboPago.png');
+    background-image-resize: 6;
+    background-image-opacity: 1;
+    background-image-position-x: center;
+    background-image-position-y: center;
+    background-image-repeat: no-repeat;
+    background-image-scale: uniform;
+}
+
+p, span, label{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 15pt;
+}
+
+.h1{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 30pt;
+}
+
+.h2{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 35pt;
+}
+
+#page_pdf{
+	margin: 50;
+	position: relative;
+	width: 100%;
+	max-width: 20cm;
+	padding: 15px;
+}
+
+.link_Whats,
+.link_Email {
+	display: inline-block;
+	padding: 10px;
+	text-decoration: none;
+	border-radius: 5px;
+	margin-right: 10px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 13pt;
+	color: black; 
+}
+
+#factura_head{
+	margin: 50px;
+	margin-bottom: 10px;
+}
+
+.info_empresa{
+	width: 50%;
+	text-align: center;
+}
+
+.datos_pago_uno, .datos_pago_dos, .datos_pago_tres{
+	width: 100%;
+	padding: 15px;
+}
+
+#table_pago_uno,  #table_pago_dos, #table_pago_tres{
+  width: 100%;
+  margin: 10px;
+  border: 1px solid gray;
+}
+
+.card {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 1px;
+}
+
+.card-content {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info_Eabajo{
+	text-align: center;
+	margin-top: 20px;
+	padding: 10px;
+	position: absolute;
+	bottom: 20px; 
+	left: 20px; 
+	right: 20px; 
+}
+
+.text_infoE {
+	text-align: center;
+	font-size: 12pt;
+	font-family: 'Montserrat', sans-serif;
+}

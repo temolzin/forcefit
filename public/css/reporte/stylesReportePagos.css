@@ -42,8 +42,7 @@ p, label, span, table{
   margin-bottom: 5px;
 }
 
-#reporte_cliente,
-#reporte_detalle {
+#reporte_cliente {
   width: 100%;
   margin: 10px;
   border: 1px solid #0B1C80;

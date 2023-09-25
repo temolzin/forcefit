@@ -457,15 +457,30 @@ const llenarplanGym = () => {
     });
 }
 
-var mostrarPago = function() {
+var mostrarPago  = function () {
     var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
-    var tablePago = $('#dataTablePago').DataTable({
+    var tablePago  = $('#dataTablePago').DataTable({
         "processing": true,
         "ajax": {
-            "url": "<?php echo constant('URL'); ?>pago/readPagoByIdgimnasio?id_gimnasio=" + id_gimnasio
+            type: "POST",
+            "url": "<?php echo constant('URL'); ?>pago/readPagoByIdgimnasio",
+            data: {
+                id_gimnasio: id_gimnasio
+            },
+            dataSrc: function (json) {
+                let customData = [];
+                json.data.forEach(element => {
+                    customData = [...customData, {
+                        ...element, option: `
+                        <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetallePago' title="Ver Detalles"><i class="fa fa-eye"></i></button>
+                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarPago' title="Editar Datos"><i class="fa fa-edit"></i></button>
+                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarPago' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
+                        <button class='generar-recibo btn btn-secondary' data-id-pago="${element.id_pago}" title="Generar Recibo"><i class="fa fa-credit-card"></i></button>`}]
+                })
+                return customData;
+            }
         },
-
-        "columns": [{
+            "columns": [{
                 "data": "id_pago"
             },
             {
@@ -490,21 +505,18 @@ var mostrarPago = function() {
                 "data": "tipo_Pago"
             },
             {
-                data: null,
-                "defaultContent": `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetallePago' title="Ver Detalles"><i class="fa fa-eye"></i></button>
-                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarPago' title="Editar Datos"><i class="fa fa-edit"></i></button>
-                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarPago' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>`
+                data: "option",
             }
-        ],
-        responsive: true,
-        autoWidth: false,
-        language: idiomaDataTable,
-        lengthChange: true,
-        buttons: ['copy', 'excel', 'csv', 'pdf'],
-        dom: 'Bfltip'
-    });
-    obtenerdatosDT(tablePago);
-}
+            ],
+            responsive: true,
+            autoWidth: false,
+            language: idiomaDataTable,
+            lengthChange: true,
+            buttons: ['copy', 'excel', 'csv', 'pdf'],
+            dom: 'Bfltip'
+        });
+        obtenerdatosDT(tablePago);
+    }
 
 var obtenerdatosDT = function(table) {
     $('#dataTablePago tbody').on('click', 'tr', function() {
@@ -755,6 +767,34 @@ $(document).on('click', '#generarFacturaBtn', function (event) {
         },
         error: function () {
             console.error("Error generando el reporte");
+        }
+    });
+});
+
+$(document).on('click', '.generar-recibo', function (event) {
+    event.preventDefault();
+    var id_pago = $(this).data('id-pago');
+    var url = "<?php echo constant('URL'); ?>pago/generateReceipt";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        xhrFields: {
+            responseType: 'blob'
+        },
+        data: {
+            id_pago: id_pago
+        },
+        success: function (json) {
+            var a = document.createElement('a');
+            var url = window.URL.createObjectURL(json);
+            a.href = url;
+            a.download = 'Recibo del pago.pdf';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        },
+        error: function () {
+            console.error("Error al generer el recibo");
         }
     });
 });

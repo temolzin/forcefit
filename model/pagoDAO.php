@@ -80,10 +80,9 @@ class PagoDAO extends Model implements CRUD
             $pago->fecha_hora_pago = $value['fecha_hora_pago'];
             $pago->vencimiento = $value['vencimiento'];
             $pago->tipo_Pago = $value['tipo_Pago'];
-            $objPago['data'][] = $pago;
+            array_push($objPago, $pago);
         }
-        
-        echo json_encode($objPago, JSON_UNESCAPED_UNICODE);
+        return $objPago;
     }
 
     public function getCustomersWithPaymentsPerUser($id_usuario)
@@ -114,5 +113,21 @@ class PagoDAO extends Model implements CRUD
 
         $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
         $cliente['pagos'] = $resultados;
+    }
+
+    public function getCustomerPaymentDetails(&$clientePagoRecibo, $id_pago)
+    {
+        $query = $this->db->conectar()->prepare("SELECT pp.*, c.*, pg.nombrePlanGym
+            FROM pago_plan_gym_cliente pp
+            INNER JOIN cliente c ON pp.id_cliente = c.id_cliente
+            INNER JOIN plan_gym pg ON pp.id_planGym = pg.id_planGym
+            WHERE pp.id_pago = :id_pago
+        ");
+
+        $query->bindParam(':id_pago', $id_pago, PDO::PARAM_INT);
+        $query->execute();
+
+        $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
+        $clientePagoRecibo = $resultados[0];
     }
 }
