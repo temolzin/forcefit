@@ -475,7 +475,7 @@ var mostrarPago  = function () {
                         <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetallePago' title="Ver Detalles"><i class="fa fa-eye"></i></button>
                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarPago' title="Editar Datos"><i class="fa fa-edit"></i></button>
                         <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarPago' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
-                        <button class='generar-recibo btn btn-secondary' data-id-pago="${element.id_pago}" title="Generar Recibo"><i class="fa fa-credit-card"></i></button>`}]
+                        <button class='generar-recibo btn btn-secondary' data-id-pago="${element.id_pago}" title="Generar Recibo"><i class="fa fa-file-text-o"></i></button>`}]
                 })
                 return customData;
             }

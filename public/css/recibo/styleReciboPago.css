@@ -32,6 +32,14 @@ p, span, label{
 	padding: 15px;
 }
 
+.force_titulo {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 30pt;
+	color: black;
+	text-decoration: none;
+	display: inline-block;
+}
+
 .link_Whats,
 .link_Email {
 	display: inline-block;
@@ -92,4 +100,7 @@ p, span, label{
 	text-align: center;
 	font-size: 12pt;
 	font-family: 'Montserrat', sans-serif;
+	color: black;
+	text-decoration: none;
+	display: inline-block;
 }

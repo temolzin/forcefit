@@ -13,7 +13,7 @@ function getPlantillaFront($clientePagoRecibo)
                     </td>
                     <td class="info_empresa">
                         <div>
-                            <h1>FORCE FIT</h1><br>
+                            <a class="force_titulo" href="https://www.rootheim.com/">FORCE FIT</a><br>
                             <a class="link_Whats" href="https://wa.me/525623640302">WhatsApp: +52 56 2364 0302</a><br>
                             <a class="link_Email" href="mailto:info@rootheim.com">Email: info@rootheim.com</a>
                         </div>
@@ -25,6 +25,17 @@ function getPlantillaFront($clientePagoRecibo)
                     <h2>Recibo de pago</h2>
                 </div>
             </div>
+            <table id="table_pago_dos">
+                <tr>
+                    <td class="datos_pago_dos">
+                        <div>
+                            <p>Nombre del cliente: <label>' . $clientePagoRecibo['nombre_cliente'] . ' ' . $clientePagoRecibo['apellido_paterno_cliente'] . ' ' . $clientePagoRecibo['apellido_materno_cliente'] . '</label></p>
+                            <p>Teléfono: <label>' . $clientePagoRecibo['numero_cliente'] . '</label></p>
+                            <p>Dirección: <label>' . $clientePagoRecibo['municipio_cliente'] . ', ' . $clientePagoRecibo['colonia_cliente'] . ', ' . $clientePagoRecibo['calle_cliente'] . ', ' . $clientePagoRecibo['codigo_postal_cliente'] . '</label></p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
             <table id="table_pago_uno">
                 <tr>
                     <td class="datos_pago_uno">
@@ -36,22 +47,11 @@ function getPlantillaFront($clientePagoRecibo)
                     </td>
                 </tr>
             </table>
-            <table id="table_pago_dos">
-                <tr>
-                    <td class="datos_pago_dos">
-                        <div>
-                            <p>Nombre del cliente: <label>' . $clientePagoRecibo['nombre_cliente'] . ' ' . $clientePagoRecibo['apellido_paterno_cliente'] . ' ' . $clientePagoRecibo['apellido_materno_cliente'] . '</label></p>
-                            <p>Teléfono: <label>' . $clientePagoRecibo['numero_cliente'] . '</label></p>
-                            <p>Dicrreción: <label>' . $clientePagoRecibo['municipio_cliente'] . ', ' . $clientePagoRecibo['colonia_cliente'] . ', ' . $clientePagoRecibo['calle_cliente'] . ', ' . $clientePagoRecibo['codigo_postal_cliente'] . '</label></p>
-                        </div>
-                    </td>
-                </tr>
-            </table>
             <table id="table_pago_tres">
                 <tr>
                     <td class="datos_pago_tres">
                         <div>
-                            <p>Plan del gimnacio: <label>' . $clientePagoRecibo['nombrePlanGym'] . '</label></p>
+                            <p>Plan del gimnasio: <label>' . $clientePagoRecibo['nombrePlanGym'] . '</label></p>
                             <p>Formato de pago: <label>' . $clientePagoRecibo['tipo_Pago'] . '</label></p>
                             <p>Cantidad: <label>' . $clientePagoRecibo['cantidad_pago'] . '</label></p>
                         </div>
@@ -60,7 +60,7 @@ function getPlantillaFront($clientePagoRecibo)
             </table>
         </div>
         <div class="info_Eabajo">
-            <p class="text_infoE">Force Fit by Root Heim Company</p>
+            <a class="text_infoE" href="https://www.rootheim.com/">Force Fit by Root Heim Company</a>
         </div>
     ';
     
