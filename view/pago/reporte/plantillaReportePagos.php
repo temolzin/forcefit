@@ -16,7 +16,7 @@ function getPlantillaFront($cliente)
                     <tr>
                         <td class="info_empresa">
                             <div>
-                                <span class="h2">FORCE FIT</span><br>
+                                <a class="force_titulo" href="https://www.rootheim.com/">FORCE FIT</a><br>
                                 <a class="link_Whats" href="https://wa.me/525623640302">WhatsApp: +52 56 2364 0302</a><br>
                                 <a class="link_Email" href="mailto:info@rootheim.com">Email: info@rootheim.com</a>
                             </div>
@@ -70,7 +70,7 @@ function getPlantillaFront($cliente)
                 </table>
             </div>
             <div class="info_Eabajo">
-                <p class="text_infoE">Force Fit by Root Heim Company</p>
+                <a class="text_infoE" href="https://www.rootheim.com/">Force Fit by Root Heim Company</a>
             </div>
     ';
     
