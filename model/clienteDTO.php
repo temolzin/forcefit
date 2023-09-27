@@ -16,6 +16,7 @@ class ClienteDTO implements JsonSerializable
     private $fecha_vencimiento;
     private $is_active;
     private $email_customer;
+    private $is_email_notified;
 
     public function __get($property)
     {

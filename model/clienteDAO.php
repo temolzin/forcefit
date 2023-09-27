@@ -213,6 +213,8 @@ class ClienteDAO extends Model implements CRUD
                 $cliente->numero_cliente = $value['numero_cliente'];
                 $cliente->imagen_cliente = $value['imagen_cliente'];
                 $cliente->fecha_vencimiento = $value['vencimiento'];
+                $cliente->is_email_notified = $value['is_email_notified'];
+                $cliente->email_customer = $value['email_cliente'];
                 $objCliente[$cliente->id_cliente] = $cliente;
             }
         }else{

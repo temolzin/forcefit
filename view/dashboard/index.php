@@ -66,7 +66,7 @@ $menu->header('dashboard');
                         </div>
                         <div class="col-md-6 text-right">
                             <button class="btn btn-primary"  onclick="emailClientsAboutMembershipExpiry();">
-                                <i class="fa fa-user"></i>Notificar via Gmail
+                                <i class="fa fa-user"></i>Notificar via Email
                             </button>
                             <a href="<?php echo constant("URL"); ?>cliente" class="btn btn-primary">
                                 <i class="fa fa-user"></i>Ver Clientes
@@ -87,6 +87,8 @@ $menu->header('dashboard');
                                 <th>Teléfono</th>
                                 <th>Plan Gimnasio</th>
                                 <th>Fecha de Vencimiento</th>
+                                <th>Email</th>
+                                <th>Notificacion</th>
                             </tr>
                         </thead>
                     </table>
@@ -103,6 +105,7 @@ $menu->footer();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <script>
+    var tableCliente;
     $(document).ready(function() {
         getMonthlyAndWeeklyRevenueData();
         getCustomersAboutToExpireMembership();
@@ -123,8 +126,8 @@ $menu->footer();
                     "¡Éxito!",
                     data.message,
                     "success"
-                )
-            },
+                    )
+                },
             error: function(xhr, status, error) {
                 Swal.fire(
                     "Error!",
@@ -133,6 +136,8 @@ $menu->footer();
                 )
             }
         });
+        tableCliente.destroy();
+        getCustomersAboutToExpireMembership();
     }
 
     var getMonthlyAndWeeklyRevenueData = function() {
@@ -242,7 +247,7 @@ $menu->footer();
 
     var getCustomersAboutToExpireMembership = function() {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
-        var tableCliente = $('#dataTableCliente').DataTable({
+        tableCliente = $('#dataTableCliente').DataTable({
             "processing": true,
             "ajax": {
                 type: "POST",
@@ -303,6 +308,19 @@ $menu->footer();
                 },
                 {
                     "data": "fecha_vencimiento"
+                },
+                {
+                    "data": "email_customer"
+                },
+                {
+                    "data": "is_email_notified",
+                    "render": function (data, type, row) {
+                        if (data == 1) {
+                            return '<span style="color: green;">Enviada</span>';
+                        } else {
+                            return '<span style="color: red;">No enviada</span>';
+                        }
+                    }
                 }
             ],
             responsive: true,

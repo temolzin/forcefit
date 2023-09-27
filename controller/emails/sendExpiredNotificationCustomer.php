@@ -115,11 +115,17 @@ class sendExpiredNotificationCustomer
                     }
 
                     .logo-top {
-                        max-width: 8%;
+                        width: 25px;
+                        height: 25px;
+                        border-radius: 50%;
+                        margin-top: 8px;
                     }
 
                     .logo-bottom {
-                        max-width: 6%;
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        margin-top: 4px;
                     }
 
                     .centered-text {
@@ -131,8 +137,8 @@ class sendExpiredNotificationCustomer
                     }
 
                     a {
-                        color: #000; /* Cambia el color a negro (#000) o el color deseado */
-                        text-decoration: none; /* Elimina el subrayado predeterminado de los enlaces */
+                        color: #000;
+                        text-decoration: none;
                     }
                 </style>
             </head>
@@ -161,14 +167,26 @@ class sendExpiredNotificationCustomer
                         <p style="text-align: justify;">¡Esperamos seguir viéndole en nuestro gimnasio y ayudarle a alcanzar sus
                             objetivos de fitness!</p>
                     </div>
-                    <div class="footer">
-                        <img src="cid:gym.png" alt="Logo al final" class="logo-bottom">
-                        <p class="footer-text">&copy; ' . $name_gym . '. Todos los derechos reservados.</p>
-                    </div>
-                    <div class="footer">
-                        <img src="cid:rootheim.png" alt="Logo al final" class="logo-top">
-                        <p class="footer-text"><a href="https://www.rootheim.com/" style="color: #000; text-decoration: none;">Force Fit by Root Heim Company</a></p>
-                    </div>
+                    <table style="margin: 0 auto;">
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <img src="cid:gym.png" alt="' . $name_gym . '" class="logo-bottom">
+                            </td>
+                            <td>
+                                <p class="footer-text">&copy; ' . $name_gym . '. Todos los derechos reservados.</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 0 auto;">
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <img src="cid:rootheim.png" alt="https://www.rootheim.com/" class="logo-top">
+                            </td>
+                            <td>
+                                <p class="footer-text"><a href="https://www.rootheim.com/" style="color: #000; text-decoration: none;">Force Fit by Root Heim Company</a></p>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </body>
             </html>
