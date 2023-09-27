@@ -65,6 +65,9 @@ $menu->header('dashboard');
                             <h2>Membresías por expirar</h2>
                         </div>
                         <div class="col-md-6 text-right">
+                            <button class="btn btn-primary"  onclick="emailClientsAboutMembershipExpiry();">
+                                <i class="fa fa-user"></i>Notificar via Gmail
+                            </button>
                             <a href="<?php echo constant("URL"); ?>cliente" class="btn btn-primary">
                                 <i class="fa fa-user"></i>Ver Clientes
                             </a>
@@ -104,6 +107,33 @@ $menu->footer();
         getMonthlyAndWeeklyRevenueData();
         getCustomersAboutToExpireMembership();
     });
+
+    var emailClientsAboutMembershipExpiry = function() {
+        var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
+        $.ajax({
+            type: "GET",
+            url: "<?php echo constant('URL'); ?>dashboard/emailClientsAboutMembershipExpiry",
+            data: {
+                id_gimnasio: id_gimnasio,
+            },
+            async: false,
+            dataType: "json",
+            success: function(data) {
+                Swal.fire(
+                    "¡Éxito!",
+                    data.message,
+                    "success"
+                )
+            },
+            error: function(xhr, status, error) {
+                Swal.fire(
+                    "Error!",
+                    xhr.responseText,
+                    "error"
+                )
+            }
+        });
+    }
 
     var getMonthlyAndWeeklyRevenueData = function() {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
