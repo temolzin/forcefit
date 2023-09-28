@@ -316,7 +316,7 @@ $menu->footer();
                     "data": "is_email_notified",
                     "render": function (data, type, row) {
                         var response = 'Enviada';
-                        var color = 'green'
+                        var color = 'green';
                         if(data !== 1){
                             response = 'No enviada';
                             color = 'red';
