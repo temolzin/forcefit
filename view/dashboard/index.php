@@ -65,6 +65,9 @@ $menu->header('dashboard');
                             <h2>Membresías por expirar</h2>
                         </div>
                         <div class="col-md-6 text-right">
+                            <button class="btn btn-primary"  onclick="emailClientsAboutMembershipExpiry();">
+                                <i class="fa fa-user"></i>Notificar via Email
+                            </button>
                             <a href="<?php echo constant("URL"); ?>cliente" class="btn btn-primary">
                                 <i class="fa fa-user"></i>Ver Clientes
                             </a>
@@ -84,6 +87,8 @@ $menu->header('dashboard');
                                 <th>Teléfono</th>
                                 <th>Plan Gimnasio</th>
                                 <th>Fecha de Vencimiento</th>
+                                <th>Email</th>
+                                <th>Notificacion</th>
                             </tr>
                         </thead>
                     </table>
@@ -100,10 +105,40 @@ $menu->footer();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <script>
+    var tableCliente;
     $(document).ready(function() {
         getMonthlyAndWeeklyRevenueData();
         getCustomersAboutToExpireMembership();
     });
+
+    var emailClientsAboutMembershipExpiry = function() {
+        var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
+        $.ajax({
+            type: "GET",
+            url: "<?php echo constant('URL'); ?>dashboard/emailClientsAboutMembershipExpiry",
+            data: {
+                id_gimnasio: id_gimnasio,
+            },
+            async: false,
+            dataType: "json",
+            success: function(data) {
+                Swal.fire(
+                    "¡Éxito!",
+                    data.message,
+                    "success"
+                    )
+                },
+            error: function(xhr, status, error) {
+                Swal.fire(
+                    "Error!",
+                    xhr.responseText,
+                    "error"
+                )
+            }
+        });
+        tableCliente.destroy();
+        getCustomersAboutToExpireMembership();
+    }
 
     var getMonthlyAndWeeklyRevenueData = function() {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
@@ -212,7 +247,7 @@ $menu->footer();
 
     var getCustomersAboutToExpireMembership = function() {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
-        var tableCliente = $('#dataTableCliente').DataTable({
+        tableCliente = $('#dataTableCliente').DataTable({
             "processing": true,
             "ajax": {
                 type: "POST",
@@ -273,6 +308,21 @@ $menu->footer();
                 },
                 {
                     "data": "fecha_vencimiento"
+                },
+                {
+                    "data": "email_customer"
+                },
+                {
+                    "data": "is_email_notified",
+                    "render": function (data, type, row) {
+                        var response = 'Enviada';
+                        var color = 'green';
+                        if(data !== 1){
+                            response = 'No enviada';
+                            color = 'red';
+                        }
+                        return '<span style="color: '+color+';">' + response +'</span>';
+                    }
                 }
             ],
             responsive: true,
