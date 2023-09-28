@@ -315,11 +315,13 @@ $menu->footer();
                 {
                     "data": "is_email_notified",
                     "render": function (data, type, row) {
-                        if (data == 1) {
-                            return '<span style="color: green;">Enviada</span>';
-                        } else {
-                            return '<span style="color: red;">No enviada</span>';
+                        var response = 'Enviada';
+                        var color = 'green'
+                        if(data !== 1){
+                            response = 'No enviada';
+                            color = 'red';
                         }
+                        return '<span style="color: '+color+';">' + response +'</span>';
                     }
                 }
             ],
