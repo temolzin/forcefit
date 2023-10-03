@@ -1,6 +1,8 @@
 <?php
 class UsuarioDAO extends Model implements CRUD
 {
+    const roleManager = 2;
+
     public function __construct()
     {
         parent::__construct();
@@ -236,6 +238,29 @@ class UsuarioDAO extends Model implements CRUD
             }
         }
         return $arrPermisos;
+    }
+
+    public function readUsersManagers()
+    {
+        require_once 'usuarioDTO.php';
+        $query = "SELECT usuario.id_usuario, usuario.nombreUsuario, usuario.apellidoPaternoUsuario, usuario.apellidoMaternoUsuario
+        FROM usuario
+        INNER JOIN rol ON usuario.id_rol = rol.id_rol
+        WHERE rol.id_rol = " . self::roleManager;
+        $objUsuario = array();
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
+            foreach ($this->db->consultar($query) as $key => $value) {
+                $usuario = new UsuarioDTO();
+                $usuario->id_usuario = $value['id_usuario'];
+                $usuario->nombreUsuario = $value['nombreUsuario'];
+                $usuario->apellidoPaternoUsuario = $value['apellidoPaternoUsuario'];
+                $usuario->apellidoMaternoUsuario = $value['apellidoMaternoUsuario'];
+                array_push($objUsuario, $usuario);
+            }
+        }else{
+            $objUsuario=null;
+        }
+        return $objUsuario;
     }
 }
 ?>
