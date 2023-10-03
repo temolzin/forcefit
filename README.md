@@ -28,4 +28,12 @@ git clone https://github.com/temolzin/forcefit.git
 - Posteriormente instalas la base de datos.
 - Para que el proyecto funcione correctamente ejecuta este comando en la carpeta raíz **composer install**
 
+### Instalación de la  librería phinx📋
+- Ejecuta este comando **composer require robmorgan/phinx**
+
+### Descargar Migraciones
+- Ejecuta este comando **composer phinx-migrate**
+### Descargar seeders
+- Ejecuta el siguiente comando **composer phinx-seed-run**
+
 ### End

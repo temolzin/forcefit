@@ -1,5 +1,12 @@
 {
     "require": {
         "mpdf/mpdf": "^8.1"
-    }
+    },
+    "scripts": {
+        "phinx-create": "./vendor/bin/phinx --configuration=\"./config/phinx.php\" create ",
+        "phinx-migrate": "./vendor/bin/phinx --configuration=\"./config/phinx.php\" migrate ",
+        "phinx-rollback": "./vendor/bin/phinx --configuration=\"./config/phinx.php\" rollback ",
+        "phinx-seed-create": "./vendor/bin/phinx --configuration=\"./config/phinx.php\" seed:create",
+        "phinx-seed-run": "./vendor/bin/phinx --configuration=\"./config/phinx.php\" seed:run"
+      }
 }
