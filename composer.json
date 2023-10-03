@@ -1,6 +1,7 @@
 {
     "require": {
-        "mpdf/mpdf": "^8.1"
+        "mpdf/mpdf": "^8.1",
+        "phpmailer/phpmailer": "^6.8.1"
     },
     "scripts": {
         "phinx-create": "./vendor/bin/phinx --configuration=\"./config/phinx.php\" create ",

@@ -15,5 +15,23 @@ class Dashboard extends Controller
 	{
 		$this->view->render('dashboard/aboutUs');
 	}
+
+	function getMonthlyAndWeeklyRevenueData()
+	{
+		$id_gimnasio = $_GET['id_gimnasio'];
+		require 'model/dashboardDAO.php';
+		$this->loadModel('DashboardDAO');
+		$dashboardDAO = new DashboardDAO();
+		$dashboardDAO = $dashboardDAO->getMonthlyAndWeeklyRevenueData($id_gimnasio);
+	}
+
+	function emailClientsAboutMembershipExpiry()
+	{
+		$id_gimnasio = $_GET['id_gimnasio'];
+		require 'model/dashboardDAO.php';
+		$this->loadModel('DashboardDAO');
+		$dashboardDAO = new DashboardDAO();
+		$dashboardDAO = $dashboardDAO->getClientsAboutMembershipExpiry($id_gimnasio);
+	}
 }
 ?>

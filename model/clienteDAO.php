@@ -2,6 +2,7 @@
 class ClienteDAO extends Model implements CRUD
 {
     const CUSTOMER_INACTIVE = 0;
+    const NOTIFICATION_NOT_SENT = 0;
 
     public function __construct()
     {
@@ -22,6 +23,8 @@ class ClienteDAO extends Model implements CRUD
                 :codigo_postal_cliente, 
                 :numero_cliente, 
                 :imagen_cliente,
+                :email_cliente,
+                :is_email_notified,
                 :is_active)');
         $query->execute([
             'id_gimnasio'=> $data['id_gimnasio'],
@@ -35,7 +38,9 @@ class ClienteDAO extends Model implements CRUD
             ':codigo_postal_cliente' => $data['codigoPostalCliente'],
             ':numero_cliente' => $data['numeroCliente'],
             ':imagen_cliente' => $data['imagen'],
-            ':is_active' => self::CUSTOMER_INACTIVE
+            ':email_cliente' => $data['emailCliente'],
+            ':is_email_notified' => self::NOTIFICATION_NOT_SENT,
+            ':is_active' => self::CUSTOMER_INACTIVE,
         ]);
         echo 'ok';
     }
@@ -60,6 +65,7 @@ class ClienteDAO extends Model implements CRUD
                 ':calle_cliente' => $data['calle_cliente'],
                 ':codigo_postal_cliente' => $data['codigo_postal_cliente'],
                 ':numero_cliente' => $data['numero_cliente'],
+                ':email_cliente' => $data['email_cliente'],
                 ':imagen_cliente' => $data['imagen_cliente']
             ];
         } else {
@@ -73,6 +79,7 @@ class ClienteDAO extends Model implements CRUD
                 ':calle_cliente' => $data['calle_cliente'],
                 ':codigo_postal_cliente' => $data['codigo_postal_cliente'],
                 ':numero_cliente' => $data['numero_cliente'],
+                ':email_cliente' => $data['email_cliente'],
                 ':imagen_cliente' => $data['imagen_cliente']
             ];
         }
@@ -85,7 +92,8 @@ class ClienteDAO extends Model implements CRUD
             colonia_cliente = :colonia_cliente,
             calle_cliente = :calle_cliente,
             codigo_postal_cliente = :codigo_postal_cliente,
-            numero_cliente = :numero_cliente
+            numero_cliente = :numero_cliente,
+            email_cliente = :email_cliente
             WHERE id_cliente = :id_cliente');
 
         $query->execute($arrayActualizar);
@@ -115,6 +123,7 @@ class ClienteDAO extends Model implements CRUD
             $cliente->calle_cliente = $value['calle_cliente'];
             $cliente->codigo_postal_cliente = $value['codigo_postal_cliente'];
             $cliente->numero_cliente = $value['numero_cliente'];
+            $cliente->email_customer = $value['email_cliente'];
             $cliente->imagen_cliente = $value['imagen_cliente'];
             array_push($objCliente, $cliente);
         }
@@ -147,6 +156,7 @@ class ClienteDAO extends Model implements CRUD
             $cliente->calle_cliente = $value['calle_cliente'];
             $cliente->codigo_postal_cliente = $value['codigo_postal_cliente'];
             $cliente->numero_cliente = $value['numero_cliente'];
+            $cliente->email_customer = $value['email_cliente'];
             $cliente->imagen_cliente = $value['imagen_cliente'];
             $cliente->is_active = $value['is_active'];
             array_push($objCliente, $cliente);
@@ -156,7 +166,7 @@ class ClienteDAO extends Model implements CRUD
 
     public function readFullDataById(&$cliente, $id_cliente)
     {
-        $query = $this->db->conectar()->prepare("SELECT c.nombre_cliente, c.apellido_paterno_cliente, c.apellido_materno_cliente, c.municipio_cliente, c.colonia_cliente, c.calle_cliente, c.codigo_postal_cliente, c.numero_cliente, c.imagen_cliente, g.nombre_gimnasio, g.telefono, g.imagen
+        $query = $this->db->conectar()->prepare("SELECT c.nombre_cliente, c.apellido_paterno_cliente, c.apellido_materno_cliente, c.municipio_cliente, c.colonia_cliente, c.calle_cliente, c.codigo_postal_cliente, c.numero_cliente, c.email_cliente, c.imagen_cliente, g.nombre_gimnasio, g.telefono, g.imagen
         FROM cliente AS c INNER JOIN gimnasio g ON c.id_gimnasio = g.id_gimnasio WHERE c.id_cliente =:id_cliente");
 
         $query->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
@@ -187,6 +197,44 @@ class ClienteDAO extends Model implements CRUD
         }
         return $objCliente;
     }
+
+    public function getCustomersWithUpcomingMembershipExpiry($id_gimnasio)
+    {
+        $objCliente = array();
+        require_once 'clienteDTO.php';
+        $query = "SELECT DISTINCT c.*, pg.nombrePlanGym, ppg.vencimiento
+        FROM cliente AS c
+        INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
+        INNER JOIN pago_plan_gym_cliente AS ppg ON c.id_cliente = ppg.id_cliente
+        WHERE ppg.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+        AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio)";
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
+            foreach ($this->db->consultar($query) as $key => $value) {
+                $cliente = new ClienteDTO();
+                $cliente->id_cliente = $value['id_cliente'];
+                $cliente->nombrePlanGym = $value['nombrePlanGym'];
+                $cliente->nombre_cliente = $value['nombre_cliente'];
+                $cliente->apellido_paterno_cliente = $value['apellido_paterno_cliente'];
+                $cliente->apellido_materno_cliente = $value['apellido_materno_cliente'];
+                $cliente->municipio_cliente = $value['municipio_cliente'];
+                $cliente->colonia_cliente = $value['colonia_cliente'];
+                $cliente->calle_cliente = $value['calle_cliente'];
+                $cliente->codigo_postal_cliente = $value['codigo_postal_cliente'];
+                $cliente->numero_cliente = $value['numero_cliente'];
+                $cliente->email_customer = $value['email_cliente'];
+                $cliente->imagen_cliente = $value['imagen_cliente'];
+                $cliente->fecha_vencimiento = $value['vencimiento'];
+                $cliente->is_email_notified = $value['is_email_notified'];
+                $objCliente[$cliente->id_cliente] = $cliente;
+            }
+        }else{
+            $objCliente=null;
+        }
+
+        $objCliente = array_values($objCliente);
+        return $objCliente;
+    }
+
 }
 ?>
 

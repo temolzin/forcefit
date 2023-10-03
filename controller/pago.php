@@ -73,11 +73,21 @@ class Pago extends Controller
 
 	function readPagoByIdgimnasio()
     {
-		$id_gimnasio = $_GET['id_gimnasio'];
+		$id_gimnasio = $_POST['id_gimnasio'];
         require 'model/pagoDAO.php';
 		$this->loadModel('PagoDAO');
 		$pagoDAO = new PagoDAO();
 		$pagoDAO = $pagoDAO->readPagoByIdgimnasio($id_gimnasio);
+
+		$obj = null;
+		if (is_array($pagoDAO) || is_object($pagoDAO)) {
+			foreach ($pagoDAO as $key => $value) {
+				$obj["data"][] = $value;
+			}
+		} else {
+			$obj = array();
+		}
+		echo json_encode($obj);
     }
 
     function readClientes()
@@ -116,6 +126,25 @@ class Pago extends Controller
 		$plantillaFront = getPlantillaFront($cliente);
 		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
 		$mpdf->writeHtml($plantillaFront, \Mpdf\HTMLParserMode::HTML_BODY);
+		$mpdf->Output();
+	}
+
+	function generateReceipt()
+	{
+        require_once( './view/pago/recibo/plantillaReciboPago.php');
+		require_once __DIR__ . '/../vendor/autoload.php';
+
+		$clientePagoRecibo = array();
+		$id_pago = $_POST['id_pago'];
+		require 'model/pagoDAO.php';
+		$this->loadModel('PagoDAO');
+		$pagoDAO = new PagoDAO();
+		$pagoDAO = $pagoDAO->getCustomerPaymentDetails($clientePagoRecibo, $id_pago);
+		$css = file_get_contents('./public/css/recibo/styleReciboPago.css');
+		$mpdf = new \Mpdf\Mpdf([ 'margin_left' => 5, 'margin_right' => 20,'margin_top' => 5,'margin_bottom' => 20,]);
+		$plantillaFront= getPlantillaFront($clientePagoRecibo);
+		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+		$mpdf->writeHtml($plantillaFront,\Mpdf\HTMLParserMode::HTML_BODY);
 		$mpdf->Output();
 	}
 }
