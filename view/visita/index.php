@@ -424,7 +424,6 @@ $menu->footer();
                     $('#cliente_id').append('<option value="' + cliente.id_cliente + '">' + cliente.nombre_cliente + ' ' + cliente.apellido_paterno_cliente + ' ' + cliente.apellido_materno_cliente + '</option>');
 
                     $('#cliente_id_Update').append('<option value="' + cliente.id_cliente + '">' + cliente.nombre_cliente + ' ' + cliente.apellido_paterno_cliente + ' ' + cliente.apellido_materno_cliente + '</option>');
-
                 });
             },
             error: function(error) {
@@ -476,8 +475,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location =
-                                "<?php echo constant('URL'); ?>visita";
+                            window.location = "<?php echo constant('URL'); ?>visita";
                         });
                     },
                 });
@@ -535,8 +533,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location =
-                                "<?php echo constant('URL'); ?>visita";
+                            window.location = "<?php echo constant('URL'); ?>visita";
                         });
                     },
                 });
@@ -591,8 +588,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location =
-                                "<?php echo constant('URL'); ?>visita";
+                            window.location = "<?php echo constant('URL'); ?>visita";
                         });
                     },
                 });
@@ -666,8 +662,7 @@ $menu->footer();
                         message,
                         icon
                     ).then(function() {
-                        window.location =
-                            "<?php echo constant('URL'); ?>visita";
+                        window.location = "<?php echo constant('URL'); ?>visita";
                     });
                 },
             });
