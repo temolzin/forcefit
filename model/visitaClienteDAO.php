@@ -1,5 +1,5 @@
 <?php
-class VisitaDAO extends Model implements CRUD
+class VisitaClienteDAO extends Model implements CRUD
 {
     public function __construct()
     {
@@ -78,14 +78,14 @@ class VisitaDAO extends Model implements CRUD
 
     public function readVisits($id_gimnasio)
     {
-        require_once 'visitaDTO.php';
+        require_once 'visitaClienteDTO.php';
         $query = "SELECT esc.*, c.*
         FROM visita_cliente AS esc
         INNER JOIN cliente AS c ON esc.id_cliente = c.id_cliente
         WHERE esc.id_gimnasio = $id_gimnasio";
         $objVisita = array();
         foreach ($this->db->consultar($query) as $key => $value) {
-            $visita = new VisitaDTO();
+            $visita = new VisitaClienteDTO();
             $visita->id_visit = $value['id_visita'];
             $visita->id_client = $value['id_cliente'];
             $visita->name_client = $value['nombre_cliente'] . ' ' . $value['apellido_paterno_cliente'] . ' ' . $value['apellido_materno_cliente'];

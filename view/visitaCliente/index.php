@@ -344,7 +344,7 @@ $menu->footer();
         var tableVisit = $('#dataTableVisit').DataTable({
             "processing": true,
             "ajax": {
-                "url": "<?php echo constant('URL'); ?>visita/readTableVisit?id_gimnasio=" + id_gimnasio
+                "url": "<?php echo constant('URL'); ?>VisitaCliente/readTableVisit?id_gimnasio=" + id_gimnasio
             },
             "columns": [{
                     "data": "id_visit"
@@ -416,7 +416,7 @@ $menu->footer();
 
     var getClientsByGym = $(document).ready(function() {
         $.ajax({
-            url: 'visita/getClientsByGym?id_gimnasio=<?php echo $_SESSION['id_gimnasio']; ?>',
+            url: 'VisitaCliente/getClientsByGym?id_gimnasio=<?php echo $_SESSION['id_gimnasio']; ?>',
             type: 'POST',
             dataType: 'json',
             success: function(data) {
@@ -434,7 +434,7 @@ $menu->footer();
 
     var getClientsInGym = $(document).ready(function() {
         $.ajax({
-            url: 'visita/getClientsInGym?id_gimnasio=<?php echo $_SESSION['id_gimnasio']; ?>',
+            url: 'VisitaCliente/getClientsInGym?id_gimnasio=<?php echo $_SESSION['id_gimnasio']; ?>',
             type: 'POST',
             dataType: 'json',
             success: function(data) {
@@ -457,7 +457,7 @@ $menu->footer();
                 console.log(datos)
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo constant('URL'); ?>visita/insertEntry",
+                    url: "<?php echo constant('URL'); ?>VisitaCliente/insertEntry",
                     data: datos,
                     success: function(data) {
                         var title = "¡Éxito!";
@@ -475,7 +475,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location = "<?php echo constant('URL'); ?>visita";
+                            window.location = "<?php echo constant('URL'); ?>VisitaCliente";
                         });
                     },
                 });
@@ -515,7 +515,7 @@ $menu->footer();
                 console.log(datos)
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo constant('URL'); ?>visita/insertExit",
+                    url: "<?php echo constant('URL'); ?>VisitaCliente/insertExit",
                     data: datos,
                     success: function(data) {
                         var title = "¡Éxito!";
@@ -533,7 +533,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location = "<?php echo constant('URL'); ?>visita";
+                            window.location = "<?php echo constant('URL'); ?>VisitaCliente";
                         });
                     },
                 });
@@ -570,7 +570,7 @@ $menu->footer();
                 var datos = $('#formUpdateVisit').serialize();
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo constant('URL'); ?>visita/update",
+                    url: "<?php echo constant('URL'); ?>VisitaCliente/update",
                     data: datos,
                     success: function(data) {
                         var title = "¡Éxito!";
@@ -588,7 +588,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location = "<?php echo constant('URL'); ?>visita";
+                            window.location = "<?php echo constant('URL'); ?>VisitaCliente";
                         });
                     },
                 });
@@ -644,7 +644,7 @@ $menu->footer();
             console.log(datos);
             $.ajax({
                 type: "POST",
-                url: "<?php echo constant('URL'); ?>visita/delete",
+                url: "<?php echo constant('URL'); ?>VisitaCliente/delete",
                 data: datos,
                 success: function(data) {
                     var title = "¡Éxito!";
@@ -662,7 +662,7 @@ $menu->footer();
                         message,
                         icon
                     ).then(function() {
-                        window.location = "<?php echo constant('URL'); ?>visita";
+                        window.location = "<?php echo constant('URL'); ?>VisitaCliente";
                     });
                 },
             });

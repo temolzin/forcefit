@@ -1,5 +1,5 @@
 <?php
-class VisitaDTO implements JsonSerializable
+class VisitaClienteDTO implements JsonSerializable
 {
     private $id_visit;
     private $image_client;
