@@ -37,6 +37,7 @@ $menu->header('usuario');
                                             <th>Rol</th>
                                             <th>Gimnasio</th>
                                             <th>Plan Sistema</th>
+                                            <th>Estatus del usuario</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
@@ -766,6 +767,16 @@ const llenarPlanSistema = () => {
             },
             {
                 "data": "nombre_plan_sistema"
+            },
+            {
+                "data": "is_active",
+                "render": function (data, type, row) {
+                    if (data === 1) {
+                        return '<span style="color: green;">Activo</span>';
+                    } else {
+                        return '<span style="color: red;">Inactivo</span>';
+                    }
+                }
             },
             {
                 "defaultContent": `
