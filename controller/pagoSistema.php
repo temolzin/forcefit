@@ -86,12 +86,12 @@ class PagoSistema extends Controller
 		echo json_encode($obj);
 	}
 
-	function readUsersManagers()
+	function readUserManagersGym()
 	{
 		require 'model/usuarioDAO.php';
 		$this->loadModel('UsuarioDAO');
 		$usuarioDAO = new UsuarioDAO();
-		$usuarioDAO = $usuarioDAO->readUsersManagers();
+		$usuarioDAO = $usuarioDAO->readUserManagersGym();
         echo json_encode($usuarioDAO);
 	}
 

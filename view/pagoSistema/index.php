@@ -321,7 +321,7 @@ $(document).ready(function() {
 
 const llenarUsuario = (selector, modal) => {
     $.ajax({
-        url: "<?php echo constant('URL'); ?>pagoSistema/readUsersManagers",
+        url: "<?php echo constant('URL'); ?>pagoSistema/readUserManagersGym",
         async: false,
         dataType: "json",
         success: function(data) {
