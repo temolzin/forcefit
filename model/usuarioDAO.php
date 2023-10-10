@@ -1,6 +1,9 @@
 <?php
 class UsuarioDAO extends Model implements CRUD
 {
+    const roleManager = 2;
+    const CUSTOMER_INACTIVE = 0;
+
     public function __construct()
     {
         parent::__construct();
@@ -20,7 +23,8 @@ class UsuarioDAO extends Model implements CRUD
                 :municipioUsuario,
                 :coloniaUsuario,
                 :codigoPostalUsuario,
-                :id_rol)');
+                :id_rol,
+                :is_active)');
         $query->execute([
             ':nombreUsuario' => $data['nombreUsuario'],
             ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
@@ -33,8 +37,8 @@ class UsuarioDAO extends Model implements CRUD
             ':municipioUsuario' => $data['municipioUsuario'],
             ':coloniaUsuario' => $data['coloniaUsuario'],
             ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
-            ':id_rol' => $data['rolUsuario']
-
+            ':id_rol' => $data['rolUsuario'],
+            ':is_active' => self::CUSTOMER_INACTIVE
         ]);
         echo 'ok';
     }
@@ -143,7 +147,11 @@ class UsuarioDAO extends Model implements CRUD
             WHEN r.nombreRol = 'Administrador' THEN 'No aplica'
             WHEN ug.id_plan_sistema IS NULL THEN 'Aun no se le asigna'
             ELSE ps.nombre_plan_sistema
-        END AS nombrePlanSistema
+        END AS nombrePlanSistema,
+        CASE
+            WHEN (SELECT MIN(pps.vencimiento) FROM pago_plan_sistema pps WHERE pps.id_usuario = u.id_usuario) > CURDATE() THEN 1
+            ELSE 0
+        END AS is_active
     FROM usuario u
     LEFT JOIN usuario_gimnasio ug ON u.id_usuario = ug.id_usuario
     LEFT JOIN gimnasio g ON ug.id_gimnasio = g.id_gimnasio
@@ -168,6 +176,7 @@ class UsuarioDAO extends Model implements CRUD
             $usuario->nombreRol = $value['Rol'];
             $usuario-> nombre_gimnasio= $value['nombreGimnasio'];
             $usuario->nombre_plan_sistema = $value['nombrePlanSistema'];
+            $usuario->is_active = $value['is_active'];
             array_push($objUsuario, $usuario);
         }
 
@@ -236,6 +245,29 @@ class UsuarioDAO extends Model implements CRUD
             }
         }
         return $arrPermisos;
+    }
+
+    public function readUserManagersGym()
+    {
+        require_once 'usuarioDTO.php';
+        $query = "SELECT usuario.id_usuario, usuario.nombreUsuario, usuario.apellidoPaternoUsuario, usuario.apellidoMaternoUsuario
+        FROM usuario
+        INNER JOIN rol ON usuario.id_rol = rol.id_rol
+        WHERE rol.id_rol = " . self::roleManager;
+        $objUsuario = array();
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
+            foreach ($this->db->consultar($query) as $key => $value) {
+                $usuario = new UsuarioDTO();
+                $usuario->id_usuario = $value['id_usuario'];
+                $usuario->nombreUsuario = $value['nombreUsuario'];
+                $usuario->apellidoPaternoUsuario = $value['apellidoPaternoUsuario'];
+                $usuario->apellidoMaternoUsuario = $value['apellidoMaternoUsuario'];
+                array_push($objUsuario, $usuario);
+            }
+        }else{
+            $objUsuario=null;
+        }
+        return $objUsuario;
     }
 }
 ?>

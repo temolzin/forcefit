@@ -61,6 +61,25 @@
             }
             return $objplanSistema;
         }
+
+        public function readSystemPlan()
+        {
+            require_once 'PlanSistemaDTO.php';
+            $query = "SELECT id_plan_sistema, nombre_plan_sistema
+            FROM plan_sistema";
+            $objPlanSistema = array();
+            if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
+                foreach ($this->db->consultar($query) as $key => $value) {
+                    $planSistema = new PlanSistemaDTO();
+                    $planSistema->id_plan_sistema = $value['id_plan_sistema'];
+                    $planSistema->nombre_plan_sistema = $value['nombre_plan_sistema'];
+                    array_push($objPlanSistema, $planSistema);
+                }
+            }else{
+                $objPlanSistema=null;
+            }
+            return $objPlanSistema;
+        }
     }
 ?>
 
