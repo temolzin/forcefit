@@ -247,7 +247,7 @@ class UsuarioDAO extends Model implements CRUD
         return $arrPermisos;
     }
 
-    public function readUsersManagers()
+    public function readUserManagersGym()
     {
         require_once 'usuarioDTO.php';
         $query = "SELECT usuario.id_usuario, usuario.nombreUsuario, usuario.apellidoPaternoUsuario, usuario.apellidoMaternoUsuario
