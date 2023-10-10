@@ -23,6 +23,7 @@ class Cliente extends Controller
 		$calle_cliente = $_POST['calleCliente'];
 		$codigo_postal_cliente = $_POST['codigoPostalCliente'];
 		$numero_cliente = $_POST['numeroCliente'];
+		$email_cliente = $_POST['emailCliente'];
 		$nombreImagen = "";
 		if ($_FILES["imagen"]["name"] != null) {
 			$imagen = $_FILES["imagen"];
@@ -50,6 +51,7 @@ class Cliente extends Controller
 					'calleCliente' => $calle_cliente,
 					'codigoPostalCliente' => $codigo_postal_cliente,
 					'numeroCliente' => $numero_cliente,
+					'emailCliente' => $email_cliente,
 					'imagen' => $nombreImagen,
 					'nombreImagen' => $nombreImagen
 				);
@@ -72,6 +74,7 @@ class Cliente extends Controller
 		$calle_cliente = $_POST['calleClienteActualizar'];
 		$codigo_postal_cliente = $_POST['codigoPostalClienteActualizar'];
 		$numero_cliente = $_POST['numeroClienteActualizar'];
+		$email_cliente = $_POST['emailClienteActualizar'];
 		$nombreImagen = "";
 
 		$arrayActualizar = array(
@@ -84,6 +87,7 @@ class Cliente extends Controller
 			'calle_cliente' => $calle_cliente,
 			'codigo_postal_cliente' => $codigo_postal_cliente,
 			'numero_cliente' => $numero_cliente,
+			'email_cliente' => $email_cliente,
 		);
 
 		if (isset($_FILES["imagenClienteActualizar"])) {
@@ -173,6 +177,25 @@ class Cliente extends Controller
 		$plantillaBack= getPlantillaBack($cliente);
 		$mpdf->WriteHTML($plantillaBack,\Mpdf\HTMLParserMode::HTML_BODY);
 		$mpdf->Output();
+	}
+
+	function getCustomersWithUpcomingMembershipExpiry()
+	{
+		$id_gimnasio= $_POST['id_gimnasio'];
+		require 'model/clienteDAO.php';
+		$this->loadModel('ClienteDAO');
+		$clienteDAO = new ClienteDAO();
+		$clienteDAO = $clienteDAO->getCustomersWithUpcomingMembershipExpiry($id_gimnasio);
+
+		$obj = null;
+		if (is_array($clienteDAO) || is_object($clienteDAO)) {
+			foreach ($clienteDAO as $key => $value) {
+				$obj["data"][] = $value;
+			}
+		} else {
+			$obj = array();
+		}
+		echo json_encode($obj);
 	}
 }
 ?>

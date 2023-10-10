@@ -32,6 +32,14 @@ p, label, span, table{
   font-size: 17pt;
 }
 
+.force_titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17pt;
+  display: inline-block;
+  text-decoration: none;
+  color: black;
+}
+
 .h3{
   font-family: 'Montserrat', sans-serif;
   font-size: 15pt;
@@ -42,8 +50,7 @@ p, label, span, table{
   margin-bottom: 5px;
 }
 
-#reporte_cliente,
-#reporte_detalle {
+#reporte_cliente {
   width: 100%;
   margin: 10px;
   border: 1px solid #0B1C80;
@@ -112,6 +119,8 @@ p, label, span, table{
 
 #reporte_detalle{
   border-collapse: collapse;
+  width: 100%;
+  margin: 10px;
 }
 
 #reporte_detalle thead th{
@@ -138,6 +147,9 @@ p, label, span, table{
   text-align: center;
   font-size: 12pt;
   font-family: 'Montserrat', sans-serif;
+  color: black;
+  text-decoration: none;
+	display: inline-block;
 }
 
 .logo {
@@ -156,4 +168,5 @@ p, label, span, table{
   border-radius: 5px;
   margin-right: 10px;
   font-family: 'Montserrat', sans-serif;
+  color: black;
 }

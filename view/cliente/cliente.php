@@ -36,6 +36,7 @@ $menu->header('cliente');
                                             <th>Apellido Paterno</th>
                                             <th>Apellido Materno</th>
                                             <th>Teléfono</th>
+                                            <th>Email</th>
                                             <th>Plan Gimnasio</th>
                                             <th>Estatus del cliente</th>
                                             <th>Opciones</th>
@@ -115,6 +116,13 @@ $menu->header('cliente');
                                         <div class="input-group-prepend">
                                             <input type="text" id="numeroCliente" name="numeroCliente"
                                                 class="form-control" placeholder="Telefono">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Email (*)</label>
+                                        <div class="input-group-prepend">
+                                            <input type="email" id="emailCliente" name="emailCliente"
+                                                class="form-control" placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -269,6 +277,15 @@ $menu->header('cliente');
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" class="form-control"
+                                                id="emailClienteActualizar"
+                                                name="emailClienteActualizar"
+                                                placeholder="Email" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                       <div class="form-group">
                                         <label>Plan Gimnasio(*)</label>
                                          <select name="id_PlanGymActualizar" id="id_PlanGymActualizar" class="form-control pagoRegistrarPlanGym" style="width:100%;">
@@ -401,6 +418,14 @@ $menu->header('cliente');
                                             <input type="text" disabled class="form-control" id="numeroClienteConsultar"
                                                 name="numeroClienteConsultar" data-inputmask='"mask": "(999) 999-9999"'
                                                 placeholder="Número telefonico" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" disabled class="form-control"
+                                                id="emailClienteConsultar"
+                                                name="emailClienteConsultar" placeholder="Email" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -621,6 +646,9 @@ $menu->footer();
                 "data": "numero_cliente"
             },
             {
+                "data": "email_customer"
+            },
+            {
                 "data": "nombrePlanGym"
             },
             {
@@ -689,6 +717,7 @@ $menu->footer();
             var calleClienteConsultar = $("#calleClienteConsultar").val(data.calle_cliente);
             var codigoPostalClienteConsultar = $("#codigoPostalClienteConsultar").val(data.codigo_postal_cliente);
             var numeroClienteConsultar = $("#numeroClienteConsultar").val(data.numero_cliente);
+            var emailClienteConsultar = $("#emailClienteConsultar").val(data.email_customer);
             var PlanGymClienteConsultar = $("#PlanGymClienteConsultar").val(data.nombrePlanGym);
 
             var id_clienteActualizar = $("#id_clienteActualizar").val(data.id_cliente);
@@ -703,6 +732,7 @@ $menu->footer();
             var codigoPostalClienteActualizar = $("#codigoPostalClienteActualizar").val(data
                 .codigo_postal_cliente);
             var numeroClienteActualizar = $("#numeroClienteActualizar").val(data.numero_cliente);
+            var emailClienteActualizar = $("#emailClienteActualizar").val(data.email_customer);
             var imagenClienteActualizar = $("#imagenClienteActualizar").val(data.imagen_cliente);
 
         });
@@ -758,6 +788,8 @@ $menu->footer();
                             'codigoPostalCliente').value);
                         form_data.append('numeroCliente', document.getElementById(
                             'numeroCliente').value);
+                        form_data.append('emailCliente', document.getElementById(
+                            'emailCliente').value);
                             form_data.append('id_PlanGym', document.getElementById(
                             'id_PlanGym').value);
                         $.ajax({
@@ -824,6 +856,9 @@ $menu->footer();
                 numeroCliente: {
                     required: true
                 },
+                emailCliente: {
+                    required: true
+                },
                 id_PlanGym: {
                     required: true
                 },
@@ -855,6 +890,9 @@ $menu->footer();
                 },
                 numeroCliente: {
                     required: "Ingresa el numero telefonico"
+                },
+                emailCliente: {
+                    required: "Ingresa el email del cliente"
                 },
                 id_PlanGym: {
                     required: "Ingresa plan de gimnasio"
@@ -941,6 +979,9 @@ $menu->footer();
                 numeroClienteActualizar: {
                     required: true
                 },
+                emailClienteActualizar: {
+                    required: true
+                },
                 imagenClienteActualizar: {
                     required: true
                 }
@@ -969,6 +1010,9 @@ $menu->footer();
                 },
                 numeroClienteActualizar: {
                     required: "Ingresa el numero telefonico"
+                },
+                emailClienteActualizar: {
+                    required: "Ingresa el email del cliente"
                 },
                 imagenClienteActualizar: {
                     required: "Ingresa la imagen del cliente"
