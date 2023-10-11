@@ -28,4 +28,17 @@ git clone https://github.com/temolzin/forcefit.git
 - Posteriormente instalas la base de datos.
 - Para que el proyecto funcione correctamente ejecuta este comando en la carpeta raíz **composer install**
 
+### Instalación de la  librería phinx📋
+- Ejecuta este comando **composer.phar require robmorgan/phinx**
+
+### Descargar Migraciones
+- Ejecuta este comando **composer phinx-migrate** Para descargar las migraciones
+### Descargar seeders
+- Ejecuta el siguiente comando **composer phinx-seed-run** Para descargar los seders
+
+- Si quieres agregar mas seders o actualizar puedes editar el Scrips que se encuentra en composer.json para que se ejecute el seder que creaste o actualizaste.
+- En el archivo composer.json se encuentran los scrips para las migraciones.
+- Estos son link para mayor información [Link](https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method/).
+[Link](https://book.cakephp.org/phinx/0/en/seeding.html/).
+
 ### End
