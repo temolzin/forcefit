@@ -20,12 +20,12 @@ class PerfilDAO extends Model implements CRUD
 
     public function getUserData($id_usuario)
     {
-        $query = "SELECT u.*, r.*
+        $queryGetDatasUser = "SELECT u.*, r.*
         FROM usuario as u
         INNER JOIN rol AS r ON u.id_rol = r.id_rol
         WHERE id_usuario = $id_usuario";
-        $query_results = $this->db->consultar($query);
-        echo json_encode($query_results);
+        $dataUser = $this->db->consultar($queryGetDatasUser);
+        echo json_encode($dataUser);
     }
 
     public function update($data)
@@ -44,7 +44,7 @@ class PerfilDAO extends Model implements CRUD
             ':codigoPostalUsuario' => $data['postalcodeUser'],
         );
 
-        $query = "UPDATE usuario SET 
+        $queryUpdateUser = "UPDATE usuario SET 
         nombreUsuario = :nombreUsuario,
         apellidoPaternoUsuario = :apellidoPaternoUsuario,
         apellidoMaternoUsuario = :apellidoMaternoUsuario,
@@ -57,37 +57,38 @@ class PerfilDAO extends Model implements CRUD
         
         if (isset($data['imageUserUpdate'])) {
             $insertData[':imagen'] = $data['imageUserUpdate'];
-            $query .= ", imagen = :imagen";
+            $queryUpdateUser .= ", imagen = :imagen";
             $_SESSION['imagen'] = $data['imageUserUpdate'];
         }
-        $query .= " WHERE id_usuario = :id_usuario";
 
-        if ($this->db->ejecutarAccion($query, $insertData)) {
+        $queryUpdateUser .= " WHERE id_usuario = :id_usuario";
+
+        if ($this->db->ejecutarAccion($queryUpdateUser, $insertData)) {
+            $_SESSION['nombreUsuario'] = $data['nameUser'];
+            $_SESSION['apellidoPaternoUsuario'] = $data['lastNameP'];
             echo "ok";
         }
-        $_SESSION['nombreUsuario'] = $data['nameUser'];
-        $_SESSION['apellidoPaternoUsuario'] = $data['lastNameP'];
     }
 
     public function updatePassword($data)
     {
-        $actualContrasena = $data['oldPassword'];
+        $inputOldPassword = $data['oldPassword'];
         
-        $query = "SELECT passwordUsuario
+        $querySearchPassword = "SELECT passwordUsuario
         FROM usuario
         WHERE id_usuario = " . $data['id_usuario'];
-        $passwordBD = $this->db->consultar($query);
+        $passwordBD = $this->db->consultar($querySearchPassword);
 
-        if($passwordBD[0]['passwordUsuario'] !== $actualContrasena){
+        if($passwordBD[0]['passwordUsuario'] !== $inputOldPassword){
             return "error ";
         }
 
         $insertData = array(
-            ':actualContrasena' => $data['newPassword']
+            ':newPassword' => $data['newPassword']
         );
         
         $query = "UPDATE usuario SET 
-        passwordUsuario = :actualContrasena
+        passwordUsuario = :newPassword
         WHERE id_usuario = " . $data['id_usuario'];
 
         if ($this->db->ejecutarAccion($query, $insertData)) {
