@@ -57,7 +57,7 @@ class Perfil extends Controller
         if ($oldNameUser != $nameUser || $lastNameP != $oldLastNameUser) {
             $oldFullname = $oldNameUser . "_" . $oldLastNameUser;
             $oldCarpeta = "public/usuario/" . $id_usuario . "_" . $oldFullname . "/" . $_POST['imagen'];
-            
+
             copy($oldCarpeta, $newCarpeta . $_POST['imagen']);
         }
 

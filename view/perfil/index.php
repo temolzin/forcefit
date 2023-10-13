@@ -114,8 +114,6 @@ $menu->header('perfil');
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Actualizar Datos</button>
                         </div>
-                        <!--  -->
-                        <!--  -->
                     </form>
                 </div>
             </div>
@@ -204,8 +202,6 @@ $menu->footer();
             async: false,
             dataType: "json",
             success: function(data) {
-                console.log(data);
-                console.log(data[0].id_usuario);
                 var nameUser = $("#nameUser").val(data[0].nombreUsuario);
                 var lastNameP = $("#lastNameP").val(data[0].apellidoPaternoUsuario);
                 var lastNameM = $("#lastNameM").val(data[0].apellidoMaternoUsuario);
@@ -253,8 +249,6 @@ $menu->footer();
                         $('#formUpdatePerfil').css("opacity", ".5");
                     },
                     success: function(data) {
-
-                        console.log("data ", data)
                         var title = "¡Éxito!";
                         var message = "Su información ha sido Actualizada de manera correcta";
                         var icon = "success";
@@ -355,13 +349,11 @@ $menu->footer();
             submitHandler: function() {
                 var datos = $('#formUpdatePassword').serialize();
                 datos += '&id_usuario=' + id_usuario;
-                console.log(datos);
                 $.ajax({
                     type: "POST",
                     url: "<?php echo constant('URL'); ?>perfil/updatePassword",
                     data: datos,
                     success: function(data) {
-                        console.log(data);
                         var title = "¡Éxito!";
                         var message = "Su contraseña ha sido actualizada correctamente";
                         var icon = "success";

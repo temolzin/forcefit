@@ -54,7 +54,7 @@ class PerfilDAO extends Model implements CRUD
         municipioUsuario = :municipioUsuario,
         coloniaUsuario = :coloniaUsuario,
         codigoPostalUsuario = :codigoPostalUsuario";
-        
+
         if (isset($data['imageUserUpdate'])) {
             $insertData[':imagen'] = $data['imageUserUpdate'];
             $queryUpdateUser .= ", imagen = :imagen";
@@ -73,20 +73,20 @@ class PerfilDAO extends Model implements CRUD
     public function updatePassword($data)
     {
         $inputOldPassword = $data['oldPassword'];
-        
+
         $querySearchPassword = "SELECT passwordUsuario
         FROM usuario
         WHERE id_usuario = " . $data['id_usuario'];
         $passwordBD = $this->db->consultar($querySearchPassword);
 
-        if($passwordBD[0]['passwordUsuario'] !== $inputOldPassword){
+        if ($passwordBD[0]['passwordUsuario'] !== $inputOldPassword) {
             return "error ";
         }
 
         $insertData = array(
             ':newPassword' => $data['newPassword']
         );
-        
+
         $query = "UPDATE usuario SET 
         passwordUsuario = :newPassword
         WHERE id_usuario = " . $data['id_usuario'];
