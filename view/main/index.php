@@ -63,15 +63,26 @@
                 type: "POST",
                 url: "<?php echo constant('URL'); ?>usuario/login",
                 data: datos,
+                dataType: "json",
                 success: function (data) {
-                    console.log(data)
-                    if (data == false) {
+                    console.log(data);
+                    if (data.error) {
                         Swal.fire(
                             "¡Error!",
-                            "Usuario y Contraseña incorrectos" + data,
+                            data.error,
                             "error"
                         );
-                    } else if (data == true) {
+                    }
+
+                    if (data.warning) {
+                        Swal.fire(
+                            "¡Advertencia!",
+                            "Su pago ha vencido. Por favor, renueve su suscripción.",
+                            "warning"
+                        );
+                    }
+
+                    if (data.success) {
                         window.location = "<?php echo constant('URL'); ?>dashboard";
                     }
                 },

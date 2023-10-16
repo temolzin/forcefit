@@ -186,10 +186,13 @@ class UsuarioDAO extends Model implements CRUD
     public function login($data)
     {
         require_once 'usuarioDTO.php';
-        $query = $this->db->consultar("SELECT u.id_usuario, u.nombreUsuario, u.apellidoPaternoUsuario, u.apellidoMaternoUsuario,
-        u.emailUsuario, u.passwordUsuario, u.imagen, u.calleUsuario, u.estadoUsuario, u.municipioUsuario, u.coloniaUsuario,
-         u.codigoPostalUsuario, u.id_rol, ug.id_gimnasio FROM usuario AS u LEFT JOIN usuario_gimnasio AS ug ON u.id_usuario = ug.id_usuario
-          WHERE u.emailUsuario = '" . $data['emailUsuario'] . "' AND u.passwordUsuario ='" . $data['passwordUsuario'] . "'");
+        $query = $this->db->consultar("SELECT u.id_usuario, u.nombreUsuario, u.apellidoPaternoUsuario, u.apellidoMaternoUsuario, u.emailUsuario, u.passwordUsuario, u.imagen, u.calleUsuario, u.estadoUsuario, u.municipioUsuario, u.coloniaUsuario, u.codigoPostalUsuario, u.id_rol, ug.id_gimnasio,
+        (CASE WHEN u.id_rol = 2 THEN
+            (CASE WHEN (SELECT MIN(pps.vencimiento) FROM pago_plan_sistema pps WHERE pps.id_usuario = u.id_usuario) > CURDATE() THEN 1 ELSE 0 END)
+        ELSE 0 END) as is_active
+        FROM usuario AS u
+        LEFT JOIN usuario_gimnasio AS ug ON u.id_usuario = ug.id_usuario
+        WHERE u.emailUsuario = '" . $data['emailUsuario'] . "' AND u.passwordUsuario ='" . $data['passwordUsuario'] . "'");
         session_start();
         if ($query != null) {
             foreach ($query as $key => $value) {
@@ -209,10 +212,16 @@ class UsuarioDAO extends Model implements CRUD
                 $_SESSION['id_rol'] = $value['id_rol'];
                 $_SESSION['login'] = true;
                 $_SESSION['permisos'] = $this->getPermisos($value['id_rol']);
+                if ($value['is_active'] === 0 && $value['id_rol'] === 2) {
+                    echo json_encode(array("warning" => true));
+                    exit;
+                } else {
+                    echo json_encode(array("success" => true));
+                    exit;
+                }
             }
-            echo true;
         } else {
-            echo false;
+            echo json_encode(array("error" => "Usuario y Contraseña incorrectos"));
         }
     }
     public function getPermisos($idrol)
