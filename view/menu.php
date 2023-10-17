@@ -6,13 +6,14 @@ class Menu
         $nombre = $_SESSION['nombreUsuario'];
         $foto = $_SESSION['imagen'];
         $appaterno = $_SESSION['apellidoPaternoUsuario'];
+        $id_usuario = $_SESSION['id_usuario'];
         $fotoruta = constant('URL') . 'public/usuario/' . $nombre . '_' . $appaterno  . '/' . $foto;
         if ($foto != null){
-            $fotoruta ='public/usuario/' . $nombre . '_' . $appaterno  . '/' . $foto;
+            $fotoruta ='public/usuario/' . $id_usuario . '_' .$nombre . '_' . $appaterno  . '/' . $foto;
             if(!file_exists($fotoruta)){
               $fotoruta= constant('URL') . 'public/img/avatar.png';
             }else{
-                $fotoruta = constant('URL') . 'public/usuario/' . $nombre . '_' . $appaterno  . '/' . $foto;
+                $fotoruta = constant('URL') . 'public/usuario/' . $id_usuario . '_' . $nombre . '_' . $appaterno  . '/' . $foto;
             }
           }else{
             $fotoruta= constant('URL') . 'public/img/avatar.png';
