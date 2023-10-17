@@ -80,7 +80,7 @@ class PerfilDAO extends Model implements CRUD
         $passwordBD = $this->db->consultar($querySearchPassword);
 
         if ($passwordBD[0]['passwordUsuario'] !== $inputOldPassword) {
-            return "error ";
+            return "error";
         }
 
         $insertData = array(
