@@ -65,7 +65,6 @@
                 data: datos,
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
                     if (data.error) {
                         Swal.fire(
                             "¡Error!",

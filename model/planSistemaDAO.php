@@ -64,7 +64,7 @@
 
         public function readSystemPlan()
         {
-            require_once 'PlanSistemaDTO.php';
+            require_once 'planSistemaDTO.php';
             $query = "SELECT id_plan_sistema, nombre_plan_sistema
             FROM plan_sistema";
             $objPlanSistema = array();
