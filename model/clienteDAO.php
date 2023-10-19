@@ -136,8 +136,7 @@ class ClienteDAO extends Model implements CRUD
         require_once 'clienteDTO.php';
         $query = "SELECT c.*, pg.nombrePlanGym,
             (CASE
-            WHEN (SELECT MIN(ppgc.vencimiento) FROM pago_plan_gym_cliente ppgc WHERE ppgc.id_cliente = c.id_cliente) > CURDATE() THEN 1
-            ELSE 0
+            WHEN (SELECT MIN(ppgc.vencimiento) FROM pago_plan_gym_cliente ppgc WHERE ppgc.id_cliente = c.id_cliente AND ppgc.vencimiento > CURDATE()) IS NOT NULL THEN 1 ELSE 0
             END) as is_active
             FROM cliente AS c
             INNER JOIN usuario_gimnasio AS ug ON c.id_gimnasio = ug.id_gimnasio
