@@ -8,7 +8,13 @@ class Cliente extends Controller
 
 	function index()
 	{
-		$this->view->render('cliente/cliente');
+		require_once __DIR__ . './services/validarPermisoModulo.php';
+		$permiss = new ValidarPermisoModulo();
+		$result = $permiss->validatePermissionAccessModule("Cliente");
+		if ($result) {
+			return $this->view->render('cliente/cliente');
+		}
+		$this->view->render('errorPage/index');
 	}
 
 	function insert()
