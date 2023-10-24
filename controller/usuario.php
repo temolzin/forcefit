@@ -8,7 +8,13 @@ class Usuario extends Controller
 
 	function index()
 	{
-		$this->view->render('usuario/index');
+		require_once __DIR__ . '/services/validateSession.php';
+		require_once __DIR__ . '/services/validatePermissionModule.php';
+		ValidateSession::invoke();
+		if (ValidatePermissionModule::invoke("Usuarios")) {
+			return $this->view->render('usuario/index');
+		}
+		$this->view->render('errorPage/index');
 	}
 
 	function insert()

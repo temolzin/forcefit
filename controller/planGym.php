@@ -8,7 +8,13 @@ class PlanGym extends Controller
 
 	function index()
 	{
-		$this->view->render('planGym/index');
+		require_once __DIR__ . '/services/validateSession.php';
+		require_once __DIR__ . '/services/validatePermissionModule.php';
+		ValidateSession::invoke();
+		if (ValidatePermissionModule::invoke("PlanGym")) {
+			return $this->view->render('planGym/index');
+		}
+		$this->view->render('errorPage/index');
 	}
 
 	function insert()

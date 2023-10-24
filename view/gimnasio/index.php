@@ -1,8 +1,4 @@
-<?php session_start();
-if (!isset($_SESSION['login'])) {
-    header('location: ' . constant('URL'));
- }
- 
+<?php
 require 'view/menu.php';
 $menu = new Menu();
 $menu->header('gimnasio');

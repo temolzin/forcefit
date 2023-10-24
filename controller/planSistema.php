@@ -8,7 +8,13 @@ class PlanSistema extends Controller
 
 	function index()
 	{
-		$this->view->render('planSistema/index');
+		require_once __DIR__ . '/services/validateSession.php';
+		require_once __DIR__ . '/services/validatePermissionModule.php';
+		ValidateSession::invoke();
+		if (ValidatePermissionModule::invoke("PlanSistema")) {
+			return $this->view->render('planSistema/index');
+		}
+		$this->view->render('errorPage/index');
 	}
 
 	function insert()
