@@ -195,26 +195,26 @@ class UsuarioDAO extends Model implements CRUD
         session_start();
         if ($query != null) {
             foreach ($query as $key => $value) {
-                $_SESSION['id_usuario'] = $value['id_usuario'];
-                $_SESSION['id_gimnasio'] = $value['id_gimnasio'];
-                $_SESSION['nombreUsuario'] = $value['nombreUsuario'];
-                $_SESSION['apellidoPaternoUsuario'] = $value['apellidoPaternoUsuario'];
-                $_SESSION['apellidoMaternoUsuario'] = $value['apellidoMaternoUsuario'];
-                $_SESSION['emailUsuario'] = $value['emailUsuario'];
-                $_SESSION['passwordUsuario'] = $value['passwordUsuario'];
-                $_SESSION['imagen'] = $value['imagen'];
-                $_SESSION['calleUsuario'] = $value['calleUsuario'];
-                $_SESSION['estadoUsuario'] = $value['estadoUsuario'];
-                $_SESSION['municipioUsuario'] = $value['municipioUsuario'];
-                $_SESSION['coloniaUsuario'] = $value['coloniaUsuario'];
-                $_SESSION['codigoPostalUsuario'] = $value['codigoPostalUsuario'];
-                $_SESSION['id_rol'] = $value['id_rol'];
-                $_SESSION['login'] = true;
-                $_SESSION['permisos'] = $this->getPermisos($value['id_rol']);
                 if ($value['is_active'] === 0 && $value['id_rol'] === 2) {
                     echo json_encode(array("warning" => true));
                     exit;
                 } else {
+                    $_SESSION['id_usuario'] = $value['id_usuario'];
+                    $_SESSION['nombreUsuario'] = $value['nombreUsuario'];
+                    $_SESSION['id_gimnasio'] = $value['id_gimnasio'];
+                    $_SESSION['apellidoMaternoUsuario'] = $value['apellidoMaternoUsuario'];
+                    $_SESSION['emailUsuario'] = $value['emailUsuario'];
+                    $_SESSION['passwordUsuario'] = $value['passwordUsuario'];
+                    $_SESSION['imagen'] = $value['imagen'];
+                    $_SESSION['calleUsuario'] = $value['calleUsuario'];
+                    $_SESSION['estadoUsuario'] = $value['estadoUsuario'];
+                    $_SESSION['municipioUsuario'] = $value['municipioUsuario'];
+                    $_SESSION['coloniaUsuario'] = $value['coloniaUsuario'];
+                    $_SESSION['codigoPostalUsuario'] = $value['codigoPostalUsuario'];
+                    $_SESSION['id_rol'] = $value['id_rol'];
+                    $_SESSION['login'] = true;
+                    $_SESSION['permisos'] = $this->getPermisos($value['id_rol']);
+                    $_SESSION['apellidoPaternoUsuario'] = $value['apellidoPaternoUsuario'];
                     echo json_encode(array("success" => true));
                     exit;
                 }
