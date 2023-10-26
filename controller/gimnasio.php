@@ -8,7 +8,13 @@ class Gimnasio extends Controller
 
     function index()
     {
-        $this->view->render('gimnasio/index');
+		require_once __DIR__ . '/services/validateSession.php';
+		require_once __DIR__ . '/services/validatePermissionModule.php';
+		ValidateSession::invoke();
+		if (ValidatePermissionModule::invoke("Gimnasio")) {
+			return $this->view->render('gimnasio/index');
+		}
+		$this->view->render('errorPage/index');
     }
 
     function insert()

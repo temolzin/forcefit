@@ -8,7 +8,13 @@ class Dashboard extends Controller
 
 	function index()
 	{
-		$this->view->render('dashboard/index');
+		require_once __DIR__ . '/services/validateSession.php';
+		require_once __DIR__ . '/services/validatePermissionModule.php';
+		ValidateSession::invoke();
+		if (ValidatePermissionModule::invoke("Dashboard")) {
+			return $this->view->render('dashboard/index');
+		}
+		$this->view->render('errorPage/index');
 	}
 
 	function aboutUs()

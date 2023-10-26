@@ -8,7 +8,13 @@ class VisitaCliente extends Controller
 
 	function index()
 	{
-		$this->view->render('visitaCliente/index');
+		require_once __DIR__ . '/services/validateSession.php';
+		require_once __DIR__ . '/services/validatePermissionModule.php';
+		ValidateSession::invoke();
+		if (ValidatePermissionModule::invoke("VisitaCliente")) {
+			return $this->view->render('visitaCliente/index');
+		}
+		$this->view->render('errorPage/index');
 	}
 
 	function insertEntry()

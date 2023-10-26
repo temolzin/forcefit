@@ -8,7 +8,13 @@ class Rol extends Controller
 
 	function index()
 	{
-		$this->view->render('rol/rol');
+		require_once __DIR__ . '/services/validateSession.php';
+		require_once __DIR__ . '/services/validatePermissionModule.php';
+		ValidateSession::invoke();
+		if (ValidatePermissionModule::invoke("Usuarios")) {
+			return $this->view->render('rol/rol');
+		}
+		$this->view->render('errorPage/index');
 	}
 
 	function insert()
