@@ -309,7 +309,7 @@ $menu->header('gimnasio');
                             </div>
                         </div>
                         <div class="text-center mt-3">
-                            <button type="submit" class="btn btn-info">Registrar</button>
+                            <button type="submit" class="btn btn-info">Actualizar</button>
                         </div>
                     </div>
                 </form>
