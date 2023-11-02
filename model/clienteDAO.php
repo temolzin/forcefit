@@ -146,6 +146,7 @@ class ClienteDAO extends Model implements CRUD
         foreach ($this->db->consultar($query) as $key => $value) {
             $cliente = new ClienteDTO();
             $cliente->id_cliente = $value['id_cliente'];
+            $cliente->id_planGym = $value['id_planGym'];
             $cliente->nombrePlanGym = $value['nombrePlanGym'];
             $cliente->nombre_cliente = $value['nombre_cliente'];
             $cliente->apellido_paterno_cliente = $value['apellido_paterno_cliente'];

@@ -61,6 +61,8 @@
             foreach ($this->db->consultar($query) as $key => $value) {
                 $pagoSistema = new PagoSistemaDTO();
                 $pagoSistema->id_pago = $value['id_pago'];
+                $pagoSistema->id_usuario = $value['id_usuario'];
+                $pagoSistema->id_plan_sistema = $value['id_plan_sistema'];
                 $pagoSistema->nombre_plan_sistema = $value['nombre_plan_sistema'];
                 $pagoSistema->nombreUsuario = $value['nombreUsuario'];
                 $pagoSistema->fecha_hora_pago = $value['fecha_hora_pago'];

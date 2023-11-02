@@ -420,8 +420,8 @@ var obtenerdatosDT = function(table) {
 
         var id_pagoActualizar = $("#id_PagoActualizar").val(data.id_pago);
         var vencimientoPagoActualizar = $("#vencimientoPagoActualizar").val(data.vencimiento);
-        var idUsuarioPagoActualizar = $("#idUsuarioPagoActualizar").val(data.nombreUsuario);
-        var idPlanSistemaActualizar = $("#idPlanSistemaActualizar").val(data.nombre_plan_sistema);
+        var idUsuarioPagoActualizar = $("#idUsuarioPagoActualizar").val(data.id_usuario);
+        var idPlanSistemaActualizar = $("#idPlanSistemaActualizar").val(data.id_plan_sistema);
         var tipoPagoActualizar = $("#tipoPagoActualizar").val(data.tipo_Pago);
 
 

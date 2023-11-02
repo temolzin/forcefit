@@ -2,6 +2,7 @@
 class ClienteDTO implements JsonSerializable
 {
     private $id_cliente;
+    private $id_planGym;
     private $nombrePlanGym;
     private $nombre_cliente;
     private $apellido_paterno_cliente;

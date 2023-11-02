@@ -126,6 +126,7 @@ class UsuarioDAO extends Model implements CRUD
         require_once 'usuarioDTO.php';
         $query = "SELECT
         u.id_usuario AS 'ID',
+        u.id_rol,
         u.nombreUsuario,
         u.apellidoPaternoUsuario,
         u.apellidoMaternoUsuario,
@@ -161,6 +162,7 @@ class UsuarioDAO extends Model implements CRUD
         foreach ($this->db->consultar($query) as $key => $value) {
             $usuario = new UsuarioDTO();
             $usuario->id_usuario = $value['ID'];
+            $usuario->id_rol = $value['id_rol'];
             $usuario->nombreUsuario = $value['nombreUsuario'];
             $usuario->apellidoPaternoUsuario = $value['apellidoPaternoUsuario'];
             $usuario->apellidoMaternoUsuario = $value['apellidoMaternoUsuario'];

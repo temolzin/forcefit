@@ -721,6 +721,7 @@ $menu->footer();
             var PlanGymClienteConsultar = $("#PlanGymClienteConsultar").val(data.nombrePlanGym);
 
             var id_clienteActualizar = $("#id_clienteActualizar").val(data.id_cliente);
+            var id_PlanGymActualizar = $("#id_PlanGymActualizar").val(data.id_planGym);
             var nombreClienteActualizar = $("#nombreClienteActualizar").val(data.nombre_cliente);
             var apellidoPaternoClienteActualizar = $("#apellidoPaternoClienteActualizar").val(data
                 .apellido_paterno_cliente);
