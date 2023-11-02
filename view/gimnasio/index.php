@@ -144,18 +144,6 @@ $menu->header('gimnasio');
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <span><label>Imagen (*)</label></span>
-                                        <div class="form-group input-group">
-                                            <div class="custom-file">
-                                                <input type="file" accept="image/*" class="custom-file-input"
-                                                    name="imagenGimnasioActualizar" id="imagenGimnasioActualizar"
-                                                    lang="es">
-                                                <label class="custom-file-label" for="imagen">Seleccione
-                                                    Fotografía</label>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div style="display: none;" class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -290,6 +278,46 @@ $menu->header('gimnasio');
     </div>
 </div>
 
+<!--------------------------------------------------------- Modal Update Image ----------------------------------------------->
+<div class="modal fade" id="modalUpdateImage" tabindex="-1" role="dialog" aria-labelledby="modalUpdateImage" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="card-primary">
+                <div class="card-header bg-primary">
+                    <div class="d-sm-flex align-items-center justify-content-between ">
+                        <h4 class="card-title">Actualizar Imagen</h4>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <form role="form" id="formUpdateImage" enctype="multipart/form-data" name="formUpdateImage" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="rounded-circle mx-auto d-inline-block overflow-hidden photo-container" style="width: 150px; height: 150px;">
+                                <img src="" alt="gimnasio" id="imgPreview" class="img-fluid">
+                            </div>
+                            <div class="col-lg-12">
+                                <input type="text" hidden class="form-control" id="idGymUpdateImage" name="idGymUpdateImage" placeholder="Id" />
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group input-group">
+                                    <div class="custom-file">
+                                        <input type="file" accept="image/*" class="custom-file-input" onchange="previewImage(event, '#imgPreview')" name="imageInput" id="imageInput" lang="es">
+                                        <label class="custom-file-label" for="imagen">Seleccione
+                                            Fotografía</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 $menu->footer();
 ?>
@@ -301,6 +329,7 @@ $menu->footer();
         enviarFormularioActualizar();
         eliminarRegistro();
         rutaImagen();
+        sendFormUpdateImage();
     });
 
     $(".custom-file-input").on("change", function () {
@@ -346,8 +375,7 @@ $menu->footer();
             {
                 defaultContent: "",
                 'render': function (data, type, JsonResultRow, meta) {
-                    var fullnameImagen = JsonResultRow.nombre_gimnasio + '_' + JsonResultRow
-                        .telefono + '/' + JsonResultRow.imagen;
+                    var fullnameImagen = JsonResultRow.id_gimnasio + '/' + JsonResultRow.imagen;
                     var urlImg = '<?php echo constant('URL'); ?>public/gimnasio/' + fullnameImagen;
                     if (JsonResultRow.imagen == null || JsonResultRow.imagen == '') {
                         var urlImg = '<?php echo constant('URL'); ?>public/img/forcefit.png';
@@ -375,7 +403,8 @@ $menu->footer();
                 data: null,
                 "defaultContent": `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleGimnasio' title="Ver Detalles"><i class="fa fa-eye"></i></button>
                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarGimnasio' title="Editar Datos"><i class="fa fa-edit"></i></button>
-                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarGimnasio' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>`
+                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarGimnasio' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
+                        <button class='eliminar btn btn-info' data-toggle='modal' data-target='#modalUpdateImage' title="Actualizar Imagen"><i class="fa fa-picture-o"></i></button>`
             }
             ],
             responsive: true,
@@ -388,9 +417,21 @@ $menu->footer();
         obtenerdatosDT(tableGimnasio);
     }
 
+    function previewImage(event, querySelector) {
+        const input = event.target;
+        $imgPreview = document.querySelector(querySelector);
+        if (!input.files.length) return
+        file = input.files[0];
+        objectURL = URL.createObjectURL(file);
+        $imgPreview.src = objectURL;
+    }
+
     var obtenerdatosDT = function (table) {
         $('#dataTableGimnasio tbody').on('click', 'tr', function () {
             var data = table.row(this).data();
+            var routeImageGym = $("#imgPreview").attr("src", '<?php echo constant('URL'); ?>public/gimnasio/' + data.id_gimnasio + '/' + data.imagen);
+            var idGymUpdateImage = $("#idGymUpdateImage").val(data.id_gimnasio);
+
             var idEliminar = $('#idEliminarGimnasio').val(data.id_gimnasio);
 
             var idGimnasioActualizar = $("#idGimnasioActualizar").val(data.id_gimnasio);
@@ -573,10 +614,7 @@ $menu->footer();
                 },
                 telefonoActualizar: {
                     required: true
-                },
-                imagenGimnasioActualizar: {
-                    required: true
-                },
+                }
             },
             messages: {
                 idGimnasioActualizar: {
@@ -588,10 +626,77 @@ $menu->footer();
                 },
                 telefonoActualizar: {
                     required: "Ingresa un número de teléfono"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    }
+
+    var imageUpdate = null;
+    $('#formUpdateImage').on('submit', function(e) {
+        imageUpdate = new FormData(this);
+    });
+    var sendFormUpdateImage = function() {
+        $.validator.setDefaults({
+            submitHandler: function(e) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo constant('URL'); ?>gimnasio/UpdateImage",
+                    data: imageUpdate,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $('.submit').attr("disabled", "disabled");
+                        $('#formUpdateImage').css("opacity", ".5");
+                    },
+                    success: function(data) {
+                        var title = "¡Éxito!";
+                        var message = "La imagen ha sido actualizada de manera correcta";
+                        var icon = "success";
+                        if (data.trim() !== 'ok') {
+                            var title = "¡Error!";
+                            var message = "Ha ocurrido un error al actualizar la imagen." + data;
+                            var icon = "error";
+                        }
+                        
+                        Swal.fire(
+                                title,
+                                message,
+                                icon
+                        ).then(function() {
+                            window.location = "<?php echo constant('URL'); ?>gimnasio";
+                        });
+                    },
+                });
+            }
+        });
+        $('#formUpdateImage').validate({
+            rules: {
+                idGymUpdateImage: {
+                    required: true
                 },
-                imagenGimnasioActualizar: {
-                    required: "Ingresa una imagen"
+                imageInput: {
+                    required: true
+                }
+            },
+            messages: {
+                idGymUpdateImage: {
+                    required: "Seleccione el gimnasio"
                 },
+                imageInput: {
+                    required: "Ingrese la fecha"
+                }
             },
             errorElement: 'span',
             errorPlacement: function (error, element) {

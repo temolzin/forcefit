@@ -30,42 +30,35 @@ class Usuario extends Controller
 		$coloniaUsuario = $_POST['coloniaUsuario'];
 		$codigoPostalUsuario = $_POST['codigoPostalUsuario'];
 		$id_rol = $_POST['rolUsuario'];
-		$nombreImagen = "";
-		if ($_FILES["imagen"]["name"] != null) {
-			$imagen = $_FILES["imagen"];
-			$nombreImagen = $imagen["name"];
-			$tipoImagen = $imagen["type"];
-			$ruta_provisional = $imagen["tmp_name"];
-			$fullname = $nombreUsuario . "_" . $apellidoPaternoUsuario;
-			$carpeta = "public/usuario/" . $fullname . "/";
-			if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-				echo 'errorimagen';
-			} else {
-				if (!file_exists($carpeta)) {
-					mkdir($carpeta, 0777, true);
-				}
-				copy($ruta_provisional, $carpeta . $nombreImagen);
+		$nombreImagen = $_FILES["imagen"]["name"];
 
-				$data = array(
-					'nombreUsuario' => $nombreUsuario,
-					'apellidoPaternoUsuario' => $apellidoPaternoUsuario,
-					'apellidoMaternoUsuario' => $apellidoMaternoUsuario,
-					'correoUsuario' => $emailUsuario,
-					'password' => $passwordUsuario,
-					'calleUsuario' => $calleUsuario,
-					'estadoUsuario' => $estadoUsuario,
-					'municipioUsuario' => $municipioUsuario,
-					'coloniaUsuario' => $coloniaUsuario,
-					'codigoPostalUsuario' => $codigoPostalUsuario,
-					'rolUsuario' => $id_rol,
-					'imagen' => $nombreImagen,
-					'nombreImagen' => $nombreImagen
-				);
-				require 'model/usuarioDAO.php';
-				$this->loadModel('UsuarioDAO');
-				$usuarioDAO = new UsuarioDAO();
-				$usuarioDAO->insert($data);
-			}
+		$data = array(
+			'nombreUsuario' => $nombreUsuario,
+			'apellidoPaternoUsuario' => $apellidoPaternoUsuario,
+			'apellidoMaternoUsuario' => $apellidoMaternoUsuario,
+			'correoUsuario' => $emailUsuario,
+			'password' => $passwordUsuario,
+			'calleUsuario' => $calleUsuario,
+			'estadoUsuario' => $estadoUsuario,
+			'municipioUsuario' => $municipioUsuario,
+			'coloniaUsuario' => $coloniaUsuario,
+			'codigoPostalUsuario' => $codigoPostalUsuario,
+			'rolUsuario' => $id_rol,
+			'imagen' => $nombreImagen,
+			'nombreImagen' => $nombreImagen
+		);
+
+		if ($_FILES["imagen"]["name"] != null) {
+			require 'model/usuarioDAO.php';
+			$this->loadModel('UsuarioDAO');
+			$usuarioDAO = new UsuarioDAO();
+			$id_usuario = $usuarioDAO->insert($data);
+	
+			require_once __DIR__ . '/services/saveImage.php';
+			$imagen = $_FILES["imagen"];
+			$Carpeta = "public/usuario/" . $id_usuario . "/";
+			SaveImage::invoke($Carpeta, $imagen);
+			echo "ok";
 		}
 	}
 
@@ -83,7 +76,6 @@ class Usuario extends Controller
 		$coloniaUsuario = $_POST['coloniaUsuarioActualizar'];
 		$codigoPostalUsuario = $_POST['codigopostalUsuarioActualizar'];
 		$id_rol = $_POST['rolUsuarioActualizar'];
-		$nombreImagen = "";
 
 		$arrayActualizar = array(
 			'id_usuario' => $id_usuario,
@@ -99,28 +91,6 @@ class Usuario extends Controller
 			'codigoPostalUsuario' => $codigoPostalUsuario,
 			'id_rol' => $id_rol,
 		);
-
-		if (isset($_FILES["imagenUsuarioActualizar"])) {
-			if ($_FILES["imagenUsuarioActualizar"]["name"] != null) {
-				$imagen = $_FILES["imagenUsuarioActualizar"];
-				$nombreImagen = $imagen["name"];
-				$tipoImagen = $imagen["type"];
-				$ruta_provisional = $imagen["tmp_name"];
-
-				$fullname = $nombreUsuario . "_" . $apellidoPaternoUsuario;
-				$carpeta = "public/usuario/" . $fullname . "/";
-
-				if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-					echo 'errorimagen';
-				} else {
-					if (!file_exists($carpeta)) {
-						mkdir($carpeta, 0777, true);
-					}
-					copy($ruta_provisional, $carpeta . $nombreImagen);
-					$arrayActualizar['imagen'] = $nombreImagen;
-				}
-			}
-		}
 
 		require 'model/usuarioDAO.php';
 		$this->loadModel('UsuarioDAO');
@@ -191,6 +161,23 @@ class Usuario extends Controller
 				$this->loadModel('UsuarioDAO');
 				$usuarioDAO = new UsuarioDAO();
 				$usuarioDAO->insertGymAndPlanSistema($data);
+	}
+
+	function UpdateImage()
+	{
+		require_once __DIR__ . '/services/saveImage.php';
+		$id_user = $_POST['idUserUpdateImage'];
+		$imagen = $_FILES["imageInput"];
+		$Carpeta = "public/usuario/" . $id_user . "/";
+		$data = array(
+			'id_user' => $id_user,
+			'imageInput' => SaveImage::invoke($Carpeta, $imagen)
+		);
+
+		require 'model/usuarioDAO.php';
+		$this->loadModel('UsuarioDAO');
+		$usuarioDAO = new UsuarioDAO();
+		$usuarioDAO = $usuarioDAO->updateImage($data);
 	}
 }
 ?>

@@ -30,42 +30,34 @@ class Cliente extends Controller
 		$codigo_postal_cliente = $_POST['codigoPostalCliente'];
 		$numero_cliente = $_POST['numeroCliente'];
 		$email_cliente = $_POST['emailCliente'];
-		$nombreImagen = "";
-		if ($_FILES["imagen"]["name"] != null) {
-			$imagen = $_FILES["imagen"];
-			$nombreImagen = $imagen["name"];
-			$tipoImagen = $imagen["type"];
-			$ruta_provisional = $imagen["tmp_name"];
-			$fullname = $nombre_cliente . "_" . $apellido_paterno_cliente;
-			$carpeta = "public/cliente/" . $fullname . "/";
-			if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-				echo 'errorimagen';
-			} else {
-				if (!file_exists($carpeta)) {
-					mkdir($carpeta, 0777, true);
-				}
-				copy($ruta_provisional, $carpeta . $nombreImagen);
+		$nombreImagen = $_FILES["imagen"]["name"];
 
-				$data = array(
-					'id_gimnasio' =>$id_gimnasio,
-					'id_PlanGym' =>$id_PlanGym,
-					'nombreCliente' => $nombre_cliente,
-					'apellidoPaternoCliente' => $apellido_paterno_cliente,
-					'apellidoMaternoCliente' => $apellido_materno_cliente,
-					'municipioCliente' => $municipio_cliente,
-					'coloniaCliente' => $colonia_cliente,
-					'calleCliente' => $calle_cliente,
-					'codigoPostalCliente' => $codigo_postal_cliente,
-					'numeroCliente' => $numero_cliente,
-					'emailCliente' => $email_cliente,
-					'imagen' => $nombreImagen,
-					'nombreImagen' => $nombreImagen
-				);
-				require 'model/clienteDAO.php';
-				$this->loadModel('ClienteDAO');
-				$clienteDAO = new ClienteDAO();
-				$clienteDAO->insert($data);
-			}
+		$data = array(
+			'id_gimnasio' => $id_gimnasio,
+			'id_PlanGym' => $id_PlanGym,
+			'nombreCliente' => $nombre_cliente,
+			'apellidoPaternoCliente' => $apellido_paterno_cliente,
+			'apellidoMaternoCliente' => $apellido_materno_cliente,
+			'municipioCliente' => $municipio_cliente,
+			'coloniaCliente' => $colonia_cliente,
+			'calleCliente' => $calle_cliente,
+			'codigoPostalCliente' => $codigo_postal_cliente,
+			'numeroCliente' => $numero_cliente,
+			'emailCliente' => $email_cliente,
+			'imagen' => $nombreImagen,
+			'nombreImagen' => $nombreImagen
+		);
+		if ($_FILES["imagen"]["name"] != null) {
+			require 'model/clienteDAO.php';
+			$this->loadModel('ClienteDAO');
+			$clienteDAO = new ClienteDAO();
+			$id_cliente = $clienteDAO->insert($data);
+			
+			require_once __DIR__ . '/services/saveImage.php';
+			$imagen = $_FILES["imagen"];
+			$Carpeta = "public/cliente/" . $id_cliente . "/";
+			SaveImage::invoke($Carpeta, $imagen);
+			echo "ok";
 		}
 	}
 
@@ -95,31 +87,6 @@ class Cliente extends Controller
 			'numero_cliente' => $numero_cliente,
 			'email_cliente' => $email_cliente,
 		);
-
-		if (isset($_FILES["imagenClienteActualizar"])) {
-
-			if ($_FILES["imagenClienteActualizar"]["name"] != null) {
-
-				$imagen = $_FILES["imagenClienteActualizar"];
-				$nombreImagen = $imagen["name"];
-				$tipoImagen = $imagen["type"];
-				$ruta_provisional = $imagen["tmp_name"];
-
-				$fullname = $nombre_cliente . "_" . $apellido_paterno_cliente;
-				$carpeta = "public/cliente/" . $fullname . "/";
-
-				if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-					echo 'errorimagen';
-				} else {
-					if (!file_exists($carpeta)) {
-						mkdir($carpeta, 0777, true);
-					}
-					copy($ruta_provisional, $carpeta . $nombreImagen);
-					$arrayActualizar['imagen_cliente'] = $nombreImagen;
-				}
-			}
-		}
-
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();
@@ -202,6 +169,23 @@ class Cliente extends Controller
 			$obj = array();
 		}
 		echo json_encode($obj);
+	}
+
+	function UpdateImage()
+	{
+		require_once __DIR__ . '/services/saveImage.php';
+		$id_cliente = $_POST['idClientUpdateImage'];
+		$imagen = $_FILES["imageInput"];
+		$Carpeta = "public/cliente/" . $id_cliente . "/";
+		$data = array(
+			'id_cliente' => $id_cliente,
+			'imageInput' => SaveImage::invoke($Carpeta, $imagen)
+		);
+
+		require 'model/clienteDAO.php';
+		$this->loadModel('ClienteDAO');
+		$clienteDAO = new ClienteDAO();
+		$clienteDAO = $clienteDAO->updateImage($data);
 	}
 }
 ?>

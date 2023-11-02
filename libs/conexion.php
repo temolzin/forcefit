@@ -48,6 +48,10 @@
             }
         }
 
+        /*Método para obtener el id del ultimo registro*/
+        public function getLastInsertId() {
+            return $this->conexion->lastInsertId();
+        }
 
         //Método que ejecuta un insert, update y delete, según lo requiera.
         public function ejecutarAccion($accion, $valores = array()) {

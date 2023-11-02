@@ -11,21 +11,7 @@ class UsuarioDAO extends Model implements CRUD
 
     public function insert($data)
     {
-        $query = $this->db->conectar()->prepare('INSERT INTO usuario values (NULL, 
-                :nombreUsuario,
-                :apellidoPaternoUsuario,
-                :apellidoMaternoUsuario,
-                :emailUsuario,
-                :passwordUsuario,
-                :imagen,
-                :calleUsuario,
-                :estadoUsuario,
-                :municipioUsuario,
-                :coloniaUsuario,
-                :codigoPostalUsuario,
-                :id_rol,
-                :is_active)');
-        $query->execute([
+        $insertData = array(
             ':nombreUsuario' => $data['nombreUsuario'],
             ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
             ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
@@ -39,8 +25,25 @@ class UsuarioDAO extends Model implements CRUD
             ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
             ':id_rol' => $data['rolUsuario'],
             ':is_active' => self::CUSTOMER_INACTIVE
-        ]);
-        echo 'ok';
+        );
+        $query ="INSERT INTO usuario values (NULL, 
+                :nombreUsuario,
+                :apellidoPaternoUsuario,
+                :apellidoMaternoUsuario,
+                :emailUsuario,
+                :passwordUsuario,
+                :imagen,
+                :calleUsuario,
+                :estadoUsuario,
+                :municipioUsuario,
+                :coloniaUsuario,
+                :codigoPostalUsuario,
+                :id_rol,
+                :is_active)";
+        
+        if ($this->db->ejecutarAccion($query, $insertData)) {
+            return $this->db->getLastInsertId();
+        }
     }
 
     public function insertGymAndPlanSistema($data)
@@ -59,44 +62,21 @@ class UsuarioDAO extends Model implements CRUD
 
     public function update($data)
     {
-        $imagen = '';
-        $arrayActualizar = [];
-        if (isset($data['imagen'])) {
-            $imagen = 'imagen = :imagen,';
-            $arrayActualizar = [
-                ':id_usuario' => $data['id_usuario'],
-                ':nombreUsuario' => $data['nombreUsuario'],
-                ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
-                ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
-                ':emailUsuario' => $data['emailUsuario'],
-                ':passwordUsuario' => $data['passwordUsuario'],
-                ':imagen' => $data['imagen'],
-                ':calleUsuario' => $data['calleUsuario'],
-                ':estadoUsuario' => $data['estadoUsuario'],
-                ':municipioUsuario' => $data['municipioUsuario'],
-                ':coloniaUsuario' => $data['coloniaUsuario'],
-                ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
-                ':id_rol' => $data['id_rol']
-            ];
-        } else {
-            $arrayActualizar = [
-                ':id_usuario' => $data['id_usuario'],
-                ':nombreUsuario' => $data['nombreUsuario'],
-                ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
-                ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
-                ':emailUsuario' => $data['emailUsuario'],
-                ':passwordUsuario' => $data['passwordUsuario'],
-                ':imagen' => $data['imagen'],
-                ':calleUsuario' => $data['calleUsuario'],
-                ':estadoUsuario' => $data['estadoUsuario'],
-                ':municipioUsuario' => $data['municipioUsuario'],
-                ':coloniaUsuario' => $data['coloniaUsuario'],
-                ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
-                ':id_rol' => $data['id_rol']
-            ];
-        }
+        $arrayActualizar = [
+            ':id_usuario' => $data['id_usuario'],
+            ':nombreUsuario' => $data['nombreUsuario'],
+            ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
+            ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
+            ':emailUsuario' => $data['emailUsuario'],
+            ':passwordUsuario' => $data['passwordUsuario'],
+            ':calleUsuario' => $data['calleUsuario'],
+            ':estadoUsuario' => $data['estadoUsuario'],
+            ':municipioUsuario' => $data['municipioUsuario'],
+            ':coloniaUsuario' => $data['coloniaUsuario'],
+            ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
+            ':id_rol' => $data['id_rol']
+        ];
         $query = $this->db->conectar()->prepare('UPDATE usuario SET 
-            ' . $imagen . '
             nombreUsuario = :nombreUsuario,  
             apellidoPaternoUsuario = :apellidoPaternoUsuario,
             apellidoMaternoUsuario = :apellidoMaternoUsuario,
@@ -273,6 +253,22 @@ class UsuarioDAO extends Model implements CRUD
             $objUsuario=null;
         }
         return $objUsuario;
+    }
+
+    public function updateImage($data)
+    {
+        $insertData = array(
+            ':id_user' => $data['id_user'],
+            ':imagen' => $data['imageInput'],
+        );
+
+        $queryUpdateUser = "UPDATE usuario SET 
+        imagen = :imagen
+        WHERE id_usuario = :id_user";
+
+        if ($this->db->ejecutarAccion($queryUpdateUser, $insertData)) {
+            echo "ok";
+        }
     }
 }
 ?>
