@@ -282,8 +282,8 @@ $menu->header('gimnasio');
 <div class="modal fade" id="modalUpdateImage" tabindex="-1" role="dialog" aria-labelledby="modalUpdateImage" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="card-primary">
-                <div class="card-header bg-primary">
+            <div class="card-info">
+                <div class="card-header bg-info">
                     <div class="d-sm-flex align-items-center justify-content-between ">
                         <h4 class="card-title">Actualizar Imagen</h4>
                         <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -309,7 +309,7 @@ $menu->header('gimnasio');
                             </div>
                         </div>
                         <div class="text-center mt-3">
-                            <button type="submit" class="btn btn-primary">Registrar</button>
+                            <button type="submit" class="btn btn-info">Registrar</button>
                         </div>
                     </div>
                 </form>
