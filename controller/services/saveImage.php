@@ -1,16 +1,16 @@
 <?php
 class SaveImage
 {
-    public static function invoke($Carpeta, $imagen)
+    public static function invoke($carpeta, $imagen)
     {
-        if (!file_exists($Carpeta)) {
-            mkdir($Carpeta, 0777, true);
+        if (!file_exists($carpeta)) {
+            mkdir($carpeta, 0777, true);
         }
         
         $nombreImagen = $imagen["name"];
-        $ruta_provisional = $imagen["tmp_name"];
+        $rutaProvisional = $imagen["tmp_name"];
         
-        copy($ruta_provisional, $Carpeta . $nombreImagen);
+        copy($rutaProvisional, $carpeta . $nombreImagen);
         return $nombreImagen;
     }
 }

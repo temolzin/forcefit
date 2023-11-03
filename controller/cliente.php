@@ -19,31 +19,31 @@ class Cliente extends Controller
 
 	function insert()
 	{
-		$id_gimnasio = $_POST['id_gimnasio'];
-		$id_PlanGym = $_POST['id_PlanGym'];
-		$nombre_cliente = $_POST['nombreCliente'];
-		$apellido_paterno_cliente = $_POST['apellidoPaternoCliente'];
-		$apellido_materno_cliente = $_POST['apellidoMaternoCliente'];
-		$municipio_cliente = $_POST['municipioCliente'];
-		$colonia_cliente = $_POST['coloniaCliente'];
-		$calle_cliente = $_POST['calleCliente'];
-		$codigo_postal_cliente = $_POST['codigoPostalCliente'];
-		$numero_cliente = $_POST['numeroCliente'];
-		$email_cliente = $_POST['emailCliente'];
+		$idGimnasio = $_POST['id_gimnasio'];
+		$idPlanGym = $_POST['id_PlanGym'];
+		$nombreCliente = $_POST['nombreCliente'];
+		$apellidoPaternoCliente = $_POST['apellidoPaternoCliente'];
+		$apellidoMaternoCliente = $_POST['apellidoMaternoCliente'];
+		$municipioCliente = $_POST['municipioCliente'];
+		$coloniaCliente = $_POST['coloniaCliente'];
+		$calleCliente = $_POST['calleCliente'];
+		$codigoPostalCliente = $_POST['codigoPostalCliente'];
+		$numeroCliente = $_POST['numeroCliente'];
+		$emailCliente = $_POST['emailCliente'];
 		$nombreImagen = $_FILES["imagen"]["name"];
 
 		$data = array(
-			'id_gimnasio' => $id_gimnasio,
-			'id_PlanGym' => $id_PlanGym,
-			'nombreCliente' => $nombre_cliente,
-			'apellidoPaternoCliente' => $apellido_paterno_cliente,
-			'apellidoMaternoCliente' => $apellido_materno_cliente,
-			'municipioCliente' => $municipio_cliente,
-			'coloniaCliente' => $colonia_cliente,
-			'calleCliente' => $calle_cliente,
-			'codigoPostalCliente' => $codigo_postal_cliente,
-			'numeroCliente' => $numero_cliente,
-			'emailCliente' => $email_cliente,
+			'id_gimnasio' => $idGimnasio,
+			'id_PlanGym' => $idPlanGym,
+			'nombreCliente' => $nombreCliente,
+			'apellidoPaternoCliente' => $apellidoPaternoCliente,
+			'apellidoMaternoCliente' => $apellidoMaternoCliente,
+			'municipioCliente' => $municipioCliente,
+			'coloniaCliente' => $coloniaCliente,
+			'calleCliente' => $calleCliente,
+			'codigoPostalCliente' => $codigoPostalCliente,
+			'numeroCliente' => $numeroCliente,
+			'emailCliente' => $emailCliente,
 			'imagen' => $nombreImagen,
 			'nombreImagen' => $nombreImagen
 		);
@@ -51,41 +51,40 @@ class Cliente extends Controller
 			require 'model/clienteDAO.php';
 			$this->loadModel('ClienteDAO');
 			$clienteDAO = new ClienteDAO();
-			$id_cliente = $clienteDAO->insert($data);
+			$idCliente = $clienteDAO->insert($data);
 			
 			require_once __DIR__ . '/services/saveImage.php';
 			$imagen = $_FILES["imagen"];
-			$Carpeta = "public/cliente/" . $id_cliente . "/";
-			SaveImage::invoke($Carpeta, $imagen);
+			$carpeta = "public/cliente/" . $idCliente . "/";
+			SaveImage::invoke($carpeta, $imagen);
 			echo "ok";
 		}
 	}
 
 	function update()
 	{
-		$id_cliente = $_POST['id_clienteActualizar'];
-		$nombre_cliente = $_POST['nombreClienteActualizar'];
-		$apellido_paterno_cliente = $_POST['apellidoPaternoClienteActualizar'];
-		$apellido_materno_cliente = $_POST['apellidoMaternoClienteActualizar'];
-		$municipio_cliente = $_POST['municipioClienteActualizar'];
-		$colonia_cliente = $_POST['coloniaClienteActualizar'];
-		$calle_cliente = $_POST['calleClienteActualizar'];
-		$codigo_postal_cliente = $_POST['codigoPostalClienteActualizar'];
-		$numero_cliente = $_POST['numeroClienteActualizar'];
-		$email_cliente = $_POST['emailClienteActualizar'];
-		$nombreImagen = "";
+		$idCliente = $_POST['id_clienteActualizar'];
+		$nombreCliente = $_POST['nombreClienteActualizar'];
+		$apellidoPaternoCliente = $_POST['apellidoPaternoClienteActualizar'];
+		$apellidoMaternoCliente = $_POST['apellidoMaternoClienteActualizar'];
+		$municipioCliente = $_POST['municipioClienteActualizar'];
+		$coloniaCliente = $_POST['coloniaClienteActualizar'];
+		$calleCliente = $_POST['calleClienteActualizar'];
+		$codigoPostalCliente = $_POST['codigoPostalClienteActualizar'];
+		$numeroCliente = $_POST['numeroClienteActualizar'];
+		$emailCliente = $_POST['emailClienteActualizar'];
 
 		$arrayActualizar = array(
-			'id_cliente' => $id_cliente,
-			'nombre_cliente' => $nombre_cliente,
-			'apellido_paterno_cliente' => $apellido_paterno_cliente,
-			'apellido_materno_cliente' => $apellido_materno_cliente,
-			'municipio_cliente' => $municipio_cliente,
-			'colonia_cliente' => $colonia_cliente,
-			'calle_cliente' => $calle_cliente,
-			'codigo_postal_cliente' => $codigo_postal_cliente,
-			'numero_cliente' => $numero_cliente,
-			'email_cliente' => $email_cliente,
+			'id_cliente' => $idCliente,
+			'nombre_cliente' => $nombreCliente,
+			'apellido_paterno_cliente' => $apellidoPaternoCliente,
+			'apellido_materno_cliente' => $apellidoMaternoCliente,
+			'municipio_cliente' => $municipioCliente,
+			'colonia_cliente' => $coloniaCliente,
+			'calle_cliente' => $calleCliente,
+			'codigo_postal_cliente' => $codigoPostalCliente,
+			'numero_cliente' => $numeroCliente,
+			'email_cliente' => $emailCliente,
 		);
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
@@ -171,15 +170,15 @@ class Cliente extends Controller
 		echo json_encode($obj);
 	}
 
-	function UpdateImage()
+	function updateImage()
 	{
 		require_once __DIR__ . '/services/saveImage.php';
-		$id_cliente = $_POST['idClientUpdateImage'];
+		$idCliente = $_POST['idClientUpdateImage'];
 		$imagen = $_FILES["imageInput"];
-		$Carpeta = "public/cliente/" . $id_cliente . "/";
+		$carpeta = "public/cliente/" . $idCliente . "/";
 		$data = array(
-			'id_cliente' => $id_cliente,
-			'imageInput' => SaveImage::invoke($Carpeta, $imagen)
+			'id_cliente' => $idCliente,
+			'imageInput' => SaveImage::invoke($carpeta, $imagen)
 		);
 
 		require 'model/clienteDAO.php';

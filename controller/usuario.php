@@ -29,7 +29,7 @@ class Usuario extends Controller
 		$municipioUsuario = $_POST['municipioUsuario'];
 		$coloniaUsuario = $_POST['coloniaUsuario'];
 		$codigoPostalUsuario = $_POST['codigoPostalUsuario'];
-		$id_rol = $_POST['rolUsuario'];
+		$idRol = $_POST['rolUsuario'];
 		$nombreImagen = $_FILES["imagen"]["name"];
 
 		$data = array(
@@ -43,7 +43,7 @@ class Usuario extends Controller
 			'municipioUsuario' => $municipioUsuario,
 			'coloniaUsuario' => $coloniaUsuario,
 			'codigoPostalUsuario' => $codigoPostalUsuario,
-			'rolUsuario' => $id_rol,
+			'rolUsuario' => $idRol,
 			'imagen' => $nombreImagen,
 			'nombreImagen' => $nombreImagen
 		);
@@ -52,19 +52,19 @@ class Usuario extends Controller
 			require 'model/usuarioDAO.php';
 			$this->loadModel('UsuarioDAO');
 			$usuarioDAO = new UsuarioDAO();
-			$id_usuario = $usuarioDAO->insert($data);
+			$idUsuario = $usuarioDAO->insert($data);
 	
 			require_once __DIR__ . '/services/saveImage.php';
 			$imagen = $_FILES["imagen"];
-			$Carpeta = "public/usuario/" . $id_usuario . "/";
-			SaveImage::invoke($Carpeta, $imagen);
+			$carpeta = "public/usuario/" . $idUsuario . "/";
+			SaveImage::invoke($carpeta, $imagen);
 			echo "ok";
 		}
 	}
 
 	function update()
 	{
-		$id_usuario = $_POST['id_usuarioActualizar'];
+		$idUsuario = $_POST['id_usuarioActualizar'];
 		$nombreUsuario = $_POST['nombreUsuarioActualizar'];
 		$apellidoPaternoUsuario = $_POST['apellidoPaternoUsuarioActualizar'];
 		$apellidoMaternoUsuario = $_POST['apellidoMaternoUsuarioActualizar'];
@@ -75,10 +75,10 @@ class Usuario extends Controller
 		$municipioUsuario = $_POST['municipioUsuarioActualizar'];
 		$coloniaUsuario = $_POST['coloniaUsuarioActualizar'];
 		$codigoPostalUsuario = $_POST['codigopostalUsuarioActualizar'];
-		$id_rol = $_POST['rolUsuarioActualizar'];
+		$idRol = $_POST['rolUsuarioActualizar'];
 
 		$arrayActualizar = array(
-			'id_usuario' => $id_usuario,
+			'id_usuario' => $idUsuario,
 			'nombreUsuario' => $nombreUsuario,
 			'apellidoPaternoUsuario' => $apellidoPaternoUsuario,
 			'apellidoMaternoUsuario' => $apellidoMaternoUsuario,
@@ -89,7 +89,7 @@ class Usuario extends Controller
 			'municipioUsuario' => $municipioUsuario,
 			'coloniaUsuario' => $coloniaUsuario,
 			'codigoPostalUsuario' => $codigoPostalUsuario,
-			'id_rol' => $id_rol,
+			'id_rol' => $idRol,
 		);
 
 		require 'model/usuarioDAO.php';
@@ -163,15 +163,15 @@ class Usuario extends Controller
 				$usuarioDAO->insertGymAndPlanSistema($data);
 	}
 
-	function UpdateImage()
+	function updateImage()
 	{
 		require_once __DIR__ . '/services/saveImage.php';
-		$id_user = $_POST['idUserUpdateImage'];
+		$idUser = $_POST['idUserUpdateImage'];
 		$imagen = $_FILES["imageInput"];
-		$Carpeta = "public/usuario/" . $id_user . "/";
+		$carpeta = "public/usuario/" . $idUser . "/";
 		$data = array(
-			'id_user' => $id_user,
-			'imageInput' => SaveImage::invoke($Carpeta, $imagen)
+			'id_user' => $idUser,
+			'imageInput' => SaveImage::invoke($carpeta, $imagen)
 		);
 
 		require 'model/usuarioDAO.php';

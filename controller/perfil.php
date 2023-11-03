@@ -31,12 +31,10 @@ class Perfil extends Controller
         $municipalityUser = $_POST['municipalityUser'];
         $colonyUser = $_POST['colonyUser'];
         $postalcodeUser = $_POST['postalcodeUser'];
-        $id_usuario = $_POST['id_usuario'];
-        $oldNameUser = $_POST['oldNameUser'];
-        $oldLastNameUser = $_POST['oldLastNameUser'];
+        $idUsuario = $_POST['idUsuario'];
 
         $data = array(
-            'id_usuario' => $id_usuario,
+            'id_usuario' => $idUsuario,
             'nameUser' => $nameUser,
             'lastNameP' => $lastNameP,
             'lastNameM' => $lastNameM,
@@ -47,29 +45,12 @@ class Perfil extends Controller
             'colonyUser' => $colonyUser,
             'postalcodeUser' => $postalcodeUser
         );
-
-        $newFullname = $nameUser . "_" . $lastNameP;
-        $newCarpeta = "public/usuario/" . $id_usuario . "_" . $newFullname . "/";
-        if (!file_exists($newCarpeta)) {
-            mkdir($newCarpeta, 0777, true);
-        }
-
-        if ($oldNameUser != $nameUser || $lastNameP != $oldLastNameUser) {
-            $oldFullname = $oldNameUser . "_" . $oldLastNameUser;
-            $oldCarpeta = "public/usuario/" . $id_usuario . "_" . $oldFullname . "/" . $_POST['imagen'];
-
-            copy($oldCarpeta, $newCarpeta . $_POST['imagen']);
-        }
-
+        
         if (!empty($_FILES["imageUserUpdate"]["name"])) {
+            require_once __DIR__ . '/services/saveImage.php';
             $imagen = $_FILES["imageUserUpdate"];
-            $nombreImagen = $imagen["name"];
-            $tipoImagen = $imagen["type"];
-            $ruta_provisional = $imagen["tmp_name"];
-            if ($tipoImagen === 'image/jpg' || $tipoImagen === 'image/jpeg' || $tipoImagen === 'image/png' || $tipoImagen === 'image/gif') {
-                copy($ruta_provisional, $newCarpeta . $nombreImagen);
-                $data['imageUserUpdate'] = $nombreImagen;
-            }
+            $carpeta = "public/usuario/" . $idUsuario . "/";
+            $data['imageUserUpdate'] = SaveImage::invoke($carpeta, $imagen);
         }
 
         require 'model/perfilDAO.php';

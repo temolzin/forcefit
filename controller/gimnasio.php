@@ -19,12 +19,12 @@ class Gimnasio extends Controller
 
     function insert()
     {
-        $nombre_gimnasio = $_POST['nombreGimnasio'];
+        $nombreGimnasio = $_POST['nombreGimnasio'];
         $telefono = $_POST['telefono'];
         $nombreImagen = $_FILES["imagen"]["name"];
 
         $data = array(
-            'nombre_gimnasio' => $nombre_gimnasio,
+            'nombre_gimnasio' => $nombreGimnasio,
             'telefono' => $telefono,
             'imagen' => $nombreImagen,
             'nombreImagen' => $nombreImagen
@@ -34,25 +34,25 @@ class Gimnasio extends Controller
             require 'model/gimnasioDAO.php';
             $this->loadModel('GimnasioDAO');
             $gimnasioDAO = new GimnasioDAO();
-            $id_gimnasio = $gimnasioDAO->insert($data);
+            $idGimnasio = $gimnasioDAO->insert($data);
 
             require_once __DIR__ . '/services/saveImage.php';
             $imagen = $_FILES["imagen"];
-            $Carpeta = "public/gimnasio/" . $id_gimnasio . "/";
-            SaveImage::invoke($Carpeta, $imagen);
+            $carpeta = "public/gimnasio/" . $idGimnasio . "/";
+            SaveImage::invoke($carpeta, $imagen);
             echo "ok";
         }
     }
 
     function update()
     {
-        $id_gimnasio = $_POST['idGimnasioActualizar'];
-        $nombre_gimnasio = $_POST['nombreGimnasioActualizar'];
+        $idGimnasio = $_POST['idGimnasioActualizar'];
+        $nombreGimnasio = $_POST['nombreGimnasioActualizar'];
         $telefono = $_POST['telefonoActualizar'];
 
         $arrayActualizar = array(
-            'id_gimnasio' => $id_gimnasio,
-            'nombre_gimnasio' => $nombre_gimnasio,
+            'id_gimnasio' => $idGimnasio,
+            'nombre_gimnasio' => $nombreGimnasio,
             'telefono' => $telefono,
         );
 
@@ -98,15 +98,15 @@ class Gimnasio extends Controller
         echo json_encode($obj);
     }
 
-    function UpdateImage()
+    function updateImage()
 	{
 		require_once __DIR__ . '/services/saveImage.php';
-		$id_gimnasio = $_POST['idGymUpdateImage'];
+		$idGimnasio = $_POST['idGymUpdateImage'];
 		$imagen = $_FILES["imageInput"];
-		$Carpeta = "public/gimnasio/" . $id_gimnasio . "/";
+		$carpeta = "public/gimnasio/" . $idGimnasio . "/";
 		$data = array(
-			'id_gimnasio' => $id_gimnasio,
-			'imageInput' => SaveImage::invoke($Carpeta, $imagen)
+			'id_gimnasio' => $idGimnasio,
+			'imageInput' => SaveImage::invoke($carpeta, $imagen)
 		);
 
 		require 'model/gimnasioDAO.php';

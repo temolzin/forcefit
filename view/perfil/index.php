@@ -213,7 +213,7 @@ $menu->footer();
                 var postalcodeUser = $("#postalcodeUser").val(data[0].codigoPostalUsuario);
                 var nameRol = $("#nameRol").text(data[0].nombreRol);
                 var descriptionRol = $("#descriptionRol").text(data[0].descripcion);
-                var imageUser = $("#imageUser").attr("src", '<?php echo constant('URL'); ?>public/usuario/' + data[0].id_usuario + '_' + data[0].nombreUsuario + '_' + data[0].apellidoPaternoUsuario + '/' + data[0].imagen);
+                var imageUser = $("#imageUser").attr("src", '<?php echo constant('URL'); ?>public/usuario/' + data[0].id_usuario +  '/' + data[0].imagen);
                 var rolUser = $("#rolUser").val(data[0].nombreRol);
                 var fullNameUser = $("#fullNameUser").text(data[0].nombreUsuario + ' ' + data[0].apellidoPaternoUsuario + ' ' + data[0].apellidoMaternoUsuario);
             },
@@ -229,7 +229,7 @@ $menu->footer();
     });
     $('#formUpdatePerfil').on('submit', function(e) {
         datosActualizar = new FormData(this);
-        datosActualizar.append('id_usuario', "<?php echo $_SESSION['id_usuario']; ?>");
+        datosActualizar.append('idUsuario', "<?php echo $_SESSION['id_usuario']; ?>");
         datosActualizar.append('oldNameUser', "<?php echo $_SESSION['nombreUsuario']; ?>");
         datosActualizar.append('oldLastNameUser', "<?php echo $_SESSION['apellidoPaternoUsuario']; ?>");
         datosActualizar.append('imagen', "<?php echo $_SESSION['imagen']; ?>");
