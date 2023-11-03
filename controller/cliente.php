@@ -72,6 +72,7 @@ class Cliente extends Controller
 	function update()
 	{
 		$id_cliente = $_POST['id_clienteActualizar'];
+		$id_planGym = $_POST['id_PlanGymActualizar'];
 		$nombre_cliente = $_POST['nombreClienteActualizar'];
 		$apellido_paterno_cliente = $_POST['apellidoPaternoClienteActualizar'];
 		$apellido_materno_cliente = $_POST['apellidoMaternoClienteActualizar'];
@@ -85,6 +86,7 @@ class Cliente extends Controller
 
 		$arrayActualizar = array(
 			'id_cliente' => $id_cliente,
+			'id_planGym' => $id_planGym,
 			'nombre_cliente' => $nombre_cliente,
 			'apellido_paterno_cliente' => $apellido_paterno_cliente,
 			'apellido_materno_cliente' => $apellido_materno_cliente,

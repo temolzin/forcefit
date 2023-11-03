@@ -526,7 +526,7 @@ var obtenerdatosDT = function(table) {
         var id_pagoActualizar = $("#id_PagoActualizar").val(data.id_pago);
         var cantidadPagoActualizar = $("#cantidadPagoActualizar").val(data.cantidad_pago);
         var vencimientoPagoActualizar = $("#vencimientoPagoActualizar").val(data.vencimiento);
-        var idClientePagoActualizar = $("#idClientePagoActualizar").val(data.id_cliente);
+        var idClientePagoActualizar = $("#idClientePagoActualizar").val(data.id_cliente).trigger("change");
         var idplanPagoGymActualizar = $("#idplanPagoGymActualizar").val(data.id_planGym);
         var tipoPagoActualizar = $("#tipoPagoActualizar").val(data.tipo_Pago);
 

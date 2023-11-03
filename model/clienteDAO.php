@@ -57,6 +57,7 @@ class ClienteDAO extends Model implements CRUD
 
             $arrayActualizar = [
                 ':id_cliente' => $data['id_cliente'],
+                ':id_planGym' => $data['id_planGym'],
                 ':nombre_cliente' => $data['nombre_cliente'],
                 ':apellido_paterno_cliente' => $data['apellido_paterno_cliente'],
                 ':apellido_materno_cliente' => $data['apellido_materno_cliente'],
@@ -71,6 +72,7 @@ class ClienteDAO extends Model implements CRUD
         } else {
             $arrayActualizar = [
                 ':id_cliente' => $data['id_cliente'],
+                ':id_planGym' => $data['id_planGym'],
                 ':nombre_cliente' => $data['nombre_cliente'],
                 ':apellido_paterno_cliente' => $data['apellido_paterno_cliente'],
                 ':apellido_materno_cliente' => $data['apellido_materno_cliente'],
@@ -85,6 +87,7 @@ class ClienteDAO extends Model implements CRUD
         }
         $query = $this->db->conectar()->prepare('UPDATE cliente SET 
             ' . $imagen_cliente . '
+            id_planGym = :id_planGym,
             nombre_cliente = :nombre_cliente,  
             apellido_paterno_cliente = :apellido_paterno_cliente,
             apellido_materno_cliente = :apellido_materno_cliente,

@@ -983,6 +983,9 @@ $menu->footer();
                 emailClienteActualizar: {
                     required: true
                 },
+                id_PlanGymActualizar: {
+                    required: true
+                },
                 imagenClienteActualizar: {
                     required: true
                 }
@@ -1014,6 +1017,9 @@ $menu->footer();
                 },
                 emailClienteActualizar: {
                     required: "Ingresa el email del cliente"
+                },
+                id_PlanGymActualizar: {
+                    required: "Ingresa el plan del gym del cliente"
                 },
                 imagenClienteActualizar: {
                     required: "Ingresa la imagen del cliente"
