@@ -232,18 +232,6 @@ $menu->header('usuario');
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <span><label>Imagen del usuario (*)</label></span>
-                                        <div class="form-group input-group">
-                                            <div class="custom-file">
-                                                <input type="file" accept="image/*" class="custom-file-input"
-                                                    name="imagenUsuarioActualizar" id="imagenUsuarioActualizar"
-                                                    lang="es">
-                                                <label class="custom-file-label" for="imagen">Seleccione
-                                                    Fotografía</label>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Nombre del Usuario (*)</label>
@@ -618,6 +606,47 @@ $menu->header('usuario');
         </div>
     </div>
 </div>
+
+<!--------------------------------------------------------- Modal Update Image ----------------------------------------------->
+<div class="modal fade" id="modalUpdateImage" tabindex="-1" role="dialog" aria-labelledby="modalUpdateImage" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="card-info">
+                <div class="card-header bg-info">
+                    <div class="d-sm-flex align-items-center justify-content-between ">
+                        <h4 class="card-title">Actualizar Imagen</h4>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <form role="form" id="formUpdateImage" enctype="multipart/form-data" name="formUpdateImage" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="rounded-circle mx-auto d-inline-block overflow-hidden photo-container" style="width: 150px; height: 150px;">
+                                <img src="" alt="cliente" id="imgPreview" class="img-fluid">
+                            </div>
+                            <div class="col-lg-12">
+                                <input type="text" hidden class="form-control" id="idUserUpdateImage" name="idUserUpdateImage" placeholder="Id" />
+                            </div>
+                            <div class="col-lg-12">
+                                <span><label>Imagen del usuario (*)</label></span>
+                                <div class="form-group input-group">
+                                    <div class="custom-file">
+                                        <input type="file" accept="image/*" class="custom-file-input" onchange="previewImage(event, '#imgPreview')" name="imageInput" id="imageInput" lang="es">
+                                        <label class="custom-file-label" for="imagen">Seleccione
+                                            Fotografía</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-info">Actualizar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <?php
 $menu->footer();
 ?>
@@ -633,6 +662,7 @@ $menu->footer();
         llenarRol();
         llenarGimasio();
         llenarPlanSistema();
+        sendFormUpdateImage();
     });
 
     const llenarRol = () => {
@@ -731,8 +761,7 @@ const llenarPlanSistema = () => {
             {
                 defaultContent: "",
                 'render': function (data, type, JsonResultRow, meta) {
-                    var fullnameImagen = JsonResultRow.nombreUsuario + '_' + JsonResultRow
-                        .apellidoPaternoUsuario + '/' + JsonResultRow.imagen;
+                    var fullnameImagen = JsonResultRow.id_usuario + '/' + JsonResultRow.imagen;
                     var urlImg = '<?php echo constant('URL'); ?>public/usuario/' + fullnameImagen;
                     if (JsonResultRow.imagen == null || JsonResultRow.imagen ==
                         '') {
@@ -780,6 +809,7 @@ const llenarPlanSistema = () => {
                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarUsuario' title="Editar Datos"><i class="fa fa-edit"></i></button>
                         <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarUsuario' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
                         <button class='asignacion btn btn-primary' data-toggle='modal' data-target='#modalAsignarGimnasioYPlanSistema' title="Asignar Gimnasio y Plan Sistema"><i class="fa fa-plus"></i> Asignar</button>
+                        <button class='eliminar btn btn-info' data-toggle='modal' data-target='#modalUpdateImage' title="Actualizar Imagen"><i class="fa fa-picture-o"></i></button>
                         `
             }
             ],
@@ -792,9 +822,22 @@ const llenarPlanSistema = () => {
         });
         obtenerdatosDT(tableUsuario);
     }
+
+    function previewImage(event, querySelector) {
+        const input = event.target;
+        $imgPreview = document.querySelector(querySelector);
+        if (!input.files.length) return
+        file = input.files[0];
+        objectURL = URL.createObjectURL(file);
+        $imgPreview.src = objectURL;
+    }
+
     var obtenerdatosDT = function (table) {
         $('#dataTableUsuario tbody').on('click', 'tr', function () {
             var data = table.row(this).data();
+            var routeImageUser = $("#imgPreview").attr("src", '<?php echo constant('URL'); ?>public/usuario/' + data.id_usuario + '/' + data.imagen);
+            var idUserUpdateImage = $("#idUserUpdateImage").val(data.id_usuario);
+
             var idEliminar = $('#idEliminarUsuario').val(data.id_usuario);
 
             var id_usuarioAsignar= $("#id_usuarioAsignar").val(data.id_usuario);
@@ -1128,9 +1171,6 @@ const llenarPlanSistema = () => {
                 contraseñaUsuarioActualizar: {
                     required: true
                 },
-                imagenUsuarioActualizar: {
-                    required: true
-                },
                 calleUsuarioActualizar: {
                     required: true
                 },
@@ -1170,9 +1210,6 @@ const llenarPlanSistema = () => {
                 contraseñaUsuarioActualizar: {
                     required: "Ingrese contraseña"
                 },
-                imagenUsuarioActualizar: {
-                    required: "Ingrese una imagen"
-                },
                 calleUsuarioActualizar: {
                     required: "Ingrese calle"
                 },
@@ -1190,6 +1227,76 @@ const llenarPlanSistema = () => {
                 },
                 rolUsuarioActualizar: {
                     required: "Ingrese rol"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    }
+
+    var imageUpdate = null;
+    $('#formUpdateImage').on('submit', function(e) {
+        imageUpdate = new FormData(this);
+    });
+    var sendFormUpdateImage = function() {
+        $.validator.setDefaults({
+            submitHandler: function(e) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo constant('URL'); ?>usuario/UpdateImage",
+                    data: imageUpdate,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $('.submit').attr("disabled", "disabled");
+                        $('#formUpdateImage').css("opacity", ".5");
+                    },
+                    success: function(data) {
+                        var title = "¡Éxito!";
+                        var message = "La imagen ha sido actualizada de manera correcta";
+                        var icon = "success";
+                        if (data.trim() !== 'ok') {
+                            var title = "¡Error!";
+                            var message = "Ha ocurrido un error al actualizar la imagen." + data;
+                            var icon = "error";
+                        }
+                        
+                        Swal.fire(
+                                title,
+                                message,
+                                icon
+                        ).then(function() {
+                            window.location = "<?php echo constant('URL'); ?>usuario";
+                        });
+                    },
+                });
+            }
+        });
+        $('#formUpdateImage').validate({
+            rules: {
+                idClientUpdateImage: {
+                    required: true
+                },
+                imageInput: {
+                    required: true
+                }
+            },
+            messages: {
+                idClientUpdateImage: {
+                    required: "Seleccione el cliente"
+                },
+                imageInput: {
+                    required: "Ingrese la fecha"
                 }
             },
             errorElement: 'span',

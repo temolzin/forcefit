@@ -8,44 +8,28 @@ class GimnasioDAO extends Model implements CRUD
 
     public function insert($data)
     {
-        $query = $this->db->conectar()->prepare('INSERT INTO gimnasio values (NULL, 
-            :nombre_gimnasio,
-            :telefono,  
-            :imagen)');
-        $query->execute([
+        $insertData = array(
             ':nombre_gimnasio' => $data['nombre_gimnasio'],
             ':telefono' => $data['telefono'],
-            ':imagen' => $data['imagen'],
-        ]);
-        echo 'ok';
+            ':imagen' => $data['imagen']
+        );
+        $query = "INSERT INTO gimnasio values (NULL, 
+            :nombre_gimnasio,
+            :telefono,  
+            :imagen)";
+        if ($this->db->ejecutarAccion($query, $insertData)) {
+            return $this->db->getLastInsertId();
+        }
     }
 
     public function update($data)
     {
-        $imagen = '';
-
-        $arrayActualizar = [];
-
-        if (isset($data['imagen'])) {
-
-            $imagen = 'imagen = :imagen,';
-
-            $arrayActualizar = [
-                ':id_gimnasio' => $data['id_gimnasio'],
-                ':nombre_gimnasio' => $data['nombre_gimnasio'],
-                ':telefono' => $data['telefono'],
-                ':imagen' => $data['imagen']
-            ];
-        } else {
-            $arrayActualizar = [
-                ':id_gimnasio' => $data['id_gimnasio'],
-                ':nombre_gimnasio' => $data['nombre_gimnasio'],
-                ':telefono' => $data['telefono'],
-                ':imagen' => $data['imagen']
-            ];
-        }
-        $query = $this->db->conectar()->prepare('UPDATE gimnasio SET 
-            ' . $imagen . '
+        $arrayActualizar = [
+            ':id_gimnasio' => $data['id_gimnasio'],
+            ':nombre_gimnasio' => $data['nombre_gimnasio'],
+            ':telefono' => $data['telefono']
+        ];
+        $query = $this->db->conectar()->prepare('UPDATE gimnasio SET
             nombre_gimnasio = :nombre_gimnasio,  
             telefono = :telefono
             WHERE id_gimnasio = :id_gimnasio');
@@ -75,6 +59,22 @@ class GimnasioDAO extends Model implements CRUD
             array_push($objGimnasio, $gimnasio);
         }
         return $objGimnasio;
+    }
+
+    public function updateImage($data)
+    {
+        $insertData = array(
+            ':id_gimnasio' => $data['id_gimnasio'],
+            ':imageInput' => $data['imageInput'],
+        );
+
+        $queryUpdateUser = "UPDATE gimnasio SET 
+        imagen = :imageInput
+        WHERE id_gimnasio = :id_gimnasio";
+
+        if ($this->db->ejecutarAccion($queryUpdateUser, $insertData)) {
+            echo "ok";
+        }
     }
 }
 ?>

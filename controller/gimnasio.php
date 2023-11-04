@@ -19,74 +19,42 @@ class Gimnasio extends Controller
 
     function insert()
     {
-        $nombre_gimnasio = $_POST['nombreGimnasio'];
+        $nombreGimnasio = $_POST['nombreGimnasio'];
         $telefono = $_POST['telefono'];
-        $nombreImagen = "";
-        if ($_FILES["imagen"]["name"] != null) {
-            $imagen = $_FILES["imagen"];
-            $nombreImagen = $imagen["name"];
-            $tipoImagen = $imagen["type"];
-            $ruta_provisional = $imagen["tmp_name"];
-            $fullname = $nombre_gimnasio . "_" . $telefono;
-            $carpeta = "public/gimnasio/" . $fullname . "/";
-            if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-                echo 'errorimagen';
-            } else {
-                if (!file_exists($carpeta)) {
-                    mkdir($carpeta, 0777, true);
-                }
-                copy($ruta_provisional, $carpeta . $nombreImagen);
+        $nombreImagen = $_FILES["imagen"]["name"];
 
-                $data = array(
-                    'nombre_gimnasio' => $nombre_gimnasio,
-                    'telefono' => $telefono,
-                    'imagen' => $nombreImagen,
-                    'nombreImagen' => $nombreImagen
-                );
-                require 'model/gimnasioDAO.php';
-                $this->loadModel('GimnasioDAO');
-                $gimnasioDAO = new GimnasioDAO();
-                $gimnasioDAO->insert($data);
-            }
+        $data = array(
+            'nombre_gimnasio' => $nombreGimnasio,
+            'telefono' => $telefono,
+            'imagen' => $nombreImagen,
+            'nombreImagen' => $nombreImagen
+        );
+
+        if ($_FILES["imagen"]["name"] != null) {
+            require 'model/gimnasioDAO.php';
+            $this->loadModel('GimnasioDAO');
+            $gimnasioDAO = new GimnasioDAO();
+            $idGimnasio = $gimnasioDAO->insert($data);
+
+            require_once __DIR__ . '/services/saveImage.php';
+            $imagen = $_FILES["imagen"];
+            $carpeta = "public/gimnasio/" . $idGimnasio . "/";
+            SaveImage::invoke($carpeta, $imagen);
+            echo "ok";
         }
     }
 
     function update()
     {
-        $id_gimnasio = $_POST['idGimnasioActualizar'];
-        $nombre_gimnasio = $_POST['nombreGimnasioActualizar'];
+        $idGimnasio = $_POST['idGimnasioActualizar'];
+        $nombreGimnasio = $_POST['nombreGimnasioActualizar'];
         $telefono = $_POST['telefonoActualizar'];
-        $nombreImagen = "";
 
         $arrayActualizar = array(
-            'id_gimnasio' => $id_gimnasio,
-            'nombre_gimnasio' => $nombre_gimnasio,
+            'id_gimnasio' => $idGimnasio,
+            'nombre_gimnasio' => $nombreGimnasio,
             'telefono' => $telefono,
         );
-
-        if (isset($_FILES["imagenGimnasioActualizar"])) {
-
-            if ($_FILES["imagenGimnasioActualizar"]["name"] != null) {
-
-                $imagen = $_FILES["imagenGimnasioActualizar"];
-                $nombreImagen = $imagen["name"];
-                $tipoImagen = $imagen["type"];
-                $ruta_provisional = $imagen["tmp_name"];
-
-                $fullname = $nombre_gimnasio . "_" . $telefono;
-                $carpeta = "public/gimnasio/" . $fullname . "/";
-
-                if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-                    echo 'errorimagen';
-                } else {
-                    if (!file_exists($carpeta)) {
-                        mkdir($carpeta, 0777, true);
-                    }
-                    copy($ruta_provisional, $carpeta . $nombreImagen);
-                    $arrayActualizar['imagen'] = $nombreImagen;
-                }
-            }
-        }
 
         require 'model/gimnasioDAO.php';
         $this->loadModel('GimnasioDAO');
@@ -129,4 +97,21 @@ class Gimnasio extends Controller
         }
         echo json_encode($obj);
     }
+
+    function updateImage()
+	{
+		require_once __DIR__ . '/services/saveImage.php';
+		$idGimnasio = $_POST['idGymUpdateImage'];
+		$imagen = $_FILES["imageInput"];
+		$carpeta = "public/gimnasio/" . $idGimnasio . "/";
+		$data = array(
+			'id_gimnasio' => $idGimnasio,
+			'imageInput' => SaveImage::invoke($carpeta, $imagen)
+		);
+
+		require 'model/gimnasioDAO.php';
+		$this->loadModel('GimnasioDAO');
+		$gimnasioDAO = new GimnasioDAO();
+		$gimnasioDAO = $gimnasioDAO->updateImage($data);
+	}
 }
