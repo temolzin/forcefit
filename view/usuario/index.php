@@ -359,7 +359,7 @@ $menu->header('usuario');
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                     <label>Id Rol(*)</label>
-                                    <select name="IdRolUsuarioActualizar" id="IdRolUsuarioActualizar" class="form-control pagoRegistrarRol" style="width:100%;">
+                                    <select name="idRolUsuarioActualizar" id="idRolUsuarioActualizar" class="form-control pagoRegistrarRol" style="width:100%;">
                                             <option value="default">Seleccione Rol</option>
                                      </select>
                                     </div>
@@ -826,7 +826,7 @@ const llenarPlanSistema = () => {
             var municipioUsuarioActualizar = $("#municipioUsuarioActualizar").val(data.municipioUsuario);
             var coloniaUsuarioActualizar = $("#coloniaUsuarioActualizar").val(data.coloniaUsuario);
             var codigopostalUsuarioActualizar = $("#codigopostalUsuarioActualizar").val(data.codigoPostalUsuario);
-            var IdRolUsuarioActualizar = $("#IdRolUsuarioActualizar").val(data.id_rol);
+            var idRolUsuarioActualizar = $("#idRolUsuarioActualizar").val(data.id_rol);
             var imagenUsuarioActualizar = $("#imagenUsuarioActualizar").val(data.imagen);
 
 
@@ -1150,7 +1150,7 @@ const llenarPlanSistema = () => {
                 codigopostalUsuarioActualizar: {
                     required: true
                 },
-                IdRolUsuarioActualizar: {
+                idRolUsuarioActualizar: {
                     required: true
                 }
             },
@@ -1192,7 +1192,7 @@ const llenarPlanSistema = () => {
                 codigopostalUsuarioActualizar: {
                     required: "Ingrese Codigo Postal"
                 },
-                IdRolUsuarioActualizar: {
+                idRolUsuarioActualizar: {
                     required: "Ingrese rol"
                 }
             },
