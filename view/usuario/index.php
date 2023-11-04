@@ -343,7 +343,7 @@ $menu->header('usuario');
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                     <label>Id Rol(*)</label>
-                                    <select name="rolUsuarioActualizar" id="rolUsuarioActualizar" class="form-control pagoRegistrarRol" style="width:100%;">
+                                    <select name="idRolUsuarioActualizar" id="idRolUsuarioActualizar" class="form-control pagoRegistrarRol" style="width:100%;">
                                             <option value="default">Seleccione Rol</option>
                                      </select>
                                     </div>
@@ -852,7 +852,7 @@ const llenarPlanSistema = () => {
             var municipioUsuarioConsultar = $("#municipioUsuarioConsultar").val(data.municipioUsuario);
             var coloniaUsuarioConsultar = $("#coloniaUsuarioConsultar").val(data.coloniaUsuario);
             var codigopostalUsuarioConsultar = $("#codigoPostalUsuarioConsultar").val(data.codigoPostalUsuario);
-            var rolUsuarioConsultar = $("#rolUsuarioConsultar").val(data.id_rol);
+            var rolUsuarioConsultar = $("#rolUsuarioConsultar").val(data.nombreRol);
 
             var id_usuarioActualizar = $("#id_usuarioActualizar").val(data.id_usuario);
             var nombreUsuarioActualizar = $("#nombreUsuarioActualizar").val(data.nombreUsuario);
@@ -865,7 +865,7 @@ const llenarPlanSistema = () => {
             var municipioUsuarioActualizar = $("#municipioUsuarioActualizar").val(data.municipioUsuario);
             var coloniaUsuarioActualizar = $("#coloniaUsuarioActualizar").val(data.coloniaUsuario);
             var codigopostalUsuarioActualizar = $("#codigopostalUsuarioActualizar").val(data.codigoPostalUsuario);
-            var rolUsuarioActualizar = $("#rolUsuarioActualizar").val(data.id_rol);
+            var idRolUsuarioActualizar = $("#idRolUsuarioActualizar").val(data.id_rol);
             var imagenUsuarioActualizar = $("#imagenUsuarioActualizar").val(data.imagen);
 
 
@@ -1186,7 +1186,7 @@ const llenarPlanSistema = () => {
                 codigopostalUsuarioActualizar: {
                     required: true
                 },
-                rolUsuarioActualizar: {
+                idRolUsuarioActualizar: {
                     required: true
                 }
             },
@@ -1225,7 +1225,7 @@ const llenarPlanSistema = () => {
                 codigopostalUsuarioActualizar: {
                     required: "Ingrese Codigo Postal"
                 },
-                rolUsuarioActualizar: {
+                idRolUsuarioActualizar: {
                     required: "Ingrese rol"
                 }
             },

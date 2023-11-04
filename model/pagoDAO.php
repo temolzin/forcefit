@@ -64,7 +64,7 @@ class PagoDAO extends Model implements CRUD
     public function readPagoByIdgimnasio($id_gimnasio)
     {
         require_once 'pagoDTO.php';
-        $query ="SELECT pg.id_pago, plg.nombrePlanGym, c.nombre_cliente, pg.cantidad_pago, pg.fecha_hora_pago, pg.vencimiento, pg.tipo_Pago
+        $query ="SELECT pg.id_pago, pg.id_cliente, pg.id_planGym, plg.nombrePlanGym, c.nombre_cliente, pg.cantidad_pago, pg.fecha_hora_pago, pg.vencimiento, pg.tipo_Pago
         FROM pago_plan_gym_cliente pg
         INNER JOIN cliente c ON pg.id_cliente = c.id_cliente
         INNER JOIN usuario_gimnasio ug ON c.id_gimnasio = ug.id_gimnasio
@@ -74,6 +74,8 @@ class PagoDAO extends Model implements CRUD
         foreach ($this->db->consultar($query) as $key => $value) {
             $pago = new PagoDTO();
             $pago->id_pago = $value['id_pago'];
+            $pago->id_cliente = $value['id_cliente'];
+            $pago->id_planGym = $value['id_planGym'];
             $pago->nombrePlanGym = $value['nombrePlanGym'];
             $pago->nombre_cliente = $value['nombre_cliente'];
             $pago->cantidad_pago = $value['cantidad_pago'];
