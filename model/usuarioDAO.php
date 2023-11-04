@@ -11,21 +11,7 @@ class UsuarioDAO extends Model implements CRUD
 
     public function insert($data)
     {
-        $query = $this->db->conectar()->prepare('INSERT INTO usuario values (NULL, 
-                :nombreUsuario,
-                :apellidoPaternoUsuario,
-                :apellidoMaternoUsuario,
-                :emailUsuario,
-                :passwordUsuario,
-                :imagen,
-                :calleUsuario,
-                :estadoUsuario,
-                :municipioUsuario,
-                :coloniaUsuario,
-                :codigoPostalUsuario,
-                :id_rol,
-                :is_active)');
-        $query->execute([
+        $insertData = array(
             ':nombreUsuario' => $data['nombreUsuario'],
             ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
             ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
@@ -39,8 +25,25 @@ class UsuarioDAO extends Model implements CRUD
             ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
             ':id_rol' => $data['rolUsuario'],
             ':is_active' => self::CUSTOMER_INACTIVE
-        ]);
-        echo 'ok';
+        );
+        $query ="INSERT INTO usuario values (NULL, 
+                :nombreUsuario,
+                :apellidoPaternoUsuario,
+                :apellidoMaternoUsuario,
+                :emailUsuario,
+                :passwordUsuario,
+                :imagen,
+                :calleUsuario,
+                :estadoUsuario,
+                :municipioUsuario,
+                :coloniaUsuario,
+                :codigoPostalUsuario,
+                :id_rol,
+                :is_active)";
+        
+        if ($this->db->ejecutarAccion($query, $insertData)) {
+            return $this->db->getLastInsertId();
+        }
     }
 
     public function insertGymAndPlanSistema($data)
@@ -59,44 +62,21 @@ class UsuarioDAO extends Model implements CRUD
 
     public function update($data)
     {
-        $imagen = '';
-        $arrayActualizar = [];
-        if (isset($data['imagen'])) {
-            $imagen = 'imagen = :imagen,';
-            $arrayActualizar = [
-                ':id_usuario' => $data['id_usuario'],
-                ':nombreUsuario' => $data['nombreUsuario'],
-                ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
-                ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
-                ':emailUsuario' => $data['emailUsuario'],
-                ':passwordUsuario' => $data['passwordUsuario'],
-                ':imagen' => $data['imagen'],
-                ':calleUsuario' => $data['calleUsuario'],
-                ':estadoUsuario' => $data['estadoUsuario'],
-                ':municipioUsuario' => $data['municipioUsuario'],
-                ':coloniaUsuario' => $data['coloniaUsuario'],
-                ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
-                ':id_rol' => $data['id_rol']
-            ];
-        } else {
-            $arrayActualizar = [
-                ':id_usuario' => $data['id_usuario'],
-                ':nombreUsuario' => $data['nombreUsuario'],
-                ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
-                ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
-                ':emailUsuario' => $data['emailUsuario'],
-                ':passwordUsuario' => $data['passwordUsuario'],
-                ':imagen' => $data['imagen'],
-                ':calleUsuario' => $data['calleUsuario'],
-                ':estadoUsuario' => $data['estadoUsuario'],
-                ':municipioUsuario' => $data['municipioUsuario'],
-                ':coloniaUsuario' => $data['coloniaUsuario'],
-                ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
-                ':id_rol' => $data['id_rol']
-            ];
-        }
+        $arrayActualizar = [
+            ':id_usuario' => $data['id_usuario'],
+            ':nombreUsuario' => $data['nombreUsuario'],
+            ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
+            ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
+            ':emailUsuario' => $data['emailUsuario'],
+            ':passwordUsuario' => $data['passwordUsuario'],
+            ':calleUsuario' => $data['calleUsuario'],
+            ':estadoUsuario' => $data['estadoUsuario'],
+            ':municipioUsuario' => $data['municipioUsuario'],
+            ':coloniaUsuario' => $data['coloniaUsuario'],
+            ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
+            ':id_rol' => $data['id_rol']
+        ];
         $query = $this->db->conectar()->prepare('UPDATE usuario SET 
-            ' . $imagen . '
             nombreUsuario = :nombreUsuario,  
             apellidoPaternoUsuario = :apellidoPaternoUsuario,
             apellidoMaternoUsuario = :apellidoMaternoUsuario,
@@ -194,37 +174,34 @@ class UsuarioDAO extends Model implements CRUD
         FROM usuario AS u
         LEFT JOIN usuario_gimnasio AS ug ON u.id_usuario = ug.id_usuario
         WHERE u.emailUsuario = '" . $data['emailUsuario'] . "' AND u.passwordUsuario ='" . $data['passwordUsuario'] . "'");
-        session_start();
-        if ($query != null) {
-            foreach ($query as $key => $value) {
-                $_SESSION['id_usuario'] = $value['id_usuario'];
-                $_SESSION['id_gimnasio'] = $value['id_gimnasio'];
-                $_SESSION['nombreUsuario'] = $value['nombreUsuario'];
-                $_SESSION['apellidoPaternoUsuario'] = $value['apellidoPaternoUsuario'];
-                $_SESSION['apellidoMaternoUsuario'] = $value['apellidoMaternoUsuario'];
-                $_SESSION['emailUsuario'] = $value['emailUsuario'];
-                $_SESSION['passwordUsuario'] = $value['passwordUsuario'];
-                $_SESSION['imagen'] = $value['imagen'];
-                $_SESSION['calleUsuario'] = $value['calleUsuario'];
-                $_SESSION['estadoUsuario'] = $value['estadoUsuario'];
-                $_SESSION['municipioUsuario'] = $value['municipioUsuario'];
-                $_SESSION['coloniaUsuario'] = $value['coloniaUsuario'];
-                $_SESSION['codigoPostalUsuario'] = $value['codigoPostalUsuario'];
-                $_SESSION['id_rol'] = $value['id_rol'];
-                $_SESSION['login'] = true;
-                $_SESSION['permisos'] = $this->getPermisos($value['id_rol']);
-                if ($value['is_active'] === 0 && $value['id_rol'] === 2) {
-                    echo json_encode(array("warning" => true));
-                    exit;
-                } else {
-                    echo json_encode(array("success" => true));
-                    exit;
-                }
+        if ($query !== null) {
+            if ($query[0]['is_active'] === 0 && $query[0]['id_rol'] === 2) {
+                echo json_encode(array("warning" => true));
+                return;
             }
-        } else {
-            echo json_encode(array("error" => "Usuario y Contraseña incorrectos"));
+            session_start();
+            $_SESSION['id_usuario'] = $query[0]['id_usuario'];
+            $_SESSION['id_gimnasio'] = $query[0]['id_gimnasio'];
+            $_SESSION['nombreUsuario'] = $query[0]['nombreUsuario'];
+            $_SESSION['apellidoPaternoUsuario'] = $query[0]['apellidoPaternoUsuario'];
+            $_SESSION['apellidoMaternoUsuario'] = $query[0]['apellidoMaternoUsuario'];
+            $_SESSION['emailUsuario'] = $query[0]['emailUsuario'];
+            $_SESSION['passwordUsuario'] = $query[0]['passwordUsuario'];
+            $_SESSION['imagen'] = $query[0]['imagen'];
+            $_SESSION['calleUsuario'] = $query[0]['calleUsuario'];
+            $_SESSION['estadoUsuario'] = $query[0]['estadoUsuario'];
+            $_SESSION['municipioUsuario'] = $query[0]['municipioUsuario'];
+            $_SESSION['coloniaUsuario'] = $query[0]['coloniaUsuario'];
+            $_SESSION['codigoPostalUsuario'] = $query[0]['codigoPostalUsuario'];
+            $_SESSION['id_rol'] = $query[0]['id_rol'];
+            $_SESSION['login'] = true;
+            $_SESSION['permisos'] = $this->getPermisos($query[0]['id_rol']);
+            echo json_encode(array("success" => true));
+            return;
         }
+        echo json_encode(array("error" => "Usuario y Contraseña incorrectos"));
     }
+    
     public function getPermisos($idrol)
     {
         require_once 'permisoDTO.php';
@@ -278,6 +255,22 @@ class UsuarioDAO extends Model implements CRUD
             $objUsuario=null;
         }
         return $objUsuario;
+    }
+
+    public function updateImage($data)
+    {
+        $insertData = array(
+            ':id_user' => $data['id_user'],
+            ':imagen' => $data['imageInput'],
+        );
+
+        $queryUpdateUser = "UPDATE usuario SET 
+        imagen = :imagen
+        WHERE id_usuario = :id_user";
+
+        if ($this->db->ejecutarAccion($queryUpdateUser, $insertData)) {
+            echo "ok";
+        }
     }
 }
 ?>

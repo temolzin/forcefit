@@ -8,10 +8,10 @@ class Cliente extends Controller
 
 	function index()
 	{
-		require_once __DIR__ . './services/validarPermisoModulo.php';
-		$permiss = new ValidarPermisoModulo();
-		$result = $permiss->validatePermissionAccessModule("Cliente");
-		if ($result) {
+		require_once __DIR__ . '/services/validateSession.php';
+		require_once __DIR__ . '/services/validatePermissionModule.php';
+		ValidateSession::invoke();
+		if (ValidatePermissionModule::invoke("Cliente")) {
 			return $this->view->render('cliente/cliente');
 		}
 		$this->view->render('errorPage/index');
@@ -19,109 +19,75 @@ class Cliente extends Controller
 
 	function insert()
 	{
-		$id_gimnasio = $_POST['id_gimnasio'];
-		$id_PlanGym = $_POST['id_PlanGym'];
-		$nombre_cliente = $_POST['nombreCliente'];
-		$apellido_paterno_cliente = $_POST['apellidoPaternoCliente'];
-		$apellido_materno_cliente = $_POST['apellidoMaternoCliente'];
-		$municipio_cliente = $_POST['municipioCliente'];
-		$colonia_cliente = $_POST['coloniaCliente'];
-		$calle_cliente = $_POST['calleCliente'];
-		$codigo_postal_cliente = $_POST['codigoPostalCliente'];
-		$numero_cliente = $_POST['numeroCliente'];
-		$email_cliente = $_POST['emailCliente'];
-		$nombreImagen = "";
-		if ($_FILES["imagen"]["name"] != null) {
-			$imagen = $_FILES["imagen"];
-			$nombreImagen = $imagen["name"];
-			$tipoImagen = $imagen["type"];
-			$ruta_provisional = $imagen["tmp_name"];
-			$fullname = $nombre_cliente . "_" . $apellido_paterno_cliente;
-			$carpeta = "public/cliente/" . $fullname . "/";
-			if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-				echo 'errorimagen';
-			} else {
-				if (!file_exists($carpeta)) {
-					mkdir($carpeta, 0777, true);
-				}
-				copy($ruta_provisional, $carpeta . $nombreImagen);
+		$idGimnasio = $_POST['id_gimnasio'];
+		$idPlanGym = $_POST['id_PlanGym'];
+		$nombreCliente = $_POST['nombreCliente'];
+		$apellidoPaternoCliente = $_POST['apellidoPaternoCliente'];
+		$apellidoMaternoCliente = $_POST['apellidoMaternoCliente'];
+		$municipioCliente = $_POST['municipioCliente'];
+		$coloniaCliente = $_POST['coloniaCliente'];
+		$calleCliente = $_POST['calleCliente'];
+		$codigoPostalCliente = $_POST['codigoPostalCliente'];
+		$numeroCliente = $_POST['numeroCliente'];
+		$emailCliente = $_POST['emailCliente'];
+		$nombreImagen = $_FILES["imagen"]["name"];
 
-				$data = array(
-					'id_gimnasio' =>$id_gimnasio,
-					'id_PlanGym' =>$id_PlanGym,
-					'nombreCliente' => $nombre_cliente,
-					'apellidoPaternoCliente' => $apellido_paterno_cliente,
-					'apellidoMaternoCliente' => $apellido_materno_cliente,
-					'municipioCliente' => $municipio_cliente,
-					'coloniaCliente' => $colonia_cliente,
-					'calleCliente' => $calle_cliente,
-					'codigoPostalCliente' => $codigo_postal_cliente,
-					'numeroCliente' => $numero_cliente,
-					'emailCliente' => $email_cliente,
-					'imagen' => $nombreImagen,
-					'nombreImagen' => $nombreImagen
-				);
-				require 'model/clienteDAO.php';
-				$this->loadModel('ClienteDAO');
-				$clienteDAO = new ClienteDAO();
-				$clienteDAO->insert($data);
-			}
+		$data = array(
+			'id_gimnasio' => $idGimnasio,
+			'id_PlanGym' => $idPlanGym,
+			'nombreCliente' => $nombreCliente,
+			'apellidoPaternoCliente' => $apellidoPaternoCliente,
+			'apellidoMaternoCliente' => $apellidoMaternoCliente,
+			'municipioCliente' => $municipioCliente,
+			'coloniaCliente' => $coloniaCliente,
+			'calleCliente' => $calleCliente,
+			'codigoPostalCliente' => $codigoPostalCliente,
+			'numeroCliente' => $numeroCliente,
+			'emailCliente' => $emailCliente,
+			'imagen' => $nombreImagen,
+			'nombreImagen' => $nombreImagen
+		);
+		if ($_FILES["imagen"]["name"] != null) {
+			require 'model/clienteDAO.php';
+			$this->loadModel('ClienteDAO');
+			$clienteDAO = new ClienteDAO();
+			$idCliente = $clienteDAO->insert($data);
+			
+			require_once __DIR__ . '/services/saveImage.php';
+			$imagen = $_FILES["imagen"];
+			$carpeta = "public/cliente/" . $idCliente . "/";
+			SaveImage::invoke($carpeta, $imagen);
+			echo "ok";
 		}
 	}
 
 	function update()
 	{
-		$id_cliente = $_POST['id_clienteActualizar'];
 		$id_planGym = $_POST['id_PlanGymActualizar'];
-		$nombre_cliente = $_POST['nombreClienteActualizar'];
-		$apellido_paterno_cliente = $_POST['apellidoPaternoClienteActualizar'];
-		$apellido_materno_cliente = $_POST['apellidoMaternoClienteActualizar'];
-		$municipio_cliente = $_POST['municipioClienteActualizar'];
-		$colonia_cliente = $_POST['coloniaClienteActualizar'];
-		$calle_cliente = $_POST['calleClienteActualizar'];
-		$codigo_postal_cliente = $_POST['codigoPostalClienteActualizar'];
-		$numero_cliente = $_POST['numeroClienteActualizar'];
-		$email_cliente = $_POST['emailClienteActualizar'];
-		$nombreImagen = "";
+		$idCliente = $_POST['id_clienteActualizar'];
+		$nombreCliente = $_POST['nombreClienteActualizar'];
+		$apellidoPaternoCliente = $_POST['apellidoPaternoClienteActualizar'];
+		$apellidoMaternoCliente = $_POST['apellidoMaternoClienteActualizar'];
+		$municipioCliente = $_POST['municipioClienteActualizar'];
+		$coloniaCliente = $_POST['coloniaClienteActualizar'];
+		$calleCliente = $_POST['calleClienteActualizar'];
+		$codigoPostalCliente = $_POST['codigoPostalClienteActualizar'];
+		$numeroCliente = $_POST['numeroClienteActualizar'];
+		$emailCliente = $_POST['emailClienteActualizar'];
 
 		$arrayActualizar = array(
-			'id_cliente' => $id_cliente,
-			'id_planGym' => $id_planGym,
-			'nombre_cliente' => $nombre_cliente,
-			'apellido_paterno_cliente' => $apellido_paterno_cliente,
-			'apellido_materno_cliente' => $apellido_materno_cliente,
-			'municipio_cliente' => $municipio_cliente,
-			'colonia_cliente' => $colonia_cliente,
-			'calle_cliente' => $calle_cliente,
-			'codigo_postal_cliente' => $codigo_postal_cliente,
-			'numero_cliente' => $numero_cliente,
-			'email_cliente' => $email_cliente,
+      'id_planGym' => $nombreCliente,
+			'id_cliente' => $idCliente,
+			'nombre_cliente' => $nombreCliente,
+			'apellido_paterno_cliente' => $apellidoPaternoCliente,
+			'apellido_materno_cliente' => $apellidoMaternoCliente,
+			'municipio_cliente' => $municipioCliente,
+			'colonia_cliente' => $coloniaCliente,
+			'calle_cliente' => $calleCliente,
+			'codigo_postal_cliente' => $codigoPostalCliente,
+			'numero_cliente' => $numeroCliente,
+			'email_cliente' => $emailCliente,
 		);
-
-		if (isset($_FILES["imagenClienteActualizar"])) {
-
-			if ($_FILES["imagenClienteActualizar"]["name"] != null) {
-
-				$imagen = $_FILES["imagenClienteActualizar"];
-				$nombreImagen = $imagen["name"];
-				$tipoImagen = $imagen["type"];
-				$ruta_provisional = $imagen["tmp_name"];
-
-				$fullname = $nombre_cliente . "_" . $apellido_paterno_cliente;
-				$carpeta = "public/cliente/" . $fullname . "/";
-
-				if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-					echo 'errorimagen';
-				} else {
-					if (!file_exists($carpeta)) {
-						mkdir($carpeta, 0777, true);
-					}
-					copy($ruta_provisional, $carpeta . $nombreImagen);
-					$arrayActualizar['imagen_cliente'] = $nombreImagen;
-				}
-			}
-		}
-
 		require 'model/clienteDAO.php';
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();
@@ -204,6 +170,23 @@ class Cliente extends Controller
 			$obj = array();
 		}
 		echo json_encode($obj);
+	}
+
+	function updateImage()
+	{
+		require_once __DIR__ . '/services/saveImage.php';
+		$idCliente = $_POST['idClientUpdateImage'];
+		$imagen = $_FILES["imageInput"];
+		$carpeta = "public/cliente/" . $idCliente . "/";
+		$data = array(
+			'id_cliente' => $idCliente,
+			'imageInput' => SaveImage::invoke($carpeta, $imagen)
+		);
+
+		require 'model/clienteDAO.php';
+		$this->loadModel('ClienteDAO');
+		$clienteDAO = new ClienteDAO();
+		$clienteDAO = $clienteDAO->updateImage($data);
 	}
 }
 ?>

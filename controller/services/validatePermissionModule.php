@@ -1,9 +1,8 @@
 <?php
-class ValidarPermisoModulo
+class ValidatePermissionModule
 {
-    function validatePermissionAccessModule($modulo)
+    public static function invoke($modulo)
     {
-        session_start();
         foreach ($_SESSION['permisos'] as $permission) {
             if ($permission['modulo'] === $modulo && $permission['r'] === 1) {
                 return true;

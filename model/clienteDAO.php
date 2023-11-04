@@ -11,7 +11,23 @@ class ClienteDAO extends Model implements CRUD
 
     public function insert($data)
     {
-        $query = $this->db->conectar()->prepare('INSERT INTO cliente values (NULL, 
+        $insertData = array(
+            ':id_gimnasio'=> $data['id_gimnasio'],
+            ':id_planGym' =>$data['id_PlanGym'],
+            ':nombre_cliente' => $data['nombreCliente'],
+            ':apellido_paterno_cliente' => $data['apellidoPaternoCliente'],
+            ':apellido_materno_cliente' => $data['apellidoMaternoCliente'],
+            ':municipio_cliente' => $data['municipioCliente'],
+            ':colonia_cliente' => $data['coloniaCliente'],
+            ':calle_cliente' => $data['calleCliente'],
+            ':codigo_postal_cliente' => $data['codigoPostalCliente'],
+            ':numero_cliente' => $data['numeroCliente'],
+            ':imagen_cliente' => $data['imagen'],
+            ':email_cliente' => $data['emailCliente'],
+            ':is_email_notified' => self::NOTIFICATION_NOT_SENT,
+            ':is_active' => self::CUSTOMER_INACTIVE
+        );
+        $query ="INSERT INTO cliente values (NULL,
                 :id_gimnasio,
                 :id_planGym,
                 :nombre_cliente, 
@@ -25,70 +41,30 @@ class ClienteDAO extends Model implements CRUD
                 :imagen_cliente,
                 :email_cliente,
                 :is_email_notified,
-                :is_active)');
-        $query->execute([
-            'id_gimnasio'=> $data['id_gimnasio'],
-            'id_planGym' =>$data['id_PlanGym'],
-            ':nombre_cliente' => $data['nombreCliente'],
-            ':apellido_paterno_cliente' => $data['apellidoPaternoCliente'],
-            ':apellido_materno_cliente' => $data['apellidoMaternoCliente'],
-            ':municipio_cliente' => $data['municipioCliente'],
-            ':colonia_cliente' => $data['coloniaCliente'],
-            ':calle_cliente' => $data['calleCliente'],
-            ':codigo_postal_cliente' => $data['codigoPostalCliente'],
-            ':numero_cliente' => $data['numeroCliente'],
-            ':imagen_cliente' => $data['imagen'],
-            ':email_cliente' => $data['emailCliente'],
-            ':is_email_notified' => self::NOTIFICATION_NOT_SENT,
-            ':is_active' => self::CUSTOMER_INACTIVE,
-        ]);
-        echo 'ok';
+                :is_active)";
+        if ($this->db->ejecutarAccion($query, $insertData)) {
+            return $this->db->getLastInsertId();
+        }
     }
 
     public function update($data)
     {
-        $imagen_cliente = '';
-
-        $arrayActualizar = [];
-
-        if (isset($data['imagen_cliente'])) {
-
-            $imagen_cliente = 'imagen_cliente = :imagen_cliente,';
-
-            $arrayActualizar = [
-                ':id_cliente' => $data['id_cliente'],
-                ':id_planGym' => $data['id_planGym'],
-                ':nombre_cliente' => $data['nombre_cliente'],
-                ':apellido_paterno_cliente' => $data['apellido_paterno_cliente'],
-                ':apellido_materno_cliente' => $data['apellido_materno_cliente'],
-                ':municipio_cliente' => $data['municipio_cliente'],
-                ':colonia_cliente' => $data['colonia_cliente'],
-                ':calle_cliente' => $data['calle_cliente'],
-                ':codigo_postal_cliente' => $data['codigo_postal_cliente'],
-                ':numero_cliente' => $data['numero_cliente'],
-                ':email_cliente' => $data['email_cliente'],
-                ':imagen_cliente' => $data['imagen_cliente']
-            ];
-        } else {
-            $arrayActualizar = [
-                ':id_cliente' => $data['id_cliente'],
-                ':id_planGym' => $data['id_planGym'],
-                ':nombre_cliente' => $data['nombre_cliente'],
-                ':apellido_paterno_cliente' => $data['apellido_paterno_cliente'],
-                ':apellido_materno_cliente' => $data['apellido_materno_cliente'],
-                ':municipio_cliente' => $data['municipio_cliente'],
-                ':colonia_cliente' => $data['colonia_cliente'],
-                ':calle_cliente' => $data['calle_cliente'],
-                ':codigo_postal_cliente' => $data['codigo_postal_cliente'],
-                ':numero_cliente' => $data['numero_cliente'],
-                ':email_cliente' => $data['email_cliente'],
-                ':imagen_cliente' => $data['imagen_cliente']
-            ];
-        }
+        $arrayActualizar = [
+            ':id_cliente' => $data['id_cliente'],
+            ':id_planGym' => $data['id_planGym'],
+            ':nombre_cliente' => $data['nombre_cliente'],
+            ':apellido_paterno_cliente' => $data['apellido_paterno_cliente'],
+            ':apellido_materno_cliente' => $data['apellido_materno_cliente'],
+            ':municipio_cliente' => $data['municipio_cliente'],
+            ':colonia_cliente' => $data['colonia_cliente'],
+            ':calle_cliente' => $data['calle_cliente'],
+            ':codigo_postal_cliente' => $data['codigo_postal_cliente'],
+            ':numero_cliente' => $data['numero_cliente'],
+            ':email_cliente' => $data['email_cliente']
+        ];
         $query = $this->db->conectar()->prepare('UPDATE cliente SET 
-            ' . $imagen_cliente . '
+            nombre_cliente = :nombre_cliente,
             id_planGym = :id_planGym,
-            nombre_cliente = :nombre_cliente,  
             apellido_paterno_cliente = :apellido_paterno_cliente,
             apellido_materno_cliente = :apellido_materno_cliente,
             municipio_cliente = :municipio_cliente,
@@ -236,6 +212,22 @@ class ClienteDAO extends Model implements CRUD
 
         $objCliente = array_values($objCliente);
         return $objCliente;
+    }
+
+    public function updateImage($data)
+    {
+        $insertData = array(
+            ':id_cliente' => $data['id_cliente'],
+            ':imagen_cliente' => $data['imageInput'],
+        );
+
+        $queryUpdateUser = "UPDATE cliente SET 
+        imagen_cliente = :imagen_cliente
+        WHERE id_cliente = :id_cliente";
+
+        if ($this->db->ejecutarAccion($queryUpdateUser, $insertData)) {
+            echo "ok";
+        }
     }
 
 }

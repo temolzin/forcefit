@@ -8,7 +8,13 @@ class Usuario extends Controller
 
 	function index()
 	{
-		$this->view->render('usuario/index');
+		require_once __DIR__ . '/services/validateSession.php';
+		require_once __DIR__ . '/services/validatePermissionModule.php';
+		ValidateSession::invoke();
+		if (ValidatePermissionModule::invoke("Usuarios")) {
+			return $this->view->render('usuario/index');
+		}
+		$this->view->render('errorPage/index');
 	}
 
 	function insert()
@@ -23,49 +29,42 @@ class Usuario extends Controller
 		$municipioUsuario = $_POST['municipioUsuario'];
 		$coloniaUsuario = $_POST['coloniaUsuario'];
 		$codigoPostalUsuario = $_POST['codigoPostalUsuario'];
-		$id_rol = $_POST['rolUsuario'];
-		$nombreImagen = "";
-		if ($_FILES["imagen"]["name"] != null) {
-			$imagen = $_FILES["imagen"];
-			$nombreImagen = $imagen["name"];
-			$tipoImagen = $imagen["type"];
-			$ruta_provisional = $imagen["tmp_name"];
-			$fullname = $nombreUsuario . "_" . $apellidoPaternoUsuario;
-			$carpeta = "public/usuario/" . $fullname . "/";
-			if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-				echo 'errorimagen';
-			} else {
-				if (!file_exists($carpeta)) {
-					mkdir($carpeta, 0777, true);
-				}
-				copy($ruta_provisional, $carpeta . $nombreImagen);
+		$idRol = $_POST['rolUsuario'];
+		$nombreImagen = $_FILES["imagen"]["name"];
 
-				$data = array(
-					'nombreUsuario' => $nombreUsuario,
-					'apellidoPaternoUsuario' => $apellidoPaternoUsuario,
-					'apellidoMaternoUsuario' => $apellidoMaternoUsuario,
-					'correoUsuario' => $emailUsuario,
-					'password' => $passwordUsuario,
-					'calleUsuario' => $calleUsuario,
-					'estadoUsuario' => $estadoUsuario,
-					'municipioUsuario' => $municipioUsuario,
-					'coloniaUsuario' => $coloniaUsuario,
-					'codigoPostalUsuario' => $codigoPostalUsuario,
-					'rolUsuario' => $id_rol,
-					'imagen' => $nombreImagen,
-					'nombreImagen' => $nombreImagen
-				);
-				require 'model/usuarioDAO.php';
-				$this->loadModel('UsuarioDAO');
-				$usuarioDAO = new UsuarioDAO();
-				$usuarioDAO->insert($data);
-			}
+		$data = array(
+			'nombreUsuario' => $nombreUsuario,
+			'apellidoPaternoUsuario' => $apellidoPaternoUsuario,
+			'apellidoMaternoUsuario' => $apellidoMaternoUsuario,
+			'correoUsuario' => $emailUsuario,
+			'password' => $passwordUsuario,
+			'calleUsuario' => $calleUsuario,
+			'estadoUsuario' => $estadoUsuario,
+			'municipioUsuario' => $municipioUsuario,
+			'coloniaUsuario' => $coloniaUsuario,
+			'codigoPostalUsuario' => $codigoPostalUsuario,
+			'rolUsuario' => $idRol,
+			'imagen' => $nombreImagen,
+			'nombreImagen' => $nombreImagen
+		);
+
+		if ($_FILES["imagen"]["name"] != null) {
+			require 'model/usuarioDAO.php';
+			$this->loadModel('UsuarioDAO');
+			$usuarioDAO = new UsuarioDAO();
+			$idUsuario = $usuarioDAO->insert($data);
+	
+			require_once __DIR__ . '/services/saveImage.php';
+			$imagen = $_FILES["imagen"];
+			$carpeta = "public/usuario/" . $idUsuario . "/";
+			SaveImage::invoke($carpeta, $imagen);
+			echo "ok";
 		}
 	}
 
 	function update()
 	{
-		$id_usuario = $_POST['id_usuarioActualizar'];
+		$idUsuario = $_POST['id_usuarioActualizar'];
 		$nombreUsuario = $_POST['nombreUsuarioActualizar'];
 		$apellidoPaternoUsuario = $_POST['apellidoPaternoUsuarioActualizar'];
 		$apellidoMaternoUsuario = $_POST['apellidoMaternoUsuarioActualizar'];
@@ -76,11 +75,10 @@ class Usuario extends Controller
 		$municipioUsuario = $_POST['municipioUsuarioActualizar'];
 		$coloniaUsuario = $_POST['coloniaUsuarioActualizar'];
 		$codigoPostalUsuario = $_POST['codigopostalUsuarioActualizar'];
-		$id_rol = $_POST['rolUsuarioActualizar'];
-		$nombreImagen = "";
+		$idRol = $_POST['rolUsuarioActualizar'];
 
 		$arrayActualizar = array(
-			'id_usuario' => $id_usuario,
+			'id_usuario' => $idUsuario,
 			'nombreUsuario' => $nombreUsuario,
 			'apellidoPaternoUsuario' => $apellidoPaternoUsuario,
 			'apellidoMaternoUsuario' => $apellidoMaternoUsuario,
@@ -91,30 +89,8 @@ class Usuario extends Controller
 			'municipioUsuario' => $municipioUsuario,
 			'coloniaUsuario' => $coloniaUsuario,
 			'codigoPostalUsuario' => $codigoPostalUsuario,
-			'id_rol' => $id_rol,
+			'id_rol' => $idRol,
 		);
-
-		if (isset($_FILES["imagenUsuarioActualizar"])) {
-			if ($_FILES["imagenUsuarioActualizar"]["name"] != null) {
-				$imagen = $_FILES["imagenUsuarioActualizar"];
-				$nombreImagen = $imagen["name"];
-				$tipoImagen = $imagen["type"];
-				$ruta_provisional = $imagen["tmp_name"];
-
-				$fullname = $nombreUsuario . "_" . $apellidoPaternoUsuario;
-				$carpeta = "public/usuario/" . $fullname . "/";
-
-				if ($tipoImagen != 'image/jpg' && $tipoImagen != 'image/jpeg' && $tipoImagen != 'image/png' && $tipoImagen != 'image/gif') {
-					echo 'errorimagen';
-				} else {
-					if (!file_exists($carpeta)) {
-						mkdir($carpeta, 0777, true);
-					}
-					copy($ruta_provisional, $carpeta . $nombreImagen);
-					$arrayActualizar['imagen'] = $nombreImagen;
-				}
-			}
-		}
 
 		require 'model/usuarioDAO.php';
 		$this->loadModel('UsuarioDAO');
@@ -185,6 +161,23 @@ class Usuario extends Controller
 				$this->loadModel('UsuarioDAO');
 				$usuarioDAO = new UsuarioDAO();
 				$usuarioDAO->insertGymAndPlanSistema($data);
+	}
+
+	function updateImage()
+	{
+		require_once __DIR__ . '/services/saveImage.php';
+		$idUser = $_POST['idUserUpdateImage'];
+		$imagen = $_FILES["imageInput"];
+		$carpeta = "public/usuario/" . $idUser . "/";
+		$data = array(
+			'id_user' => $idUser,
+			'imageInput' => SaveImage::invoke($carpeta, $imagen)
+		);
+
+		require 'model/usuarioDAO.php';
+		$this->loadModel('UsuarioDAO');
+		$usuarioDAO = new UsuarioDAO();
+		$usuarioDAO = $usuarioDAO->updateImage($data);
 	}
 }
 ?>

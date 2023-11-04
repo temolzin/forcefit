@@ -92,7 +92,7 @@ class VisitaClienteDAO extends Model implements CRUD
             $visita->date = $value['fecha'];
             $visita->hour_entry = $value['hora_entrada'];
             $visita->hour_exit = $value['hora_salida'];
-            $visita->image_client = $value['nombre_cliente'] . '_' . $value['apellido_paterno_cliente'] . '/' . $value['imagen_cliente'];
+            $visita->image_client = $value['id_cliente'] . '/' . $value['imagen_cliente'];
             $objVisita['data'][] = $visita;
             array_push($objVisita, $visita);
         }
