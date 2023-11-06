@@ -40,8 +40,6 @@ class RolDAO extends Model implements CRUD
             $rol->descripcion = $value['descripcion'];
             array_push($objRol, $rol);
         }
-        }else{
-            $objRol = array();
         }
         $objRol = array_values($objRol);
         return $objRol;

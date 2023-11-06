@@ -59,8 +59,6 @@ class GimnasioDAO extends Model implements CRUD
             $gimnasio->imagen = $value['imagen'];
             array_push($objGimnasio, $gimnasio);
         }
-        }else{
-            $objGimnasio = array();
         }
         $objGimnasio = array_values($objGimnasio);
         return $objGimnasio;

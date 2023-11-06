@@ -85,8 +85,6 @@ class PagoDAO extends Model implements CRUD
             $pago->tipo_Pago = $value['tipo_Pago'];
             array_push($objPago, $pago);
         }
-        }else {
-            $objPago = array();
         }
         return $objPago;
     }

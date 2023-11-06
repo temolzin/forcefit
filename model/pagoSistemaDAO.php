@@ -71,8 +71,6 @@
                 $pagoSistema->tipo_Pago = $value['tipo_Pago'];
                 array_push($objpagoSistema, $pagoSistema);
             }
-            }else{
-                $objpagoSistema = array();
             }
             $objpagoSistema = array_values($objpagoSistema);
             return $objpagoSistema;

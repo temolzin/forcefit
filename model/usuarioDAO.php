@@ -161,8 +161,6 @@ class UsuarioDAO extends Model implements CRUD
             $usuario->is_active = $value['is_active'];
             array_push($objUsuario, $usuario);
         }
-        }else{
-            $objUsuario = array();
         }
 
         $objUsuario = array_values($objUsuario);

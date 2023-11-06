@@ -96,8 +96,6 @@ class VisitaClienteDAO extends Model implements CRUD
             $visita->image_client = $value['id_cliente'] . '/' . $value['imagen_cliente'];
             $objVisita[$visita->id_visita] = $visita;
         }
-        }else{
-            $objVisita = array();
         }
 
         $objVisita = array_values($objVisita);

@@ -68,8 +68,6 @@
                 $planGym->costoPlanGym = $value['costoPlanGym'];
                 $objplanGym[$planGym->id_planGym] = $planGym;
             }
-            }else{
-                $objplanGym = array();
             }
             $objplanGym = array_values($objplanGym);
             return $objplanGym;

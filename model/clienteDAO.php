@@ -141,8 +141,6 @@ class ClienteDAO extends Model implements CRUD
             $cliente->is_active = $value['is_active'];
             array_push($objCliente, $cliente);
         }
-        }else {
-            $objCliente = array();
         }
         return $objCliente;
     }
@@ -210,8 +208,6 @@ class ClienteDAO extends Model implements CRUD
                 $cliente->is_email_notified = $value['is_email_notified'];
                 $objCliente[$cliente->id_cliente] = $cliente;
             }
-        }else{
-            $objCliente = array();
         }
 
         $objCliente = array_values($objCliente);
