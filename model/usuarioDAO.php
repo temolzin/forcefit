@@ -139,6 +139,7 @@ class UsuarioDAO extends Model implements CRUD
     JOIN rol r ON u.id_rol = r.id_rol";
 
         $objUsuario = array();
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
         foreach ($this->db->consultar($query) as $key => $value) {
             $usuario = new UsuarioDTO();
             $usuario->id_usuario = $value['ID'];
@@ -160,7 +161,9 @@ class UsuarioDAO extends Model implements CRUD
             $usuario->is_active = $value['is_active'];
             array_push($objUsuario, $usuario);
         }
+        }
 
+        $objUsuario = array_values($objUsuario);
         return $objUsuario;
     }
 

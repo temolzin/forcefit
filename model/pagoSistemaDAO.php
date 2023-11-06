@@ -58,6 +58,7 @@
                 JOIN usuario u ON ps.id_usuario = u.id_usuario
                 JOIN plan_sistema ps2 ON ps.id_plan_sistema = ps2.id_plan_sistema";
             $objpagoSistema = array();
+            if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
             foreach ($this->db->consultar($query) as $key => $value) {
                 $pagoSistema = new PagoSistemaDTO();
                 $pagoSistema->id_pago = $value['id_pago'];
@@ -70,6 +71,8 @@
                 $pagoSistema->tipo_Pago = $value['tipo_Pago'];
                 array_push($objpagoSistema, $pagoSistema);
             }
+            }
+            $objpagoSistema = array_values($objpagoSistema);
             return $objpagoSistema;
         }
     }

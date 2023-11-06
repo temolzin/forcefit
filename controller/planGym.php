@@ -75,6 +75,15 @@ class PlanGym extends Controller
 		$this->loadModel('PlanGymDAO');
 		$planGymDAO = new PlanGymDAO();
 		$planGymDAO = $planGymDAO->readPlanGymByIdGimnasio($id_gimnasio);
+		$obj = array();
+		if (is_array($planGymDAO) || is_object($planGymDAO)) {
+			foreach ($planGymDAO as $key => $value) {
+				$obj["data"][] = $value;
+			}
+		} else {
+			$obj = array();
+		}
+		echo json_encode($obj);
 	}
 
 	function readPlanGym()

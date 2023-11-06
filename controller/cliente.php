@@ -119,8 +119,7 @@ class Cliente extends Controller
 		$this->loadModel('ClienteDAO');
 		$clienteDAO = new ClienteDAO();
 		$clienteDAO = $clienteDAO->readDataByIdUsuario($id_usuario);
-
-		$obj = null;
+		$obj = array();
 		if (is_array($clienteDAO) || is_object($clienteDAO)) {
 			foreach ($clienteDAO as $key => $value) {
 				$obj["data"][] = $value;
@@ -161,7 +160,7 @@ class Cliente extends Controller
 		$clienteDAO = new ClienteDAO();
 		$clienteDAO = $clienteDAO->getCustomersWithUpcomingMembershipExpiry($id_gimnasio);
 
-		$obj = null;
+		$obj = array();
 		if (is_array($clienteDAO) || is_object($clienteDAO)) {
 			foreach ($clienteDAO as $key => $value) {
 				$obj["data"][] = $value;

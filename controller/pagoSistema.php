@@ -75,7 +75,7 @@ class PagoSistema extends Controller
 		$pagoSistemaDAO = new PagoSistemaDAO();
 		$pagoSistemaDAO = $pagoSistemaDAO->read();
 
-		$obj = null;
+		$obj = array();
 		if (is_array($pagoSistemaDAO) || is_object($pagoSistemaDAO)) {
 			foreach ($pagoSistemaDAO as $key => $value) {
 				$obj["data"][] = $value;

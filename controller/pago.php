@@ -85,7 +85,7 @@ class Pago extends Controller
 		$pagoDAO = new PagoDAO();
 		$pagoDAO = $pagoDAO->readPagoByIdgimnasio($id_gimnasio);
 
-		$obj = null;
+		$obj = array();
 		if (is_array($pagoDAO) || is_object($pagoDAO)) {
 			foreach ($pagoDAO as $key => $value) {
 				$obj["data"][] = $value;

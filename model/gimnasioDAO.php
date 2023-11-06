@@ -50,6 +50,7 @@ class GimnasioDAO extends Model implements CRUD
         require_once 'gimnasioDTO.php';
         $query = "SELECT * FROM gimnasio";
         $objGimnasio = array();
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
         foreach ($this->db->consultar($query) as $key => $value) {
             $gimnasio = new GimnasioDTO();
             $gimnasio->id_gimnasio = $value['id_gimnasio'];
@@ -58,6 +59,8 @@ class GimnasioDAO extends Model implements CRUD
             $gimnasio->imagen = $value['imagen'];
             array_push($objGimnasio, $gimnasio);
         }
+        }
+        $objGimnasio = array_values($objGimnasio);
         return $objGimnasio;
     }
 

@@ -78,7 +78,7 @@ class PlanSistema extends Controller
 		$planSistemaDAO = new PlanSistemaDAO();
 		$planSistemaDAO = $planSistemaDAO->read();
 
-		$obj = null;
+		$obj = array();
 		if (is_array($planSistemaDAO) || is_object($planSistemaDAO)) {
 			foreach ($planSistemaDAO as $key => $value) {
 				$obj["data"][] = $value;

@@ -122,6 +122,7 @@ class ClienteDAO extends Model implements CRUD
             INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
             WHERE ug.id_usuario = " . $id_usuario;
         $objCliente = array();
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
         foreach ($this->db->consultar($query) as $key => $value) {
             $cliente = new ClienteDTO();
             $cliente->id_cliente = $value['id_cliente'];
@@ -139,6 +140,7 @@ class ClienteDAO extends Model implements CRUD
             $cliente->imagen_cliente = $value['imagen_cliente'];
             $cliente->is_active = $value['is_active'];
             array_push($objCliente, $cliente);
+        }
         }
         return $objCliente;
     }
@@ -206,8 +208,6 @@ class ClienteDAO extends Model implements CRUD
                 $cliente->is_email_notified = $value['is_email_notified'];
                 $objCliente[$cliente->id_cliente] = $cliente;
             }
-        }else{
-            $objCliente=null;
         }
 
         $objCliente = array_values($objCliente);

@@ -59,15 +59,18 @@
             $query = "SELECT pg.* FROM plan_gym pg JOIN usuario_gimnasio ug ON pg.id_gimnasio = ug.id_gimnasio
             WHERE ug.id_gimnasio = ".$id_gimnasio." ";
             $objplanGym = array();
+            if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
             foreach ($this->db->consultar($query) as $key => $value) {
                 $planGym = new PlanGymDTO();
                 $planGym->id_planGym = $value['id_planGym'];
                 $planGym->nombrePlanGym = $value['nombrePlanGym'];
                 $planGym->descripcionPlanGym = $value['descripcionPlanGym'];
                 $planGym->costoPlanGym = $value['costoPlanGym'];
-                $objplanGym['data'][] = $planGym;
+                $objplanGym[$planGym->id_planGym] = $planGym;
             }
-            echo json_encode($objplanGym, JSON_UNESCAPED_UNICODE);
+            }
+            $objplanGym = array_values($objplanGym);
+            return $objplanGym;
         }
 
         public function readPlanGym($id_gimnasio)

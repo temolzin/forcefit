@@ -32,6 +32,7 @@ class RolDAO extends Model implements CRUD
         require_once 'rolDTO.php';
         $query = "SELECT * FROM rol";
         $objRol = array();
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
         foreach ($this->db->consultar($query) as $key => $value) {
             $rol = new RolDTO();
             $rol->id_rol = $value['id_rol'];
@@ -39,6 +40,8 @@ class RolDAO extends Model implements CRUD
             $rol->descripcion = $value['descripcion'];
             array_push($objRol, $rol);
         }
+        }
+        $objRol = array_values($objRol);
         return $objRol;
     }
 }

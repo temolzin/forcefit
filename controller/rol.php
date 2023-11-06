@@ -67,7 +67,7 @@ class Rol extends Controller
 		$rolDAO = new RolDAO();
 		$rolDAO = $rolDAO->read();
 
-		$obj = null;
+		$obj = array();
 		if (is_array($rolDAO ) || is_object($rolDAO )) {
 			foreach ($rolDAO  as $key => $value) {
 				$obj["data"][] = $value;
