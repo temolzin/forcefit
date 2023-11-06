@@ -71,6 +71,7 @@ class PagoDAO extends Model implements CRUD
         INNER JOIN plan_gym plg ON pg.id_planGym = plg.id_planGym
         WHERE ug.id_gimnasio = ".$id_gimnasio."";
         $objPago = array();
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
         foreach ($this->db->consultar($query) as $key => $value) {
             $pago = new PagoDTO();
             $pago->id_pago = $value['id_pago'];
@@ -83,6 +84,9 @@ class PagoDAO extends Model implements CRUD
             $pago->vencimiento = $value['vencimiento'];
             $pago->tipo_Pago = $value['tipo_Pago'];
             array_push($objPago, $pago);
+        }
+        }else {
+            $objPago = array();
         }
         return $objPago;
     }

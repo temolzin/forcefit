@@ -76,8 +76,9 @@
                     array_push($objPlanSistema, $planSistema);
                 }
             }else{
-                $objPlanSistema=null;
+                $objPlanSistema = array();
             }
+            $objPlanSistema = array_values($objPlanSistema);
             return $objPlanSistema;
         }
     }

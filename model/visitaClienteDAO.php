@@ -84,6 +84,7 @@ class VisitaClienteDAO extends Model implements CRUD
         INNER JOIN cliente AS c ON esc.id_cliente = c.id_cliente
         WHERE esc.id_gimnasio = $id_gimnasio";
         $objVisita = array();
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
         foreach ($this->db->consultar($query) as $key => $value) {
             $visita = new VisitaClienteDTO();
             $visita->id_visit = $value['id_visita'];
@@ -93,10 +94,14 @@ class VisitaClienteDAO extends Model implements CRUD
             $visita->hour_entry = $value['hora_entrada'];
             $visita->hour_exit = $value['hora_salida'];
             $visita->image_client = $value['id_cliente'] . '/' . $value['imagen_cliente'];
-            $objVisita['data'][] = $visita;
-            array_push($objVisita, $visita);
+            $objVisita[$visita->id_visita] = $visita;
         }
-        echo json_encode($objVisita, JSON_UNESCAPED_UNICODE);
+        }else{
+            $objVisita = array();
+        }
+
+        $objVisita = array_values($objVisita);
+        return $objVisita;
     }
 
     public function getClientsByGym($id_gimnasio)

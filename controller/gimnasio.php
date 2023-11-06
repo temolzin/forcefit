@@ -87,7 +87,7 @@ class Gimnasio extends Controller
         $gimnasioDAO = new GimnasioDAO();
         $gimnasioDAO = $gimnasioDAO->read();
 
-        $obj = null;
+        $obj = array();
         if (is_array($gimnasioDAO) || is_object($gimnasioDAO)) {
             foreach ($gimnasioDAO as $key => $value) {
                 $obj["data"][] = $value;

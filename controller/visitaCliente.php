@@ -85,6 +85,15 @@ class VisitaCliente extends Controller
 		$this->loadModel('VisitaClienteDAO');
 		$visitaClienteDAO = new VisitaClienteDAO();
 		$visitaClienteDAO = $visitaClienteDAO->readVisits($id_gimnasio);
+		$obj = array();
+		if (is_array($visitaClienteDAO) || is_object($visitaClienteDAO)) {
+			foreach ($visitaClienteDAO as $key => $value) {
+				$obj["data"][] = $value;
+			}
+		} else {
+			$obj = array();
+		}
+		echo json_encode($obj);
 	}
 
 	function getClientsByGym()

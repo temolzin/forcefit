@@ -123,7 +123,7 @@ class Usuario extends Controller
 		$usuarioDAO = new UsuarioDAO();
 		$usuarioDAO = $usuarioDAO->read();
 
-		$obj = null;
+		$obj = array();
 		if (is_array($usuarioDAO) || is_object($usuarioDAO)) {
 			foreach ($usuarioDAO as $key => $value) {
 				$obj["data"][] = $value;
