@@ -53,6 +53,11 @@
             return $this->conexion->lastInsertId();
         }
 
+        public function prepare($query)
+        {
+            return $this->conexion->prepare($query);
+        }
+
         //Método que ejecuta un insert, update y delete, según lo requiera.
         public function ejecutarAccion($accion, $valores = array()) {
             $resultado = false;

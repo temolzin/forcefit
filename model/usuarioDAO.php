@@ -170,35 +170,40 @@ class UsuarioDAO extends Model implements CRUD
     public function login($data)
     {
         require_once 'usuarioDTO.php';
-        $query = $this->db->consultar("SELECT u.id_usuario, u.nombreUsuario, u.apellidoPaternoUsuario, u.apellidoMaternoUsuario, u.emailUsuario, u.passwordUsuario, u.imagen, u.calleUsuario, u.estadoUsuario, u.municipioUsuario, u.coloniaUsuario, u.codigoPostalUsuario, u.id_rol, ug.id_gimnasio,
+        $query = $this->db->prepare("SELECT u.id_usuario, u.nombreUsuario, u.apellidoPaternoUsuario, u.apellidoMaternoUsuario, u.emailUsuario, u.passwordUsuario, u.imagen, u.calleUsuario, u.estadoUsuario, u.municipioUsuario, u.coloniaUsuario, u.codigoPostalUsuario, u.id_rol, ug.id_gimnasio,
         (CASE WHEN u.id_rol = 2 AND EXISTS
             (SELECT 1 FROM pago_plan_sistema pps WHERE pps.id_usuario = u.id_usuario AND pps.vencimiento > CURDATE()) THEN 1 ELSE 0
         END) as is_active
         FROM usuario AS u
         LEFT JOIN usuario_gimnasio AS ug ON u.id_usuario = ug.id_usuario
-        WHERE u.emailUsuario = '" . $data['emailUsuario'] . "' AND u.passwordUsuario ='" . $data['passwordUsuario'] . "'");
-        if ($query !== null) {
-            if ($query[0]['is_active'] === 0 && $query[0]['id_rol'] === 2) {
+        WHERE u.emailUsuario = :emailUsuario AND u.passwordUsuario = :passwordUsuario");
+        $query->bindParam(":emailUsuario", $data['emailUsuario']);
+        $query->bindParam(":passwordUsuario", $data['passwordUsuario']);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result) === 1) {
+            $row = $result[0];
+            if ($row['is_active'] === 0 && $row['id_rol'] === 2) {
                 echo json_encode(array("warning" => true));
                 return;
             }
             session_start();
-            $_SESSION['id_usuario'] = $query[0]['id_usuario'];
-            $_SESSION['id_gimnasio'] = $query[0]['id_gimnasio'];
-            $_SESSION['nombreUsuario'] = $query[0]['nombreUsuario'];
-            $_SESSION['apellidoPaternoUsuario'] = $query[0]['apellidoPaternoUsuario'];
-            $_SESSION['apellidoMaternoUsuario'] = $query[0]['apellidoMaternoUsuario'];
-            $_SESSION['emailUsuario'] = $query[0]['emailUsuario'];
-            $_SESSION['passwordUsuario'] = $query[0]['passwordUsuario'];
-            $_SESSION['imagen'] = $query[0]['imagen'];
-            $_SESSION['calleUsuario'] = $query[0]['calleUsuario'];
-            $_SESSION['estadoUsuario'] = $query[0]['estadoUsuario'];
-            $_SESSION['municipioUsuario'] = $query[0]['municipioUsuario'];
-            $_SESSION['coloniaUsuario'] = $query[0]['coloniaUsuario'];
-            $_SESSION['codigoPostalUsuario'] = $query[0]['codigoPostalUsuario'];
-            $_SESSION['id_rol'] = $query[0]['id_rol'];
+            $_SESSION['id_usuario'] = $row['id_usuario'];
+            $_SESSION['id_gimnasio'] = $row['id_gimnasio'];
+            $_SESSION['nombreUsuario'] = $row['nombreUsuario'];
+            $_SESSION['apellidoPaternoUsuario'] = $row['apellidoPaternoUsuario'];
+            $_SESSION['apellidoMaternoUsuario'] = $row['apellidoMaternoUsuario'];
+            $_SESSION['emailUsuario'] = $row['emailUsuario'];
+            $_SESSION['passwordUsuario'] = $row['passwordUsuario'];
+            $_SESSION['imagen'] = $row['imagen'];
+            $_SESSION['calleUsuario'] = $row['calleUsuario'];
+            $_SESSION['estadoUsuario'] = $row['estadoUsuario'];
+            $_SESSION['municipioUsuario'] = $row['municipioUsuario'];
+            $_SESSION['coloniaUsuario'] = $row['coloniaUsuario'];
+            $_SESSION['codigoPostalUsuario'] = $row['codigoPostalUsuario'];
+            $_SESSION['id_rol'] = $row['id_rol'];
             $_SESSION['login'] = true;
-            $_SESSION['permisos'] = $this->getPermisos($query[0]['id_rol']);
+            $_SESSION['permisos'] = $this->getPermisos($row['id_rol']);
             echo json_encode(array("success" => true));
             return;
         }
