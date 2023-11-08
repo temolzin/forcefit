@@ -85,35 +85,42 @@ $menu->header('usuario');
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Nombre del Usuario (*)</label>
                                             <input type="text" class="form-control" id="nombreUsuario"
                                                 name="nombreUsuario" placeholder="Nombre Usuario" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Apellido Paterno</label>
                                             <input type="text" class="form-control" id="apellidoPaternoUsuario"
                                                 name="apellidoPaternoUsuario" placeholder="Apellido Paterno" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Apellido Materno</label>
                                             <input type="text" class="form-control" id="apellidoMaternoUsuario"
                                                 name="apellidoMaternoUsuario" placeholder="Apellido Materno" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Teléfono (*)</label>
+                                            <input type="text" class="form-control" id="telefonoUsuario"
+                                                name="telefonoUsuario" placeholder="Telefono" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <label>Correo (*)</label>
                                         <div class="input-group-prepend">
                                             <input type="email" id="correoUsuario" name="correoUsuario"
                                                 class="form-control" placeholder="Correo">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <label>Contraseña (*)</label>
                                         <div class="input-group-prepend">
                                             <input type="password" id="password" name="password" class="form-control"
@@ -136,21 +143,21 @@ $menu->header('usuario');
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Calle(*)</label>
                                             <input type="text" class="form-control" id="calleUsuario"
                                                 name="calleUsuario" placeholder="Calle" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Estado (*)</label>
                                             <input type="text" name="estadoUsuario" id="estadoUsuario"
                                                 class="form-control" placeholder="estado">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Municipio (*)</label>
                                             <input type="text" id="municipioUsuario" name="municipioUsuario"
@@ -232,14 +239,14 @@ $menu->header('usuario');
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Nombre del Usuario (*)</label>
                                             <input type="text" class="form-control" id="nombreUsuarioActualizar"
                                                 name="nombreUsuarioActualizar" placeholder="Nombre Usuario" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Apellido Paterno</label>
                                             <input type="text" class="form-control"
@@ -248,7 +255,7 @@ $menu->header('usuario');
                                                 placeholder="Apellido Paterno" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Apellido Materno</label>
                                             <input type="text" class="form-control"
@@ -257,14 +264,23 @@ $menu->header('usuario');
                                                 placeholder="Apellido Materno" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Telefono</label>
+                                            <input type="text" class="form-control"
+                                                id="telefonoUsuarioActualizar"
+                                                name="telefonoUsuarioActualizar"
+                                                placeholder="Telefono" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="email" class="form-control" id="EmailUsuarioActualizar"
                                                 name="EmailUsuarioActualizar" placeholder="Email" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Contraseña</label>
                                             <input type="text" class="form-control" id="contrasenaUsuarioActualizar"
@@ -393,21 +409,21 @@ $menu->header('usuario');
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Id (*)</label>
                                             <input type="text" disabled class="form-control" id="id_usuarioConsultar"
                                                 name="id_usuarioConsultar" placeholder="id" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-5">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Nombre del Usuario (*)</label>
                                             <input type="text" disabled class="form-control" id="nombreUsuarioConsultar"
                                                 name="nombreUsuarioConsultar" placeholder="Nombre del usuario" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-5">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Apellido Paterno</label>
                                             <input type="text" disabled class="form-control"
@@ -415,7 +431,7 @@ $menu->header('usuario');
                                                 name="apellidoPaternoUsuarioConsultar" placeholder="Apellido Paterno" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Apellido Materno</label>
                                             <input type="text" disabled class="form-control"
@@ -423,7 +439,15 @@ $menu->header('usuario');
                                                 name="apellidoMaternoUsuarioConsultar" placeholder="Apellido Materno" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Telefono</label>
+                                            <input type="text" disabled class="form-control"
+                                                id="telefonoUsuarioConsultar"
+                                                name="telefonoUsuarioConsultar" placeholder="Telefono" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="email" disabled class="form-control" id="emailUsuarioConsultar"
@@ -846,6 +870,7 @@ const llenarPlanSistema = () => {
             var nombreUsuarioConsultar = $("#nombreUsuarioConsultar").val(data.nombreUsuario);
             var apellidoPaternoUsuarioConsultar = $("#apellidoPaternoUsuarioConsultar").val(data.apellidoPaternoUsuario);
             var apellidoMaternoUsuarioConsultar = $("#apellidoMaternoUsuarioConsultar").val(data.apellidoMaternoUsuario);
+            var telefonoUsuarioConsultar = $("#telefonoUsuarioConsultar").val(data.telefonoUsuario);
             var emailUsuarioConsultar = $("#emailUsuarioConsultar").val(data.emailUsuario);
             var calleUsuarioConsultar = $("#calleUsuarioConsultar").val(data.calleUsuario);
             var estadoUsuarioConsultar = $("#estadoUsuarioConsultar").val(data.estadoUsuario);
@@ -858,6 +883,7 @@ const llenarPlanSistema = () => {
             var nombreUsuarioActualizar = $("#nombreUsuarioActualizar").val(data.nombreUsuario);
             var apellidoPaternoUsuarioActualizar = $("#apellidoPaternoUsuarioActualizar").val(data.apellidoPaternoUsuario);
             var apellidoMaternoUsuarioActualizar = $("#apellidoMaternoUsuarioActualizar").val(data.apellidoMaternoUsuario);
+            var telefonoUsuarioActualizar = $("#telefonoUsuarioActualizar").val(data.telefonoUsuario);
             var EmailUsuarioActualizar = $("#EmailUsuarioActualizar").val(data.emailUsuario);
             var contraseñaUsuarioActualizar = $("#contraseñaUsuarioActualizar").val(data.passwordUsuario);
             var calleUsuarioActualizar = $("#calleUsuarioActualizar").val(data.calleUsuario);
@@ -966,6 +992,8 @@ const llenarPlanSistema = () => {
                             'apellidoPaternoUsuario').value);
                         form_data.append('apellidoMaternoUsuario', document.getElementById(
                             'apellidoMaternoUsuario').value);
+                        form_data.append('telefonoUsuario', document.getElementById(
+                            'telefonoUsuario').value);
                         form_data.append('correoUsuario', document.getElementById(
                             'correoUsuario').value);
                         form_data.append('password', document.getElementById(
@@ -1028,6 +1056,9 @@ const llenarPlanSistema = () => {
                 apellidoMaternoUsuario: {
                     required: true
                 },
+                telefonoUsuario: {
+                    required: true
+                },
                 correoUsuario: {
                     required: true
                 },
@@ -1065,6 +1096,9 @@ const llenarPlanSistema = () => {
                 },
                 apellidoMaternoUsuario: {
                     required: "Ingrese apellido materno"
+                },
+                telefonoUsuario: {
+                    required: "Ingrese el telefono"
                 },
                 correoUsuario: {
                     required: "Ingrese correo del usuario"
@@ -1165,6 +1199,9 @@ const llenarPlanSistema = () => {
                 apellidoMaternoUsuarioActualizar: {
                     required: true
                 },
+                telefonoUsuarioActualizar: {
+                    required: true
+                },
                 EmailUsuarioActualizar: {
                     required: true
                 },
@@ -1203,6 +1240,9 @@ const llenarPlanSistema = () => {
                 },
                 apellidoMaternoUsuarioActualizar: {
                     required: "Ingrese apellido materno"
+                },
+                telefonoUsuarioActualizar: {
+                    required: "Ingrese el telefono"
                 },
                 EmailUsuarioActualizar: {
                     required: "Ingrese correo del usuario"

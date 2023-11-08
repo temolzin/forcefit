@@ -2,8 +2,8 @@
 function getPlantillaFront($cliente)
 {
 
-    if ($cliente['imagen_cliente'] !== null && file_exists('public/cliente/' . $cliente['nombre_cliente'] . '_' . $cliente['apellido_paterno_cliente'] . '/' . $cliente['imagen_cliente'])) {
-        $fotoruta = constant('URL') . 'public/cliente/' . $cliente['nombre_cliente'] . '_' . $cliente['apellido_paterno_cliente'] . '/' . $cliente['imagen_cliente'];
+    if ($cliente['imagen_cliente'] !== null && file_exists('public/cliente/' . $cliente['id_cliente'] . '/' . $cliente['imagen_cliente'])) {
+        $fotoruta = constant('URL') . 'public/cliente/' . $cliente['id_cliente'] . '/' . $cliente['imagen_cliente'];
     } else {
         $fotoruta = constant('URL') . 'public/img/defaultFotoCliente.png';
     }
@@ -25,8 +25,8 @@ function getPlantillaFront($cliente)
 
 function getPlantillaBack($cliente)
 {
-    if ($cliente['imagen'] !== null && file_exists('public/gimnasio/' . $cliente['nombre_gimnasio'] . '_' . $cliente['telefono']  . '/' .$cliente['imagen'])) {
-        $fotoruta = constant('URL') . 'public/gimnasio/' . $cliente['nombre_gimnasio'] . '_' . $cliente['telefono']  . '/' .$cliente['imagen'];
+    if ($cliente['imagen'] !== null && file_exists('public/gimnasio/' . $cliente['id_gimnasio'] . '/' .$cliente['imagen'])) {
+        $fotoruta = constant('URL') . 'public/gimnasio/' . $cliente['id_gimnasio'] . '/' .$cliente['imagen'];
     } else {
         $fotoruta = constant('URL') . 'public/img/defaultFotoGym.png';
     }

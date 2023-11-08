@@ -37,6 +37,10 @@ class Dashboard extends Controller
 		require 'model/dashboardDAO.php';
 		$this->loadModel('DashboardDAO');
 		$dashboardDAO = new DashboardDAO();
+		if($id_gimnasio === ""){
+			$dashboardDAO = $dashboardDAO->getUsersAboutMembershipExpiry();
+			return;
+		}
 		$dashboardDAO = $dashboardDAO->getClientsAboutMembershipExpiry($id_gimnasio);
 	}
 }

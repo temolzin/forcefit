@@ -77,7 +77,7 @@ $menu->header('dashboard');
                             <tr>
                                 <th>ID</th>
                                 <th>Imagen</th>
-                                <th>Nombre del Cliente</th>
+                                <th>Nombre</th>
                                 <th>Apellido Paterno</th>
                                 <th>Apellido Materno</th>
                                 <th>Teléfono</th>
@@ -201,9 +201,11 @@ $menu->footer();
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
                 },
                 plugins: {
                     legend: {
@@ -228,9 +230,11 @@ $menu->footer();
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
                 },
                 plugins: {
                     legend: {
@@ -242,12 +246,16 @@ $menu->footer();
     }
 
     var getCustomersAboutToExpireMembership = function() {
-        var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
+        var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>";
+        var url = "<?php echo constant('URL'); ?>cliente/getCustomersWithUpcomingMembershipExpiry";
+        if(id_gimnasio === ""){
+            var url = "<?php echo constant('URL'); ?>usuario/getUsersWithUpcomingMembershipExpiry";
+        }
         tableCliente = $('#dataTableCliente').DataTable({
             "processing": true,
             "ajax": {
                 type: "POST",
-                "url": "<?php echo constant('URL'); ?>cliente/getCustomersWithUpcomingMembershipExpiry",
+                "url": url,
                 data: {
                     id_gimnasio: id_gimnasio
                 },
@@ -267,15 +275,14 @@ $menu->footer();
                 {
                     defaultContent: "",
                     'render': function(data, type, JsonResultRow, meta) {
-                        var fullnameImagen = JsonResultRow.nombre_cliente + '_' + JsonResultRow
-                            .apellido_paterno_cliente + '/' + JsonResultRow.imagen_cliente;
+                        var fullnameImagen = JsonResultRow.id_cliente + '/' + JsonResultRow.imagen_cliente;
                         var urlImg = '<?php echo constant('URL'); ?>public/cliente/' + fullnameImagen;
+                        if("<?php echo $_SESSION['id_gimnasio']; ?>" === ""){
+                            urlImg = '<?php echo constant('URL'); ?>public/usuario/' + fullnameImagen;
+                        }
                         if (JsonResultRow.imagen_cliente == null || JsonResultRow.imagen_cliente ==
                             '') {
                             var urlImg = '<?php echo constant('URL'); ?>public/img/avatar.png';
-                        } else {
-                            var urlImg = '<?php echo constant('URL'); ?>public/cliente/' +
-                                fullnameImagen;
                         }
                         return '<center><img src="' + urlImg +
                             '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;"/></center>';

@@ -340,7 +340,7 @@ $menu->footer();
         var tableVisit = $('#dataTableVisit').DataTable({
             "processing": true,
             "ajax": {
-                "url": "<?php echo constant('URL'); ?>VisitaCliente/readTableVisit?id_gimnasio=" + id_gimnasio
+                "url": "<?php echo constant('URL'); ?>visitaCliente/readTableVisit?id_gimnasio=" + id_gimnasio
             },
             "columns": [{
                     "data": "id_visit"
@@ -412,7 +412,7 @@ $menu->footer();
 
     var getClientsByGym = $(document).ready(function() {
         $.ajax({
-            url: 'VisitaCliente/getClientsByGym?id_gimnasio=<?php echo $_SESSION['id_gimnasio']; ?>',
+            url: 'visitaCliente/getClientsByGym?id_gimnasio=<?php echo $_SESSION['id_gimnasio']; ?>',
             type: 'POST',
             dataType: 'json',
             success: function(data) {
@@ -430,7 +430,7 @@ $menu->footer();
 
     var getClientsInGym = $(document).ready(function() {
         $.ajax({
-            url: 'VisitaCliente/getClientsInGym?id_gimnasio=<?php echo $_SESSION['id_gimnasio']; ?>',
+            url: 'visitaCliente/getClientsInGym?id_gimnasio=<?php echo $_SESSION['id_gimnasio']; ?>',
             type: 'POST',
             dataType: 'json',
             success: function(data) {
@@ -453,7 +453,7 @@ $menu->footer();
                 console.log(datos)
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo constant('URL'); ?>VisitaCliente/insertEntry",
+                    url: "<?php echo constant('URL'); ?>visitaCliente/insertEntry",
                     data: datos,
                     success: function(data) {
                         var title = "¡Éxito!";
@@ -511,7 +511,7 @@ $menu->footer();
                 console.log(datos)
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo constant('URL'); ?>VisitaCliente/insertExit",
+                    url: "<?php echo constant('URL'); ?>visitaCliente/insertExit",
                     data: datos,
                     success: function(data) {
                         var title = "¡Éxito!";
@@ -566,7 +566,7 @@ $menu->footer();
                 var datos = $('#formUpdateVisit').serialize();
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo constant('URL'); ?>VisitaCliente/update",
+                    url: "<?php echo constant('URL'); ?>visitaCliente/update",
                     data: datos,
                     success: function(data) {
                         var title = "¡Éxito!";
@@ -640,7 +640,7 @@ $menu->footer();
             console.log(datos);
             $.ajax({
                 type: "POST",
-                url: "<?php echo constant('URL'); ?>VisitaCliente/delete",
+                url: "<?php echo constant('URL'); ?>visitaCliente/delete",
                 data: datos,
                 success: function(data) {
                     var title = "¡Éxito!";

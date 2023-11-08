@@ -23,6 +23,8 @@ class UsuarioDTO implements JsonSerializable
     private $fecha_termino;
     private $status;
     private $is_active;
+    private $telefonoUsuario;
+    private $isEmailNotified;
 
 
     public function __get($property)

@@ -28,15 +28,21 @@ class DashboardDAO extends Model implements CRUD
 
         for ($i = 6; $i > -1; $i--) {
             $subtractDaysFromCurrentDate = date("Y-m-d", strtotime("-$i days"));
-            $query = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_gym_cliente WHERE id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND fecha_hora_pago LIKE '" . $subtractDaysFromCurrentDate . "%'";
-            $query_results = $this->db->consultar($query);
+            $queryWeekly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_gym_cliente WHERE id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND fecha_hora_pago LIKE '" . $subtractDaysFromCurrentDate . "%'";
+            if($id_gimnasio === ""){
+                $queryWeekly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_sistema WHERE fecha_hora_pago LIKE '" . $subtractDaysFromCurrentDate . "%'";
+            }
+            $query_results = $this->db->consultar($queryWeekly);
             $daily_Payment_Totals[] = $query_results[0]['cantidad'];
         }
 
         for ($i = 11; $i > -1; $i--) {
             $subtractMonthsFromCurrentDate = date("Y-m", strtotime("-$i months"));
-            $query = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_gym_cliente WHERE id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND fecha_hora_pago LIKE '" . $subtractMonthsFromCurrentDate . "-%'";
-            $query_results = $this->db->consultar($query);
+            $queryMonthly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_gym_cliente WHERE id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND fecha_hora_pago LIKE '" . $subtractMonthsFromCurrentDate . "-%'";
+            if($id_gimnasio === ""){
+                $queryMonthly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_sistema WHERE fecha_hora_pago LIKE '" . $subtractMonthsFromCurrentDate . "-%'";
+            }
+            $query_results = $this->db->consultar($queryMonthly);
             $monthly_Payment_Totals[] = $query_results[0]['cantidad'];;
         }
 
@@ -72,7 +78,6 @@ class DashboardDAO extends Model implements CRUD
 
     public function getClientsAboutMembershipExpiry($id_gimnasio)
     {
-        $objCliente = array();
         require_once 'clienteDTO.php';
         require_once __DIR__ . '/../controller/emails/sendExpiredNotificationCustomer.php';
 
@@ -83,7 +88,7 @@ class DashboardDAO extends Model implements CRUD
         INNER JOIN gimnasio AS g ON c.id_gimnasio = g.id_gimnasio
         WHERE ppg.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
         AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND (c.is_email_notified = 0 OR c.is_email_notified IS NULL)";
-
+        $message = 'No hay correos por enviar';
         if (!is_null($this->db->consultar($query_get_clients))) {
             foreach ($this->db->consultar($query_get_clients) as $key => $value) {
                 $cliente = new ClienteDTO();
@@ -92,24 +97,64 @@ class DashboardDAO extends Model implements CRUD
                 $cliente->nombre_cliente = $value['nombre_cliente'] . ' ' . $value['apellido_paterno_cliente'];
                 $cliente->fecha_vencimiento = $value['vencimiento'];
                 $cliente->nombrePlanGym = $value['nombrePlanGym'];
-                $cliente->imagen_cliente = '' . $value['nombre_gimnasio'] . '_' . $value['telefono'] . '/' . $value['imagen'];
-                $name_gym = $value['nombre_gimnasio'];
+                $cliente->imagen_cliente = '' . $value['id_gimnasio'] . '/' . $value['imagen'];
+                $name_gym = ' en <strong>'.$value['nombre_gimnasio'];
 
                 if ($cliente->email_customer  != null) {
                     $sendEmailToCustomer = new sendExpiredNotificationCustomer();
-                    $sendEmailToCustomer->sendEmailToCustomer($cliente, $name_gym);
+                    $result = $sendEmailToCustomer->sendEmailToCustomer($cliente, $name_gym);
 
-                    $query_update_is_email_notified = "UPDATE cliente SET is_email_notified = 1 WHERE id_cliente = :id_cliente";
-                    $values = array(
-                        ':id_cliente' => $cliente->id_cliente
-                    );
-
-                    $result = $this->db->ejecutarAccion($query_update_is_email_notified, $values);
+                    if($result === true){
+                        $queryUpdateUsEmailNotified = "UPDATE cliente SET is_email_notified = 1 WHERE id_cliente = :id_cliente";
+                        $values = array(
+                            ':id_cliente' => $cliente->id_cliente
+                        );
+                        $updateIsEmailNotified = $this->db->ejecutarAccion($queryUpdateUsEmailNotified, $values);
+                    }
                 }
-                $message = "Correos enviados correctamente";
             }
-        } else {
-            $message = "Ya se le ha notificado a todos los clientes";
+            $message = "Correos enviados correctamente";
+        }
+        $response = array(
+            'message' => $message
+        );
+        echo json_encode($response);
+    }
+
+    public function getUsersAboutMembershipExpiry()
+    {
+        require_once 'clienteDTO.php';
+        require_once __DIR__ . '/../controller/emails/sendExpiredNotificationCustomer.php';
+
+        $query_get_clients = "SELECT DISTINCT u.*, pps.vencimiento, ps.nombre_plan_sistema
+        FROM usuario as u
+        INNER JOIN pago_plan_sistema as pps ON u.id_usuario = pps.id_usuario
+        INNER JOIN plan_sistema as ps ON pps.id_plan_sistema = ps.id_plan_sistema
+        WHERE pps.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+        AND (u.isEmailNotified = 0 OR u.isEmailNotified IS NULL)";
+        $message = 'No hay correos por enviar';
+        if (!is_null($this->db->consultar($query_get_clients))) {
+            foreach ($this->db->consultar($query_get_clients) as $key => $value) {
+                $cliente = new ClienteDTO();
+                $cliente->id_cliente = $value['id_usuario'];
+                $cliente->email_customer = $value['emailUsuario'];
+                $cliente->nombre_cliente = $value['nombreUsuario'] . ' ' . $value['apellidoPaternoUsuario'];
+                $cliente->fecha_vencimiento = $value['vencimiento'];
+                $cliente->nombrePlanGym = $value['nombre_plan_sistema'];
+                $cliente->imagen_cliente = null;
+                $name_gym = null;
+                $sendEmailToUser = new sendExpiredNotificationCustomer();
+                $result = $sendEmailToUser->sendEmailToCustomer($cliente, $name_gym);
+
+                if($result === true){
+                    $query_update_is_email_notified = "UPDATE usuario SET isEmailNotified = 1 WHERE id_usuario = :id_usuario";
+                    $values = array(
+                        ':id_usuario' => $cliente->id_cliente
+                    );
+                    $update_is_email_notified = $this->db->ejecutarAccion($query_update_is_email_notified, $values);
+                }
+            }
+            $message = "correos electrónicos enviados correctamente";
         }
         $response = array(
             'message' => $message

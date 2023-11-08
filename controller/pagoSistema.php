@@ -15,11 +15,13 @@ class PagoSistema extends Controller
 	{
         $vencimientoPago = $_POST['vencimientoPago'];
         $idUsuario = $_POST['idUsuario'];
+        $cantidadPago = $_POST['cantidad'];
         $idPlanSistema = $_POST['idPlanSistema'];
         $tipoPago = $_POST['tipoPago'];
 		$data = array(
             'vencimientoPago' => $vencimientoPago, 
             'idUsuario' => $idUsuario, 
+            'cantidadPago' => $cantidadPago, 
             'idPlanSistema' => $idPlanSistema,
             'tipoPago' => $tipoPago);
 
@@ -34,12 +36,14 @@ class PagoSistema extends Controller
         $id_pago = $_POST['id_PagoActualizar'];
         $vencimientoPago = $_POST['vencimientoPagoActualizar'];
         $idUsuario = $_POST['idUsuarioPagoActualizar'];
+        $cantidadPago = $_POST['cantidadPagoActualizar'];
         $idPlanSistema = $_POST['idPlanSistemaActualizar'];
         $tipoPago = $_POST['tipoPagoActualizar'];
         $data = array(
 			'id_PagoActualizar' => $id_pago, 
 			'vencimientoPago' => $vencimientoPago, 
 			'idUsuario'=>$idUsuario,
+			'cantidadPago'=>$cantidadPago,
             'idPlanSistema' =>$idPlanSistema,
             'tipoPago' =>$tipoPago
         );

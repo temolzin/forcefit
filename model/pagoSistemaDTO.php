@@ -9,6 +9,7 @@ class PagoSistemaDTO implements JsonSerializable
     private $tipo_Pago;
     private $nombreUsuario;
     private $nombre_plan_sistema;
+    private $cantidadPago;
     
     public function __get($property)
     {

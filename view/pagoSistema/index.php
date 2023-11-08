@@ -33,6 +33,7 @@ $menu->header('pagoSistema');
                                             <th>ID</th>
                                             <th>Plan del sistema</th>
                                             <th>Usuario</th>
+                                            <th>Cantidad</th>
                                             <th>Fecha y hora de pago</th>
                                             <th>Fecha de vencimiento</th>
                                             <th>Forma de pago</th>
@@ -77,13 +78,22 @@ $menu->header('pagoSistema');
                             <div class="card-body">
                                 <div class="row">
                                 <div class="card-body">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
+                                        <label>Cantidad (*)</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad del Pago">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                         <label>Fecha de vencimiento(*)</label>
                                             <input type="date" class="form-control" id="vencimientoPago"name="vencimientoPago" placeholder="Vencimiento de pago" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                     <div class="form-group">
                                     <label>Usuario(*)</label>
                                     <select name="idUsuario" id="idUsuario" class="form-control pagoRegistrarUsuario" style="width:100%;">
@@ -161,13 +171,22 @@ $menu->header('pagoSistema');
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
+                                        <label>Cantidad (*)</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="cantidadPagoActualizar" name="cantidadPagoActualizar" placeholder="cantidad del Pago">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Fecha de Vencimineto</label>
                                             <input type="date" class="form-control" id="vencimientoPagoActualizar" name="vencimientoPagoActualizar" placeholder="2023-05-07" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                     <div class="form-group">
                                     <label>Usuario(*)</label>
                                     <select name="idUsuarioPagoActualizar" id="idUsuarioPagoActualizar" class="form-control pagoActualizarUsuario" style="width:100%;">
@@ -234,37 +253,43 @@ $menu->header('pagoSistema');
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Id</label>
                                             <input type="text" disabled class="form-control" id="id_pagoConsultar" name="id_pagoConsultar" placeholder="id" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Cantidad</label>
+                                            <input type="text" disabled class="form-control" id="cantidadPagoConsultar" name="cantidadPagoConsultar" placeholder="Cantidad" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Fecha y hora de pago</label>
                                             <input type="text" disabled class="form-control" id="fechaPagoConsultar" name="fechaPagoConsultar" placeholder="Fecha del pago" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Vencimiento</label>
                                             <input type="text" disabled class="form-control" id="vencimientoPagoConsultar" name="vencimientoPagoConsultar" placeholder="Vencimiento" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Usuario</label>
                                             <input type="text" disabled class="form-control" id="idUsuarioPagoConsultar" name="idUsuarioPagoConsultar" placeholder="Usuario" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Plan del sistema</label>
                                             <input type="text" disabled class="form-control" id="idPlanSistemaConsultar" name="idPlanSistemaConsultar" placeholder="Plan del sistema" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Forma de pago</label>
                                             <input type="text" disabled class="form-control" id="formaPagoConsultar" name="formaPagoConsultar" placeholder="Forma de pago" />
@@ -387,6 +412,9 @@ var mostrarPagoSistema = function() {
                 "data": "nombreUsuario"
             },
             {
+                "data": "cantidadPago"
+            },
+            {
                 "data": "fecha_hora_pago"
             },
             {
@@ -422,6 +450,7 @@ var obtenerdatosDT = function(table) {
         var vencimientoPagoActualizar = $("#vencimientoPagoActualizar").val(data.vencimiento);
         var idUsuarioPagoActualizar = $("#idUsuarioPagoActualizar").val(data.id_usuario).trigger("change");
         var idPlanSistemaActualizar = $("#idPlanSistemaActualizar").val(data.id_plan_sistema);
+        var cantidadPagoActualizar = $("#cantidadPagoActualizar").val(data.cantidadPago);
         var tipoPagoActualizar = $("#tipoPagoActualizar").val(data.tipo_Pago);
 
 
@@ -429,6 +458,7 @@ var obtenerdatosDT = function(table) {
         var fechaPagoConsultar = $("#fechaPagoConsultar").val(data.fecha_hora_pago);
         var vencimientoPagoConsultar = $("#vencimientoPagoConsultar").val(data.vencimiento);
         var idUsuarioPagoConsultar = $("#idUsuarioPagoConsultar").val(data.nombreUsuario);
+        var cantidadPagoConsultar = $("#cantidadPagoConsultar").val(data.cantidadPago);
         var idPlanSistemaConsultar = $("#idPlanSistemaConsultar").val(data.nombre_plan_sistema);
         var formaPagoConsultar = $("#formaPagoConsultar").val(data.tipo_Pago);
 
@@ -472,6 +502,9 @@ var enviarFormularioRegistrar = function() {
             idUsuario: {
                 required: true
             },
+            cantidad: {
+                required: true
+            },
             idPlanSistema: {
                 required: true
             },
@@ -485,6 +518,9 @@ var enviarFormularioRegistrar = function() {
             },
             idUsuario: {
                 required: "Ingrese el id del usuario"
+            },
+            cantidad: {
+                required: "Ingrese la cantidad del pago"
             },
             idPlanSistema: {
                 required: "Ingrese el id del plan de sistema"
@@ -544,6 +580,9 @@ var enviarFormularioActualizar = function() {
             idusuarioPagoActualizar: {
                 required: true
             },
+            cantidadPagoActualizar: {
+                required: true
+            },
             idPlanSistemaActualizar: {
                 required: true
             },
@@ -557,6 +596,9 @@ var enviarFormularioActualizar = function() {
             },
             idusuarioPagoActualizar: {
                 required: "Ingrese el usuario que realiza el pago"
+            },
+            cantidadPagoActualizar: {
+                required: "Ingrese la cantidad del pago"
             },
             idPlanSistemaActualizar: {
                 required: "Ingrese el plan del sistema"

@@ -7,19 +7,21 @@
 
         public function insert($data)
         {
-            $query = $this->db->conectar()->prepare('INSERT INTO pago_plan_sistema (`id_pago`, `fecha_hora_pago`, `vencimiento`, `id_usuario`, `id_plan_sistema`, `tipo_Pago`)
+            $query = $this->db->conectar()->prepare('INSERT INTO pago_plan_sistema (`id_pago`, `fecha_hora_pago`, `vencimiento`, `id_usuario`, `id_plan_sistema`, `tipo_Pago`, `cantidad_pago`)
                 values (null,
                 NOW(),
                 :vencimientoPago,
                 :idUsuario,
                 :idPlanSistema,
-                :tipoPago
+                :tipoPago,
+                :cantidadPago
             )');
             $query->execute([
                 ':vencimientoPago' => $data['vencimientoPago'],
                 ':idUsuario' => $data['idUsuario'],
                 ':idPlanSistema' => $data['idPlanSistema'],
-                ':tipoPago' => $data['tipoPago']
+                ':tipoPago' => $data['tipoPago'],
+                ':cantidadPago' => $data['cantidadPago']
             ]);
             echo 'ok';
         }
@@ -31,14 +33,16 @@
                 vencimiento = :vencimientoPago, 
                 id_usuario = :idUsuario, 
                 id_plan_sistema = :idPlanSistema, 
-                tipo_Pago = :tipoPago
+                tipo_Pago = :tipoPago,
+                cantidad_pago = :cantidadPago
                 WHERE id_pago = :id_pago');
             $query->execute([
                 ':id_pago' => $data['id_PagoActualizar'],
                 'vencimientoPago' => $data['vencimientoPago'],
                 ':idUsuario' => $data['idUsuario'],
                 ':idPlanSistema' => $data['idPlanSistema'],
-                ':tipoPago' => $data['tipoPago']
+                ':tipoPago' => $data['tipoPago'],
+                ':cantidadPago' => $data['cantidadPago']
             ]);
             echo 'ok';
         }
@@ -69,6 +73,7 @@
                 $pagoSistema->fecha_hora_pago = $value['fecha_hora_pago'];
                 $pagoSistema->vencimiento = $value['vencimiento'];
                 $pagoSistema->tipo_Pago = $value['tipo_Pago'];
+                $pagoSistema->cantidadPago = $value['cantidad_pago'];
                 array_push($objpagoSistema, $pagoSistema);
             }
             }

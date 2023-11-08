@@ -22,6 +22,7 @@ class Usuario extends Controller
 		$nombreUsuario = $_POST['nombreUsuario'];
 		$apellidoPaternoUsuario = $_POST['apellidoPaternoUsuario'];
 		$apellidoMaternoUsuario = $_POST['apellidoMaternoUsuario'];
+		$telefonoUsuario = $_POST['telefonoUsuario'];
 		$emailUsuario = $_POST['correoUsuario'];
 		$passwordUsuario = $_POST['password'];
 		$calleUsuario = $_POST['calleUsuario'];
@@ -36,6 +37,7 @@ class Usuario extends Controller
 			'nombreUsuario' => $nombreUsuario,
 			'apellidoPaternoUsuario' => $apellidoPaternoUsuario,
 			'apellidoMaternoUsuario' => $apellidoMaternoUsuario,
+			'telefonoUsuario' => $telefonoUsuario,
 			'correoUsuario' => $emailUsuario,
 			'password' => $passwordUsuario,
 			'calleUsuario' => $calleUsuario,
@@ -68,6 +70,7 @@ class Usuario extends Controller
 		$nombreUsuario = $_POST['nombreUsuarioActualizar'];
 		$apellidoPaternoUsuario = $_POST['apellidoPaternoUsuarioActualizar'];
 		$apellidoMaternoUsuario = $_POST['apellidoMaternoUsuarioActualizar'];
+		$telefonoUsuario = $_POST['telefonoUsuarioActualizar'];
 		$emailUsuario = $_POST['EmailUsuarioActualizar'];
 		$passwordUsuario = $_POST['contrasenaUsuarioActualizar'];
 		$calleUsuario = $_POST['calleUsuarioActualizar'];
@@ -75,13 +78,14 @@ class Usuario extends Controller
 		$municipioUsuario = $_POST['municipioUsuarioActualizar'];
 		$coloniaUsuario = $_POST['coloniaUsuarioActualizar'];
 		$codigoPostalUsuario = $_POST['codigopostalUsuarioActualizar'];
-		$idRol = $_POST['rolUsuarioActualizar'];
+		$idRol = $_POST['idRolUsuarioActualizar'];
 
 		$arrayActualizar = array(
 			'id_usuario' => $idUsuario,
 			'nombreUsuario' => $nombreUsuario,
 			'apellidoPaternoUsuario' => $apellidoPaternoUsuario,
 			'apellidoMaternoUsuario' => $apellidoMaternoUsuario,
+			'telefonoUsuario' => $telefonoUsuario,
 			'emailUsuario' => $emailUsuario,
 			'passwordUsuario' => $passwordUsuario,
 			'calleUsuario' => $calleUsuario,
@@ -178,6 +182,22 @@ class Usuario extends Controller
 		$this->loadModel('UsuarioDAO');
 		$usuarioDAO = new UsuarioDAO();
 		$usuarioDAO = $usuarioDAO->updateImage($data);
+	}
+
+	function getUsersWithUpcomingMembershipExpiry()
+	{
+		require 'model/usuarioDAO.php';
+		$this->loadModel('UsuarioDAO');
+		$usuarioDAO = new UsuarioDAO();
+		$usuarioDAO = $usuarioDAO->getUsersWithUpcomingMembershipExpiry();
+
+		$obj = array();
+		if (is_array($usuarioDAO) || is_object($usuarioDAO)) {
+			foreach ($usuarioDAO as $key => $value) {
+				$obj["data"][] = $value;
+			}
+		}
+		echo json_encode($obj);
 	}
 }
 ?>
