@@ -28,16 +28,17 @@ class sendExpiredNotificationCustomer
             if($cliente->imagen_cliente !== null){
                 $imagePath = __DIR__ . '/../../public/gimnasio/' . $cliente->imagen_cliente;
                 $mail->addEmbeddedImage($imagePath, 'gym.png');
-                $footerLogoGym = '<table style="margin: 0 auto;">
-                <tr>
-                    <td style="text-align: center; vertical-align: middle;">
-                        <img src="cid:gym.png" alt="' . $name_gym . '" class="logo-bottom">
-                    </td>
-                    <td>
-                        <p class="footer-text">&copy; ' . str_replace(' en <strong>', '', $name_gym) . '. Todos los derechos reservados.</p>
-                    </td>
-                </tr>
-            </table>';
+                $footerLogoGym = '
+                <table style="margin: 0 auto;">
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle;">
+                            <img src="cid:gym.png" alt="' . $name_gym . '" class="logo-bottom">
+                        </td>
+                        <td>
+                            <p class="footer-text">&copy; ' . str_replace(' en <strong>', '', $name_gym) . '. Todos los derechos reservados.</p>
+                        </td>
+                    </tr>
+                </table>';
             }
             $imagePath2 = __DIR__ . '/../../public/img/logos/logotipoAzul.png';
             $mail->addEmbeddedImage($imagePath2, 'rootheim.png');

@@ -61,7 +61,7 @@ $menu->header('dashboard');
                             <h2>Membresías por expirar</h2>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button class="btn btn-primary"  onclick="emailClientsAboutMembershipExpiry();">
+                            <button class="btn btn-primary"  onclick="sendEmailClientsAboutMembershipExpiry();">
                                 <i class="fa fa-user"></i>Notificar via Email
                             </button>
                             <a href="<?php echo constant("URL"); ?>cliente" class="btn btn-primary">
@@ -107,11 +107,11 @@ $menu->footer();
         getCustomersAboutToExpireMembership();
     });
 
-    var emailClientsAboutMembershipExpiry = function() {
+    var sendEmailClientsAboutMembershipExpiry = function() {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
         $.ajax({
             type: "GET",
-            url: "<?php echo constant('URL'); ?>dashboard/emailClientsAboutMembershipExpiry",
+            url: "<?php echo constant('URL'); ?>dashboard/sendEmailClientsAboutMembershipExpiry",
             data: {
                 id_gimnasio: id_gimnasio,
             },

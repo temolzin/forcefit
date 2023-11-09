@@ -47,7 +47,7 @@ class DashboardDAO extends Model implements CRUD
         }
 
         $todays_date = date('N');
-        $days_of_the_week = array('lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo');
+        $days_of_the_week = array('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo');
         for ($i = $todays_date - 6; $i <= $todays_date; $i++) {
             $day_Index = ($i - 1 + 7) % 7;
             $order_of_the_days_of_the_week[] = $days_of_the_week[$day_Index];
@@ -56,7 +56,7 @@ class DashboardDAO extends Model implements CRUD
         $current_month = date('n');
         $months_of_the_year = [
             'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
-            'Septiembre', 'Octubre', 'Noviembre', 'dDiciembre'
+            'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
         ];
         for ($i = 0; $i < 12; $i++) {
             $month_Index = ($current_month - $i - 1 + 12) % 12;
