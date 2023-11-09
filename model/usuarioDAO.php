@@ -24,7 +24,9 @@ class UsuarioDAO extends Model implements CRUD
             ':coloniaUsuario' => $data['coloniaUsuario'],
             ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
             ':id_rol' => $data['rolUsuario'],
-            ':is_active' => self::CUSTOMER_INACTIVE
+            ':is_active' => self::CUSTOMER_INACTIVE,
+            ':telefonoUsuario' => $data['telefonoUsuario'],
+            ':isEmailNotified' => false
         );
         $query ="INSERT INTO usuario values (NULL, 
                 :nombreUsuario,
@@ -39,7 +41,9 @@ class UsuarioDAO extends Model implements CRUD
                 :coloniaUsuario,
                 :codigoPostalUsuario,
                 :id_rol,
-                :is_active)";
+                :is_active,
+                :telefonoUsuario,
+                :isEmailNotified)";
         
         if ($this->db->ejecutarAccion($query, $insertData)) {
             return $this->db->getLastInsertId();
@@ -67,6 +71,7 @@ class UsuarioDAO extends Model implements CRUD
             ':nombreUsuario' => $data['nombreUsuario'],
             ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
             ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
+            ':telefonoUsuario' => $data['telefonoUsuario'],
             ':emailUsuario' => $data['emailUsuario'],
             ':passwordUsuario' => $data['passwordUsuario'],
             ':calleUsuario' => $data['calleUsuario'],
@@ -80,6 +85,7 @@ class UsuarioDAO extends Model implements CRUD
             nombreUsuario = :nombreUsuario,  
             apellidoPaternoUsuario = :apellidoPaternoUsuario,
             apellidoMaternoUsuario = :apellidoMaternoUsuario,
+            telefonoUsuario = :telefonoUsuario,
             emailUsuario = :emailUsuario,
             passwordUsuario = :passwordUsuario,
             calleUsuario = :calleUsuario,
@@ -110,6 +116,7 @@ class UsuarioDAO extends Model implements CRUD
         u.nombreUsuario,
         u.apellidoPaternoUsuario,
         u.apellidoMaternoUsuario,
+        u.telefonoUsuario,
         u.emailUsuario,
         u.passwordUsuario,
         u.imagen,
@@ -147,6 +154,7 @@ class UsuarioDAO extends Model implements CRUD
             $usuario->nombreUsuario = $value['nombreUsuario'];
             $usuario->apellidoPaternoUsuario = $value['apellidoPaternoUsuario'];
             $usuario->apellidoMaternoUsuario = $value['apellidoMaternoUsuario'];
+            $usuario->telefonoUsuario = $value['telefonoUsuario'];
             $usuario->emailUsuario = $value['emailUsuario'];
             $usuario->passwordUsuario = $value['passwordUsuario'];
             $usuario->imagen = $value['imagen'];
@@ -279,6 +287,37 @@ class UsuarioDAO extends Model implements CRUD
         if ($this->db->ejecutarAccion($queryUpdateUser, $insertData)) {
             echo "ok";
         }
+    }
+
+    public function getUsersWithUpcomingMembershipExpiry()
+    {
+        $objCliente = array();
+        require_once 'clienteDTO.php';
+        $query = "SELECT u.*, pps.vencimiento, ps.nombre_plan_sistema
+        FROM usuario as u
+        INNER JOIN pago_plan_sistema as pps ON u.id_usuario = pps.id_usuario
+        INNER JOIN plan_sistema as ps ON pps.id_plan_sistema = ps.id_plan_sistema
+        WHERE pps.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)";
+        $objCliente=null;
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
+            foreach ($this->db->consultar($query) as $key => $value) {
+                $cliente = new ClienteDTO();
+                $cliente->imagen_cliente = $value['imagen'];
+                $cliente->id_cliente = $value['id_usuario'];
+                $cliente->nombre_cliente = $value['nombreUsuario'];
+                $cliente->apellido_paterno_cliente = $value['apellidoPaternoUsuario'];
+                $cliente->apellido_materno_cliente = $value['apellidoMaternoUsuario'];
+                $cliente->numero_cliente = $value['telefonoUsuario'];
+                $cliente->nombrePlanGym = $value['nombre_plan_sistema'];
+                $cliente->fecha_vencimiento = $value['vencimiento'];
+                $cliente->email_customer = $value['emailUsuario'];
+                $cliente->is_email_notified = $value['isEmailNotified'];
+                $objCliente[$cliente->id_cliente] = $cliente;
+            }
+        }
+
+        $objCliente = array_values($objCliente);
+        return $objCliente;
     }
 }
 ?>

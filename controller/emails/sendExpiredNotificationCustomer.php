@@ -24,9 +24,23 @@ class sendExpiredNotificationCustomer
 
             $mail->setFrom('cruzrosasjesus@gmail.com', 'Jesus');
             $mail->addAddress('' . $cliente->email_customer . '', 'Sr Yisus');
-            $imagePath = __DIR__ . '/../../public/gimnasio/' . $cliente->imagen_cliente;
+            $footerLogoGym = '';
+            if($cliente->imagen_cliente !== null){
+                $imagePath = __DIR__ . '/../../public/gimnasio/' . $cliente->imagen_cliente;
+                $mail->addEmbeddedImage($imagePath, 'gym.png');
+                $footerLogoGym = '
+                <table style="margin: 0 auto;">
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle;">
+                            <img src="cid:gym.png" alt="' . $name_gym . '" class="logo-bottom">
+                        </td>
+                        <td>
+                            <p class="footer-text">&copy; ' . str_replace(' en <strong>', '', $name_gym) . '. Todos los derechos reservados.</p>
+                        </td>
+                    </tr>
+                </table>';
+            }
             $imagePath2 = __DIR__ . '/../../public/img/logos/logotipoAzul.png';
-            $mail->addEmbeddedImage($imagePath, 'gym.png');
             $mail->addEmbeddedImage($imagePath2, 'rootheim.png');
 
             $mail->isHTML(true);
@@ -151,7 +165,7 @@ class sendExpiredNotificationCustomer
                     <div class="content">
                         <h2>Suscripción por expirar</h2>
                         <p>Estimado(a) cliente <strong>' . $cliente->nombre_cliente . '</strong></p>
-                        <p style="text-align: justify;">Le recordamos que su membresía en <strong>' . $name_gym . '</strong> está
+                        <p style="text-align: justify;">Le recordamos que su membresía' . $name_gym . '</strong> está
                             programada para caducar el día ' . $cliente->fecha_vencimiento . '. A continuación, encontrará algunos
                             detalles importantes:</p>
                         <ul>
@@ -160,23 +174,13 @@ class sendExpiredNotificationCustomer
                             <li style="text-align: justify;">Tipo de Membresía: <strong>' . $cliente->nombrePlanGym . '</strong>
                             </li>
                         </ul>
-                        <p style="text-align: justify;">Para renovar su membresía y continuar disfrutando de nuestros servicios, le
-                            invitamos a visitarnos en nuestro gimnasio. Nuestro personal estará disponible para ayudarle con la
-                            renovación y responder a cualquier pregunta que pueda tener. Estamos aquí para proporcionarle la mejor
-                            asistencia posible.</p>
-                        <p style="text-align: justify;">¡Esperamos seguir viéndole en nuestro gimnasio y ayudarle a alcanzar sus
-                            objetivos de fitness!</p>
+                        <p style="text-align: justify;">Para renovar su membresía y continuar disfrutando de nuestros servicios, 
+                            le recomendamos ponerse en contacto con nuestro personal para poder renovar su membresía. Estarán disponibles 
+                            para ayudarle con la renovación y responder a cualquier pregunta que pueda tener. Estamos aquí para proporcionarle 
+                            la mejor asistencia posible.</p>
+                        <p style="text-align: justify;">¡Esperamos seguir viéndole y ayudarle a alcanzar sus objetivos!"</p>
                     </div>
-                    <table style="margin: 0 auto;">
-                        <tr>
-                            <td style="text-align: center; vertical-align: middle;">
-                                <img src="cid:gym.png" alt="' . $name_gym . '" class="logo-bottom">
-                            </td>
-                            <td>
-                                <p class="footer-text">&copy; ' . $name_gym . '. Todos los derechos reservados.</p>
-                            </td>
-                        </tr>
-                    </table>
+                    '.$footerLogoGym.'
                     <table style="margin: 0 auto;">
                         <tr>
                             <td style="text-align: center; vertical-align: middle;">
@@ -192,8 +196,10 @@ class sendExpiredNotificationCustomer
             </html>
             ';
             $mail->send();
+            return true;
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            return false;
         }
     }
 }

@@ -31,12 +31,16 @@ class Dashboard extends Controller
 		$dashboardDAO = $dashboardDAO->getMonthlyAndWeeklyRevenueData($id_gimnasio);
 	}
 
-	function emailClientsAboutMembershipExpiry()
+	function sendEmailClientsAboutMembershipExpiry()
 	{
 		$id_gimnasio = $_GET['id_gimnasio'];
 		require 'model/dashboardDAO.php';
 		$this->loadModel('DashboardDAO');
 		$dashboardDAO = new DashboardDAO();
+		if($id_gimnasio === ""){
+			$dashboardDAO = $dashboardDAO->getUsersAboutMembershipExpiry();
+			return;
+		}
 		$dashboardDAO = $dashboardDAO->getClientsAboutMembershipExpiry($id_gimnasio);
 	}
 }

@@ -76,7 +76,7 @@ class Cliente extends Controller
 		$emailCliente = $_POST['emailClienteActualizar'];
 
 		$arrayActualizar = array(
-      'id_planGym' => $nombreCliente,
+			'id_planGym' => $id_planGym,
 			'id_cliente' => $idCliente,
 			'nombre_cliente' => $nombreCliente,
 			'apellido_paterno_cliente' => $apellidoPaternoCliente,
