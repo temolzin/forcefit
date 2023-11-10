@@ -188,7 +188,12 @@ class ClienteDAO extends Model implements CRUD
         INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
         INNER JOIN pago_plan_gym_cliente AS ppg ON c.id_cliente = ppg.id_cliente
         WHERE ppg.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
-        AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio)";
+        AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio)
+        AND c.id_cliente NOT IN (
+            SELECT id_cliente
+            FROM pago_plan_gym_cliente
+            WHERE vencimiento > DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+        )";
         if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
             foreach ($this->db->consultar($query) as $key => $value) {
                 $cliente = new ClienteDTO();

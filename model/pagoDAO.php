@@ -24,6 +24,13 @@ class PagoDAO extends Model implements CRUD
             ':idPlanGym' => $data['idPlanGym'],
             ':tipoPago' => $data['tipoPago']
         ]);
+
+        $values = [
+            ':idUser' => $data['idCliente'],
+            ':isEmailNotified' => false
+        ];
+        $queryUpdateIsEmailNotified = "UPDATE cliente SET is_email_notified = :isEmailNotified WHERE id_cliente = :idUser";
+        $updateIsEmailNotified = $this->db->ejecutarAccion($queryUpdateIsEmailNotified, $values);
         echo 'ok';
     }
     

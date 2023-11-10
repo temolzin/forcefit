@@ -72,7 +72,6 @@ class Usuario extends Controller
 		$apellidoMaternoUsuario = $_POST['apellidoMaternoUsuarioActualizar'];
 		$telefonoUsuario = $_POST['telefonoUsuarioActualizar'];
 		$emailUsuario = $_POST['EmailUsuarioActualizar'];
-		$passwordUsuario = $_POST['contrasenaUsuarioActualizar'];
 		$calleUsuario = $_POST['calleUsuarioActualizar'];
 		$estadoUsuario = $_POST['estadoUsuarioActualizar'];
 		$municipioUsuario = $_POST['municipioUsuarioActualizar'];
@@ -87,7 +86,6 @@ class Usuario extends Controller
 			'apellidoMaternoUsuario' => $apellidoMaternoUsuario,
 			'telefonoUsuario' => $telefonoUsuario,
 			'emailUsuario' => $emailUsuario,
-			'passwordUsuario' => $passwordUsuario,
 			'calleUsuario' => $calleUsuario,
 			'estadoUsuario' => $estadoUsuario,
 			'municipioUsuario' => $municipioUsuario,
@@ -198,6 +196,18 @@ class Usuario extends Controller
 			}
 		}
 		echo json_encode($obj);
+	}
+
+	function updatePassword()
+	{
+		$data = array(
+			'idUser' => $_POST['idUser'],
+			'newPassword' => $_POST['newPassword']
+		);
+		require 'model/usuarioDAO.php';
+		$this->loadModel('UsuarioDAO');
+		$usuarioDAO = new UsuarioDAO();
+		$usuarioDAO = $usuarioDAO->updatePassword($data);
 	}
 }
 ?>
