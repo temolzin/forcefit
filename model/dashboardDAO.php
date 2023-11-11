@@ -87,7 +87,12 @@ class DashboardDAO extends Model implements CRUD
         INNER JOIN pago_plan_gym_cliente AS ppg ON c.id_cliente = ppg.id_cliente
         INNER JOIN gimnasio AS g ON c.id_gimnasio = g.id_gimnasio
         WHERE ppg.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
-        AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND (c.is_email_notified = 0 OR c.is_email_notified IS NULL)";
+        AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND (c.is_email_notified = 0 OR c.is_email_notified IS NULL)
+        AND c.id_cliente NOT IN (
+            SELECT id_cliente
+            FROM pago_plan_gym_cliente
+            WHERE vencimiento > DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+        )";
         $message = 'No hay correos por enviar';
         if (!is_null($this->db->consultar($query_get_clients))) {
             foreach ($this->db->consultar($query_get_clients) as $key => $value) {
@@ -131,7 +136,12 @@ class DashboardDAO extends Model implements CRUD
         INNER JOIN pago_plan_sistema as pps ON u.id_usuario = pps.id_usuario
         INNER JOIN plan_sistema as ps ON pps.id_plan_sistema = ps.id_plan_sistema
         WHERE pps.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
-        AND (u.isEmailNotified = 0 OR u.isEmailNotified IS NULL)";
+        AND (u.isEmailNotified = 0 OR u.isEmailNotified IS NULL)
+        AND u.id_usuario NOT IN (
+            SELECT id_usuario
+            FROM pago_plan_sistema
+            WHERE vencimiento > DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+        )";
         $message = 'No hay correos por enviar';
         if (!is_null($this->db->consultar($query_get_clients))) {
             foreach ($this->db->consultar($query_get_clients) as $key => $value) {

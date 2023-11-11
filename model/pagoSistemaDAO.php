@@ -23,6 +23,13 @@
                 ':tipoPago' => $data['tipoPago'],
                 ':cantidadPago' => $data['cantidadPago']
             ]);
+
+            $values = [
+                ':idUser' => $data['idUsuario'],
+                ':isEmailNotified' => false
+            ];
+            $queryUpdateIsEmailNotified = "UPDATE usuario SET isEmailNotified = :isEmailNotified WHERE id_usuario = :idUser";
+            $updateIsEmailNotified = $this->db->ejecutarAccion($queryUpdateIsEmailNotified, $values);
             echo 'ok';
         }
 

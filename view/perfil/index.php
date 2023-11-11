@@ -370,7 +370,7 @@ $menu->footer();
                             icon: icon
                         }).then(function(result) {
                             if (data.trim() === 'ok') {
-                                window.location = "<?php echo constant('URL'); ?>Perfil";
+                                window.location = "<?php echo constant('URL'); ?>perfil";
                             }
                         });
                     },

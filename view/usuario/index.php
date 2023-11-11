@@ -229,7 +229,7 @@ $menu->header('usuario');
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row justify-content-around">
                                     <div style="display: none;" class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -264,7 +264,7 @@ $menu->header('usuario');
                                                 placeholder="Apellido Materno" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-5">
                                         <div class="form-group">
                                             <label>Telefono</label>
                                             <input type="text" class="form-control"
@@ -273,21 +273,13 @@ $menu->header('usuario');
                                                 placeholder="Telefono" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-5">
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="email" class="form-control" id="EmailUsuarioActualizar"
                                                 name="EmailUsuarioActualizar" placeholder="Email" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Contraseña</label>
-                                            <input type="text" class="form-control" id="contrasenaUsuarioActualizar"
-                                                name="contrasenaUsuarioActualizar" placeholder="Contraseña" />
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
@@ -303,36 +295,36 @@ $menu->header('usuario');
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-3">
+                                <div class="row justify-content-around">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Calle</label>
                                             <input type="text" class="form-control" id="calleUsuarioActualizar"
                                                 name="calleUsuarioActualizar" placeholder="Calle" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Estado</label>
                                             <input type="text" class="form-control" id="estadoUsuarioActualizar"
                                                 name="estadoUsuarioActualizar" placeholder="Estado" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Municipio</label>
                                             <input type="text" class="form-control" id="municipioUsuarioActualizar"
                                                 name="municipioUsuarioActualizar" placeholder="Municipio" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-5">
                                         <div class="form-group">
                                             <label>Colonia</label>
                                             <input type="text" class="form-control" id="coloniaUsuarioActualizar"
                                                 name="coloniaUsuarioActualizar" placeholder="Colonia" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-5">
                                         <div class="form-group">
                                             <label>Codigo Postal</label>
                                             <input type="text" class="form-control" id="codigopostalUsuarioActualizar"
@@ -355,14 +347,14 @@ $menu->header('usuario');
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                    <label>Id Rol(*)</label>
-                                    <select name="idRolUsuarioActualizar" id="idRolUsuarioActualizar" class="form-control pagoRegistrarRol" style="width:100%;">
-                                            <option value="default">Seleccione Rol</option>
-                                     </select>
-                                    </div>
+                                <div class="row d-flex align-items-center justify-content-center">
+                                    <label for="idRolUsuarioActualizar" class="mr-2">Id Rol(*)</label>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <select name="idRolUsuarioActualizar" id="idRolUsuarioActualizar" class="form-control pagoRegistrarRol" style="width:100%;">
+                                                <option value="default">Seleccione Rol</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -671,6 +663,45 @@ $menu->header('usuario');
         </div>
     </div>
 </div>
+
+<!--------------------------------------------------------- Modal Update Password ----------------------------------------------->
+<div class="modal fade" id="modalUpdatePassword" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePassword" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="card-primary">
+                <div class="card-header bg-secondary">
+                    <div class="d-sm-flex align-items-center justify-content-between ">
+                        <h4 class="card-title">Actualizar Contraseña</h4>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <form role="form" id="formUpdatePassword" enctype="multipart/form-data" name="formUpdatePassword" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" id="idUser" name="idUser" hidden/>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Contraseña (*)</label>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                        </div>
+                                        <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Ingrese la Nueva Contraseña" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-secondary">Confirmar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <?php
 $menu->footer();
 ?>
@@ -687,6 +718,7 @@ $menu->footer();
         llenarGimasio();
         llenarPlanSistema();
         sendFormUpdateImage();
+        updatePassword();
     });
 
     const llenarRol = () => {
@@ -829,12 +861,13 @@ const llenarPlanSistema = () => {
             },
             {
                 "defaultContent": `
-                        <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleUsuario' title="Ver Detalles"><i class="fa fa-eye"></i></button>
-                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarUsuario' title="Editar Datos"><i class="fa fa-edit"></i></button>
-                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarUsuario' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
-                        <button class='asignacion btn btn-primary' data-toggle='modal' data-target='#modalAsignarGimnasioYPlanSistema' title="Asignar Gimnasio y Plan Sistema"><i class="fa fa-plus"></i> Asignar</button>
-                        <button class='eliminar btn btn-info' data-toggle='modal' data-target='#modalUpdateImage' title="Actualizar Imagen"><i class="fa fa-picture-o"></i></button>
-                        `
+                    <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleUsuario' title="Ver Detalles"><i class="fa fa-eye"></i></button>
+                    <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarUsuario' title="Editar Datos"><i class="fa fa-edit"></i></button>
+                    <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarUsuario' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
+                    <button class='asignacion btn btn-primary' data-toggle='modal' data-target='#modalAsignarGimnasioYPlanSistema' title="Asignar Gimnasio y Plan Sistema"><i class="fa fa-plus"></i> Asignar</button>
+                    <button class='eliminar btn btn-info' data-toggle='modal' data-target='#modalUpdateImage' title="Actualizar Imagen"><i class="fa fa-picture-o"></i></button>
+                    <button class='eliminar btn btn-secondary' data-toggle='modal' data-target='#modalUpdatePassword' title="Actualizar Contraseña"><i class="fa fa-lock fa-6" aria-hidden="true"></i></button>
+                `
             }
             ],
             responsive: true,
@@ -861,6 +894,8 @@ const llenarPlanSistema = () => {
             var data = table.row(this).data();
             var routeImageUser = $("#imgPreview").attr("src", '<?php echo constant('URL'); ?>public/usuario/' + data.id_usuario + '/' + data.imagen);
             var idUserUpdateImage = $("#idUserUpdateImage").val(data.id_usuario);
+
+            var idUsuario = $("#idUser").val(data.id_usuario);
 
             var idEliminar = $('#idEliminarUsuario').val(data.id_usuario);
 
@@ -1205,9 +1240,6 @@ const llenarPlanSistema = () => {
                 EmailUsuarioActualizar: {
                     required: true
                 },
-                contraseñaUsuarioActualizar: {
-                    required: true
-                },
                 calleUsuarioActualizar: {
                     required: true
                 },
@@ -1246,9 +1278,6 @@ const llenarPlanSistema = () => {
                 },
                 EmailUsuarioActualizar: {
                     required: "Ingrese correo del usuario"
-                },
-                contraseñaUsuarioActualizar: {
-                    required: "Ingrese contraseña"
                 },
                 calleUsuarioActualizar: {
                     required: "Ingrese calle"
@@ -1348,6 +1377,61 @@ const llenarPlanSistema = () => {
                 $(element).addClass('is-invalid');
             },
             unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    }
+
+    var updatePassword = function() {
+        $.validator.setDefaults({
+            submitHandler: function() {
+                var datos = $('#formUpdatePassword').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo constant('URL'); ?>usuario/updatePassword",
+                    data: datos,
+                    success: function(data) {
+                        var title = "¡Éxito!";
+                        var message = "Su contraseña ha sido actualizada correctamente";
+                        var icon = "success";
+
+                        if (data.trim() !== 'ok') {
+                            var title = "¡Error!";
+                            var message = "Contraseña actual incorrecta. Inténtalo de nuevo.. ";
+                            var icon = "error";
+                        }
+
+                        Swal.fire({
+                            title: title,
+                            text: message,
+                            icon: icon
+                        }).then(function(result) {
+                            window.location = "<?php echo constant('URL'); ?>usuario";
+                        });
+                    },
+                });
+            }
+        });
+        $('#formUpdatePassword').validate({
+            rules: {
+                newPassword: {
+                    required: true
+                }
+            },
+            messages: {
+                newPassword: {
+                    required: "Ingrese una contraseña"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
         });

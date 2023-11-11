@@ -16,7 +16,7 @@ class UsuarioDAO extends Model implements CRUD
             ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
             ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
             ':emailUsuario' => $data['correoUsuario'],
-            ':passwordUsuario' => $data['password'],
+            ':passwordUsuario' => sha1($data['password']),
             ':imagen' => $data['imagen'],
             ':calleUsuario' => $data['calleUsuario'],
             ':estadoUsuario' => $data['estadoUsuario'],
@@ -73,7 +73,6 @@ class UsuarioDAO extends Model implements CRUD
             ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
             ':telefonoUsuario' => $data['telefonoUsuario'],
             ':emailUsuario' => $data['emailUsuario'],
-            ':passwordUsuario' => $data['passwordUsuario'],
             ':calleUsuario' => $data['calleUsuario'],
             ':estadoUsuario' => $data['estadoUsuario'],
             ':municipioUsuario' => $data['municipioUsuario'],
@@ -87,7 +86,6 @@ class UsuarioDAO extends Model implements CRUD
             apellidoMaternoUsuario = :apellidoMaternoUsuario,
             telefonoUsuario = :telefonoUsuario,
             emailUsuario = :emailUsuario,
-            passwordUsuario = :passwordUsuario,
             calleUsuario = :calleUsuario,
             estadoUsuario = :estadoUsuario,
             municipioUsuario = :municipioUsuario,
@@ -185,8 +183,9 @@ class UsuarioDAO extends Model implements CRUD
         FROM usuario AS u
         LEFT JOIN usuario_gimnasio AS ug ON u.id_usuario = ug.id_usuario
         WHERE u.emailUsuario = :emailUsuario AND u.passwordUsuario = :passwordUsuario");
+        $password = sha1($data['passwordUsuario']);
         $query->bindParam(":emailUsuario", $data['emailUsuario']);
-        $query->bindParam(":passwordUsuario", $data['passwordUsuario']);
+        $query->bindParam(":passwordUsuario", $password);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         if (count($result) === 1) {
@@ -297,7 +296,12 @@ class UsuarioDAO extends Model implements CRUD
         FROM usuario as u
         INNER JOIN pago_plan_sistema as pps ON u.id_usuario = pps.id_usuario
         INNER JOIN plan_sistema as ps ON pps.id_plan_sistema = ps.id_plan_sistema
-        WHERE pps.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)";
+        WHERE pps.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+        AND u.id_usuario NOT IN (
+            SELECT id_usuario
+            FROM pago_plan_sistema
+            WHERE vencimiento > DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+        )";
         $objCliente=null;
         if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
             foreach ($this->db->consultar($query) as $key => $value) {
@@ -318,6 +322,19 @@ class UsuarioDAO extends Model implements CRUD
 
         $objCliente = array_values($objCliente);
         return $objCliente;
+    }
+
+    public function updatePassword($data)
+    {
+        $arrayUpdate = [
+            ':idUser' => $data['idUser'],
+            ':password' => sha1($data['newPassword']),
+        ];
+        $query ="UPDATE usuario SET passwordUsuario = :password WHERE id_usuario = :idUser";
+        
+        if ($this->db->ejecutarAccion($query, $arrayUpdate)) {
+            echo "ok";
+        }
     }
 }
 ?>
