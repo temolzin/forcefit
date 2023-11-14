@@ -12,7 +12,7 @@ return
         'default' => [
             'adapter' => 'mysql',
             'host' => 'localhost',
-            'name' => 'production_db',
+            'name' => 'gestiongym',
             'user' => 'root',
             'pass' => '',
             'port' => '3306',

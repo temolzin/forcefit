@@ -16,6 +16,9 @@ class Cliente extends AbstractSeed
      */
     public function run(): void
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0;');
+        $table = $this->table('cliente');
+        $table->truncate();
         $data = [
             [
 			    'id_cliente' => 1,
@@ -171,8 +174,6 @@ class Cliente extends AbstractSeed
                 'is_active' => 0,
             ],
         ];
-
-        $table = $this->table('cliente');
         $table->insert($data)->save();
 
     }

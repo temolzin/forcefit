@@ -16,6 +16,9 @@ class Gimnasio extends AbstractSeed
      */
     public function run(): void
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0;');
+        $table = $this->table('gimnasio');
+        $table->truncate();
         $data = [
             [
                 'id_gimnasio' => 1,
@@ -43,7 +46,7 @@ class Gimnasio extends AbstractSeed
             ],
         ];
 
-        $table = $this->table('gimnasio');
+
         $table->insert($data)->save();
 
     }

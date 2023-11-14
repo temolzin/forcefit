@@ -16,6 +16,9 @@ class Submodulo extends AbstractSeed
      */
     public function run(): void
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0;');
+        $table = $this->table('submodulo');
+        $table->truncate();
         $data = [
             [
                 'id_submodulo' => 1,
@@ -31,7 +34,6 @@ class Submodulo extends AbstractSeed
             ],
         ];
 
-        $table = $this->table('submodulo');
         $table->insert($data)->save();
 
     }

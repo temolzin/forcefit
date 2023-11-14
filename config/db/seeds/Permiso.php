@@ -16,6 +16,9 @@ class Permiso extends AbstractSeed
      */
     public function run(): void
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0;');
+        $table = $this->table('permiso');
+        $table->truncate();
         $data = [
             [
                 'id_permiso' => 1,
@@ -143,9 +146,26 @@ class Permiso extends AbstractSeed
                 'u' => 1,
                 'd' => 1,
             ],
+            [
+                'id_permiso' => 15,
+                'id_rol' => 2,
+                'id_modulo' => 7,
+                'c' => 1,
+                'r' => 1,
+                'u' => 1,
+                'd' => 1,
+            ],
+            [
+                'id_permiso' => 16,
+                'id_rol' => 2,
+                'id_modulo' => 7,
+                'c' => 1,
+                'r' => 1,
+                'u' => 1,
+                'd' => 1,
+            ],
         ];
 
-        $table = $this->table('permiso');
         $table->insert($data)->save();
 
     }

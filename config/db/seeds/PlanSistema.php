@@ -16,6 +16,9 @@ class PlanSistema extends AbstractSeed
      */
     public function run(): void
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0;');
+        $table = $this->table('plan_sistema');
+        $table->truncate();
         $data = [
             [
                 'id_plan_sistema' => 1,
@@ -31,7 +34,6 @@ class PlanSistema extends AbstractSeed
             ],
         ];
 
-        $table = $this->table('plan_sistema');
         $table->insert($data)->save();
 
 

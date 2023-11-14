@@ -27,6 +27,7 @@ final class CrearTablaPagoPlanSistema extends AbstractMigration
               ->addColumn('id_usuario', 'integer', ['limit' => 11, 'null' => false])
               ->addIndex('id_plan_sistema')
               ->addIndex('id_usuario')
+              ->addColumn('tipo_Pago', 'string', ['limit' => 250, 'default' => null, 'null' => true])
               ->save();
 
         $table->addForeignKey('id_plan_sistema', 'plan_sistema', 'id_plan_sistema');
