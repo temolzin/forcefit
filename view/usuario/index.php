@@ -688,7 +688,7 @@ $menu->header('usuario');
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-lock"></i></span>
                                         </div>
-                                        <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Ingrese la Nueva Contraseña" />
+                                        <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Ingrese la Nueva Contraseña" value=""/>
                                     </div>
                                 </div>
                             </div>
@@ -920,7 +920,6 @@ const llenarPlanSistema = () => {
             var apellidoMaternoUsuarioActualizar = $("#apellidoMaternoUsuarioActualizar").val(data.apellidoMaternoUsuario);
             var telefonoUsuarioActualizar = $("#telefonoUsuarioActualizar").val(data.telefonoUsuario);
             var EmailUsuarioActualizar = $("#EmailUsuarioActualizar").val(data.emailUsuario);
-            var contraseñaUsuarioActualizar = $("#contraseñaUsuarioActualizar").val(data.passwordUsuario);
             var calleUsuarioActualizar = $("#calleUsuarioActualizar").val(data.calleUsuario);
             var estadoUsuarioActualizar = $("#estadoUsuarioActualizar").val(data.estadoUsuario);
             var municipioUsuarioActualizar = $("#municipioUsuarioActualizar").val(data.municipioUsuario);

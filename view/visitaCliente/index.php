@@ -126,7 +126,7 @@ $menu->header('visita');
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success" onclick="sendFormRegisterExit(event)">Registrar</button>
+                        <button type="submit" class="btn btn-success" onclick="sendFormUpdateExit(event)">Registrar</button>
                     </div>
                 </form>
             </div>
@@ -330,7 +330,7 @@ $menu->footer();
     $(document).ready(function() {
         dataTableVisit();
         sendFormRegisterEntry();
-        sendFormRegisterExit();
+        sendFormUpdateExit();
         sendFormUpdateVisit();
         deleteVisit();
     });
@@ -471,7 +471,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location = "<?php echo constant('URL'); ?>VisitaCliente";
+                            window.location = "<?php echo constant('URL'); ?>visitaCliente";
                         });
                     },
                 });
@@ -502,7 +502,7 @@ $menu->footer();
         });
     }
 
-    var sendFormRegisterExit = function() {
+    var sendFormUpdateExit = function() {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
         $.validator.setDefaults({
             submitHandler: function() {
@@ -511,7 +511,7 @@ $menu->footer();
                 console.log(datos)
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo constant('URL'); ?>visitaCliente/insertExit",
+                    url: "<?php echo constant('URL'); ?>visitaCliente/updateExit",
                     data: datos,
                     success: function(data) {
                         var title = "¡Éxito!";
@@ -529,7 +529,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location = "<?php echo constant('URL'); ?>VisitaCliente";
+                            window.location = "<?php echo constant('URL'); ?>visitaCliente";
                         });
                     },
                 });
@@ -584,7 +584,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location = "<?php echo constant('URL'); ?>VisitaCliente";
+                            window.location = "<?php echo constant('URL'); ?>visitaCliente";
                         });
                     },
                 });
@@ -658,7 +658,7 @@ $menu->footer();
                         message,
                         icon
                     ).then(function() {
-                        window.location = "<?php echo constant('URL'); ?>VisitaCliente";
+                        window.location = "<?php echo constant('URL'); ?>visitaCliente";
                     });
                 },
             });

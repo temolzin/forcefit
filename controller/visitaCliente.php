@@ -32,19 +32,13 @@ class VisitaCliente extends Controller
 		$visitaClienteDAO->insert($data);
 	}
 
-	function insertExit()
+	function updateExit()
 	{
-		$id_gimnasio = $_POST['id_gimnasio'];
-		$id_cliente = $_POST['id_cliente'];
-
-		$data = array(
-			'id_gimnasio' => $id_gimnasio,
-			'id_cliente' => $id_cliente
-		);
+		$idCliente = $_POST['id_cliente'];
 		require 'model/visitaClienteDAO.php';
 		$this->loadModel('VisitaClienteDAO');
 		$visitaClienteDAO = new VisitaClienteDAO();
-		$visitaClienteDAO->insertExit($data);
+		$visitaClienteDAO->updateExit($idCliente);
 	}
 
 	function update()

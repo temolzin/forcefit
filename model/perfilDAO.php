@@ -72,7 +72,7 @@ class PerfilDAO extends Model implements CRUD
 
     public function updatePassword($data)
     {
-        $inputOldPassword = $data['oldPassword'];
+        $inputOldPassword = sha1($data['oldPassword']);
 
         $querySearchPassword = "SELECT passwordUsuario
         FROM usuario
@@ -84,7 +84,7 @@ class PerfilDAO extends Model implements CRUD
         }
 
         $insertData = array(
-            ':newPassword' => $data['newPassword']
+            ':newPassword' => sha1($data['newPassword'])
         );
 
         $query = "UPDATE usuario SET 

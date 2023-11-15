@@ -264,7 +264,7 @@ $menu->footer();
                             message,
                             icon
                         ).then(function() {
-                            window.location = "<?php echo constant('URL'); ?>Perfil";
+                            window.location = "<?php echo constant('URL'); ?>perfil";
                         });
                     },
                 });

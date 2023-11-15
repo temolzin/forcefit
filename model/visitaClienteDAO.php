@@ -21,21 +21,21 @@ class VisitaClienteDAO extends Model implements CRUD
         }
     }
 
-    public function insertExit($data)
+    public function updateExit($idCliente)
     {
+        $queryGetIdVisit = "SELECT MAX(id_visita) FROM visita_cliente WHERE id_cliente = " . $idCliente;
+
+        $idVisit = $this->db->consultar($queryGetIdVisit);
+
+        $queryUpdateExitClient = "UPDATE visita_cliente
+        SET hora_salida = CURTIME()
+        WHERE id_visita = :idVisit";
+
         $insertData = array(
-            ':id_cliente' => $data['id_cliente']
+            ':idVisit' => $idVisit[0][0]
         );
 
-        $query = "UPDATE visita_cliente
-        SET hora_salida = CURTIME()
-        WHERE id_visita = (
-            SELECT MAX(id_visita)
-            FROM visita_cliente
-            WHERE id_cliente = :id_cliente
-        );";
-
-        if ($this->db->ejecutarAccion($query, $insertData)) {
+        if ($this->db->ejecutarAccion($queryUpdateExitClient, $insertData)) {
             echo "ok";
         }
     }
@@ -94,7 +94,7 @@ class VisitaClienteDAO extends Model implements CRUD
             $visita->hour_entry = $value['hora_entrada'];
             $visita->hour_exit = $value['hora_salida'];
             $visita->image_client = $value['id_cliente'] . '/' . $value['imagen_cliente'];
-            $objVisita[$visita->id_visita] = $visita;
+            $objVisita[$visita->id_visit] = $visita;
         }
         }
 
