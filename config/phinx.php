@@ -16,12 +16,12 @@ return
         'default_environment' => 'default',
         'default' => [
             "adapter" => "mysql",
-            "host" => $env['HOST'],
-            "name" => $env['DB'],
-            "user" => $env['USER'],
-            "pass" => $env['PASSWORD'],
-            "port" => $env['PORT'],
-            "charset" => $env['CHARSET'],
+            "host" => $env['DB_HOST'],
+            "name" => $env['DB_NAME'],
+            "user" => $env['DB_USER'],
+            "pass" => $env['DB_PASSWORD'],
+            "port" => $env['DB_PORT'],
+            "charset" => $env['DB_CHARSET'],
             
         ],
     ],
