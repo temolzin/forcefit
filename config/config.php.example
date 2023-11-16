@@ -1,8 +1,15 @@
 <?php
-    define('URL', 'http://localhost/crudphpmvc/');
-    define('HOST', 'localhost');
-    define('DB', 'estructuramvc');
-    define('USER', 'root');
-    define('PASSWORD', '');
-    define('CHARSET', 'utf8mb4');
+$env = parse_ini_file('./.env');
+
+if ($env === false) {
+    
+    die("No se puede cargar el archivo .env");
+}
+
+define('URL', $env['URL']);
+define('HOST', $env['HOST']);
+define('DB', $env['DB']);
+define('USER', $env['USER']);
+define('PASSWORD', $env['PASSWORD']);
+define('CHARSET', $env['CHARSET']);
 ?>
