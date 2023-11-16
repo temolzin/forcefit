@@ -15,13 +15,14 @@ return
         'default_migration_table' => 'migrations',
         'default_environment' => 'default',
         'default' => [
-            'adapter' => 'mysql',
-            'host' => 'localhost',
-            'name' => 'production_db',
-            'user' => 'root',
-            'pass' => '',
-            'port' => '3306',
-            'charset' => 'utf8',
+            "adapter" => "mysql",
+            "host" => $env['HOST'],
+            "name" => $env['DB'],
+            "user" => $env['USER'],
+            "pass" => $env['PASSWORD'],
+            "port" => $env['PORT'],
+            "charset" => $env['CHARSET'],
+            
         ],
     ],
     'version_order' => 'creation'
