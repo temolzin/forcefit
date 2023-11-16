@@ -8,6 +8,9 @@ class Rol extends AbstractSeed
 {
     public function run(): void
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0;');
+        $table = $this->table('rol');
+        $table->truncate();
         $data = [
             [
                 'id_rol' => 1,
@@ -21,7 +24,6 @@ class Rol extends AbstractSeed
             ],
         ];
 
-        $table = $this->table('rol');
         $table->insert($data)->save();
 
     }

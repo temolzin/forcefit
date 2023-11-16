@@ -8,6 +8,9 @@ class Modulo extends AbstractSeed
 {
     public function run(): void
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0;');
+        $table = $this->table('modulo');
+        $table->truncate();
         $data = [
             [
                 'id_modulo' => 1,
@@ -51,9 +54,20 @@ class Modulo extends AbstractSeed
                 'icono' => 'fa fa-money',
                 'posicion' => 7,
             ],
+            [
+                'id_modulo' => 8,
+                'nombre_modulo' => 'visitas',
+                'icono' => 'fa fa-users',
+                'posicion' => 8,
+            ],
+            [
+                'id_modulo' => 9,
+                'nombre_modulo' => 'PagoSistema',
+                'icono' => 'fa fa-money',
+                'posicion' => 9,
+            ],
         ];
 
-        $table = $this->table('modulo');
         $table->insert($data)->save();
 
     }

@@ -8,6 +8,10 @@ class PlanGym extends AbstractSeed
 {
     public function run(): void
     {
+    
+        $this->execute('SET FOREIGN_KEY_CHECKS=0;');
+        $table = $this->table('plan_gym');
+        $table->truncate();
         $data = [
             [
                 'id_planGym' => 1,
@@ -95,7 +99,6 @@ class PlanGym extends AbstractSeed
             ],
         ];
 
-        $table = $this->table('plan_gym');
         $table->insert($data)->save();
 
     }
