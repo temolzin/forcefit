@@ -3,3 +3,4 @@ public/cliente
 public/gimnasio
 public/usuario
 vendor/
+.env
