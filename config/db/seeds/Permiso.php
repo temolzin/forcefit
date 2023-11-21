@@ -156,6 +156,24 @@ class Permiso extends AbstractSeed
                 'u' => 1,
                 'd' => 1,
             ],
+            [
+                'id_permiso' => 17,
+                'id_rol' => 1,
+                'id_modulo' => 9,
+                'c' => 1,
+                'r' => 1,
+                'u' => 1,
+                'd' => 1,
+            ],
+            [
+                'id_permiso' => 18,
+                'id_rol' => 2,
+                'id_modulo' => 8,
+                'c' => 1,
+                'r' => 1,
+                'u' => 1,
+                'd' => 1,
+            ],
         ];
 
         $table->insert($data)->save();

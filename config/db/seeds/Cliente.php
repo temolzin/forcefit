@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Phinx\Seed\AbstractSeed;
+use Faker\Factory;
 
 class Cliente extends AbstractSeed
 {
@@ -11,6 +12,7 @@ class Cliente extends AbstractSeed
         $this->execute('SET FOREIGN_KEY_CHECKS=0;');
         $table = $this->table('cliente');
         $table->truncate();
+        $faker = Factory::create();
         $data = [
             [
 			    'id_cliente' => 1,
@@ -25,8 +27,8 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '55740',
                 'numero_cliente' => '5589098567',
                 'imagen_cliente' => 'imagen3.jpg',
-                'email_cliente' => null,
-                'is_email_notified' => null,
+                'email_cliente' => 'eri@gmail.com',
+                'is_email_notified' => 0,
                 'is_active' => 0,
             ],
             [
@@ -42,8 +44,8 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '55740',
                 'numero_cliente' => '7754323456',
                 'imagen_cliente' => 'imagen1.jpg',
-                'email_cliente' => null,
-                'is_email_notified' => null,
+                'email_cliente' => 'martin@gmail.com',
+                'is_email_notified' => 0,
                 'is_active' => 0,
             ],
             [
@@ -59,8 +61,8 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '66789',
                 'numero_cliente' => '7765432457',
                 'imagen_cliente' => 'imagen10.jpg',
-                'email_cliente' => null,
-                'is_email_notified' => null,
+                'email_cliente' => 'ceci@gmail.com',
+                'is_email_notified' => 0,
                 'is_active' => 0,
             ],
             [
@@ -76,8 +78,8 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '55740',
                 'numero_cliente' => '5567865434',
                 'imagen_cliente' => 'imagen10.jpg',
-                'email_cliente' => null,
-                'is_email_notified' => null,
+                'email_cliente' => 'monse@gmail.com',
+                'is_email_notified' => 0,
                 'is_active' => 0,
             ],
             [
@@ -93,8 +95,8 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '55740',
                 'numero_cliente' => '5678765432',
                 'imagen_cliente' => 'imagen9.jpg',
-                'email_cliente' => null,
-                'is_email_notified' => null,
+                'email_cliente' => 'gerardo@gmail.com',
+                'is_email_notified' => 0,
                 'is_active' => 0,
             ],
             [
@@ -110,8 +112,8 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '89876',
                 'numero_cliente' => '897654345',
                 'imagen_cliente' => null,
-                'email_cliente' => null,
-                'is_email_notified' => null,
+                'email_cliente' => 'eri@gmail.com',
+                'is_email_notified' => 0,
                 'is_active' => 0,
             ],
             [
@@ -127,8 +129,8 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '55740',
                 'numero_cliente' => '7719028008',
                 'imagen_cliente' => 'imagen4.jpg',
-                'email_cliente' => null,
-                'is_email_notified' => null,
+                'email_cliente' => 'lucia@gmail.com',
+                'is_email_notified' => 0,
                 'is_active' => 0,
             ],
             [
@@ -144,8 +146,8 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '55740',
                 'numero_cliente' => '7754323456',
                 'imagen_cliente' => 'imagen7.jpg',
-                'email_cliente' => null,
-                'is_email_notified' => null,
+                'email_cliente' => 'gera@gmail.com',
+                'is_email_notified' => 0,
                 'is_active' => 0,
             ],
             [
@@ -161,11 +163,32 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '55740',
                 'numero_cliente' => '7719028008',
                 'imagen_cliente' => 'imagen7.jpg',
-                'email_cliente' => null,
-                'is_email_notified' => null,
+                'email_cliente' => 'jeus@gmail.com',
+                'is_email_notified' => 0,
                 'is_active' => 0,
             ],
         ];
+
+        for ($i = count($data) + 1; $i <= 60; $i++) {
+            $data[] = [
+                'id_cliente' => $i,
+                'id_gimnasio' => 2,
+                'id_planGym' => $faker->randomElement([4, 5, 6]),
+                'nombre_cliente' => $faker->firstName,
+                'apellido_paterno_cliente' => $faker->lastName,
+                'apellido_materno_cliente' => $faker->lastName,
+                'municipio_cliente' => $faker->city,
+                'colonia_cliente' => $faker->word,
+                'calle_cliente' => $faker->streetAddress,
+                'codigo_postal_cliente' => $faker->postcode,
+                'numero_cliente' => $faker->phoneNumber,
+                'imagen_cliente' => null,
+                'email_cliente' => $faker->email,
+                'is_email_notified' => 0,
+                'is_active' => 0,
+            ];
+        }
+
         $table->insert($data)->save();
 
     }
