@@ -112,7 +112,7 @@ class Cliente extends AbstractSeed
                 'codigo_postal_cliente' => '89876',
                 'numero_cliente' => '897654345',
                 'imagen_cliente' => null,
-                'email_cliente' => 'eri@gmail.com',
+                'email_cliente' => 'aberto@gmail.com',
                 'is_email_notified' => 0,
                 'is_active' => 0,
             ],
