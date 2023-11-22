@@ -56,7 +56,7 @@ class Modulo extends AbstractSeed
             ],
             [
                 'id_modulo' => 8,
-                'nombre_modulo' => 'visitas',
+                'nombre_modulo' => 'VisitaCliente',
                 'icono' => 'fa fa-users',
                 'posicion' => 8,
             ],

@@ -8,8 +8,8 @@ final class VisitaCliente extends AbstractMigration
 {
     public function change(): void
     {
-        $table = $this->table('visita_cliente', ['id' => false, 'primary_key' => ' id_visita']);
-        $table->addColumn(' id_visita', 'integer', ['limit' => 11, 'identity' => true])
+        $table = $this->table('visita_cliente', ['id' => false, 'primary_key' => 'id_visita']);
+        $table->addColumn('id_visita', 'integer', ['limit' => 11, 'identity' => true])
               ->addColumn('id_cliente', 'integer', ['limit' => 11, 'null' => false])
               ->addColumn('id_gimnasio', 'integer', ['limit' => 11, 'null' => false])
               ->addColumn('fecha', 'date', ['null' => true])
