@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: dockerfile
+    container_name: php_container
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysql
+    networks:
+      - forcefit
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:${DB_PORT}"
+    env_file:
+      - .env
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      - forcefit
+
+volumes:
+  my-db:
+networks:
+  forcefit:
