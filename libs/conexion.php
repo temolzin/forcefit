@@ -14,7 +14,7 @@
          * El constructor es privado para el patrón SINGLETON*/
         private function __construct()
         {
-            $this->host = constant('HOST');//constant('HOST');
+            $this->host = constant('HOST');
             $this->db = constant('DB');
             $this->user = constant('USER');
             $this->password = constant('PASSWORD');
