@@ -12,4 +12,4 @@ scripts:
   db_reset:
     - kool run phinx migrate
     - kool run phinx seed:run -s Modulo -s Submodulo -s Rol -s Usuario -s Permiso -s Gimnasio -s PlanGym -s PlanSistema -s UsuarioGimnasio -s Cliente -s PagoPlanGymCliente
-    
+
