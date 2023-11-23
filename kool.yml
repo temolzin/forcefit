@@ -1,0 +1,15 @@
+scripts:
+  composer: kool exec php composer
+  phinx: kool exec php ./vendor/bin/phinx --configuration=./config/phinx.php
+
+  setup: 
+    - cp .env.example .env
+    - cp config/config.php.example config/config.php 
+    - kool start
+    - kool run composer install
+    
+ 
+  db_reset:
+    - kool run phinx migrate
+    - kool run phinx seed:run -s Modulo -s Submodulo -s Rol -s Usuario -s Permiso -s Gimnasio -s PlanGym -s PlanSistema -s UsuarioGimnasio -s Cliente -s PagoPlanGymCliente
+    

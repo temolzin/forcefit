@@ -41,4 +41,29 @@ git clone https://github.com/temolzin/forcefit.git
 - Estos son link para mayor información [Link](https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method/).
 [Link](https://book.cakephp.org/phinx/0/en/seeding.html/).
 
+## Instalar proyecto con docker
+Lo primero es tener instalado docker correctamente.
+
+
+## - curl -fsSL https://kool.dev/install | bash
+Para ejecutar correctamente el proyecto correctamente se necesita tener instalado kool, el cual se instala con el comando.
+
+Este comando solo sirve en linux, por lo que para usarse en windows necesitamos instalar Windows Subsistem Linux(WSL) e instalar una versión de Linux, además tenemos que tener Docker instalado en nuestro subsistema de linux y docker compose.
+
+## kool run setup
+
+Despues debemos ejecutar los siguientes comandos los cuales nos configurarán las credenciales e instalará las dependencias que necesita la aplicación.
+
+## kool run db-reset
+
+Para finalizar necesitamos ejecutar las migraciones con el siguiente comando, el cual podemos ejecutar cuantas veces querramos resetear la base de datos.
+
+## kool start
+
+Enciende el contenedor
+
+## kool stop
+
+Apaga el contenedor
+
 ### End
