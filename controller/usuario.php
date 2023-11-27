@@ -71,7 +71,7 @@ class Usuario extends Controller
 		$apellidoPaternoUsuario = $_POST['apellidoPaternoUsuarioActualizar'];
 		$apellidoMaternoUsuario = $_POST['apellidoMaternoUsuarioActualizar'];
 		$telefonoUsuario = $_POST['telefonoUsuarioActualizar'];
-		$emailUsuario = $_POST['EmailUsuarioActualizar'];
+		$emailUsuario = $_POST['emailUsuarioActualizar'];
 		$calleUsuario = $_POST['calleUsuarioActualizar'];
 		$estadoUsuario = $_POST['estadoUsuarioActualizar'];
 		$municipioUsuario = $_POST['municipioUsuarioActualizar'];

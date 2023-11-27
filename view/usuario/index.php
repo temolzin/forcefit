@@ -276,8 +276,8 @@ $menu->header('usuario');
                                     <div class="col-lg-5">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" id="EmailUsuarioActualizar"
-                                                name="EmailUsuarioActualizar" placeholder="Email" />
+                                            <input type="email" class="form-control" id="emailUsuarioActualizar"
+                                                name="emailUsuarioActualizar" placeholder="Email" />
                                         </div>
                                     </div>
                                 </div>
@@ -688,7 +688,7 @@ $menu->header('usuario');
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-lock"></i></span>
                                         </div>
-                                        <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Ingrese la Nueva Contraseña" />
+                                        <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Ingrese la Nueva Contraseña" value=""/>
                                     </div>
                                 </div>
                             </div>
@@ -919,8 +919,7 @@ const llenarPlanSistema = () => {
             var apellidoPaternoUsuarioActualizar = $("#apellidoPaternoUsuarioActualizar").val(data.apellidoPaternoUsuario);
             var apellidoMaternoUsuarioActualizar = $("#apellidoMaternoUsuarioActualizar").val(data.apellidoMaternoUsuario);
             var telefonoUsuarioActualizar = $("#telefonoUsuarioActualizar").val(data.telefonoUsuario);
-            var EmailUsuarioActualizar = $("#EmailUsuarioActualizar").val(data.emailUsuario);
-            var contraseñaUsuarioActualizar = $("#contraseñaUsuarioActualizar").val(data.passwordUsuario);
+            var emailUsuarioActualizar = $("#emailUsuarioActualizar").val(data.emailUsuario);
             var calleUsuarioActualizar = $("#calleUsuarioActualizar").val(data.calleUsuario);
             var estadoUsuarioActualizar = $("#estadoUsuarioActualizar").val(data.estadoUsuario);
             var municipioUsuarioActualizar = $("#municipioUsuarioActualizar").val(data.municipioUsuario);
@@ -1237,7 +1236,7 @@ const llenarPlanSistema = () => {
                 telefonoUsuarioActualizar: {
                     required: true
                 },
-                EmailUsuarioActualizar: {
+                emailUsuarioActualizar: {
                     required: true
                 },
                 calleUsuarioActualizar: {
@@ -1276,7 +1275,7 @@ const llenarPlanSistema = () => {
                 telefonoUsuarioActualizar: {
                     required: "Ingrese el telefono"
                 },
-                EmailUsuarioActualizar: {
+                emailUsuarioActualizar: {
                     required: "Ingrese correo del usuario"
                 },
                 calleUsuarioActualizar: {

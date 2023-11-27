@@ -72,27 +72,27 @@ class PerfilDAO extends Model implements CRUD
 
     public function updatePassword($data)
     {
-        $inputOldPassword = $data['oldPassword'];
-
-        $querySearchPassword = "SELECT passwordUsuario
+        $queryValidatePasswordInBD = $this->db->prepare("SELECT passwordUsuario
         FROM usuario
-        WHERE id_usuario = " . $data['id_usuario'];
-        $passwordBD = $this->db->consultar($querySearchPassword);
+        WHERE id_usuario = :idUsuario AND passwordUsuario = SHA1(:passwordBD)");
+        $queryValidatePasswordInBD->bindParam(":idUsuario", $data['id_usuario']);
+        $queryValidatePasswordInBD->bindParam(":passwordBD", $data['oldPassword']);
+        $queryValidatePasswordInBD->execute();
 
-        if ($passwordBD[0]['passwordUsuario'] !== $inputOldPassword) {
+        $passwordMatch = $queryValidatePasswordInBD->fetch(PDO::FETCH_ASSOC);
+
+        if (!$passwordMatch) {
             return "error";
         }
 
-        $insertData = array(
-            ':newPassword' => $data['newPassword']
-        );
+        $queryUpdatePassword = $this->db->prepare("
+        UPDATE usuario SET 
+        passwordUsuario = SHA1(:newPassword)
+        WHERE id_usuario = :idUsuario");
+        $queryUpdatePassword->bindParam(":idUsuario", $data['id_usuario']);
+        $queryUpdatePassword->bindParam(":newPassword", $data['newPassword']);
+        $queryUpdatePassword->execute();
 
-        $query = "UPDATE usuario SET 
-        passwordUsuario = :newPassword
-        WHERE id_usuario = " . $data['id_usuario'];
-
-        if ($this->db->ejecutarAccion($query, $insertData)) {
-            echo "ok";
-        }
+        echo "ok";
     }
 }

@@ -302,7 +302,6 @@ class UsuarioDAO extends Model implements CRUD
             FROM pago_plan_sistema
             WHERE vencimiento > DATE_ADD(CURDATE(), INTERVAL 5 DAY)
         )";
-        $objCliente=null;
         if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
             foreach ($this->db->consultar($query) as $key => $value) {
                 $cliente = new ClienteDTO();
