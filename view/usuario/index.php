@@ -638,7 +638,7 @@ $menu->header('usuario');
                     <div class="card-body">
                         <div class="row">
                             <div class="rounded-circle mx-auto d-inline-block overflow-hidden photo-container" style="width: 150px; height: 150px;">
-                                <img src="" alt="cliente" id="imgPreview" class="img-fluid" onerror="handleErrorImege(this);">
+                                <img src="" alt="cliente" id="imgPreview" class="img-fluid" onerror="handleErrorImage(this);">
                             </div>
                             <div class="col-lg-12">
                                 <input type="text" hidden class="form-control" id="idUserUpdateImage" name="idUserUpdateImage" placeholder="Id" />
@@ -820,7 +820,7 @@ const llenarPlanSistema = () => {
                     var fullnameImagen = JsonResultRow.id_usuario + '/' + JsonResultRow.imagen;
                     var urlImg = '<?php echo constant('URL'); ?>public/usuario/' + fullnameImagen;
                     return '<center><img src="' + urlImg +
-                        '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImege(this);"/></center>';
+                        '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImage(this);"/></center>';
                 }
             },
             {
@@ -873,7 +873,7 @@ const llenarPlanSistema = () => {
         obtenerdatosDT(tableUsuario);
     }
 
-    function handleErrorImege(image) {
+    function handleErrorImage(image) {
         image.src = '<?php echo constant('URL'); ?>public/img/avatar.png';
     }
 

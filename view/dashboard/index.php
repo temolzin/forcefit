@@ -281,7 +281,7 @@ $menu->footer();
                             urlImg = '<?php echo constant('URL'); ?>public/usuario/' + fullnameImagen;
                         }
                         return '<center><img src="' + urlImg +
-                            '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImege(this);"/></center>';
+                            '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImage(this);"/></center>';
                     }
                 },
                 {
@@ -333,7 +333,7 @@ $menu->footer();
         });
     }
 
-    function handleErrorImege(image) {
+    function handleErrorImage(image) {
         image.src = '<?php echo constant('URL'); ?>public/img/avatar.png';
     }
 </script>

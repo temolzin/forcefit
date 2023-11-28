@@ -517,7 +517,7 @@ $menu->header('cliente');
                     <div class="card-body">
                         <div class="row">
                             <div class="rounded-circle mx-auto d-inline-block overflow-hidden photo-container" style="width: 150px; height: 150px;">
-                                <img src="" alt="cliente" id="imgPreview" class="img-fluid" onerror="handleErrorImege(this);">
+                                <img src="" alt="cliente" id="imgPreview" class="img-fluid" onerror="handleErrorImage(this);">
                             </div>
                             <div class="col-lg-12">
                                 <input type="text" hidden class="form-control" id="idClientUpdateImage" name="idClientUpdateImage" placeholder="Id" />
@@ -642,7 +642,7 @@ $menu->footer();
                     var fullnameImagen = JsonResultRow.id_cliente + '/' + JsonResultRow.imagen_cliente;
                     var urlImg = '<?php echo constant('URL'); ?>public/cliente/' + fullnameImagen;
                     return '<center><img src="' + urlImg +
-                        '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImege(this);"/></center>';
+                        '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImage(this);"/></center>';
                 }
             },
             {
@@ -693,7 +693,7 @@ $menu->footer();
         obtenerdatosDT(tableCliente);
     }
 
-    function handleErrorImege(image) {
+    function handleErrorImage(image) {
         image.src = '<?php echo constant('URL'); ?>public/img/avatar.png';
     }
 
