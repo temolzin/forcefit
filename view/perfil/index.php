@@ -17,7 +17,7 @@ $menu->header('perfil');
                 </div>
                 <div class="x_content text-center">
                     <div class="rounded-circle mx-auto d-inline-block overflow-hidden photo-container" style="width: 150px; height: 150px;">
-                        <img src="" alt="usuario" id="imageUser" class="img-fluid">
+                        <img src="" alt="usuario" id="imageUser" class="img-fluid" onerror="handleErrorImage(this);">
                     </div>
                     <h5 id="fullNameUser" name="fullNameUser"></h5>
                     <h4 id="nameRol" name="nameRol"></h4>
@@ -221,6 +221,10 @@ $menu->footer();
                 console.error("Error " + error);
             }
         });
+    }
+
+    function handleErrorImage(image) {
+        image.src = '<?php echo constant('URL'); ?>public/img/avatar.png';
     }
 
     $(".custom-file-input").on("change", function updateNameFileInput() {

@@ -280,12 +280,8 @@ $menu->footer();
                         if("<?php echo $_SESSION['id_gimnasio']; ?>" === ""){
                             urlImg = '<?php echo constant('URL'); ?>public/usuario/' + fullnameImagen;
                         }
-                        if (JsonResultRow.imagen_cliente == null || JsonResultRow.imagen_cliente ==
-                            '') {
-                            var urlImg = '<?php echo constant('URL'); ?>public/img/avatar.png';
-                        }
                         return '<center><img src="' + urlImg +
-                            '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;"/></center>';
+                            '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImage(this);"/></center>';
                     }
                 },
                 {
@@ -335,6 +331,10 @@ $menu->footer();
             buttons: ['copy', 'excel', 'csv', 'pdf'],
             dom: 'Bfltip',
         });
+    }
+
+    function handleErrorImage(image) {
+        image.src = '<?php echo constant('URL'); ?>public/img/avatar.png';
     }
 </script>
 

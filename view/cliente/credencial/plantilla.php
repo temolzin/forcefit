@@ -2,15 +2,15 @@
 function getPlantillaFront($cliente)
 {
 
-    if ($cliente['imagen_cliente'] !== null && file_exists('public/cliente/' . $cliente['id_cliente'] . '/' . $cliente['imagen_cliente'])) {
-        $fotoruta = constant('URL') . 'public/cliente/' . $cliente['id_cliente'] . '/' . $cliente['imagen_cliente'];
-    } else {
-        $fotoruta = constant('URL') . 'public/img/defaultFotoCliente.png';
+    $fotorutaServer = constant('URL') . 'public/cliente/' . $cliente['id_cliente'] . '/' . $cliente['imagen_cliente'];
+    $fotorutaSistem = 'public/cliente/' . $cliente['id_cliente'] . '/' . $cliente['imagen_cliente'];
+    if (!file_exists($fotorutaSistem) || $cliente['imagen_cliente'] === null) {
+        $fotorutaServer = constant('URL') . 'public/img/defaultFotoCliente.png';
     }
     $plantillaFront = '
         <div class="front">
             <div class="logo"><img src="public/img/forcefit.png"></div>
-            <div><img class="foto" src="' .$fotoruta. '"></div>
+            <div><img class="foto" src="' .$fotorutaServer. '"></div>
 
             <div >
                 <h5>Nombre: ' . $cliente['nombre_cliente'] . ' ' . $cliente['apellido_paterno_cliente'] . ' ' . $cliente['apellido_materno_cliente'] . '</h5>
@@ -25,16 +25,16 @@ function getPlantillaFront($cliente)
 
 function getPlantillaBack($cliente)
 {
-    if ($cliente['imagen'] !== null && file_exists('public/gimnasio/' . $cliente['id_gimnasio'] . '/' .$cliente['imagen'])) {
-        $fotoruta = constant('URL') . 'public/gimnasio/' . $cliente['id_gimnasio'] . '/' .$cliente['imagen'];
-    } else {
-        $fotoruta = constant('URL') . 'public/img/defaultFotoGym.png';
+    $fotorutaServer = constant('URL') . 'public/gimnasio/' . $cliente['id_gimnasio'] . '/' .$cliente['imagen'];
+    $fotorutaSistem = 'public/gimnasio/' . $cliente['id_gimnasio'] . '/' .$cliente['imagen'];
+    if (!file_exists($fotorutaSistem)) {
+        $fotorutaServer = constant('URL') . 'public/img/defaultFotoGym.png';
     }
     $plantillaBack = '
         <div class="back">
             <div class="logo"><img src="public/img/forcefit.png"></div>
             
-            <div class="container"><img class="foto" src="' . $fotoruta . '"></div>
+            <div class="container"><img class="foto" src="' . $fotorutaServer . '"></div>
             <div>
                 <h5>Nombre del GYM: ' . $cliente['nombre_gimnasio'] . '</h5>
                 <p>Telefono: ' . $cliente['telefono'] . '</p>

@@ -27,6 +27,9 @@ class sendExpiredNotificationCustomer
             $footerLogoGym = '';
             if($cliente->imagen_cliente !== null){
                 $imagePath = __DIR__ . '/../../public/gimnasio/' . $cliente->imagen_cliente;
+                if(!file_exists($imagePath)){
+                    $imagePath = __DIR__ . '/../../public/img/forcefit.png';
+                }
                 $mail->addEmbeddedImage($imagePath, 'gym.png');
                 $footerLogoGym = '
                 <table style="margin: 0 auto;">
