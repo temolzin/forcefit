@@ -350,15 +350,8 @@ $menu->footer();
                     'render': function(data, type, JsonResultRow, meta) {
                         var fullnameImagen = JsonResultRow.image_client;
                         var urlImg = '<?php echo constant('URL'); ?>public/cliente/' + fullnameImagen;
-                        if (JsonResultRow.image_client == null || JsonResultRow.image_client ==
-                            '') {
-                            var urlImg = '<?php echo constant('URL'); ?>public/img/avatar.png';
-                        } else {
-                            var urlImg = '<?php echo constant('URL'); ?>public/cliente/' +
-                                fullnameImagen;
-                        }
                         return '<center><img src="' + urlImg +
-                            '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;"/></center>';
+                            '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImege(this);"/></center>';
                     }
                 },
                 {
@@ -388,6 +381,10 @@ $menu->footer();
             dom: 'Bfltip'
         });
         getDatasDT(tableVisit);
+    }
+
+    function handleErrorImege(image) {
+        image.src = '<?php echo constant('URL'); ?>public/img/avatar.png';
     }
 
     var getDatasDT = function(table) {

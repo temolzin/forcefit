@@ -293,7 +293,7 @@ $menu->header('gimnasio');
                     <div class="card-body">
                         <div class="row">
                             <div class="rounded-circle mx-auto d-inline-block overflow-hidden photo-container" style="width: 150px; height: 150px;">
-                                <img src="" alt="gimnasio" id="imgPreview" class="img-fluid">
+                                <img src="" alt="gimnasio" id="imgPreview" class="img-fluid" onerror="handleErrorImege(this);">
                             </div>
                             <div class="col-lg-12">
                                 <input type="text" hidden class="form-control" id="idGymUpdateImage" name="idGymUpdateImage" placeholder="Id" />
@@ -377,14 +377,8 @@ $menu->footer();
                 'render': function (data, type, JsonResultRow, meta) {
                     var fullnameImagen = JsonResultRow.id_gimnasio + '/' + JsonResultRow.imagen;
                     var urlImg = '<?php echo constant('URL'); ?>public/gimnasio/' + fullnameImagen;
-                    if (JsonResultRow.imagen == null || JsonResultRow.imagen == '') {
-                        var urlImg = '<?php echo constant('URL'); ?>public/img/forcefit.png';
-                    } else {
-                        var urlImg = '<?php echo constant('URL'); ?>public/gimnasio/' +
-                            fullnameImagen;
-                    }
                     return '<center><img src="' + urlImg +
-                        '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;"/></center>';
+                        '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImege(this);"/></center>';
                 }
             },
             {
@@ -415,6 +409,10 @@ $menu->footer();
             dom: 'Bfltip'
         });
         obtenerdatosDT(tableGimnasio);
+    }
+
+    function handleErrorImege(image) {
+        image.src = '<?php echo constant('URL'); ?>public/img/forcefit.png';
     }
 
     function previewImage(event, querySelector) {
