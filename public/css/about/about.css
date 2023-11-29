@@ -7,10 +7,10 @@
 }
 
 .img{
-  width: 650px;
-  height: 680px;
+  width: 50%;
+  height: auto;
   overflow: hidden;
-  padding: 70px 0;
+  padding: 5% 0;
   position: relative;
 
 }
@@ -19,30 +19,32 @@
   background-size: 55%;
   background-color: #ffffff;
   overflow: hidden;
-  padding: 87px 0;
+  padding: 5% 0;
   position: relative;
 }
 
 .inner-container{
+  max-width: 800px;
   width: 50%;
   float: right;
   background-color: #fbfbfb;
-  padding: 10px;
+  padding: 2%;
+  box-sizing: border-box;
 }
 
 .inner-container h1{
   color: black;
-  margin-bottom: 50px;
-  font-size: 50px;
+  margin-bottom: 2%;
+  font-size: 4vw;
   font-weight: 900;
 }
 
 .text{
-  font-size: 13px;
+  font-size: 1.5VW;
   color: #252525;
-  line-height: 25px;
+  line-height: 1.5;
   text-align: justify;
-  margin-bottom: 70px;
+  margin-bottom: 2%;
 }
 
 @media screen and (max-width:1200px){
@@ -51,7 +53,7 @@
   }
 }
 
-@media screen and (max-width:1000px){
+@media screen and (max-width:1000px) and (max-width: 1200px) {
   .about-section{
       background-size: 100%;
       padding: 100px 40px;

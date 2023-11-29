@@ -730,7 +730,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data) {
             data.forEach(function (cliente) {
-                $('#cliente_id').append('<option value="' + cliente.id_cliente + '">' + cliente.nombre_cliente + '</option>');
+                $('#cliente_id').append('<option value="' + cliente.id_cliente + '">' + cliente.nombre_cliente + ' ' + cliente.apellido_paterno_cliente + ' ' + cliente.apellido_materno_cliente +'</option>');
             });
         },
         error: function (error) {

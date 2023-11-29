@@ -99,7 +99,7 @@ class PagoDAO extends Model implements CRUD
     public function getCustomersWithPaymentsPerUser($id_usuario)
     {
         $query = $this->db->conectar()->prepare("
-            SELECT DISTINCT c.id_cliente, c.nombre_cliente
+            SELECT DISTINCT c.id_cliente, c.nombre_cliente,  c.apellido_paterno_cliente, c.apellido_materno_cliente
             FROM cliente c
             INNER JOIN pago_plan_gym_cliente p ON c.id_cliente = p.id_cliente
             INNER JOIN usuario_gimnasio ug ON c.id_gimnasio = ug.id_gimnasio
