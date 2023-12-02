@@ -7,7 +7,7 @@ require 'view/menu.php';
 $menu = new Menu();
 $menu->header('dashboard');
 ?>
-<link rel="stylesheet" href="public/css/about/about.css">
+<link rel="stylesheet" href="public/css/about/styles.css">
 
 <body>
     <div class="right_col" role="main" style="min-height: 825px;">
