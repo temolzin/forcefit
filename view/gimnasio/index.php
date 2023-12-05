@@ -451,7 +451,7 @@ $menu->footer();
                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarGimnasio' title="Editar Datos"><i class="fa fa-edit"></i></button>
                         <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarGimnasio' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
                         <button class='eliminar btn btn-info' data-toggle='modal' data-target='#modalUpdateImage' title="Actualizar Imagen"><i class="fa fa-picture-o"></i></button>
-                        <button class='eliminar btn btn-secondary' data-toggle='modal' data-target='#modalUpdateBackgroundCredential' title="Actualizar Fondo Credencial del Cliente"><i class="fa fa-file-image-o"></i></button>`
+                        <button class='btn btn-secondary' data-toggle='modal' data-target='#modalUpdateBackgroundCredential' title="Actualizar Fondo Credencial del Cliente"><i class="fa fa-file-image-o"></i></button>`
             }
             ],
             responsive: true,
