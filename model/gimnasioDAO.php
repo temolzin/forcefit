@@ -11,12 +11,14 @@ class GimnasioDAO extends Model implements CRUD
         $insertData = array(
             ':nombre_gimnasio' => $data['nombre_gimnasio'],
             ':telefono' => $data['telefono'],
-            ':imagen' => $data['imagen']
+            ':imagen' => $data['imagen'],
+            ':fondoCredencial' => $data['fondoCredencial']
         );
         $query = "INSERT INTO gimnasio values (NULL, 
             :nombre_gimnasio,
             :telefono,  
-            :imagen)";
+            :imagen,
+            :fondoCredencial)";
         if ($this->db->ejecutarAccion($query, $insertData)) {
             return $this->db->getLastInsertId();
         }
@@ -57,6 +59,7 @@ class GimnasioDAO extends Model implements CRUD
             $gimnasio->nombre_gimnasio = $value['nombre_gimnasio'];
             $gimnasio->telefono = $value['telefono'];
             $gimnasio->imagen = $value['imagen'];
+            $gimnasio->fondoCredencial = $value['fondoCredencial'];
             array_push($objGimnasio, $gimnasio);
         }
         }
@@ -73,6 +76,22 @@ class GimnasioDAO extends Model implements CRUD
 
         $queryUpdateUser = "UPDATE gimnasio SET 
         imagen = :imageInput
+        WHERE id_gimnasio = :id_gimnasio";
+
+        if ($this->db->ejecutarAccion($queryUpdateUser, $insertData)) {
+            echo "ok";
+        }
+    }
+
+    public function updateBackgroundCredential($data)
+    {
+        $insertData = array(
+            ':id_gimnasio' => $data['id_gimnasio'],
+            ':backgroundCredential' => $data['backgroundCredential'],
+        );
+
+        $queryUpdateUser = "UPDATE gimnasio SET 
+        fondoCredencial = :backgroundCredential
         WHERE id_gimnasio = :id_gimnasio";
 
         if ($this->db->ejecutarAccion($queryUpdateUser, $insertData)) {

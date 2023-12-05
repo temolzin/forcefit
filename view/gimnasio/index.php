@@ -72,14 +72,25 @@ $menu->header('gimnasio');
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <span><label>Imagen (*)</label></span>
+                                    <div class="col-lg-6">
+                                        <span><label>Imagen del gimnasio (*)</label></span>
                                         <div class="form-group input-group">
                                             <div class="custom-file">
                                                 <input type="file" accept="image/*" class="custom-file-input"
                                                     name="imagen" id="imagen" lang="es">
                                                 <label class="custom-file-label" for="imagen">Seleccione
-                                                    Fotografía</label>
+                                                    Imagen</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span><label>Fondo para credenciales de los clientes (*)</label></span>
+                                        <div class="form-group input-group">
+                                            <div class="custom-file">
+                                                <input type="file" accept="image/*" class="custom-file-input"
+                                                    name="fondoCredencial" id="fondoCredencial" lang="es">
+                                                <label class="custom-file-label" for="imagen">Seleccione
+                                                    Imagen</label>
                                             </div>
                                         </div>
                                     </div>
@@ -318,6 +329,46 @@ $menu->header('gimnasio');
     </div>
 </div>
 
+<!--------------------------------------------------------- Modal Update Fondo Credencial ----------------------------------------------->
+<div class="modal fade" id="modalUpdateBackgroundCredential" tabindex="-1" role="dialog" aria-labelledby="modalUpdateBackgroundCredential" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="card-info">
+                <div class="card-header bg-secondary">
+                    <div class="d-sm-flex align-items-center justify-content-between ">
+                        <h4 class="card-title">Actualizar Fondo</h4>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <form role="form" id="formUpdateBackgroundCredential" enctype="multipart/form-data" name="formUpdateBackgroundCredential" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="mx-auto d-inline-block photo-container" style="width: 150px; height: 150px; margin-bottom: 10px; overflow: hidden;">
+                                <img src="" alt="gimnasio" id="imgPreviewBackground" class="img-fluid" onerror="handleErrorImage(this);" style="max-height: 100%;">
+                            </div>
+                            <div class="col-lg-12">
+                                <input type="text" hidden class="form-control" id="idGymUpdateBackground" name="idGymUpdateBackground" placeholder="Id" />
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group input-group" style="margin-bottom: 10px;">
+                                    <div class="custom-file">
+                                        <input type="file" accept="image/*" class="custom-file-input" onchange="previewImage(event, '#imgPreviewBackground')" name="imageBackgroundInput" id="imageBackgroundInput" lang="es">
+                                        <label class="custom-file-label" for="imagen">Seleccione
+                                            Fondo</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-secondary">Actualizar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 $menu->footer();
 ?>
@@ -330,6 +381,7 @@ $menu->footer();
         eliminarRegistro();
         rutaImagen();
         sendFormUpdateImage();
+        sendFormUpdateBackgroundCredential()
     });
 
     $(".custom-file-input").on("change", function () {
@@ -398,7 +450,8 @@ $menu->footer();
                 "defaultContent": `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetalleGimnasio' title="Ver Detalles"><i class="fa fa-eye"></i></button>
                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarGimnasio' title="Editar Datos"><i class="fa fa-edit"></i></button>
                         <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarGimnasio' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
-                        <button class='eliminar btn btn-info' data-toggle='modal' data-target='#modalUpdateImage' title="Actualizar Imagen"><i class="fa fa-picture-o"></i></button>`
+                        <button class='eliminar btn btn-info' data-toggle='modal' data-target='#modalUpdateImage' title="Actualizar Imagen"><i class="fa fa-picture-o"></i></button>
+                        <button class='eliminar btn btn-secondary' data-toggle='modal' data-target='#modalUpdateBackgroundCredential' title="Actualizar Fondo Credencial del Cliente"><i class="fa fa-file-image-o"></i></button>`
             }
             ],
             responsive: true,
@@ -428,7 +481,9 @@ $menu->footer();
         $('#dataTableGimnasio tbody').on('click', 'tr', function () {
             var data = table.row(this).data();
             var routeImageGym = $("#imgPreview").attr("src", '<?php echo constant('URL'); ?>public/gimnasio/' + data.id_gimnasio + '/' + data.imagen);
+            var routeImageBackgroundCredential = $("#imgPreviewBackground").attr("src", '<?php echo constant('URL'); ?>public/gimnasio/fondo/' + data.id_gimnasio + '/' + data.fondoCredencial);
             var idGymUpdateImage = $("#idGymUpdateImage").val(data.id_gimnasio);
+            var idGymUpdateBackground = $("#idGymUpdateBackground").val(data.id_gimnasio);
 
             var idEliminar = $('#idEliminarGimnasio').val(data.id_gimnasio);
 
@@ -474,6 +529,7 @@ $menu->footer();
                             imagen = "images/default-profile.jpg";
                         }
                         form_data.append('imagen', imagen);
+                        form_data.append('fondoCredencial', $('#fondoCredencial').prop('files')[0]);
                         form_data.append('nombreGimnasio', document.getElementById(
                             'nombreGimnasio').value);
                         form_data.append('telefono', document.getElementById(
@@ -530,6 +586,9 @@ $menu->footer();
                 imagen: {
                     required: true
                 },
+                fondoCredencial: {
+                    required: true
+                },
             },
             messages: {
                 id_gimnasio: {
@@ -543,6 +602,9 @@ $menu->footer();
                     required: "Ingresa el número de telefono del gimnasio"
                 },
                 imagen: {
+                    required: "Selecciona el logo del gimnasio"
+                },
+                fondoCredencial: {
                     required: "Selecciona el logo del gimnasio"
                 },
             },
@@ -693,6 +755,76 @@ $menu->footer();
                     required: "Seleccione el gimnasio"
                 },
                 imageInput: {
+                    required: "Ingrese la fecha"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    }
+
+    var imageBackground = null;
+    $('#formUpdateBackgroundCredential').on('submit', function(e) {
+        imageBackground = new FormData(this);
+    });
+    var sendFormUpdateBackgroundCredential = function() {
+        $.validator.setDefaults({
+            submitHandler: function(e) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo constant('URL'); ?>gimnasio/UpdateBackgroundCredential",
+                    data: imageBackground,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $('.submit').attr("disabled", "disabled");
+                        $('#formUpdateBackgroundCredential').css("opacity", ".5");
+                    },
+                    success: function(data) {
+                        var title = "¡Éxito!";
+                        var message = "La imagen ha sido actualizada de manera correcta";
+                        var icon = "success";
+                        if (data.trim() !== 'ok') {
+                            var title = "¡Error!";
+                            var message = "Ha ocurrido un error al actualizar la imagen." + data;
+                            var icon = "error";
+                        }
+                        
+                        Swal.fire(
+                                title,
+                                message,
+                                icon
+                        ).then(function() {
+                            window.location = "<?php echo constant('URL'); ?>gimnasio";
+                        });
+                    },
+                });
+            }
+        });
+        $('#formUpdateBackgroundCredential').validate({
+            rules: {
+                idGymUpdateBackground: {
+                    required: true
+                },
+                imageBackgroundInput: {
+                    required: true
+                }
+            },
+            messages: {
+                idGymUpdateBackground: {
+                    required: "Seleccione el gimnasio"
+                },
+                imageBackgroundInput: {
                     required: "Ingrese la fecha"
                 }
             },

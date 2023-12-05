@@ -22,12 +22,14 @@ class Gimnasio extends Controller
         $nombreGimnasio = $_POST['nombreGimnasio'];
         $telefono = $_POST['telefono'];
         $nombreImagen = $_FILES["imagen"]["name"];
+        $nombreFondoCredencial = $_FILES["fondoCredencial"]["name"];
 
         $data = array(
             'nombre_gimnasio' => $nombreGimnasio,
             'telefono' => $telefono,
             'imagen' => $nombreImagen,
-            'nombreImagen' => $nombreImagen
+            'nombreImagen' => $nombreImagen,
+            'fondoCredencial' => $nombreFondoCredencial
         );
 
         if ($_FILES["imagen"]["name"] != null) {
@@ -39,6 +41,10 @@ class Gimnasio extends Controller
             require_once __DIR__ . '/services/saveImage.php';
             $imagen = $_FILES["imagen"];
             $carpeta = "public/gimnasio/" . $idGimnasio . "/";
+            SaveImage::invoke($carpeta, $imagen);
+
+            $imagen = $_FILES["fondoCredencial"];
+            $carpeta = "public/gimnasio/fondo/" . $idGimnasio . "/";
             SaveImage::invoke($carpeta, $imagen);
             echo "ok";
         }
@@ -114,4 +120,20 @@ class Gimnasio extends Controller
 		$gimnasioDAO = new GimnasioDAO();
 		$gimnasioDAO = $gimnasioDAO->updateImage($data);
 	}
+    
+    function UpdateBackgroundCredential(){
+        require_once __DIR__ . '/services/saveImage.php';
+		$idGimnasio = $_POST['idGymUpdateBackground'];
+		$imagen = $_FILES["imageBackgroundInput"];
+		$carpeta = "public/gimnasio/fondo/" . $idGimnasio . "/";
+		$data = array(
+			'id_gimnasio' => $idGimnasio,
+			'backgroundCredential' => SaveImage::invoke($carpeta, $imagen)
+		);
+
+		require 'model/gimnasioDAO.php';
+		$this->loadModel('GimnasioDAO');
+		$gimnasioDAO = new GimnasioDAO();
+		$gimnasioDAO = $gimnasioDAO->updateBackgroundCredential($data);
+    }
 }
