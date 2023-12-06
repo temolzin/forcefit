@@ -147,7 +147,7 @@ class ClienteDAO extends Model implements CRUD
 
     public function readFullDataById(&$cliente, $id_cliente)
     {
-        $query = $this->db->conectar()->prepare("SELECT c.id_cliente, g.id_gimnasio, c.nombre_cliente, c.apellido_paterno_cliente, c.apellido_materno_cliente, c.municipio_cliente, c.colonia_cliente, c.calle_cliente, c.codigo_postal_cliente, c.numero_cliente, c.email_cliente, c.imagen_cliente, g.nombre_gimnasio, g.telefono, g.imagen
+        $query = $this->db->conectar()->prepare("SELECT c.id_cliente, g.id_gimnasio, c.nombre_cliente, c.apellido_paterno_cliente, c.apellido_materno_cliente, c.municipio_cliente, c.colonia_cliente, c.calle_cliente, c.codigo_postal_cliente, c.numero_cliente, c.email_cliente, c.imagen_cliente, g.nombre_gimnasio, g.telefono, g.imagen, g.fondoCredencial
         FROM cliente AS c INNER JOIN gimnasio g ON c.id_gimnasio = g.id_gimnasio WHERE c.id_cliente =:id_cliente");
 
         $query->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);

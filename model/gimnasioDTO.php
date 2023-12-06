@@ -4,6 +4,7 @@
         private $nombre_gimnasio;
         private $telefono;
         private $imagen;
+        private $fondoCredencial;
 
         public function __get($property){
             if(property_exists($this, $property)) {

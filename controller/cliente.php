@@ -142,6 +142,10 @@ class Cliente extends Controller
 		$clienteDAO = $clienteDAO->readFullDataById($cliente, $id_cliente);
 
 		$css = file_get_contents('./public/css/credencial/styles.css');
+		$rutaPlantilla = "public/gimnasio/fondo/" . $cliente['id_gimnasio'] . "/" . $cliente['fondoCredencial'];
+		if($cliente['fondoCredencial'] !== null && file_exists($rutaPlantilla)){
+			$css = str_replace("url('public/img/fondoCredencial.png')", "url('$rutaPlantilla')", $css);
+		}
 		$mpdf = new \Mpdf\Mpdf([ 'margin_left' => 5, 'margin_right' => 20,'margin_top' => 5,'margin_bottom' => 20,]);
 		$plantillaFront= getPlantillaFront($cliente);
 		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
