@@ -14,7 +14,7 @@ Para ejecutar este proyecto necesitas.
 - Servidor PHP(xampp, wamp, lamp)
 - Editor de texto **Visual Studio Code** (opcional)
 
-### Instalalación 🔧💻
+### Instalalación de manera Local🔧💻
 - En **GitHub.com**, ir a la página principal del repositorio forcefit  [Link](https://github.com/temolzin/forcefit/).
 -  En la lista de la parte superior selecciona **code** [Clonar repositorio](https://github.com/temolzin/forcefit/)
 - Para clonar el repositorio copeas el link.
@@ -23,13 +23,14 @@ Para ejecutar este proyecto necesitas.
 git clone https://github.com/temolzin/forcefit.git
 ``
 - Después lo abres en tu editor de texto preferido.
+- Desactivarás la extencion ;extension=gd que se encuentra en el archivo php.ini
 - Para ejecutarlo inicializas el servidor, si tienes **xampp** activas apache y MySQL
-- Para la instalación de la Base de Datos encontrarás una carpeta con el nombre de **database** la cual contiene el archivo con la base de datos.
-- Posteriormente instalas la base de datos.
-- Para que el proyecto funcione correctamente ejecuta este comando en la carpeta raíz **composer install**
+- Ejecutas **composer update**
 
-### Instalación de la  librería phinx📋
-- Ejecuta este comando **composer.phar require robmorgan/phinx**
+- Después ejecutas el siguiente comando **cp .env.example .env**
+- Para la instalación de la Base de Datos crearás una base de datos con el nombre que aparece en el archivo .env
+
+- Después descargas las migraciones y los seeder
 
 ### Descargar Migraciones
 - Ejecuta este comando **composer phinx-migrate** Para descargar las migraciones
@@ -44,10 +45,14 @@ git clone https://github.com/temolzin/forcefit.git
 ## Instalar proyecto con docker
 Lo primero es tener instalado docker correctamente.
 
+## Instalar Kool Para Windows
+Para ejecutar correctamente el proyecto correctamente se necesita tener instalado kool, descarga el archivo .exe para poder instalarlo en windows
 
-## - curl -fsSL https://kool.dev/install | bash
-Para ejecutar correctamente el proyecto correctamente se necesita tener instalado kool, el cual se instala con el comando.
+[Link](https://github.com/kool-dev/kool/releases/download/2.2.0/kool-install.exe)
 
+## Instalar Kool Para Linux
+Ejecuta el siguiente comando
+- curl -fsSL https://kool.dev/install | bash
 Este comando solo sirve en linux, por lo que para usarse en windows necesitamos instalar Windows Subsistem Linux(WSL) e instalar una versión de Linux, además tenemos que tener Docker instalado en nuestro subsistema de linux y docker compose.
 
 ## kool run setup
@@ -65,5 +70,3 @@ Enciende el contenedor
 ## kool stop
 
 Apaga el contenedor
-
-### End
