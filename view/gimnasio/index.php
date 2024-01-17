@@ -467,6 +467,7 @@ $menu->footer();
     function handleErrorImage(image) {
         image.src = '<?php echo constant('URL'); ?>public/img/forcefit.png';
     }
+    
     function handleErrorImageBackground(imageBackground) {
         imageBackground.src  = '<?php echo constant('URL'); ?>public/img/fondoCredencial.png';
     }
