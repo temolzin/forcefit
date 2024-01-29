@@ -2,7 +2,8 @@
     "require": {
         "mpdf/mpdf": "^8.1",
         "phpmailer/phpmailer": "^6.8.1",
-        "robmorgan/phinx": "^0.13.0"
+        "robmorgan/phinx": "^0.13.0",
+        "fakerphp/faker": "^1.23"
     },
     "config": {
         "platform": {
