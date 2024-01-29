@@ -12,7 +12,6 @@ class PagoSistema extends AbstractSeed
         $this->execute('SET FOREIGN_KEY_CHECKS=0;');
         $table = $this->table('pago_plan_sistema');
         $table->truncate();
-        //$faker = Factory::create();
         $data = [
             [
 			    'id_pago' => 1,
@@ -51,21 +50,6 @@ class PagoSistema extends AbstractSeed
                 'tipo_pago' => 'Efectivo',
             ],
         ];
-
-       /* $existingUsuarios = $this->fetchAll('SELECT id_usuario FROM usuario WHERE id_rol = 2');
-        for ($i = count($data) + 1; $i <= 40; $i++) {
-            $fechaInicio = $faker->dateTimeBetween('now', '+2 months')->format('Y-m-d H:i:s');
-            $fechaVencimiento = $faker->dateTimeBetween('now', '+1 month +1 day')->format('Y-m-d');
-            $data[] = [
-                'id_pago' => $i,
-                'id_plan_sistema' => $faker->randomElement([1, 2, 3]),
-                'id_usuario' => $faker->randomElement($existingUsuarios)['id_usuario'],
-                'cantidad_pago' => $faker->numberBetween(1000, 5000),
-                'fecha_hora_pago' => $fechaInicio,
-                'vencimiento' => $fechaVencimiento,
-                'tipo_Pago' => $faker->randomElement(['Transferencia', 'Efectivo', 'Tarjeta']),
-            ];
-        }*/
 
         $table->insert($data)->save();
     }

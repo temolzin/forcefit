@@ -12,7 +12,6 @@ class Cliente extends AbstractSeed
         $this->execute('SET FOREIGN_KEY_CHECKS=0;');
         $table = $this->table('cliente');
         $table->truncate();
-        //$faker = Factory::create();
         $data = [
             [
 			    'id_cliente' => 1,
@@ -168,26 +167,6 @@ class Cliente extends AbstractSeed
                 'is_active' => 0,
             ],
         ];
-/*
-        for ($i = count($data) + 1; $i <= 60; $i++) {
-            $data[] = [
-                'id_cliente' => $i,
-                'id_gimnasio' => 2,
-                'id_planGym' => $faker->randomElement([4, 5, 6]),
-                'nombre_cliente' => $faker->firstName,
-                'apellido_paterno_cliente' => $faker->lastName,
-                'apellido_materno_cliente' => $faker->lastName,
-                'municipio_cliente' => $faker->city,
-                'colonia_cliente' => $faker->word,
-                'calle_cliente' => $faker->streetAddress,
-                'codigo_postal_cliente' => $faker->postcode,
-                'numero_cliente' => $faker->phoneNumber,
-                'imagen_cliente' => null,
-                'email_cliente' => $faker->email,
-                'is_email_notified' => 0,
-                'is_active' => 0,
-            ];
-        }*/
 
         $table->insert($data)->save();
 

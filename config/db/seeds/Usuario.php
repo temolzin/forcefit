@@ -12,7 +12,6 @@ class Usuario extends AbstractSeed
         $this->execute('SET FOREIGN_KEY_CHECKS=0;');
         $table = $this->table('usuario');
         $table->truncate();
-        //$faker = Factory::create();
         $data = [
             [
                 'id_usuario' => 1,
@@ -127,25 +126,6 @@ class Usuario extends AbstractSeed
                 'id_rol' => 2,
             ],
         ];
-
-        /*for ($i = count($data) + 1; $i <= 40; $i++) {
-            $data[] = [
-                'id_usuario' => $i,
-                'nombreUsuario' => $faker->firstName,
-                'apellidoPaternoUsuario' => $faker->lastName,
-                'apellidoMaternoUsuario' => $faker->lastName,
-                'emailUsuario' => $faker->email,
-                'passwordUsuario' => sha1('12345'),
-                'telefonoUsuario' => $faker->phoneNumber,
-                'imagen' => null,
-                'calleUsuario' => $faker->streetAddress,
-                'estadoUsuario' => $faker->state,
-                'municipioUsuario' => $faker->city,
-                'coloniaUsuario' => $faker->word,
-                'codigoPostalUsuario' => $faker->postcode,
-                'id_rol' => 2,
-            ];
-        }*/
 
         $table->insert($data)->save();
 

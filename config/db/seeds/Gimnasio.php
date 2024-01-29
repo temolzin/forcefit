@@ -12,7 +12,6 @@ class Gimnasio extends AbstractSeed
         $this->execute('SET FOREIGN_KEY_CHECKS=0;');
         $table = $this->table('gimnasio');
         $table->truncate();
-        //$faker = Factory::create();
         $data = [
             [
                 'id_gimnasio' => 1,
@@ -39,16 +38,6 @@ class Gimnasio extends AbstractSeed
                 'imagen' => 'BOGUI.jfif',
             ],
         ];
-
-        /*for ($i = count($data) + 1; $i <= 50; $i++) {
-            $data[] = [
-                'id_gimnasio' => $i,
-                'nombre_gimnasio' => $faker->company,
-                'telefono' => $faker->phoneNumber,
-                'imagen' => null,
-            ];
-        }*/
-
 
         $table->insert($data)->save();
 
