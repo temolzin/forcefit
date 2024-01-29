@@ -45,15 +45,15 @@ class PerfilDAO extends Model implements CRUD
         );
 
         $queryUpdateUser = "UPDATE usuario SET 
-        nombreUsuario = :nombreUsuario,
-        apellidoPaternoUsuario = :apellidoPaternoUsuario,
-        apellidoMaternoUsuario = :apellidoMaternoUsuario,
-        emailUsuario = :correoUsuario,
-        calleUsuario = :calleUsuario,
-        estadoUsuario = :estadoUsuario,
-        municipioUsuario = :municipioUsuario,
-        coloniaUsuario = :coloniaUsuario,
-        codigoPostalUsuario = :codigoPostalUsuario";
+        nombre = :nombreUsuario,
+        apellido_paterno = :apellidoPaternoUsuario,
+        apellido_materno = :apellidoMaternoUsuario,
+        email = :correoUsuario,
+        calle = :calleUsuario,
+        estado = :estadoUsuario,
+        municipio = :municipioUsuario,
+        colonia = :coloniaUsuario,
+        codigo_postal = :codigoPostalUsuario";
 
         if (isset($data['imageUserUpdate'])) {
             $insertData[':imagen'] = $data['imageUserUpdate'];
@@ -72,9 +72,9 @@ class PerfilDAO extends Model implements CRUD
 
     public function updatePassword($data)
     {
-        $queryValidatePasswordInBD = $this->db->prepare("SELECT passwordUsuario
+        $queryValidatePasswordInBD = $this->db->prepare("SELECT password_usuario
         FROM usuario
-        WHERE id_usuario = :idUsuario AND passwordUsuario = SHA1(:passwordBD)");
+        WHERE id_usuario = :idUsuario AND password_usuario = SHA1(:passwordBD)");
         $queryValidatePasswordInBD->bindParam(":idUsuario", $data['id_usuario']);
         $queryValidatePasswordInBD->bindParam(":passwordBD", $data['oldPassword']);
         $queryValidatePasswordInBD->execute();
@@ -87,7 +87,7 @@ class PerfilDAO extends Model implements CRUD
 
         $queryUpdatePassword = $this->db->prepare("
         UPDATE usuario SET 
-        passwordUsuario = SHA1(:newPassword)
+        password_usuario = SHA1(:newPassword)
         WHERE id_usuario = :idUsuario");
         $queryUpdatePassword->bindParam(":idUsuario", $data['id_usuario']);
         $queryUpdatePassword->bindParam(":newPassword", $data['newPassword']);

@@ -12,12 +12,12 @@ class Cliente extends AbstractSeed
         $this->execute('SET FOREIGN_KEY_CHECKS=0;');
         $table = $this->table('cliente');
         $table->truncate();
-        $faker = Factory::create();
+        //$faker = Factory::create();
         $data = [
             [
 			    'id_cliente' => 1,
                 'id_gimnasio' => 1,
-                'id_planGym' => 1,
+                'id_plan_gym' => 1,
                 'nombre_cliente' => 'Erika',
                 'apellido_paterno_cliente' => 'Lopez',
                 'apellido_materno_cliente' => 'Velasco',
@@ -34,7 +34,7 @@ class Cliente extends AbstractSeed
             [
 			    'id_cliente' => 2,
                 'id_gimnasio' => 1,
-                'id_planGym' => 2,
+                'id_plan_gym' => 2,
                 'nombre_cliente' => 'Martin',
                 'apellido_paterno_cliente' => 'Garcia',
                 'apellido_materno_cliente' => 'Martinez',
@@ -51,7 +51,7 @@ class Cliente extends AbstractSeed
             [
 			    'id_cliente' => 3,
                 'id_gimnasio' => 1,
-                'id_planGym' => 3,
+                'id_plan_gym' => 3,
                 'nombre_cliente' => 'Cecilia',
                 'apellido_paterno_cliente' => 'Lopez',
                 'apellido_materno_cliente' => 'Garcia',
@@ -68,7 +68,7 @@ class Cliente extends AbstractSeed
             [
 			    'id_cliente' => 4,
                 'id_gimnasio' => 2,
-                'id_planGym' => 4,
+                'id_plan_gym' => 4,
                 'nombre_cliente' => 'Monserat',
                 'apellido_paterno_cliente' => 'Osorio',
                 'apellido_materno_cliente' => 'Lopez',
@@ -85,7 +85,7 @@ class Cliente extends AbstractSeed
             [
 			    'id_cliente' => 5,
                 'id_gimnasio' => 2,
-                'id_planGym' => 5,
+                'id_plan_gym' => 5,
                 'nombre_cliente' => 'Gerardo',
                 'apellido_paterno_cliente' => 'Garcia',
                 'apellido_materno_cliente' => 'San juan',
@@ -102,7 +102,7 @@ class Cliente extends AbstractSeed
             [
 			    'id_cliente' => 6,
                 'id_gimnasio' => 2,
-                'id_planGym' => 6,
+                'id_plan_gym' => 6,
                 'nombre_cliente' => 'Alberto',
                 'apellido_paterno_cliente' => 'Perez',
                 'apellido_materno_cliente' => 'Perez',
@@ -119,7 +119,7 @@ class Cliente extends AbstractSeed
             [
 			    'id_cliente' => 7,
                 'id_gimnasio' => 3,
-                'id_planGym' => 7,
+                'id_plan_gym' => 7,
                 'nombre_cliente' => 'Luciana',
                 'apellido_paterno_cliente' => 'López',
                 'apellido_materno_cliente' => 'San juan',
@@ -136,7 +136,7 @@ class Cliente extends AbstractSeed
             [
 			    'id_cliente' => 8,
                 'id_gimnasio' => 3,
-                'id_planGym' => 8,
+                'id_plan_gym' => 8,
                 'nombre_cliente' => 'Gerardo',
                 'apellido_paterno_cliente' => 'Garcia',
                 'apellido_materno_cliente' => 'Martinez',
@@ -153,7 +153,7 @@ class Cliente extends AbstractSeed
             [
 			    'id_cliente' => 9,
                 'id_gimnasio' => 4,
-                'id_planGym' => 10,
+                'id_plan_gym' => 10,
                 'nombre_cliente' => 'Jesus',
                 'apellido_paterno_cliente' => 'Lopez',
                 'apellido_materno_cliente' => 'Martinez',
@@ -168,7 +168,7 @@ class Cliente extends AbstractSeed
                 'is_active' => 0,
             ],
         ];
-
+/*
         for ($i = count($data) + 1; $i <= 60; $i++) {
             $data[] = [
                 'id_cliente' => $i,
@@ -187,7 +187,7 @@ class Cliente extends AbstractSeed
                 'is_email_notified' => 0,
                 'is_active' => 0,
             ];
-        }
+        }*/
 
         $table->insert($data)->save();
 

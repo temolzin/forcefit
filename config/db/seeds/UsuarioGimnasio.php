@@ -12,7 +12,7 @@ class UsuarioGimnasio extends AbstractSeed
         $this->execute('SET FOREIGN_KEY_CHECKS=0;');
         $table = $this->table('usuario_gimnasio');
         $table->truncate();
-        $faker = Factory::create();
+        //$faker = Factory::create();
         $data = [
             [
                 'id_usuario' => 2,
@@ -47,7 +47,8 @@ class UsuarioGimnasio extends AbstractSeed
                 'estatus' => null,
             ],
         ];
-        $existingGimnasios = $this->fetchAll('SELECT id_gimnasio FROM gimnasio');
+
+        /*$existingGimnasios = $this->fetchAll('SELECT id_gimnasio FROM gimnasio');
         $existingUsuarios = $this->fetchAll('SELECT id_usuario FROM usuario');
         for ($i = count($data) + 1; $i <= 40; $i++) {
             $data[] = [
@@ -58,7 +59,7 @@ class UsuarioGimnasio extends AbstractSeed
                 'fecha_termino' => null,
                 'estatus' => null,
             ];
-        }
+        }*/
 
         $table->insert($data)->save();
 

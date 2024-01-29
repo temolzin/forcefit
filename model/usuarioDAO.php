@@ -12,38 +12,38 @@ class UsuarioDAO extends Model implements CRUD
     public function insert($data)
     {
         $insertData = array(
-            ':nombreUsuario' => $data['nombreUsuario'],
-            ':apellidoPaternoUsuario' => $data['apellidoPaternoUsuario'],
-            ':apellidoMaternoUsuario' => $data['apellidoMaternoUsuario'],
-            ':emailUsuario' => $data['correoUsuario'],
-            ':passwordUsuario' => sha1($data['password']),
+            ':nombre' => $data['nombreUsuario'],
+            ':apellido_paterno' => $data['apellidoPaternoUsuario'],
+            ':apellido_materno' => $data['apellidoMaternoUsuario'],
+            ':email' => $data['correoUsuario'],
+            ':password_usuario' => sha1($data['password']),
             ':imagen' => $data['imagen'],
-            ':calleUsuario' => $data['calleUsuario'],
-            ':estadoUsuario' => $data['estadoUsuario'],
-            ':municipioUsuario' => $data['municipioUsuario'],
-            ':coloniaUsuario' => $data['coloniaUsuario'],
-            ':codigoPostalUsuario' => $data['codigoPostalUsuario'],
+            ':calle' => $data['calleUsuario'],
+            ':estado' => $data['estadoUsuario'],
+            ':municipio' => $data['municipioUsuario'],
+            ':colonia' => $data['coloniaUsuario'],
+            ':codigo_postal' => $data['codigoPostalUsuario'],
             ':id_rol' => $data['rolUsuario'],
             ':is_active' => self::CUSTOMER_INACTIVE,
-            ':telefonoUsuario' => $data['telefonoUsuario'],
-            ':isEmailNotified' => false
+            ':telefono' => $data['telefonoUsuario'],
+            ':is_email_notified' => false
         );
         $query ="INSERT INTO usuario values (NULL, 
-                :nombreUsuario,
-                :apellidoPaternoUsuario,
-                :apellidoMaternoUsuario,
-                :emailUsuario,
-                :passwordUsuario,
+                :nombre,
+                :apellido_paterno,
+                :apellido_materno,
+                :email,
+                :password_usuario,
                 :imagen,
-                :calleUsuario,
-                :estadoUsuario,
-                :municipioUsuario,
-                :coloniaUsuario,
-                :codigoPostalUsuario,
+                :calle,
+                :estado,
+                :municipio,
+                :colonia,
+                :codigo_postal,
                 :id_rol,
                 :is_active,
-                :telefonoUsuario,
-                :isEmailNotified)";
+                :telefono,
+                :is_email_notified)";
         
         if ($this->db->ejecutarAccion($query, $insertData)) {
             return $this->db->getLastInsertId();
@@ -81,16 +81,16 @@ class UsuarioDAO extends Model implements CRUD
             ':id_rol' => $data['id_rol']
         ];
         $query = $this->db->conectar()->prepare('UPDATE usuario SET 
-            nombreUsuario = :nombreUsuario,  
-            apellidoPaternoUsuario = :apellidoPaternoUsuario,
-            apellidoMaternoUsuario = :apellidoMaternoUsuario,
-            telefonoUsuario = :telefonoUsuario,
-            emailUsuario = :emailUsuario,
-            calleUsuario = :calleUsuario,
-            estadoUsuario = :estadoUsuario,
-            municipioUsuario = :municipioUsuario,
-            coloniaUsuario = :coloniaUsuario,
-            codigoPostalUsuario = :codigoPostalUsuario,
+            nombre = :nombreUsuario,
+            apellido_paterno = :apellidoPaternoUsuario,
+            apellido_materno = :apellidoMaternoUsuario,
+            telefono = :telefonoUsuario,
+            email = :emailUsuario,
+            calle = :calleUsuario,
+            estado = :estadoUsuario,
+            municipio = :municipioUsuario,
+            colonia = :coloniaUsuario,
+            codigo_postal = :codigoPostalUsuario,
             id_rol = :id_rol
             WHERE id_usuario = :id_usuario');
 
@@ -111,26 +111,26 @@ class UsuarioDAO extends Model implements CRUD
         $query = "SELECT
         u.id_usuario AS 'ID',
         u.id_rol,
-        u.nombreUsuario,
-        u.apellidoPaternoUsuario,
-        u.apellidoMaternoUsuario,
-        u.telefonoUsuario,
-        u.emailUsuario,
-        u.passwordUsuario,
+        u.nombre,
+        u.apellido_paterno,
+        u.apellido_materno,
+        u.telefono,
+        u.email,
+        u.password_usuario,
         u.imagen,
-        u.calleUsuario,
-        u.estadoUsuario,
-        u.municipioUsuario,
-        u.coloniaUsuario,
-        u.codigoPostalUsuario,
-        r.nombreRol AS 'Rol',
+        u.calle,
+        u.estado,
+        u.municipio,
+        u.colonia,
+        u.codigo_postal,
+        r.nombre_rol AS 'Rol',
         CASE
-            WHEN r.nombreRol = 'Administrador' THEN 'No aplica'
+            WHEN r.nombre_rol = 'Administrador' THEN 'No aplica'
             WHEN ug.id_gimnasio IS NULL THEN 'Aun no se le asigna'
             ELSE g.nombre_gimnasio
         END AS nombreGimnasio,
         CASE
-            WHEN r.nombreRol = 'Administrador' THEN 'No aplica'
+            WHEN r.nombre_rol = 'Administrador' THEN 'No aplica'
             WHEN ug.id_plan_sistema IS NULL THEN 'Aun no se le asigna'
             ELSE ps.nombre_plan_sistema
         END AS nombrePlanSistema,
@@ -149,18 +149,18 @@ class UsuarioDAO extends Model implements CRUD
             $usuario = new UsuarioDTO();
             $usuario->id_usuario = $value['ID'];
             $usuario->id_rol = $value['id_rol'];
-            $usuario->nombreUsuario = $value['nombreUsuario'];
-            $usuario->apellidoPaternoUsuario = $value['apellidoPaternoUsuario'];
-            $usuario->apellidoMaternoUsuario = $value['apellidoMaternoUsuario'];
-            $usuario->telefonoUsuario = $value['telefonoUsuario'];
-            $usuario->emailUsuario = $value['emailUsuario'];
-            $usuario->passwordUsuario = $value['passwordUsuario'];
+            $usuario->nombreUsuario = $value['nombre'];
+            $usuario->apellidoPaternoUsuario = $value['apellido_paterno'];
+            $usuario->apellidoMaternoUsuario = $value['apellido_materno'];
+            $usuario->telefonoUsuario = $value['telefono'];
+            $usuario->emailUsuario = $value['email'];
+            $usuario->passwordUsuario = $value['password_usuario'];
             $usuario->imagen = $value['imagen'];
-            $usuario->calleUsuario = $value['calleUsuario'];
-            $usuario->estadoUsuario = $value['estadoUsuario'];
-            $usuario->municipioUsuario = $value['municipioUsuario'];
-            $usuario->coloniaUsuario = $value['coloniaUsuario'];
-            $usuario->codigoPostalUsuario = $value['codigoPostalUsuario'];
+            $usuario->calleUsuario = $value['calle'];
+            $usuario->estadoUsuario = $value['estado'];
+            $usuario->municipioUsuario = $value['municipio'];
+            $usuario->coloniaUsuario = $value['colonia'];
+            $usuario->codigoPostalUsuario = $value['codigo_postal'];
             $usuario->nombreRol = $value['Rol'];
             $usuario-> nombre_gimnasio= $value['nombreGimnasio'];
             $usuario->nombre_plan_sistema = $value['nombrePlanSistema'];
@@ -176,13 +176,13 @@ class UsuarioDAO extends Model implements CRUD
     public function login($data)
     {
         require_once 'usuarioDTO.php';
-        $query = $this->db->prepare("SELECT u.id_usuario, u.nombreUsuario, u.apellidoPaternoUsuario, u.apellidoMaternoUsuario, u.emailUsuario, u.passwordUsuario, u.imagen, u.calleUsuario, u.estadoUsuario, u.municipioUsuario, u.coloniaUsuario, u.codigoPostalUsuario, u.id_rol, ug.id_gimnasio,
+        $query = $this->db->prepare("SELECT u.id_usuario, u.nombre, u.apellido_paterno, u.apellido_materno, u.email, u.password_usuario, u.imagen, u.calle, u.estado, u.municipio, u.colonia, u.codigo_postal, u.id_rol, ug.id_gimnasio,
         (CASE WHEN u.id_rol = 2 AND EXISTS
             (SELECT 1 FROM pago_plan_sistema pps WHERE pps.id_usuario = u.id_usuario AND pps.vencimiento > CURDATE()) THEN 1 ELSE 0
         END) as is_active
         FROM usuario AS u
         LEFT JOIN usuario_gimnasio AS ug ON u.id_usuario = ug.id_usuario
-        WHERE u.emailUsuario = :emailUsuario AND u.passwordUsuario = :passwordUsuario");
+        WHERE u.email = :emailUsuario AND u.password_usuario = :passwordUsuario");
         $password = sha1($data['passwordUsuario']);
         $query->bindParam(":emailUsuario", $data['emailUsuario']);
         $query->bindParam(":passwordUsuario", $password);
@@ -197,17 +197,17 @@ class UsuarioDAO extends Model implements CRUD
             session_start();
             $_SESSION['id_usuario'] = $row['id_usuario'];
             $_SESSION['id_gimnasio'] = $row['id_gimnasio'];
-            $_SESSION['nombreUsuario'] = $row['nombreUsuario'];
-            $_SESSION['apellidoPaternoUsuario'] = $row['apellidoPaternoUsuario'];
-            $_SESSION['apellidoMaternoUsuario'] = $row['apellidoMaternoUsuario'];
-            $_SESSION['emailUsuario'] = $row['emailUsuario'];
-            $_SESSION['passwordUsuario'] = $row['passwordUsuario'];
+            $_SESSION['nombreUsuario'] = $row['nombre'];
+            $_SESSION['apellidoPaternoUsuario'] = $row['apellido_paterno'];
+            $_SESSION['apellidoMaternoUsuario'] = $row['apellido_materno'];
+            $_SESSION['emailUsuario'] = $row['email'];
+            $_SESSION['passwordUsuario'] = $row['password_usuario'];
             $_SESSION['imagen'] = $row['imagen'];
-            $_SESSION['calleUsuario'] = $row['calleUsuario'];
-            $_SESSION['estadoUsuario'] = $row['estadoUsuario'];
-            $_SESSION['municipioUsuario'] = $row['municipioUsuario'];
-            $_SESSION['coloniaUsuario'] = $row['coloniaUsuario'];
-            $_SESSION['codigoPostalUsuario'] = $row['codigoPostalUsuario'];
+            $_SESSION['calleUsuario'] = $row['calle'];
+            $_SESSION['estadoUsuario'] = $row['estado'];
+            $_SESSION['municipioUsuario'] = $row['municipio'];
+            $_SESSION['coloniaUsuario'] = $row['colonia'];
+            $_SESSION['codigoPostalUsuario'] = $row['codigo_postal'];
             $_SESSION['id_rol'] = $row['id_rol'];
             $_SESSION['login'] = true;
             $_SESSION['permisos'] = $this->getPermisos($row['id_rol']);
@@ -252,7 +252,7 @@ class UsuarioDAO extends Model implements CRUD
     public function readUserManagersGym()
     {
         require_once 'usuarioDTO.php';
-        $query = "SELECT usuario.id_usuario, usuario.nombreUsuario, usuario.apellidoPaternoUsuario, usuario.apellidoMaternoUsuario
+        $query = "SELECT usuario.id_usuario, usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno
         FROM usuario
         INNER JOIN rol ON usuario.id_rol = rol.id_rol
         WHERE rol.id_rol = " . self::roleManager;
@@ -261,9 +261,9 @@ class UsuarioDAO extends Model implements CRUD
             foreach ($this->db->consultar($query) as $key => $value) {
                 $usuario = new UsuarioDTO();
                 $usuario->id_usuario = $value['id_usuario'];
-                $usuario->nombreUsuario = $value['nombreUsuario'];
-                $usuario->apellidoPaternoUsuario = $value['apellidoPaternoUsuario'];
-                $usuario->apellidoMaternoUsuario = $value['apellidoMaternoUsuario'];
+                $usuario->nombreUsuario = $value['nombre'];
+                $usuario->apellidoPaternoUsuario = $value['apellido_paterno'];
+                $usuario->apellidoMaternoUsuario = $value['apellido_paterno'];
                 array_push($objUsuario, $usuario);
             }
         }else{
@@ -307,14 +307,14 @@ class UsuarioDAO extends Model implements CRUD
                 $cliente = new ClienteDTO();
                 $cliente->imagen_cliente = $value['imagen'];
                 $cliente->id_cliente = $value['id_usuario'];
-                $cliente->nombre_cliente = $value['nombreUsuario'];
-                $cliente->apellido_paterno_cliente = $value['apellidoPaternoUsuario'];
-                $cliente->apellido_materno_cliente = $value['apellidoMaternoUsuario'];
-                $cliente->numero_cliente = $value['telefonoUsuario'];
+                $cliente->nombre_cliente = $value['nombre'];
+                $cliente->apellido_paterno_cliente = $value['apellido_paterno'];
+                $cliente->apellido_materno_cliente = $value['apellido_materno'];
+                $cliente->numero_cliente = $value['telefono'];
                 $cliente->nombrePlanGym = $value['nombre_plan_sistema'];
                 $cliente->fecha_vencimiento = $value['vencimiento'];
-                $cliente->email_customer = $value['emailUsuario'];
-                $cliente->is_email_notified = $value['isEmailNotified'];
+                $cliente->email_customer = $value['email'];
+                $cliente->is_email_notified = $value['is_email_notified'];
                 $objCliente[$cliente->id_cliente] = $cliente;
             }
         }
@@ -329,7 +329,7 @@ class UsuarioDAO extends Model implements CRUD
             ':idUser' => $data['idUser'],
             ':password' => sha1($data['newPassword']),
         ];
-        $query ="UPDATE usuario SET passwordUsuario = :password WHERE id_usuario = :idUser";
+        $query ="UPDATE usuario SET password_usuario = :password WHERE id_usuario = :idUser";
         
         if ($this->db->ejecutarAccion($query, $arrayUpdate)) {
             echo "ok";

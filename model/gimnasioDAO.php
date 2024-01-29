@@ -59,7 +59,7 @@ class GimnasioDAO extends Model implements CRUD
             $gimnasio->nombre_gimnasio = $value['nombre_gimnasio'];
             $gimnasio->telefono = $value['telefono'];
             $gimnasio->imagen = $value['imagen'];
-            $gimnasio->fondoCredencial = $value['fondoCredencial'];
+            $gimnasio->fondoCredencial = $value['fondo_credencial'];
             array_push($objGimnasio, $gimnasio);
         }
         }
@@ -91,7 +91,7 @@ class GimnasioDAO extends Model implements CRUD
         );
 
         $queryUpdateUser = "UPDATE gimnasio SET 
-        fondoCredencial = :backgroundCredential
+        fondo_credencial = :backgroundCredential
         WHERE id_gimnasio = :id_gimnasio";
 
         if ($this->db->ejecutarAccion($queryUpdateUser, $insertData)) {

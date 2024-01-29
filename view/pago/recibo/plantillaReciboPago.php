@@ -51,8 +51,8 @@ function getPlantillaFront($clientePagoRecibo)
                 <tr>
                     <td class="datos_pago_tres">
                         <div>
-                            <p>Plan del gimnasio: <label>' . $clientePagoRecibo['nombrePlanGym'] . '</label></p>
-                            <p>Formato de pago: <label>' . $clientePagoRecibo['tipo_Pago'] . '</label></p>
+                            <p>Plan del gimnasio: <label>' . $clientePagoRecibo['nombre_plan_gym'] . '</label></p>
+                            <p>Formato de pago: <label>' . $clientePagoRecibo['tipo_pago'] . '</label></p>
                             <p>Cantidad: <label>' . $clientePagoRecibo['cantidad_pago'] . '</label></p>
                         </div>
                     </td>

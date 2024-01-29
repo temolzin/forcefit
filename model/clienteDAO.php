@@ -13,7 +13,7 @@ class ClienteDAO extends Model implements CRUD
     {
         $insertData = array(
             ':id_gimnasio'=> $data['id_gimnasio'],
-            ':id_planGym' =>$data['id_PlanGym'],
+            ':id_plan_gym' =>$data['id_PlanGym'],
             ':nombre_cliente' => $data['nombreCliente'],
             ':apellido_paterno_cliente' => $data['apellidoPaternoCliente'],
             ':apellido_materno_cliente' => $data['apellidoMaternoCliente'],
@@ -29,7 +29,7 @@ class ClienteDAO extends Model implements CRUD
         );
         $query ="INSERT INTO cliente values (NULL,
                 :id_gimnasio,
-                :id_planGym,
+                :id_plan_gym,
                 :nombre_cliente, 
                 :apellido_paterno_cliente, 
                 :apellido_materno_cliente, 
@@ -64,7 +64,7 @@ class ClienteDAO extends Model implements CRUD
         ];
         $query = $this->db->conectar()->prepare('UPDATE cliente SET 
             nombre_cliente = :nombre_cliente,
-            id_planGym = :id_planGym,
+            id_plan_gym = :id_planGym,
             apellido_paterno_cliente = :apellido_paterno_cliente,
             apellido_materno_cliente = :apellido_materno_cliente,
             municipio_cliente = :municipio_cliente,
@@ -113,21 +113,21 @@ class ClienteDAO extends Model implements CRUD
     public function readDataByIdUsuario($id_usuario)
     {
         require_once 'clienteDTO.php';
-        $query = "SELECT c.*, pg.nombrePlanGym,
+        $query = "SELECT c.*, pg.nombre_plan_gym,
             (CASE
             WHEN (SELECT MIN(ppgc.vencimiento) FROM pago_plan_gym_cliente ppgc WHERE ppgc.id_cliente = c.id_cliente AND ppgc.vencimiento > CURDATE()) IS NOT NULL THEN 1 ELSE 0
             END) as is_active
             FROM cliente AS c
             INNER JOIN usuario_gimnasio AS ug ON c.id_gimnasio = ug.id_gimnasio
-            INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
+            INNER JOIN plan_gym AS pg ON c.id_plan_gym = pg.id_plan_gym
             WHERE ug.id_usuario = " . $id_usuario;
         $objCliente = array();
         if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
         foreach ($this->db->consultar($query) as $key => $value) {
             $cliente = new ClienteDTO();
             $cliente->id_cliente = $value['id_cliente'];
-            $cliente->id_planGym = $value['id_planGym'];
-            $cliente->nombrePlanGym = $value['nombrePlanGym'];
+            $cliente->id_planGym = $value['id_plan_gym'];
+            $cliente->nombrePlanGym = $value['nombre_plan_gym'];
             $cliente->nombre_cliente = $value['nombre_cliente'];
             $cliente->apellido_paterno_cliente = $value['apellido_paterno_cliente'];
             $cliente->apellido_materno_cliente = $value['apellido_materno_cliente'];
@@ -147,7 +147,7 @@ class ClienteDAO extends Model implements CRUD
 
     public function readFullDataById(&$cliente, $id_cliente)
     {
-        $query = $this->db->conectar()->prepare("SELECT c.id_cliente, g.id_gimnasio, c.nombre_cliente, c.apellido_paterno_cliente, c.apellido_materno_cliente, c.municipio_cliente, c.colonia_cliente, c.calle_cliente, c.codigo_postal_cliente, c.numero_cliente, c.email_cliente, c.imagen_cliente, g.nombre_gimnasio, g.telefono, g.imagen, g.fondoCredencial
+        $query = $this->db->conectar()->prepare("SELECT c.id_cliente, g.id_gimnasio, c.nombre_cliente, c.apellido_paterno_cliente, c.apellido_materno_cliente, c.municipio_cliente, c.colonia_cliente, c.calle_cliente, c.codigo_postal_cliente, c.numero_cliente, c.email_cliente, c.imagen_cliente, g.nombre_gimnasio, g.telefono, g.imagen, g.fondo_credencial
         FROM cliente AS c INNER JOIN gimnasio g ON c.id_gimnasio = g.id_gimnasio WHERE c.id_cliente =:id_cliente");
 
         $query->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
@@ -183,12 +183,12 @@ class ClienteDAO extends Model implements CRUD
     {
         $objCliente = array();
         require_once 'clienteDTO.php';
-        $query = "SELECT DISTINCT c.*, pg.nombrePlanGym, ppg.vencimiento
+        $query = "SELECT DISTINCT c.*, pg.nombre_plan_gym, ppg.vencimiento
         FROM cliente AS c
-        INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
+        INNER JOIN plan_gym AS pg ON c.id_plan_gym = pg.id_plan_gym
         INNER JOIN pago_plan_gym_cliente AS ppg ON c.id_cliente = ppg.id_cliente
         WHERE ppg.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
-        AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio)
+        AND ppg.id_plan_gym IN (SELECT id_plan_gym FROM plan_gym WHERE id_gimnasio = $id_gimnasio)
         AND c.id_cliente NOT IN (
             SELECT id_cliente
             FROM pago_plan_gym_cliente
@@ -198,7 +198,7 @@ class ClienteDAO extends Model implements CRUD
             foreach ($this->db->consultar($query) as $key => $value) {
                 $cliente = new ClienteDTO();
                 $cliente->id_cliente = $value['id_cliente'];
-                $cliente->nombrePlanGym = $value['nombrePlanGym'];
+                $cliente->nombrePlanGym = $value['nombre_plan_gym'];
                 $cliente->nombre_cliente = $value['nombre_cliente'];
                 $cliente->apellido_paterno_cliente = $value['apellido_paterno_cliente'];
                 $cliente->apellido_materno_cliente = $value['apellido_materno_cliente'];

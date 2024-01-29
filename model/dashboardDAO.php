@@ -28,7 +28,7 @@ class DashboardDAO extends Model implements CRUD
 
         for ($i = 6; $i > -1; $i--) {
             $subtractDaysFromCurrentDate = date("Y-m-d", strtotime("-$i days"));
-            $queryWeekly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_gym_cliente WHERE id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND fecha_hora_pago LIKE '" . $subtractDaysFromCurrentDate . "%'";
+            $queryWeekly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_gym_cliente WHERE id_plan_gym IN (SELECT id_plan_gym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND fecha_hora_pago LIKE '" . $subtractDaysFromCurrentDate . "%'";
             if($id_gimnasio === ""){
                 $queryWeekly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_sistema WHERE fecha_hora_pago LIKE '" . $subtractDaysFromCurrentDate . "%'";
             }
@@ -38,7 +38,7 @@ class DashboardDAO extends Model implements CRUD
 
         for ($i = 11; $i > -1; $i--) {
             $subtractMonthsFromCurrentDate = date("Y-m", strtotime("-$i months"));
-            $queryMonthly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_gym_cliente WHERE id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND fecha_hora_pago LIKE '" . $subtractMonthsFromCurrentDate . "-%'";
+            $queryMonthly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_gym_cliente WHERE id_plan_gym IN (SELECT id_plan_gym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND fecha_hora_pago LIKE '" . $subtractMonthsFromCurrentDate . "-%'";
             if($id_gimnasio === ""){
                 $queryMonthly = "SELECT SUM(cantidad_pago) as cantidad FROM pago_plan_sistema WHERE fecha_hora_pago LIKE '" . $subtractMonthsFromCurrentDate . "-%'";
             }
@@ -81,13 +81,13 @@ class DashboardDAO extends Model implements CRUD
         require_once 'clienteDTO.php';
         require_once __DIR__ . '/../controller/emails/sendExpiredNotificationCustomer.php';
 
-        $query_get_clients = "SELECT DISTINCT c.*, pg.nombrePlanGym, ppg.vencimiento, g.*
+        $query_get_clients = "SELECT DISTINCT c.*, pg.nombre_plan_gym, ppg.vencimiento, g.*
         FROM cliente AS c
-        INNER JOIN plan_gym AS pg ON c.id_planGym = pg.id_planGym
+        INNER JOIN plan_gym AS pg ON c.id_plan_gym = pg.id_plan_gym
         INNER JOIN pago_plan_gym_cliente AS ppg ON c.id_cliente = ppg.id_cliente
         INNER JOIN gimnasio AS g ON c.id_gimnasio = g.id_gimnasio
         WHERE ppg.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
-        AND ppg.id_planGym IN (SELECT id_planGym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND (c.is_email_notified = 0 OR c.is_email_notified IS NULL)
+        AND ppg.id_plan_gym IN (SELECT id_plan_gym FROM plan_gym WHERE id_gimnasio = $id_gimnasio) AND (c.is_email_notified = 0 OR c.is_email_notified IS NULL)
         AND c.id_cliente NOT IN (
             SELECT id_cliente
             FROM pago_plan_gym_cliente
@@ -101,7 +101,7 @@ class DashboardDAO extends Model implements CRUD
                 $cliente->email_customer = $value['email_cliente'];
                 $cliente->nombre_cliente = $value['nombre_cliente'] . ' ' . $value['apellido_paterno_cliente'];
                 $cliente->fecha_vencimiento = $value['vencimiento'];
-                $cliente->nombrePlanGym = $value['nombrePlanGym'];
+                $cliente->nombrePlanGym = $value['nombre_plan_gym'];
                 $cliente->imagen_cliente = '' . $value['id_gimnasio'] . '/' . $value['imagen'];
                 $name_gym = ' en <strong>'.$value['nombre_gimnasio'];
 
@@ -114,7 +114,7 @@ class DashboardDAO extends Model implements CRUD
                         $values = array(
                             ':id_cliente' => $cliente->id_cliente
                         );
-                        $updateIsEmailNotified = $this->db->ejecutarAccion($queryUpdateUsEmailNotified, $values);
+                        $updateis_email_notified = $this->db->ejecutarAccion($queryUpdateUsEmailNotified, $values);
                     }
                 }
             }
@@ -136,7 +136,7 @@ class DashboardDAO extends Model implements CRUD
         INNER JOIN pago_plan_sistema as pps ON u.id_usuario = pps.id_usuario
         INNER JOIN plan_sistema as ps ON pps.id_plan_sistema = ps.id_plan_sistema
         WHERE pps.vencimiento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
-        AND (u.isEmailNotified = 0 OR u.isEmailNotified IS NULL)
+        AND (u.is_email_notified = 0 OR u.is_email_notified IS NULL)
         AND u.id_usuario NOT IN (
             SELECT id_usuario
             FROM pago_plan_sistema
@@ -147,8 +147,8 @@ class DashboardDAO extends Model implements CRUD
             foreach ($this->db->consultar($query_get_clients) as $key => $value) {
                 $cliente = new ClienteDTO();
                 $cliente->id_cliente = $value['id_usuario'];
-                $cliente->email_customer = $value['emailUsuario'];
-                $cliente->nombre_cliente = $value['nombreUsuario'] . ' ' . $value['apellidoPaternoUsuario'];
+                $cliente->email_customer = $value['email'];
+                $cliente->nombre_cliente = $value['nombre'] . ' ' . $value['apellido_paterno'];
                 $cliente->fecha_vencimiento = $value['vencimiento'];
                 $cliente->nombrePlanGym = $value['nombre_plan_sistema'];
                 $cliente->imagen_cliente = null;
@@ -157,7 +157,7 @@ class DashboardDAO extends Model implements CRUD
                 $result = $sendEmailToUser->sendEmailToCustomer($cliente, $name_gym);
 
                 if($result === true){
-                    $query_update_is_email_notified = "UPDATE usuario SET isEmailNotified = 1 WHERE id_usuario = :id_usuario";
+                    $query_update_is_email_notified = "UPDATE usuario SET is_email_notified = 1 WHERE id_usuario = :id_usuario";
                     $values = array(
                         ':id_usuario' => $cliente->id_cliente
                     );

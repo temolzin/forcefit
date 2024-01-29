@@ -12,7 +12,7 @@ class PagoSistema extends AbstractSeed
         $this->execute('SET FOREIGN_KEY_CHECKS=0;');
         $table = $this->table('pago_plan_sistema');
         $table->truncate();
-        $faker = Factory::create();
+        //$faker = Factory::create();
         $data = [
             [
 			    'id_pago' => 1,
@@ -21,7 +21,7 @@ class PagoSistema extends AbstractSeed
                 'cantidad_pago' => 3200,
                 'fecha_hora_pago' => '2023-08-16 22:36:00',
                 'vencimiento' => '2023-09-16',
-                'tipo_Pago' => 'Tranferencia',
+                'tipo_pago' => 'Tranferencia',
             ],
             [
 			    'id_pago' => 2,
@@ -30,7 +30,7 @@ class PagoSistema extends AbstractSeed
                 'cantidad_pago' => 15000,
                 'fecha_hora_pago' => '2023-08-16 22:36:42',
                 'vencimiento' => '2024-08-16',
-                'tipo_Pago' => 'Efectivo',
+                'tipo_pago' => 'Efectivo',
             ],
             [
 			    'id_pago' => 3,
@@ -39,7 +39,7 @@ class PagoSistema extends AbstractSeed
                 'cantidad_pago' => 2400,
                 'fecha_hora_pago' => '2023-08-16 22:37:10',
                 'vencimiento' => '2023-08-23',
-                'tipo_Pago' => 'Efectivo',
+                'tipo_pago' => 'Efectivo',
             ],
             [
 			    'id_pago' => 4,
@@ -48,11 +48,11 @@ class PagoSistema extends AbstractSeed
                 'cantidad_pago' => 2400,
                 'fecha_hora_pago' => '2023-08-16 22:37:10',
                 'vencimiento' => '2023-08-23',
-                'tipo_Pago' => 'Efectivo',
+                'tipo_pago' => 'Efectivo',
             ],
         ];
 
-        $existingUsuarios = $this->fetchAll('SELECT id_usuario FROM usuario WHERE id_rol = 2');
+       /* $existingUsuarios = $this->fetchAll('SELECT id_usuario FROM usuario WHERE id_rol = 2');
         for ($i = count($data) + 1; $i <= 40; $i++) {
             $fechaInicio = $faker->dateTimeBetween('now', '+2 months')->format('Y-m-d H:i:s');
             $fechaVencimiento = $faker->dateTimeBetween('now', '+1 month +1 day')->format('Y-m-d');
@@ -65,7 +65,7 @@ class PagoSistema extends AbstractSeed
                 'vencimiento' => $fechaVencimiento,
                 'tipo_Pago' => $faker->randomElement(['Transferencia', 'Efectivo', 'Tarjeta']),
             ];
-        }
+        }*/
 
         $table->insert($data)->save();
     }
