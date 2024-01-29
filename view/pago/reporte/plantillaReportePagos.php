@@ -59,9 +59,9 @@ function getPlantillaFront($cliente)
                     $plantillaFront .= '
                                         <tr>
                                             <td class="textcenter">' . $pago['id_pago'] . '</td>
-                                            <td class="textright">' . $pago['nombrePlanGym'] . '</td>
+                                            <td class="textright">' . $pago['nombre_´plan_gym'] . '</td>
                                             <td class="textright">' . $pago['fecha_hora_pago'] . '</td>			
-                                            <td class="textright">' . $pago['tipo_Pago'] . '</td>
+                                            <td class="textright">' . $pago['tipo_pago'] . '</td>
                                             <td class="textright">' . $pago['cantidad_pago'] . '</td>
                                         </tr>';
                 }

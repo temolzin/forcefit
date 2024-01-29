@@ -14,12 +14,12 @@ class Rol extends AbstractSeed
         $data = [
             [
                 'id_rol' => 1,
-                'nombreRol' => 'Administrador',
+                'nombre_rol' => 'Administrador',
                 'descripcion' => 'Encargado de administrar el sistema',
             ],
             [
                 'id_rol' => 2,
-                'nombreRol' => 'Gerente de gimnasio',
+                'nombre_rol' => 'Gerente de gimnasio',
                 'descripcion' => 'Encargado de administrar el gimnasio',
             ],
         ];

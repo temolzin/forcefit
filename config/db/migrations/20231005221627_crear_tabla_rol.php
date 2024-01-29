@@ -10,7 +10,7 @@ final class CrearTablaRol extends AbstractMigration
     {
         $table = $this->table('rol', ['id' => false, 'primary_key' => 'id_rol']);
         $table->addColumn('id_rol', 'integer', ['limit' => 11, 'identity' => true])
-              ->addColumn('nombreRol', 'string', ['limit' => 250, 'default' => null, 'null' => true])
+              ->addColumn('nombre_rol', 'string', ['limit' => 250, 'default' => null, 'null' => true])
               ->addColumn('descripcion', 'string', ['limit' => 250, 'default' => null, 'null' => true])
               ->save();
     }

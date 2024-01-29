@@ -8,7 +8,7 @@ class PagoDAO extends Model implements CRUD
 
     public function insert($data)
     {
-        $query = $this->db->conectar()->prepare('INSERT INTO pago_plan_gym_cliente (`id_pago`, `cantidad_pago`, `fecha_hora_pago`, `vencimiento`, `id_cliente`, `id_planGym`, `tipo_Pago`)
+        $query = $this->db->conectar()->prepare('INSERT INTO pago_plan_gym_cliente (`id_pago`, `cantidad_pago`, `fecha_hora_pago`, `vencimiento`, `id_cliente`, `id_plan_gym`, `tipo_pago`)
             values (null, 
             :cantidadPago,
             NOW(), 
@@ -42,8 +42,8 @@ class PagoDAO extends Model implements CRUD
             fecha_hora_pago = NOW(),
             vencimiento = :vencimientoPago, 
             id_cliente = :idCliente, 
-            id_planGym = :idPlanGym, 
-            tipo_Pago = :tipoPago
+            id_plan_gym = :idPlanGym,
+            tipo_pago = :tipoPago
             WHERE id_pago = :id_pago');
         $query->execute([
             ':id_pago' => $data['id_PagoActualizar'],
@@ -71,11 +71,11 @@ class PagoDAO extends Model implements CRUD
     public function readPagoByIdgimnasio($id_gimnasio)
     {
         require_once 'pagoDTO.php';
-        $query ="SELECT pg.id_pago, pg.id_cliente, pg.id_planGym, plg.nombrePlanGym, c.nombre_cliente, pg.cantidad_pago, pg.fecha_hora_pago, pg.vencimiento, pg.tipo_Pago
+        $query ="SELECT pg.id_pago, pg.id_cliente, pg.id_plan_gym, plg.nombre_plan_gym, c.nombre_cliente, pg.cantidad_pago, pg.fecha_hora_pago, pg.vencimiento, pg.tipo_pago
         FROM pago_plan_gym_cliente pg
         INNER JOIN cliente c ON pg.id_cliente = c.id_cliente
         INNER JOIN usuario_gimnasio ug ON c.id_gimnasio = ug.id_gimnasio
-        INNER JOIN plan_gym plg ON pg.id_planGym = plg.id_planGym
+        INNER JOIN plan_gym plg ON pg.id_plan_gym = plg.id_plan_gym
         WHERE ug.id_gimnasio = ".$id_gimnasio."";
         $objPago = array();
         if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
@@ -83,13 +83,13 @@ class PagoDAO extends Model implements CRUD
             $pago = new PagoDTO();
             $pago->id_pago = $value['id_pago'];
             $pago->id_cliente = $value['id_cliente'];
-            $pago->id_planGym = $value['id_planGym'];
-            $pago->nombrePlanGym = $value['nombrePlanGym'];
+            $pago->id_planGym = $value['id_plan_gym'];
+            $pago->nombrePlanGym = $value['nombre_plan_gym'];
             $pago->nombre_cliente = $value['nombre_cliente'];
             $pago->cantidad_pago = $value['cantidad_pago'];
             $pago->fecha_hora_pago = $value['fecha_hora_pago'];
             $pago->vencimiento = $value['vencimiento'];
-            $pago->tipo_Pago = $value['tipo_Pago'];
+            $pago->tipo_Pago = $value['tipo_pago'];
             array_push($objPago, $pago);
         }
         }
@@ -112,10 +112,10 @@ class PagoDAO extends Model implements CRUD
 
     public function getPaymentsByCustomerId(&$cliente, $id_cliente)
     {
-        $query = $this->db->conectar()->prepare("SELECT c.*, ppgc.*, pg.nombrePlanGym
+        $query = $this->db->conectar()->prepare("SELECT c.*, ppgc.*, pg.nombre_plan_gym
             FROM cliente AS c
             LEFT JOIN pago_plan_gym_cliente AS ppgc ON c.id_cliente = ppgc.id_cliente
-            LEFT JOIN plan_gym AS pg ON ppgc.id_planGym = pg.id_planGym
+            LEFT JOIN plan_gym AS pg ON ppgc.id_plan_gym = pg.id_plan_gym
             WHERE c.id_cliente = :id_cliente
         ");
 
@@ -128,10 +128,10 @@ class PagoDAO extends Model implements CRUD
 
     public function getCustomerPaymentDetails(&$clientePagoRecibo, $id_pago)
     {
-        $query = $this->db->conectar()->prepare("SELECT pp.*, c.*, pg.nombrePlanGym
+        $query = $this->db->conectar()->prepare("SELECT pp.*, c.*, pg.nombre_plan_gym
             FROM pago_plan_gym_cliente pp
             INNER JOIN cliente c ON pp.id_cliente = c.id_cliente
-            INNER JOIN plan_gym pg ON pp.id_planGym = pg.id_planGym
+            INNER JOIN plan_gym pg ON pp.id_plan_gym = pg.id_plan_gym
             WHERE pp.id_pago = :id_pago
         ");
 

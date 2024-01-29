@@ -202,20 +202,20 @@ $menu->footer();
             async: false,
             dataType: "json",
             success: function(data) {
-                var nameUser = $("#nameUser").val(data[0].nombreUsuario);
-                var lastNameP = $("#lastNameP").val(data[0].apellidoPaternoUsuario);
-                var lastNameM = $("#lastNameM").val(data[0].apellidoMaternoUsuario);
-                var emailUser = $("#emailUser").val(data[0].emailUsuario);
-                var streetUser = $("#streetUser").val(data[0].calleUsuario);
-                var stateUser = $("#stateUser").val(data[0].estadoUsuario);
-                var municipalityUser = $("#municipalityUser").val(data[0].municipioUsuario);
-                var colonyUser = $("#colonyUser").val(data[0].coloniaUsuario);
-                var postalcodeUser = $("#postalcodeUser").val(data[0].codigoPostalUsuario);
-                var nameRol = $("#nameRol").text(data[0].nombreRol);
+                var nameUser = $("#nameUser").val(data[0].nombre);
+                var lastNameP = $("#lastNameP").val(data[0].apellido_paterno);
+                var lastNameM = $("#lastNameM").val(data[0].apellido_materno);
+                var emailUser = $("#emailUser").val(data[0].email);
+                var streetUser = $("#streetUser").val(data[0].calle);
+                var stateUser = $("#stateUser").val(data[0].estado);
+                var municipalityUser = $("#municipalityUser").val(data[0].municipio);
+                var colonyUser = $("#colonyUser").val(data[0].colonia);
+                var postalcodeUser = $("#postalcodeUser").val(data[0].codigo_postal);
+                var nameRol = $("#nameRol").text(data[0].nombre_rol);
                 var descriptionRol = $("#descriptionRol").text(data[0].descripcion);
                 var imageUser = $("#imageUser").attr("src", '<?php echo constant('URL'); ?>public/usuario/' + data[0].id_usuario +  '/' + data[0].imagen);
-                var rolUser = $("#rolUser").val(data[0].nombreRol);
-                var fullNameUser = $("#fullNameUser").text(data[0].nombreUsuario + ' ' + data[0].apellidoPaternoUsuario + ' ' + data[0].apellidoMaternoUsuario);
+                var rolUser = $("#rolUser").val(data[0].nombre_rol);
+                var fullNameUser = $("#fullNameUser").text(data[0].nombre + ' ' + data[0].apellido_paterno + ' ' + data[0].apellido_materno);
             },
             error: function(xhr, status, error) {
                 console.error("Error " + error);

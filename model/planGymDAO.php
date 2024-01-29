@@ -9,18 +9,18 @@
         {
             $query = $this->db->conectar()->prepare('INSERT INTO plan_gym 
             values (
-                :id_planGym,
+                :id_plan_gym,
                 :id_gimnasio,
-                :nombrePlanGym,
-                :descripcionPlanGym, 
-                :costoPlanGym)');
+                :nombre_plan_gym,
+                :descripcion_plan_gym,
+                :costo_plan_gym)');
 
             $query->execute([
-                ':id_planGym' => null,
+                ':id_plan_gym' => null,
                 ':id_gimnasio' => $data['id_gimnasio'],
-                ':nombrePlanGym' => $data['nombrePlanGym'],
-                ':descripcionPlanGym' => $data['descripcionPlanGym'],
-                ':costoPlanGym' => $data['costoPlanGym']
+                ':nombre_plan_gym' => $data['nombrePlanGym'],
+                ':descripcion_plan_gym' => $data['descripcionPlanGym'],
+                ':costo_plan_gym' => $data['costoPlanGym']
             ]);
             echo 'ok';
         }
@@ -28,15 +28,15 @@
         public function update($data)
         {
             $query = $this->db->conectar()->prepare('UPDATE plan_gym SET  
-            nombrePlanGym = :nombrePlanGym, 
-            descripcionPlanGym = :descripcionPlanGym, 
-            costoPlanGym = :costoPlanGym 
-            WHERE id_planGym = :id_planGym');
+            nombre_plan_gym = :nombrePlanGym,
+            descripcion_plan_gym = :descripcionPlanGym,
+            costo_plan_gym = :costoPlanGym
+            WHERE id_plan_gym = :id_planGym');
 
             $query->execute([
                 ':id_planGym' => $data['id_planGymActualizar'],
                 ':nombrePlanGym' => $data['nombrePlanGym'],
-                ':descripcionPlanGym' => $data['descripcionPlanGym'], 
+                ':descripcionPlanGym' => $data['descripcionPlanGym'],
                 ':costoPlanGym' => $data['costoPlanGym']
             ]);
             echo 'ok';
@@ -44,7 +44,7 @@
 
         public function delete($id)
         {
-            $query = $this->db->conectar()->prepare('DELETE FROM plan_gym where id_planGym = :id_planGym');
+            $query = $this->db->conectar()->prepare('DELETE FROM plan_gym where id_plan_gym = :id_planGym');
             $query->execute([':id_planGym' => $id]);
             echo 'ok';
         }
@@ -62,10 +62,10 @@
             if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
             foreach ($this->db->consultar($query) as $key => $value) {
                 $planGym = new PlanGymDTO();
-                $planGym->id_planGym = $value['id_planGym'];
-                $planGym->nombrePlanGym = $value['nombrePlanGym'];
-                $planGym->descripcionPlanGym = $value['descripcionPlanGym'];
-                $planGym->costoPlanGym = $value['costoPlanGym'];
+                $planGym->id_planGym = $value['id_plan_gym'];
+                $planGym->nombrePlanGym = $value['nombre_plan_gym'];
+                $planGym->descripcionPlanGym = $value['descripcion_plan_gym'];
+                $planGym->costoPlanGym = $value['costo_plan_gym'];
                 $objplanGym[$planGym->id_planGym] = $planGym;
             }
             }
@@ -82,8 +82,8 @@
             if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
                 foreach ($this->db->consultar($query) as $key => $value) {
                     $planGym = new planGymDTO();
-                    $planGym->id_planGym = $value['id_planGym'];
-                    $planGym->nombrePlanGym = $value['nombrePlanGym'];
+                    $planGym->id_planGym = $value['id_plan_gym'];
+                    $planGym->nombrePlanGym = $value['nombre_plan_gym'];
                     array_push($objplanGym, $planGym);
                 }
             }else{

@@ -8,14 +8,14 @@ class RolDAO extends Model implements CRUD
 
     public function insert($data)
     {
-        $query = $this->db->conectar()->prepare('INSERT INTO rol values (:id_rol, :nombreRol, :descripcion)');
-        $query->execute([':id_rol' => null, ':nombreRol' => $data['nombreRol'], ':descripcion' => $data['descripcion']]);
+        $query = $this->db->conectar()->prepare('INSERT INTO rol values (:id_rol, :nombre_rol, :descripcion)');
+        $query->execute([':id_rol' => null, ':nombre_rol' => $data['nombreRol'], ':descripcion' => $data['descripcion']]);
         echo 'ok';
     }
 
     public function update($data)
     {
-        $query = $this->db->conectar()->prepare('UPDATE rol SET  nombreRol = :nombreRol, descripcion = :descripcion WHERE id_rol = :id_rol');
+        $query = $this->db->conectar()->prepare('UPDATE rol SET  nombre_rol = :nombreRol, descripcion = :descripcion WHERE id_rol = :id_rol');
         $query->execute([':id_rol' => $data['idRolActualizar'], ':nombreRol' => $data['nombreRol'], ':descripcion' => $data['descripcion']]);
         echo 'ok';
     }
@@ -36,7 +36,7 @@ class RolDAO extends Model implements CRUD
         foreach ($this->db->consultar($query) as $key => $value) {
             $rol = new RolDTO();
             $rol->id_rol = $value['id_rol'];
-            $rol->nombreRol = $value['nombreRol'];
+            $rol->nombreRol = $value['nombre_rol'];
             $rol->descripcion = $value['descripcion'];
             array_push($objRol, $rol);
         }

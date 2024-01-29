@@ -10,17 +10,17 @@ final class CrearTablaPagoPlanGym extends AbstractMigration
     {
         $table = $this->table('pago_plan_gym_cliente', ['id' => false, 'primary_key' => 'id_pago']);
         $table->addColumn('id_pago', 'integer', ['limit' => 11, 'identity' => true])
-              ->addColumn('id_planGym',  'integer', ['null' => false])
+              ->addColumn('id_plan_gym',  'integer', ['null' => false])
               ->addColumn('id_cliente',  'integer', ['null' => false])
               ->addColumn('cantidad_pago', 'integer', ['null' => true])
               ->addColumn('fecha_hora_pago', 'datetime', ['null' => true])
               ->addColumn('vencimiento', 'date', ['null' => true])
-              ->addColumn('tipo_Pago', 'string', ['limit' => 250, 'null' => true])
-              ->addIndex('id_planGym')
+              ->addColumn('tipo_pago', 'string', ['limit' => 250, 'null' => true])
+              ->addIndex('id_plan_gym')
               ->addIndex('id_cliente')
               ->save();
             
-        $table->addForeignKey('id_planGym', 'plan_gym', 'id_planGym');
+        $table->addForeignKey('id_plan_gym', 'plan_gym', 'id_plan_gym');
         $table->addForeignKey('id_cliente', 'cliente', 'id_cliente');
         $table->update();
 
