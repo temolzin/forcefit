@@ -68,6 +68,39 @@ class PagoDAO extends Model implements CRUD
 
     }
 
+    public function getPagoInfoByCliente($id_cliente)
+    {
+        require_once 'planGymDTO.php';
+        $query = "SELECT
+        c.nombre_cliente,
+        c.apellido_paterno_cliente,
+        g.nombre_gimnasio,
+        pg.id_plan_gym,
+        pg.nombre_plan_gym,
+        pg.costo_plan_gym
+        FROM
+        cliente c
+        JOIN
+        gimnasio g ON c.id_gimnasio = g.id_gimnasio
+        JOIN
+        plan_gym pg ON c.id_plan_gym = pg.id_plan_gym
+        WHERE
+        c.id_cliente = ".$id_cliente.";";
+        $result = array();
+        if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
+            foreach ($this->db->consultar($query) as $key => $value) {
+                $info = new PlanGymDTO();
+                $info->id_planGym = $value['id_plan_gym'];
+                $info->costoPlanGym = $value['costo_plan_gym'];
+                $info->nombrePlanGym = $value['nombre_plan_gym'];
+                array_push($result, $info);
+            }
+        }
+        $result = array_values($result);
+        return $result;
+    }
+
+
     public function readPagoByIdgimnasio($id_gimnasio)
     {
         require_once 'pagoDTO.php';
