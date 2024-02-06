@@ -7,13 +7,11 @@ function getPlantillaFront($cliente, $gimnasio)
         $pagos = array();
     }
 
-     // Validar los datos del gimnasio
+
     if (isset($gimnasio['details']) && is_array($gimnasio['details']) && !empty($gimnasio['details'])) {
-        // Puedes acceder a los detalles del gimnasio
         $nombreGimnasio = $gimnasio['details']['nombre_gimnasio'];
         $imagenGimnasio = $gimnasio['details']['imagen'];
     } else {
-        // En caso de que no haya detalles del gimnasio, proporciona valores predeterminados o maneja el error según tus necesidades
         $nombreGimnasio = 'Nombre de Gimnasio no disponible';
         $imagenGimnasio = 'public/img/forcefit.png';
     }
