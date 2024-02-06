@@ -123,13 +123,20 @@ class Pago extends Controller
 		require_once __DIR__ . '/../vendor/autoload.php';
 		$cliente = array();
 		$id_cliente = $_POST['idCliente'];
+
+		$gimnasio = array();
+		require 'model/gimnasioDAO.php';
+		$this->loadModel('GimnasioDAO');
+		$gimnasioDAO = new GimnasioDAO();
+		$gimnasioDAO->getGymInfoByCustomerId($gimnasio, $id_cliente);
+
 		require 'model/pagoDAO.php';
 		$this->loadModel('PagoDAO');
 		$pagoDAO = new PagoDAO();
 		$pagoDAO = $pagoDAO->getPaymentsByCustomerId($cliente, $id_cliente);
 		$css = file_get_contents('./public/css/reporte/stylesReportePagos.css');
 		$mpdf = new \Mpdf\Mpdf(['margin_left' => 0, 'margin_right' => 20, 'margin_top' => 0, 'margin_bottom' => 20,]);
-		$plantillaFront = getPlantillaFront($cliente);
+		$plantillaFront = getPlantillaFront($cliente, $gimnasio);
 		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
 		$mpdf->writeHtml($plantillaFront, \Mpdf\HTMLParserMode::HTML_BODY);
 		$mpdf->Output();
@@ -142,13 +149,20 @@ class Pago extends Controller
 
 		$clientePagoRecibo = array();
 		$id_pago = $_POST['id_pago'];
+
+		$gimnasio = array();
+		require 'model/gimnasioDAO.php';
+		$this->loadModel('GimnasioDAO');
+		$gimnasioDAO = new GimnasioDAO();
+		$gimnasioDAO->getGymInfoByCustomerId($gimnasio, $id_pago);
+
 		require 'model/pagoDAO.php';
 		$this->loadModel('PagoDAO');
 		$pagoDAO = new PagoDAO();
 		$pagoDAO = $pagoDAO->getCustomerPaymentDetails($clientePagoRecibo, $id_pago);
 		$css = file_get_contents('./public/css/recibo/styleReciboPago.css');
 		$mpdf = new \Mpdf\Mpdf([ 'margin_left' => 5, 'margin_right' => 20,'margin_top' => 5,'margin_bottom' => 20,]);
-		$plantillaFront= getPlantillaFront($clientePagoRecibo);
+		$plantillaFront= getPlantillaFront($clientePagoRecibo, $gimnasio);
 		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
 		$mpdf->writeHtml($plantillaFront,\Mpdf\HTMLParserMode::HTML_BODY);
 		$mpdf->Output();

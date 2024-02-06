@@ -1,22 +1,34 @@
 <?php
-function getPlantillaFront($cliente)
+function getPlantillaFront($cliente, $gimnasio)
 {
     if (isset($cliente['pagos']) && is_array($cliente['pagos']) && !empty($cliente['pagos'])) {
         $pagos = $cliente['pagos'];
     } else {
         $pagos = array();
     }
+
+     // Validar los datos del gimnasio
+    if (isset($gimnasio['details']) && is_array($gimnasio['details']) && !empty($gimnasio['details'])) {
+        // Puedes acceder a los detalles del gimnasio
+        $nombreGimnasio = $gimnasio['details']['nombre_gimnasio'];
+        $imagenGimnasio = $gimnasio['details']['imagen'];
+    } else {
+        // En caso de que no haya detalles del gimnasio, proporciona valores predeterminados o maneja el error según tus necesidades
+        $nombreGimnasio = 'Nombre de Gimnasio no disponible';
+        $imagenGimnasio = 'public/img/forcefit.png';
+    }
+    
     
     $plantillaFront = '
             <div id="page_pdf">
                 <div class="logo">
-                    <img src="public/img/logos/logotipoAzulBlanco.png">
+                    <img src="' . $imagenGimnasio . '" style="max-width: 200px;">
                 </div>
                 <table id="reporte_head">
                     <tr>
                         <td class="info_empresa">
                             <div>
-                                <a class="force_titulo" href="https://www.rootheim.com/">FORCE FIT</a><br>
+                                <a class="force_titulo" href="https://www.rootheim.com/">' . $nombreGimnasio . '</a><br>
                                 <a class="link_Whats" href="https://wa.me/525623640302">WhatsApp: +52 56 2364 0302</a><br>
                                 <a class="link_Email" href="mailto:info@rootheim.com">Email: info@rootheim.com</a>
                             </div>
@@ -59,7 +71,7 @@ function getPlantillaFront($cliente)
                     $plantillaFront .= '
                                         <tr>
                                             <td class="textcenter">' . $pago['id_pago'] . '</td>
-                                            <td class="textright">' . $pago['nombre_´plan_gym'] . '</td>
+                                            <td class="textright">' . $pago['nombre_plan_gym'] . '</td>
                                             <td class="textright">' . $pago['fecha_hora_pago'] . '</td>			
                                             <td class="textright">' . $pago['tipo_pago'] . '</td>
                                             <td class="textright">' . $pago['cantidad_pago'] . '</td>
