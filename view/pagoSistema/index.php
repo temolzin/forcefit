@@ -440,7 +440,29 @@ var mostrarPagoSistema = function() {
     obtenerdatosDT(tablePagoSistema);
 }
 
+var obtenerdatosDT = function(table) {
+    $('#dataTablePagoSistema tbody').on('click', 'tr', function() {
+        var data = table.row(this).data();
+        var idEliminar = $('#idEliminarPago').val(data.id_pago);
 
+        var id_pagoActualizar = $("#id_PagoActualizar").val(data.id_pago);
+        var vencimientoPagoActualizar = $("#vencimientoPagoActualizar").val(data.vencimiento);
+        var idUsuarioPagoActualizar = $("#idUsuarioPagoActualizar").val(data.id_usuario).trigger("change");
+        var idPlanSistemaActualizar = $("#idPlanSistemaActualizar").val(data.id_plan_sistema);
+        var cantidadPagoActualizar = $("#cantidadPagoActualizar").val(data.cantidadPago);
+        var tipoPagoActualizar = $("#tipoPagoActualizar").val(data.tipo_Pago);
+
+
+        var id_pagoConsultar = $("#id_pagoConsultar").val(data.id_pago);
+        var fechaPagoConsultar = $("#fechaPagoConsultar").val(data.fecha_hora_pago);
+        var vencimientoPagoConsultar = $("#vencimientoPagoConsultar").val(data.vencimiento);
+        var idUsuarioPagoConsultar = $("#idUsuarioPagoConsultar").val(data.nombreUsuario);
+        var cantidadPagoConsultar = $("#cantidadPagoConsultar").val(data.cantidadPago);
+        var idPlanSistemaConsultar = $("#idPlanSistemaConsultar").val(data.nombre_plan_sistema);
+        var formaPagoConsultar = $("#formaPagoConsultar").val(data.tipo_Pago);
+
+    });
+}
 
 var enviarFormularioRegistrar = function() {
     $.validator.setDefaults({
