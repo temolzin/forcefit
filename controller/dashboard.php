@@ -43,5 +43,24 @@ class Dashboard extends Controller
 		}
 		$dashboardDAO = $dashboardDAO->getClientsAboutMembershipExpiry($id_gimnasio);
 	}
+
+	function generateEarningsReport()
+	{
+        require_once( './view/dashboard/plantillaReporteIngresos.php');
+		require_once __DIR__ . '/../vendor/autoload.php';
+
+		$reporteGanancias = array();
+		$id_gimnasio = $_POST['id_gimnasio'];
+		require 'model/gimnasioDAO.php';
+		$this->loadModel('GimnasioDAO');
+		$gymDAO = new GimnasioDAO();
+		$gymDAO = $gymDAO->getDataGymReport($reporteGanancias, $id_gimnasio);
+		$css = file_get_contents('./public/css/recibo/styleReciboPago.css');
+		$mpdf = new \Mpdf\Mpdf([ 'margin_left' => 5, 'margin_right' => 20,'margin_top' => 5,'margin_bottom' => 20,]);
+		$plantillaFront= getPlantillaFront($reporteGanancias);
+		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+		$mpdf->writeHtml($plantillaFront,\Mpdf\HTMLParserMode::HTML_BODY);
+		$mpdf->Output();
+	}
 }
 ?>

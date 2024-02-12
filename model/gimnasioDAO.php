@@ -98,6 +98,37 @@ class GimnasioDAO extends Model implements CRUD
             echo "ok";
         }
     }
+
+    public function getDataGymReport(&$reporteGanancias, $id_gimnasio)
+    {
+        $query = $this->db->conectar()->prepare("SELECT
+        g.id_gimnasio,
+        g.nombre_gimnasio,
+        g.imagen,
+        MONTH(pgc.fecha_hora_pago) AS mes,
+        YEAR(pgc.fecha_hora_pago) AS anio,
+        SUM(pgc.cantidad_pago) AS ingresos_mensuales,
+        SUM(pgc.cantidad_pago) OVER (PARTITION BY YEAR(pgc.fecha_hora_pago)) AS ingresos_anuales
+        FROM
+            pago_plan_gym_cliente pgc
+        JOIN
+            plan_gym pg ON pgc.id_plan_gym = pg.id_plan_gym
+        JOIN
+            gimnasio g ON pg.id_gimnasio = g.id_gimnasio
+        WHERE
+            g.id_gimnasio = :id_gimnasio
+        GROUP BY
+            mes, anio, g.id_gimnasio
+        ORDER BY
+            anio DESC, mes DESC;
+        ");
+
+        $query->bindParam(':id_gimnasio', $id_gimnasio, PDO::PARAM_INT);
+        $query->execute();
+
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        $reporteGanancias = $data;
+    }
 }
 ?>
 
