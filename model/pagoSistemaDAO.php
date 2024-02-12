@@ -115,6 +115,29 @@
             $objPlanSistema = array_values($objPlanSistema);
             return $objPlanSistema;
         }
+        public function getUserPaymentDetails(&$usuarioPagoRecibo, $id_pago)
+        {
+            $query = $this->db->conectar()->prepare("SELECT pps.*, u.*, ps.nombre_plan_sistema, gim.id_gimnasio, gim.imagen, gim.nombre_gimnasio
+                FROM 
+                    pago_plan_sistema pps,
+                    usuario u,
+                    plan_sistema ps,
+                    usuario_gimnasio ug,
+                    gimnasio gim
+                WHERE 
+                    pps.id_pago = :id_pago
+                    AND gim.id_gimnasio = ug.id_gimnasio
+                    AND u.id_usuario = ug.id_usuario
+                    AND pps.id_usuario = u.id_usuario
+                    AND pps.id_plan_sistema = ps.id_plan_sistema;
+            ");
+
+            $query->bindParam(':id_pago', $id_pago, PDO::PARAM_INT);
+            $query->execute();
+            $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
+            $usuarioPagoRecibo = $resultados[0];
+        }
+
 
     }
 ?>

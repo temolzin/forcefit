@@ -78,7 +78,7 @@ $menu->header('pagoSistema');
                             <div class="card-body">
                                 <div class="row">
                                 <div class="card-body">
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="idUsuario">Usuario (*)</label>
                                         <select name="idUsuario" id="idUsuario" class="form-control pagoRegistrarUsuario" style="width: 100%;">
@@ -86,7 +86,7 @@ $menu->header('pagoSistema');
                                         </select>
                                       </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                     <div class="form-group">
                                       <label for="idPlanSistema">Plan del sistema (*)</label>
                                         <select name="idPlanSistema" id="idPlanSistema" class="form-control pagoRegistrarPlanSistema" style="width: 100%;">
@@ -94,7 +94,7 @@ $menu->header('pagoSistema');
                                         </select>
                                       </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <label>Cantidad (*)</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -103,13 +103,13 @@ $menu->header('pagoSistema');
                                             <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad del Pago">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                         <label>Fecha de vencimiento(*)</label>
                                             <input type="date" class="form-control" id="vencimientoPago"name="vencimientoPago" placeholder="Vencimiento de pago" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Tipo de pago (*)</label>
                                             <select name="tipoPago" id="tipoPago" class="form-control descripcion_pago">
@@ -423,7 +423,18 @@ var mostrarPagoSistema = function() {
     var tablePagoSistema = $('#dataTablePagoSistema').DataTable({
         "processing": true,
         "ajax": {
-            "url": "<?php echo constant('URL'); ?>pagoSistema/readTable"
+            "url": "<?php echo constant('URL'); ?>pagoSistema/readTable",
+            dataSrc: function (json) {
+            let customData = [];
+            json.data.forEach(element => {
+                customData = [...customData, {
+                    ...element, option: `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetallePagoSistema' title="Ver Detalles"><i class="fa fa-eye"></i></button>
+                                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarPagoSistema' title="Editar Datos"><i class="fa fa-edit"></i></button>
+                                         <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarPagoSistema' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
+                                         <button class='generar-recibo btn btn-secondary' data-id-pago="${element.id_pago}" title="Generar Recibo"><i class="fa fa-file-text-o"></i></button>`}]
+    })
+    return customData;
+}
         },
         "columns": [{
                 "data": "id_pago"
@@ -447,10 +458,7 @@ var mostrarPagoSistema = function() {
                 "data": "tipo_Pago"
             },
             {
-                data: null,
-                "defaultContent": `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetallePagoSistema' title="Ver Detalles"><i class="fa fa-eye"></i></button>
-                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarPagoSistema' title="Editar Datos"><i class="fa fa-edit"></i></button>
-                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarPagoSistema' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>`
+                data: "option",         
             }
         ],
         responsive: true,
@@ -671,5 +679,34 @@ var eliminarRegistro = function() {
             },
         });
     });
+    
+$(document).on('click', '.generar-recibo', function (event) {
+event.preventDefault();
+var id_pago = $(this).data('id-pago');
+var url = "<?php echo constant('URL'); ?>PagoSistema/generateReceipt";
+
+$.ajax({
+    type: "POST",
+    url: url,
+    xhrFields: {
+        responseType: 'blob'
+    },
+    data: {
+        id_pago: id_pago
+    },
+    success: function (json) {
+        var a = document.createElement('a');
+        var url = window.URL.createObjectURL(json);
+        a.href = url;
+        a.download = 'Recibo del pago.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+    },
+    error: function () {
+        console.error("Error al generar el recibo");
+    }
+    });
+});
+
 }
 </script>

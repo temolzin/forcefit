@@ -117,4 +117,21 @@ class PagoSistema extends Controller
 		$pagoSistemaDAO = $pagoSistemaDAO->readUserPlanDetails($idUsuario);
 		echo json_encode($pagoSistemaDAO);
     }
+	function generateReceipt()
+	{
+	    require_once( './view/pagoSistema/recibo/plantillaReciboPago.php');
+		require_once __DIR__ . '/../vendor/autoload.php';
+		$usuarioPagoRecibo = array();
+		$id_pago = $_POST['id_pago'];
+		require 'model/pagoSistemaDAO.php';
+		$this->loadModel('pagoSistemaDAO.php');
+		$pagoSistemaDAO = new pagoSistemaDAO();
+		$pagoSistemaDAO = $pagoSistemaDAO-> getUserPaymentDetails($usuarioPagoRecibo, $id_pago);
+		$css = file_get_contents('./public/css/recibo/styleReciboPago.css');
+		$mpdf = new \Mpdf\Mpdf([ 'margin_left' => 5, 'margin_right' => 20,'margin_top' => 5,'margin_bottom' => 20,]);
+		$plantillaFront= getPlantillaFront($usuarioPagoRecibo);
+		$mpdf->writeHtml($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+		$mpdf->writeHtml($plantillaFront,\Mpdf\HTMLParserMode::HTML_BODY);
+		$mpdf->Output();
+	}
 }
