@@ -107,4 +107,14 @@ class PagoSistema extends Controller
 		$planSistemaDAO = $planSistemaDAO->readSystemPlan();
 		echo json_encode($planSistemaDAO);
 	}
+
+    function readUserPlanDetails()
+    {
+		$idUsuario= $_POST["idUsuario"];
+		require 'model/pagoSistemaDAO.php';
+		$this->loadModel('pagoSistemaDAO');
+		$pagoSistemaDAO = new pagoSistemaDAO();
+		$pagoSistemaDAO = $pagoSistemaDAO->readUserPlanDetails($idUsuario);
+		echo json_encode($pagoSistemaDAO);
+    }
 }
