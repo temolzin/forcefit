@@ -78,22 +78,6 @@ $menu->header('pagoSistema');
                             <div class="card-body">
                                 <div class="row">
                                 <div class="card-body">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="idUsuario">Usuario (*)</label>
-                                        <select name="idUsuario" id="idUsuario" class="form-control pagoRegistrarUsuario" style="width: 100%;">
-                                          <option value="default">Seleccione el usuario</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                    <div class="form-group">
-                                      <label for="idPlanSistema">Plan del sistema (*)</label>
-                                        <select name="idPlanSistema" id="idPlanSistema" class="form-control pagoRegistrarPlanSistema" style="width: 100%;">
-                                          <option value="default">Seleccione plan del sistema</option>
-                                        </select>
-                                      </div>
-                                    </div>
                                     <div class="col-lg-4">
                                         <label>Cantidad (*)</label>
                                         <div class="input-group">
@@ -103,11 +87,27 @@ $menu->header('pagoSistema');
                                             <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad del Pago">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                         <label>Fecha de vencimiento(*)</label>
                                             <input type="date" class="form-control" id="vencimientoPago"name="vencimientoPago" placeholder="Vencimiento de pago" />
                                         </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                    <div class="form-group">
+                                    <label>Usuario(*)</label>
+                                    <select name="idUsuario" id="idUsuario" class="form-control pagoRegistrarUsuario" style="width:100%;">
+                                            <option value="default">Seleccione el usuario</option>
+                                     </select>
+                                    </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="form-group">
+                                    <label>Plan del sistema(*)</label>
+                                    <select name="idPlanSistema" id="idPlanSistema" class="form-control pagoRegistrarPlanSistema" style="width:100%;">
+                                            <option value="default">Seleccione plan del sistema</option>
+                                    </select>
+                                    </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -396,45 +396,11 @@ const llenarplanSistema = () => {
     });
 }
 
-$("#idUsuario").on("change", function() {
-  var userId = $(this).val();
-
-  $.ajax({
-    url: "<?php echo constant('URL'); ?>pagoSistema/readUserPlanDetails",
-    type: "POST",
-    data: { idUsuario: userId },
-    dataType: "json",
-    success: function(data) {
-      var id = data.id_plan_sistema;
-      var nombre = data.nombre_plan_sistema;
-      $("#cantidad").val(data[0].costo);
-      var planId = data[0].id_plan_sistema;
-      var planName = data[0].nombre_plan_sistema;
-      $("#idPlanSistema option[value='" + planId + "']").text(planName);
-      $("#idPlanSistema").val(planId);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.error("AJAX error:", textStatus, errorThrown);
-    }
-  });
-});
-
 var mostrarPagoSistema = function() {
     var tablePagoSistema = $('#dataTablePagoSistema').DataTable({
         "processing": true,
         "ajax": {
-            "url": "<?php echo constant('URL'); ?>pagoSistema/readTable",
-            dataSrc: function (json) {
-            let customData = [];
-            json.data.forEach(element => {
-                customData = [...customData, {
-                    ...element, option: `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetallePagoSistema' title="Ver Detalles"><i class="fa fa-eye"></i></button>
-                                         <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarPagoSistema' title="Editar Datos"><i class="fa fa-edit"></i></button>
-                                         <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarPagoSistema' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
-                                         <button class='generar-recibo btn btn-secondary' data-id-pago="${element.id_pago}" title="Generar Recibo"><i class="fa fa-file-text-o"></i></button>`}]
-    })
-    return customData;
-}
+            "url": "<?php echo constant('URL'); ?>pagoSistema/readTable"
         },
         "columns": [{
                 "data": "id_pago"
@@ -458,7 +424,10 @@ var mostrarPagoSistema = function() {
                 "data": "tipo_Pago"
             },
             {
-                data: "option",         
+                data: null,
+                "defaultContent": `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetallePagoSistema' title="Ver Detalles"><i class="fa fa-eye"></i></button>
+                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarPagoSistema' title="Editar Datos"><i class="fa fa-edit"></i></button>
+                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarPagoSistema' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>`
             }
         ],
         responsive: true,
@@ -472,29 +441,6 @@ var mostrarPagoSistema = function() {
 }
 
 
-var obtenerdatosDT = function(table) {
-    $('#dataTablePagoSistema tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var idEliminar = $('#idEliminarPago').val(data.id_pago);
-
-        var id_pagoActualizar = $("#id_PagoActualizar").val(data.id_pago);
-        var vencimientoPagoActualizar = $("#vencimientoPagoActualizar").val(data.vencimiento);
-        var idUsuarioPagoActualizar = $("#idUsuarioPagoActualizar").val(data.id_usuario).trigger("change");
-        var idPlanSistemaActualizar = $("#idPlanSistemaActualizar").val(data.id_plan_sistema);
-        var cantidadPagoActualizar = $("#cantidadPagoActualizar").val(data.cantidadPago);
-        var tipoPagoActualizar = $("#tipoPagoActualizar").val(data.tipo_Pago);
-
-
-        var id_pagoConsultar = $("#id_pagoConsultar").val(data.id_pago);
-        var fechaPagoConsultar = $("#fechaPagoConsultar").val(data.fecha_hora_pago);
-        var vencimientoPagoConsultar = $("#vencimientoPagoConsultar").val(data.vencimiento);
-        var idUsuarioPagoConsultar = $("#idUsuarioPagoConsultar").val(data.nombreUsuario);
-        var cantidadPagoConsultar = $("#cantidadPagoConsultar").val(data.cantidadPago);
-        var idPlanSistemaConsultar = $("#idPlanSistemaConsultar").val(data.nombre_plan_sistema);
-        var formaPagoConsultar = $("#formaPagoConsultar").val(data.tipo_Pago);
-
-    });
-}
 
 var enviarFormularioRegistrar = function() {
     $.validator.setDefaults({

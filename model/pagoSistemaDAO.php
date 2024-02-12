@@ -87,34 +87,7 @@
             $objpagoSistema = array_values($objpagoSistema);
             return $objpagoSistema;
         }
-
-        public function readUserPlanDetails($idUsuario)
-        {
-            require_once 'pagoSistemaDTO.php';
-            $query = "SELECT
-                        usuario.nombre,
-                        plan_sistema.id_plan_sistema,
-                        plan_sistema.nombre_plan_sistema,
-                        plan_sistema.costo
-                    FROM usuario
-                    INNER JOIN usuario_gimnasio ON usuario.id_usuario = usuario_gimnasio.id_usuario
-                    INNER JOIN plan_sistema ON usuario_gimnasio.id_plan_sistema = plan_sistema.id_plan_sistema
-                    WHERE usuario.id_usuario = " . $idUsuario . " ";
-
-            $objPlanSistema = array();
-            if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
-                foreach ($this->db->consultar($query) as $key => $value) {
-                    $pago = new pagoSistemaDTO();
-                    $pago->id_plan_sistema = $value['id_plan_sistema'];
-                    $pago->nombre_plan_sistema = $value['nombre_plan_sistema'];
-                    $pago->costo = $value['costo'];
-                    array_push($objPlanSistema, $pago);
-                }
-            }
-
-            $objPlanSistema = array_values($objPlanSistema);
-            return $objPlanSistema;
-        }
+        
         public function getUserPaymentDetails(&$usuarioPagoRecibo, $id_pago)
         {
             $query = $this->db->conectar()->prepare("SELECT pps.*, u.*, ps.nombre_plan_sistema, gim.id_gimnasio, gim.imagen, gim.nombre_gimnasio
