@@ -107,7 +107,7 @@ $menu->footer();
 
 $(document).on('click', '#generarReporte', function (event) {
     event.preventDefault();
-    var id_gimnasio = $(this).val();
+    var id_usuario = "<?php echo $_SESSION['id_usuario']; ?>"
     var url = "<?php echo constant('URL'); ?>dashboard/generateEarningsReport";
 
     $.ajax({
@@ -117,7 +117,7 @@ $(document).on('click', '#generarReporte', function (event) {
             responseType: 'blob'
         },
         data: {
-            id_gimnasio: id_gimnasio
+            id_usuario: id_usuario
         },
         success: function (json) {
             var a = document.createElement('a');
