@@ -33,19 +33,19 @@ function getPlantillaFront($reporteGanancias)
     $ingresosPorMes = array();
 
     foreach ($reporteGanancias as $value) {
-        $ano = $value['ano'];
+        $anio = $value['anio'];
         $mes = $value['mes'];
         $ingresosMes = $value['ingresos_mes'];
 
-        if (!isset($ingresosPorMes[$ano])) {
-            $ingresosPorMes[$ano] = array();
+        if (!isset($ingresosPorMes[$anio])) {
+            $ingresosPorMes[$anio] = array();
         }
 
-        if (!isset($ingresosPorMes[$ano][$mes])) {
-            $ingresosPorMes[$ano][$mes] = 0;
+        if (!isset($ingresosPorMes[$anio][$mes])) {
+            $ingresosPorMes[$anio][$mes] = 0;
         }
 
-        $ingresosPorMes[$ano][$mes] += $ingresosMes;
+        $ingresosPorMes[$anio][$mes] += $ingresosMes;
     }
 
     $plantillaFront .= '<table class="ganancias" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
@@ -67,14 +67,14 @@ function getPlantillaFront($reporteGanancias)
 
     foreach ($reporteGanancias as $value) {
         $plantillaFront .= '<tr>';
-        $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $value['ano'] . '</td>';
+        $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $value['anio'] . '</td>';
 
         for ($i = 1; $i <= 12; $i++) {
-            $ingresosMes = isset($ingresosPorMes[$value['ano']][$i]) ? $ingresosPorMes[$value['ano']][$i] : 0;
+            $ingresosMes = isset($ingresosPorMes[$value['anio']][$i]) ? $ingresosPorMes[$value['anio']][$i] : 0;
             $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $ingresosMes . '</td>';
         }
 
-        $totalAnual = array_sum($ingresosPorMes[$value['ano']]);
+        $totalAnual = array_sum($ingresosPorMes[$value['anio']]);
         $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $totalAnual . '</td>';
         $plantillaFront .= '</tr>';
 
@@ -116,6 +116,8 @@ function obtenerNombreMes($mes)
     );
 
     return $meses[$mes];
+    
 }
+
 
 ?>

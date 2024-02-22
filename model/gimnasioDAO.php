@@ -103,7 +103,7 @@ class GimnasioDAO extends Model implements CRUD
     {
         $query = "SELECT 
     g.nombre_gimnasio,
-    YEAR(ppgc.fecha_hora_pago) AS ano,
+    YEAR(ppgc.fecha_hora_pago) AS anio,
     MONTH(ppgc.fecha_hora_pago) AS mes,
     SUM(ppgc.cantidad_pago) AS ingresos_mes,
     gi.imagen AS logo_gimnasio
@@ -122,7 +122,7 @@ class GimnasioDAO extends Model implements CRUD
     GROUP BY 
         g.nombre_gimnasio, YEAR(ppgc.fecha_hora_pago), MONTH(ppgc.fecha_hora_pago)
     ORDER BY 
-        ano DESC, mes DESC;";
+        anio DESC, mes DESC;";
 
             $stmt = $this->db->conectar()->prepare($query);
             $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
