@@ -11,7 +11,7 @@ class DetallesVenta extends AbstractSeed
     public function run(): void
     {
         $this->execute('SET FOREIGN_KEY_CHECKS=0;');
-        $table = $this->table('ventas');
+        $table = $this->table('detalles_venta');
         $table->truncate();
         $data = [
             ['id_venta' => 1, 'id_producto' => 1, 'Cantidad' => 2, 'Precio_Unitario' => 74.99, 'Subtotal' => 149.98],
