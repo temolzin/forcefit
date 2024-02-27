@@ -17,8 +17,11 @@ final class CrearTablaProductos extends AbstractMigration
             ->addColumn('Stock', 'integer', ['limit' => 11, 'default' => null, 'null' => true])
             ->addColumn('Imagen_Producto', 'text', ['default' => null, 'null' => true])
             ->addColumn('id_categoria', 'integer', ['limit' => 11, 'default' => null, 'null' => true])
+            ->addColumn('id_gimnasio', 'integer', ['limit' => 11, 'default' => null, 'null' => true])
             ->addIndex('id_categoria')
+            ->addIndex('id_gimnasio') 
             ->addForeignKey('id_categoria', 'categoria', 'id_categoria', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+            ->addForeignKey('id_gimnasio', 'gimnasio', 'id_gimnasio', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
             ->addIndex(['id_producto'], ['unique' => true])
             ->save();
 
