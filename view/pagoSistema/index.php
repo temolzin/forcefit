@@ -400,8 +400,25 @@ var mostrarPagoSistema = function() {
     var tablePagoSistema = $('#dataTablePagoSistema').DataTable({
         "processing": true,
         "ajax": {
-            "url": "<?php echo constant('URL'); ?>pagoSistema/readTable"
-        },
+            "url": "<?php echo constant('URL'); ?>pagoSistema/readTable",
+            dataSrc: function (json) {
+               let customData = [];
+               json.data.forEach(element => {
+                   customData = [
+                       ...customData,
+                       {
+                           ...element,
+                           option: `
+                               <button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetallePagoSistema' title="Ver Detalles"><i class="fa fa-eye"></i></button>
+                               <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarPagoSistema' title="Editar Datos"><i class="fa fa-edit"></i></button>
+                               <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarPagoSistema' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>
+                               <button class='generar-recibo btn btn-secondary' data-id-pago="${element.id_pago}" title="Generar Recibo"><i class="fa fa-file-text-o"></i></button>`
+                       }
+                   ];
+                 })
+               return customData;
+               }
+    },
         "columns": [{
                 "data": "id_pago"
             },
@@ -424,10 +441,7 @@ var mostrarPagoSistema = function() {
                 "data": "tipo_Pago"
             },
             {
-                data: null,
-                "defaultContent": `<button class='consulta btn btn-primary' data-toggle='modal' data-target='#modalDetallePagoSistema' title="Ver Detalles"><i class="fa fa-eye"></i></button>
-                        <button class='editar btn btn-warning' data-toggle='modal' data-target='#modalActualizarPagoSistema' title="Editar Datos"><i class="fa fa-edit"></i></button>
-                        <button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarPagoSistema' title="Eliminar Registro"><i class="fa fa-trash-o"></i></button>`
+                data: "option",
             }
         ],
         responsive: true,
