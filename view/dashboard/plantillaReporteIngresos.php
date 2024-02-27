@@ -75,15 +75,15 @@ function getPlantillaFront($reporteGanancias)
         }
 
         $totalAnual = array_sum($ingresosPorMes[$value['anio']]);
-        $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $totalAnual . '</td>';
+        $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;"><b>' . $totalAnual . '</b></td>';
         $plantillaFront .= '</tr>';
 
         $totalGeneral += $totalAnual;
     }
 
     $plantillaFront .= '<tr style="background-color: #f2f2f2;">';
-    $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;" colspan="13">Total General</td>';
-    $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $totalGeneral . '</td>';
+    $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;" colspan="13"><b>Total General</b></td>';
+    $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;"><b>' . $totalGeneral . '</b></td>';
     $plantillaFront .= '</tr>';
 
     $plantillaFront .= '</tbody></table>';
@@ -116,7 +116,7 @@ function obtenerNombreMes($mes)
     );
 
     return $meses[$mes];
-    
+
 }
 
 
