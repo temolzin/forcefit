@@ -9,6 +9,9 @@ $menu->header('dashboard');
         <div class="title_left">
             <h3>Dashboard</h3>
         </div>
+        <div class="title_right text-right">
+            <button class="btn btn-primary" id="generarReporte">Reporte de Ingresos</button>
+        </div>
     </div>
     <div class="clearfix"></div>
     <!-- Charts -->
@@ -101,6 +104,35 @@ $menu->footer();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <script>
+
+$(document).on('click', '#generarReporte', function (event) {
+    event.preventDefault();
+    var id_usuario = "<?php echo $_SESSION['id_usuario']; ?>"
+    var url = "<?php echo constant('URL'); ?>dashboard/generateEarningsReport";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        xhrFields: {
+            responseType: 'blob'
+        },
+        data: {
+            id_usuario: id_usuario
+        },
+        success: function (json) {
+            var a = document.createElement('a');
+            var url = window.URL.createObjectURL(json);
+            a.href = url;
+            a.download = 'Reporte de Ganancias.pdf';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        },
+        error: function () {
+            console.error("Error generando el reporte");
+        }
+    });
+});
+
     var tableCliente;
     $(document).ready(function() {
         getMonthlyAndWeeklyRevenueData();
