@@ -15,6 +15,7 @@ final class CrearTablaCategoria extends AbstractMigration
             ->addColumn('nombre', 'string', ['limit' => 250, 'default' => null, 'null' => true])
             ->addColumn('descripcion', 'string', ['limit' => 250, 'default' => null, 'null' => true])
             ->addIndex(['id_categoria'], ['unique' => true])
+            ->addForeignKey('id_gimnasio', 'gimnasio', 'id_gimnasio', ['delete'=> 'CASCADE', 'update'=> 'CASCADE'])
             ->save();
 
     }
