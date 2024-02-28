@@ -96,6 +96,16 @@ class Pago extends Controller
 		echo json_encode($obj);
     }
 
+	function getPagoInfoByCliente()
+	{
+		$id_cliente = $_POST['idCliente'];
+		require 'model/pagoDAO.php';
+		$this->loadModel('PagoDAO');
+		$pagoDAO = new PagoDAO();
+        $pagoDAO = $pagoDAO->getPagoInfoByCliente($id_cliente);
+        echo json_encode($pagoDAO);
+	}
+
     function readClientes()
 	{
 		$id_usuario= $_GET["id_user"];
