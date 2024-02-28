@@ -1,6 +1,14 @@
 <?php
-function getPlantillaFront($clientePagoRecibo)
+function getPlantillaFront($clientePagoRecibo, $gimnasio)
 {
+
+    if (isset($gimnasio['details']) && is_array($gimnasio['details']) && !empty($gimnasio['details'])) {
+        $nombreGimnasio = $gimnasio['details']['nombre_gimnasio'];
+        $imagenGimnasio = $gimnasio['details']['imagen_gimnasio'];
+    } else {
+        $nombreGimnasio = 'Nombre de Gimnasio no disponible';
+        $imagenGimnasio = 'public/img/forcefit.png';
+    }
 
     $plantillaFront = '
         <div id="page_pdf">
@@ -8,12 +16,12 @@ function getPlantillaFront($clientePagoRecibo)
                 <tr>
                     <td>
                         <div>
-                            <img src="public/img/forcefit.png" style="max-width: 200px;">
+                            <img src="'.$imagenGimnasio.'" style="max-width: 200px;">
                         </div>
                     </td>
                     <td class="info_empresa">
                         <div>
-                            <a class="force_titulo" href="https://www.rootheim.com/">FORCE FIT</a><br>
+                            <a class="force_titulo" href="https://www.rootheim.com/">'.$nombreGimnasio.'</a><br>
                             <a class="link_Whats" href="https://wa.me/525623640302">WhatsApp: +52 56 2364 0302</a><br>
                             <a class="link_Email" href="mailto:info@rootheim.com">Email: info@rootheim.com</a>
                         </div>

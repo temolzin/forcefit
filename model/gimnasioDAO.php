@@ -98,6 +98,37 @@ class GimnasioDAO extends Model implements CRUD
             echo "ok";
         }
     }
+    
+    public function getGymInfoByCustomerId(&$gimnasio, $id_cliente)
+    {
+        $query = $this->db->conectar()->prepare("SELECT g.*
+            FROM cliente AS c
+            JOIN gimnasio AS g ON c.id_gimnasio = g.id_gimnasio
+            WHERE c.id_cliente = :id_cliente
+        ");
+
+        $query->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+        $query->execute();
+
+        $resultado = $query->fetch(PDO::FETCH_ASSOC);
+        $gimnasio['details'] = $resultado;
+    }
+
+    public function getGymInfoByPayment(&$gimnasio, $id_pago)
+    {
+        $query = $this->db->conectar()->prepare("SELECT g.*
+            FROM cliente AS c
+            JOIN gimnasio AS g ON c.id_gimnasio = g.id_gimnasio
+            JOIN pago_plan_gym_cliente AS pgc ON c.id_cliente = pgc.id_cliente
+            WHERE pgc.id_pago = :id_pago;
+        ");
+
+        $query->bindParam(':id_pago', $id_pago, PDO::PARAM_INT);
+        $query->execute();
+
+        $resultado = $query->fetch(PDO::FETCH_ASSOC);
+        $gimnasio['details'] = $resultado;
+    }
 }
 ?>
 
