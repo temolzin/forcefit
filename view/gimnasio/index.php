@@ -531,7 +531,7 @@ $menu->footer();
                         if ($('#imagen').val() != null) {
                             imagen = $('#imagen').prop('files')[0];
                         } else {
-                            imagen = "img/default-profile.jpg";
+                            imagen = "images/default-profile.jpg";
                         }
                         form_data.append('imagen', imagen);
                         form_data.append('fondoCredencial', $('#fondoCredencial').prop('files')[0]);
