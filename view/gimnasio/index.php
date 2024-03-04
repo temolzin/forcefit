@@ -344,7 +344,7 @@ $menu->header('gimnasio');
                     <div class="card-body">
                         <div class="row">
                             <div class="mx-auto d-inline-block photo-container" style="width: 150px; height: 150px; margin-bottom: 10px; overflow: hidden;">
-                                <img src="" alt="gimnasio" id="imgPreviewBackground" class="img-fluid" onerror="handleErrorImage(this);" style="max-height: 100%;">
+                                <img src="" alt="gimnasio" id="imgPreviewBackground" class="img-fluid" onerror="handleErrorImageBackground(this);" style="max-height: 100%;">
                             </div>
                             <div class="col-lg-12">
                                 <input type="text" hidden class="form-control" id="idGymUpdateBackground" name="idGymUpdateBackground" placeholder="Id" />
@@ -467,6 +467,11 @@ $menu->footer();
     function handleErrorImage(image) {
         image.src = '<?php echo constant('URL'); ?>public/img/forcefit.png';
     }
+    
+    function handleErrorImageBackground(imageBackground) {
+        imageBackground.src  = '<?php echo constant('URL'); ?>public/img/fondoCredencial.png';
+    }
+
 
     function previewImage(event, querySelector) {
         const input = event.target;
