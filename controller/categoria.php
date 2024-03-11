@@ -19,11 +19,6 @@ Class Categoria extends Controller
 
 	public function insert()
 	{
-		if (!isset($_POST['id_gimnasio'], $_POST['nombre'], $_POST['descripcion'])) {
-			echo 'Error: Uno o más índices no están definidos en $_POST.';
-			return;
-		}
-		
 		$id_gimnasio = $_POST['id_gimnasio'];
 		$nombre = $_POST['nombre'];
 		$descripcion = $_POST['descripcion'];
@@ -37,14 +32,9 @@ Class Categoria extends Controller
 		require 'model/categoriaDAO.php';
 		$this->loadModel('CategoriaDAO');
 		$categoriaDAO = new CategoriaDAO();
-		
-		try {
-			$categoriaDAO->insert($data);
-			echo 'ok';
-		} catch (PDOException $e) {
-			echo 'Error al registrar la categoría. Detalles: ' . $e->getMessage();
-		}
+		$categoriaDAO->insert($data);
 	}
+
 	function update()
 	{
 		$nombre = $_POST['nombreActualizar'];

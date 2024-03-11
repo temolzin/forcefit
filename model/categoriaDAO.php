@@ -9,14 +9,17 @@ class CategoriaDAO extends Model implements CRUD
     public function insert($data)
     {
         $query = $this->db->conectar()->prepare('INSERT INTO categoria 
-        (id_gimnasio, nombre, descripcion) 
-        VALUES (:id_gimnasio, :nombre, :descripcion)');
-        
-        $query->execute([
+        VALUES (NULL, :id_gimnasio, :nombre, :descripcion)');
+
+        if (!$query->execute([
             ':id_gimnasio' => $data['id_gimnasio'],
             ':nombre' => $data['nombre'],
             ':descripcion' => $data['descripcion']
-        ]);
+        ])) {
+            echo 'Error al ejecutar la consulta: ' . $query->errorInfo()[2];
+            return;
+        }
+        echo 'ok';
     }
 
     public function update($data)
@@ -31,7 +34,6 @@ class CategoriaDAO extends Model implements CRUD
             ':nombre' => $data['nombre'],
             ':descripcion' => $data['descripcion']
         ]);
-
         echo 'ok';
     }
 
@@ -50,10 +52,8 @@ class CategoriaDAO extends Model implements CRUD
     {
         require_once 'categoriaDTO.php';
 
-        $query = "SELECT c.* FROM categoria c 
-                JOIN usuario_gimnasio ug ON c.id_gimnasio = ug.id_gimnasio
-                WHERE ug.id_gimnasio = " . $id_gimnasio;
-
+        $query = "SELECT c.* FROM categoria c JOIN usuario_gimnasio ug ON c.id_gimnasio = ug.id_gimnasio
+        WHERE ug.id_gimnasio =".$id_gimnasio." ";
         $objCategoria = array();
 
         if (is_array($this->db->consultar($query)) || is_object($this->db->consultar($query))) {
@@ -62,19 +62,17 @@ class CategoriaDAO extends Model implements CRUD
                 $categoria->id_categoria = $value['id_categoria'];
                 $categoria->nombre = $value['nombre'];
                 $categoria->descripcion = $value['descripcion'];
-
                 array_push($objCategoria, $categoria);
             }
         } else {
             $objCategoria = null;
         }
-
         return $objCategoria;
     }
 
     public function readCategoriaByIdGimnasio($id_gimnasio)
         {
-            require_once 'planGymDTO.php';
+            require_once 'categoriaDTO.php';
             $query = "SELECT * FROM categoria
             WHERE id_gimnasio = ".$id_gimnasio." ";
             $objcategoria = array();

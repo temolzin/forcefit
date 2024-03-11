@@ -105,24 +105,24 @@ $menu->header('categoria');
 </div>
 
 <!--------------------------------------------------------- Modal Actualizar----------------------------------------------->
-<div class="modal fade" id="modalActualizarPlanGym" tabindex="-1" role="dialog" aria-labelledby="modalActualizarPlanGym"
+<div class="modal fade" id="modalActualizarCategoria" tabindex="-1" role="dialog" aria-labelledby="modalActualizarCategoria"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="card-warning">
                 <div class="card-header">
                     <div class="d-sm-flex align-items-center justify-content-between ">
-                        <h4 class="card-title">Plan del Gimnasio <small> &nbsp;(*) Campos requeridos</small></h4>
+                        <h4 class="card-title">Categoria <small> &nbsp;(*) Campos requeridos</small></h4>
                         <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
                             aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                 </div>
-                <form role="form" id="formActualizarPlanGym" enctype="multipart/form-data" name="formActualizarPlanGym"
+                <form role="form" id="formActualizarCategoria" enctype="multipart/form-data" name="formActualizarCategoria"
                     method="post">
                     <div class="card-body">
                         <div class="card">
                             <div class="card-header py-2 bg-secondary">
-                                <h3 class="card-title">Datos del Plan</h3>
+                                <h3 class="card-title">Datos de la categoria</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fa fa-minus"></i></button>
@@ -134,28 +134,16 @@ $menu->header('categoria');
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>Id (*)</label>
-                                                <input type="text" class="form-control" id="id_planGymActualizar"
-                                                    name="id_planGymActualizar" placeholder="Id" />
+                                                <input type="text" class="form-control" id="idCategoriaActualizar"
+                                                    name="idCategoriaActualizar" placeholder="Id" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Nombre (*)</label>
-                                            <input type="text" class="form-control" id="nombrePlanGymActualizar"
-                                                name="nombrePlanGymActualizar" placeholder="Nombre del plan" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Costo (*)</label>
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" id="costoPlanGymActualizar"
-                                                    name="costoPlanGymActualizar" placeholder="Costo del plan" />
-                                            </div>
+                                            <input type="text" class="form-control" id="nombreActualizar"
+                                                name="nombreActualizar" placeholder="Nombre de la categoria" />
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -166,9 +154,9 @@ $menu->header('categoria');
                                                     <span class="input-group-text"><i class="fa fa-edit"></i></span>
                                                 </div>
                                                 <textarea type="text" class="form-control"
-                                                    id="descripcionPlanGymActualizar"
-                                                    name="descripcionPlanGymActualizar"
-                                                    placeholder="Descripcion del plan"></textarea>
+                                                    id="descripcionActualizar"
+                                                    name="descripcionActualizar"
+                                                    placeholder="Descripcion de la categoria"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -187,14 +175,14 @@ $menu->header('categoria');
 </div>
 
 <!--------------------------------------------------------- Modal Detalle Plan Sistema----------------------------------------------->
-<div class="modal fade" id="modalDetallePlanGym" tabindex="-1" role="dialog" aria-labelledby="modalDetallePlanGym"
+<div class="modal fade" id="modalDetalleCategoria" tabindex="-1" role="dialog" aria-labelledby="modalDetalleCategoria"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="card-primary">
                 <div class="card-header">
                     <div class="d-sm-flex align-items-center justify-content-between ">
-                        <h4 class="card-title">Plan Gimnasio <small> &nbsp;(*) Campos requeridos</small></h4>
+                        <h4 class="card-title">Categoria <small> &nbsp;(*) Campos requeridos</small></h4>
                         <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
                             aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
@@ -203,7 +191,7 @@ $menu->header('categoria');
                     <div class="card-body">
                         <div class="card">
                             <div class="card-header py-2 bg-secondary">
-                                <h3 class="card-title">Datos del Plan</h3>
+                                <h3 class="card-title">Datos de la categoria</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fa fa-minus"></i></button>
@@ -214,28 +202,15 @@ $menu->header('categoria');
                                     <div class="col-lg-2">
                                         <div class="form-group">
                                             <label>Id (*)</label>
-                                            <input type="text" disabled class="form-control" id="id_planGymConsultar"
-                                                name="id_planGymConsultar" placeholder="id" />
+                                            <input type="text" disabled class="form-control" id="idCategoriaConsultar"
+                                                name="idCategoriaConsultar" placeholder="id" />
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
                                         <div class="form-group">
                                             <label>Nombre (*)</label>
-                                            <input type="text" disabled class="form-control" id="nombrePlanGymConsultar"
-                                                name="nombrePlanGymConsultar" placeholder="Nombre" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <div class="form-group">
-                                            <label>Costo (*)</label>
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                                                </div>
-                                                <input type="text" disabled class="form-control"
-                                                    id="costoPlanGymConsultar" name="costoPlanGymConsultar"
-                                                    placeholder="Costo del plan" />
-                                            </div>
+                                            <input type="text" disabled class="form-control" id="nombreConsultar"
+                                                name="nombreConsultar" placeholder="Nombre" />
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -246,8 +221,8 @@ $menu->header('categoria');
                                                     <span class="input-group-text"><i class="fa fa-edit"></i></span>
                                                 </div>
                                                 <input type="text" disabled class="form-control"
-                                                    id="descripcionPlanGymConsultar" name="descripcionPlanGymConsultar"
-                                                    placeholder="Descripcion del plan" />
+                                                    id="descripcionConsultar" name="descripcionConsultar"
+                                                    placeholder="Descripcion de la categoria" />
                                             </div>
                                         </div>
                                     </div>
@@ -265,19 +240,19 @@ $menu->header('categoria');
 </div>
 
 <!-- ****************************** Modal Eliminar Rol *************************************************-->
-<div class="modal fade" id="modalEliminarPlanGym" tabindex="-1" role="dialog" aria-labelledby="modalEliminarPlanGym"
+<div class="modal fade" id="modalEliminarCategoria" tabindex="-1" role="dialog" aria-labelledby="modalEliminarCategoria"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-danger">
-                <h5 class="modal-title" id="exampleModalLabel">Eliminar Plan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Categoria</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form role="form" id="formEliminarPlanGym" name="formActualizarPlanGym">
-                <input type="text" hidden id="idEliminarplan_gym" name="idEliminarplan_gym">
-                <div class="modal-body text-center text-danger">¿Realmente deseas eliminar este Plan?</div>
+            <form role="form" id="formEliminarCategoria" name="formActualizarCategoria">
+                <input type="text" hidden id="idEliminarCategoria" name="idEliminarCategoria">
+                <div class="modal-body text-center text-danger">¿Realmente deseas eliminar esta categoria?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
                     <button class="btn btn-danger" type="submit">Eliminar</button>
@@ -375,6 +350,9 @@ var enviarFormularioRegistrar = function() {
                         );
                     }
                 },
+                error: function(xhr, status, error) {
+                    alert('Error en la solicitud AJAX: ' + error);
+                }
             });
         }
     });

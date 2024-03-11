@@ -1,9 +1,9 @@
 <?php
     class CategoriaDTO implements JsonSerializable {
         private $id_categoria;
+        private $id_gimnasio;
         private $nombre;
         private $descripcion;
-        private $id_gimnasio;
 
         public function __get($property){
             if(property_exists($this, $property)) {
