@@ -134,4 +134,3 @@ class GimnasioDAO extends Model implements CRUD
     }
 }
 ?>
-

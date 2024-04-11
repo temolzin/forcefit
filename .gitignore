@@ -2,5 +2,6 @@ config/config.php
 public/cliente
 public/gimnasio
 public/usuario
+public/producto
 vendor/
 .env
