@@ -48,6 +48,24 @@
             }
         }
 
+        /* Método para iniciar una transacción */
+        public function beginTransaction()
+        {
+            return $this->conexion->beginTransaction();
+        }
+
+        /* Método para confirmar una transacción */
+        public function commit()
+        {
+            return $this->conexion->commit();
+        }
+
+        /* Método para revertir una transacción */
+        public function rollBack()
+        {
+            return $this->conexion->rollBack();
+        }
+
         /*Método para obtener el id del ultimo registro*/
         public function getLastInsertId() {
             return $this->conexion->lastInsertId();
