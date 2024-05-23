@@ -10,7 +10,9 @@ $menu->header('dashboard');
             <h3>Dashboard</h3>
         </div>
         <div class="title_right text-right">
-            <button class="btn btn-primary" id="generarReporte">Reporte de Ingresos</button>
+            <?php if ($_SESSION['role'] === 'gerente'): ?>
+                <button class="btn btn-primary" id="generarReporte">Reporte de Ingresos</button>
+            <?php endif; ?>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -64,7 +66,7 @@ $menu->header('dashboard');
                             <h2>Membresías por expirar</h2>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button class="btn btn-primary"  onclick="sendEmailClientsAboutMembershipExpiry();">
+                            <button class="btn btn-primary" onclick="sendEmailClientsAboutMembershipExpiry();">
                                 <i class="fa fa-user"></i>Notificar via Email
                             </button>
                             <a href="<?php echo constant("URL"); ?>cliente" class="btn btn-primary">
@@ -104,10 +106,9 @@ $menu->footer();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <script>
-
 $(document).on('click', '#generarReporte', function (event) {
     event.preventDefault();
-    var id_usuario = "<?php echo $_SESSION['id_usuario']; ?>"
+    var id_usuario = "<?php echo $_SESSION['id_usuario']; ?>";
     var url = "<?php echo constant('URL'); ?>dashboard/generateEarningsReport";
 
     $.ajax({
@@ -133,241 +134,239 @@ $(document).on('click', '#generarReporte', function (event) {
     });
 });
 
-    var tableCliente;
-    $(document).ready(function() {
-        getMonthlyAndWeeklyRevenueData();
-        getCustomersAboutToExpireMembership();
+var tableCliente;
+$(document).ready(function() {
+    getMonthlyAndWeeklyRevenueData();
+    getCustomersAboutToExpireMembership();
+});
+
+var sendEmailClientsAboutMembershipExpiry = function() {
+    var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>";
+    $.ajax({
+        type: "GET",
+        url: "<?php echo constant('URL'); ?>dashboard/sendEmailClientsAboutMembershipExpiry",
+        data: {
+            id_gimnasio: id_gimnasio,
+        },
+        async: false,
+        dataType: "json",
+        success: function(data) {
+            Swal.fire(
+                "¡Éxito!",
+                data.message,
+                "success"
+            );
+        },
+        error: function(xhr, status, error) {
+            Swal.fire(
+                "Error!",
+                xhr.responseText,
+                "error"
+            );
+        }
+    });
+    tableCliente.destroy();
+    getCustomersAboutToExpireMembership();
+}
+
+var getMonthlyAndWeeklyRevenueData = function() {
+    var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>";
+    $.ajax({
+        type: "GET",
+        url: "<?php echo constant('URL'); ?>dashboard/getMonthlyAndWeeklyRevenueData",
+        data: {
+            id_gimnasio: id_gimnasio,
+        },
+        async: false,
+        dataType: "json",
+        success: function(data) {
+            initialize_profit_charts(data);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error " + error);
+        }
+    });
+}
+
+function initialize_profit_charts(data) {
+    $("#tituloSemanal").text("Ganancia semanal del día " + data.last_week + " al día " + data.current_date + "");
+    $("#tituloMensual").text("Ganancia mensual del día " + data.last_year + " al día " + data.current_date + "");
+    const barFillColor  = [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(201, 203, 207, 0.2)',
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)'
+    ];
+    const barBorderColor  = [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)',
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)'
+    ];
+    const idWeeklyChart  = document.getElementById('semanal');
+    new Chart(idWeeklyChart, {
+        type: 'bar',
+        data: {
+            labels: data.order_of_the_days_of_the_week,
+            datasets: [{
+                label: 'Ganancia $',
+                data: data.daily_Payment_Totals,
+                backgroundColor: barFillColor,
+                borderColor: barBorderColor,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
     });
 
-    var sendEmailClientsAboutMembershipExpiry = function() {
-        var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
-        $.ajax({
-            type: "GET",
-            url: "<?php echo constant('URL'); ?>dashboard/sendEmailClientsAboutMembershipExpiry",
-            data: {
-                id_gimnasio: id_gimnasio,
-            },
-            async: false,
-            dataType: "json",
-            success: function(data) {
-                Swal.fire(
-                    "¡Éxito!",
-                    data.message,
-                    "success"
-                    )
-                },
-            error: function(xhr, status, error) {
-                Swal.fire(
-                    "Error!",
-                    xhr.responseText,
-                    "error"
-                )
-            }
-        });
-        tableCliente.destroy();
-        getCustomersAboutToExpireMembership();
-    }
-
-    var getMonthlyAndWeeklyRevenueData = function() {
-        var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
-        $.ajax({
-            type: "GET",
-            url: "<?php echo constant('URL'); ?>dashboard/getMonthlyAndWeeklyRevenueData",
-            data: {
-                id_gimnasio: id_gimnasio,
-            },
-            async: false,
-            dataType: "json",
-            success: function(data) {
-                initialize_profit_charts(data);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error " + error);
-            }
-        });
-    }
-
-    function initialize_profit_charts(data) {
-        $("#tituloSemanal").text("Ganancia semanal del día " + data.last_week + " al día" + data.current_date + "");
-        $("#tituloMensual").text("Ganancia mensual del día(" + data.last_year + " al día " + data.current_date + "");
-        const barFillColor  = [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 205, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(201, 203, 207, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 205, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)'
-        ];
-        const barBorderColor  = [
-            'rgb(255, 99, 132)',
-            'rgb(255, 159, 64)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)',
-            'rgb(255, 99, 132)',
-            'rgb(255, 159, 64)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)'
-        ];
-        const idWeeklyChart  = document.getElementById('semanal');
-        new Chart(idWeeklyChart, {
-            type: 'bar',
-            data: {
-                labels: data.order_of_the_days_of_the_week,
-                datasets: [{
-                    label: 'Ganancia $',
-                    data: data.daily_Payment_Totals,
-                    backgroundColor: barFillColor ,
-                    borderColor: barBorderColor ,
-                    borderWidth: 1
+    const idMonthlyChart  = document.getElementById('mensual');
+    new Chart(idMonthlyChart , {
+        type: 'bar',
+        data: {
+            labels: data.order_of_the_month_of_the_year,
+            datasets: [{
+                label: 'Ganancia $',
+                data: data.monthly_Payment_Totals,
+                backgroundColor: barFillColor,
+                borderColor: barBorderColor,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
                 }]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
-        });
-
-        const idMonthlyChart  = document.getElementById('mensual');
-        new Chart(idMonthlyChart , {
-            type: 'bar',
-            data: {
-                labels: data.order_of_the_month_of_the_year,
-                datasets: [{
-                    label: 'Ganancia $',
-                    data: data.monthly_Payment_Totals,
-                    backgroundColor: barFillColor ,
-                    borderColor: barBorderColor ,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-    }
-
-    var getCustomersAboutToExpireMembership = function() {
-        var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>";
-        var url = "<?php echo constant('URL'); ?>cliente/getCustomersWithUpcomingMembershipExpiry";
-        if(id_gimnasio === ""){
-            var url = "<?php echo constant('URL'); ?>usuario/getUsersWithUpcomingMembershipExpiry";
         }
-        tableCliente = $('#dataTableCliente').DataTable({
-            "processing": true,
-            "ajax": {
-                type: "POST",
-                "url": url,
-                data: {
-                    id_gimnasio: id_gimnasio
-                },
-                dataSrc: function(json) {
-                    let customData = [];
-                    json.data.forEach(element => {
-                        customData = [...customData, {
-                            ...element,
-                        }]
-                    })
-                    return customData;
+    });
+}
+
+var getCustomersAboutToExpireMembership = function() {
+    var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>";
+    var url = "<?php echo constant('URL'); ?>cliente/getCustomersWithUpcomingMembershipExpiry";
+    if(id_gimnasio === ""){
+        var url = "<?php echo constant('URL'); ?>usuario/getUsersWithUpcomingMembershipExpiry";
+    }
+    tableCliente = $('#dataTableCliente').DataTable({
+        "processing": true,
+        "ajax": {
+            type: "POST",
+            "url": url,
+            data: {
+                id_gimnasio: id_gimnasio
+            },
+            dataSrc: function(json) {
+                let customData = [];
+                json.data.forEach(element => {
+                    customData = [...customData, {
+                        ...element,
+                    }]
+                })
+                return customData;
+            }
+        },
+        "columns": [{
+                "data": "id_cliente"
+            },
+            {
+                defaultContent: "",
+                'render': function(data, type, JsonResultRow, meta) {
+                    var fullnameImagen = JsonResultRow.id_cliente + '/' + JsonResultRow.imagen_cliente;
+                    var urlImg = '<?php echo constant('URL'); ?>public/cliente/' + fullnameImagen;
+                    if("<?php echo $_SESSION['id_gimnasio']; ?>" === ""){
+                        urlImg = '<?php echo constant('URL'); ?>public/usuario/' + fullnameImagen;
+                    }
+                    return '<center><img src="' + urlImg +
+                        '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImage(this);"/></center>';
                 }
             },
-            "columns": [{
-                    "data": "id_cliente"
-                },
-                {
-                    defaultContent: "",
-                    'render': function(data, type, JsonResultRow, meta) {
-                        var fullnameImagen = JsonResultRow.id_cliente + '/' + JsonResultRow.imagen_cliente;
-                        var urlImg = '<?php echo constant('URL'); ?>public/cliente/' + fullnameImagen;
-                        if("<?php echo $_SESSION['id_gimnasio']; ?>" === ""){
-                            urlImg = '<?php echo constant('URL'); ?>public/usuario/' + fullnameImagen;
-                        }
-                        return '<center><img src="' + urlImg +
-                            '" class="rounded-circle img-fluid " style="width: 50px; height: 50px;" onerror="handleErrorImage(this);"/></center>';
-                    }
-                },
-                {
-                    defaultContent: "",
-                    "render": function(data, type, full) {
-                        return full['nombre_cliente'];
-                    }
-                },
-                {
-                    defaultContent: "",
-                    "render": function(data, type, full) {
-                        return full['apellido_paterno_cliente'];
-                    }
-                },
-                {
-                    "data": "apellido_materno_cliente"
-                },
-                {
-                    "data": "numero_cliente"
-                },
-                {
-                    "data": "nombrePlanGym"
-                },
-                {
-                    "data": "fecha_vencimiento"
-                },
-                {
-                    "data": "email_customer"
-                },
-                {
-                    "data": "is_email_notified",
-                    "render": function (data, type, row) {
-                        var response = 'Enviada';
-                        var color = 'green';
-                        if(data !== 1){
-                            response = 'No enviada';
-                            color = 'red';
-                        }
-                        return '<span style="color: '+color+';">' + response +'</span>';
-                    }
+            {
+                defaultContent: "",
+                "render": function(data, type, full) {
+                    return full['nombre_cliente'];
                 }
-            ],
-            responsive: true,
-            autoWidth: false,
-            language: idiomaDataTable,
-            lengthChange: true,
-            buttons: ['copy', 'excel', 'csv', 'pdf'],
-            dom: 'Bfltip',
-        });
-    }
+            },
+            {
+                defaultContent: "",
+                "render": function(data, type, full) {
+                    return full['apellido_paterno_cliente'];
+                }
+            },
+            {
+                "data": "apellido_materno_cliente"
+            },
+            {
+                "data": "numero_cliente"
+            },
+            {
+                "data": "nombrePlanGym"
+            },
+            {
+                "data": "fecha_vencimiento"
+            },
+            {
+                "data": "email_customer"
+            },
+            {
+                "data": "is_email_notified",
+                "render": function (data, type, row) {
+                    var response = 'Enviada';
+                    var color = 'green';
+                    if(data !== 1){
+                        response = 'No enviada';
+                        color = 'red';
+                    }
+                    return '<span style="color: '+color+';">' + response +'</span>';
+                }
+            }
+        ],
+        responsive: true,
+        autoWidth: false,
+        language: idiomaDataTable,
+        lengthChange: true,
+        buttons: ['copy', 'excel', 'csv', 'pdf'],
+        dom: 'Bfltip',
+    });
+}
 
-    function handleErrorImage(image) {
-        image.src = '<?php echo constant('URL'); ?>public/img/avatar.png';
-    }
+function handleErrorImage(image) {
+    image.src = '<?php echo constant('URL'); ?>public/img/avatar.png';
+}
 </script>
-
-
