@@ -2,9 +2,11 @@
 
 function getPlantillaFront($reporteGanancias)
 {
+    // C:\xampp\htdocs\forcefit\public\gimnasio\1
+
     $imagenGimnasio = 'logo_gimnasio';
-    $fotorutaServer = constant('URL') . 'public/gimnasio/' . $reporteGanancias[0]['logo_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
-    $fotorutaSistem = 'public/gimnasio/' . $reporteGanancias[0]['logo_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
+    $fotorutaServer = constant('URL') . 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
+    $fotorutaSistem = 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
 
     if (!file_exists($fotorutaSistem) or !is_readable($fotorutaSistem)) {
         $imagenGimnasio = 'forcefit.png';
@@ -65,16 +67,17 @@ function getPlantillaFront($reporteGanancias)
 
     $totalGeneral = 0;
 
-    foreach ($reporteGanancias as $value) {
+    foreach ($ingresosPorMes as $anio => $meses) {
         $plantillaFront .= '<tr>';
-        $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $value['anio'] . '</td>';
+        $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $anio . '</td>';
 
+        $totalAnual = 0;
         for ($i = 1; $i <= 12; $i++) {
-            $ingresosMes = isset($ingresosPorMes[$value['anio']][$i]) ? $ingresosPorMes[$value['anio']][$i] : 0;
+            $ingresosMes = isset($meses[$i]) ? $meses[$i] : 0;
             $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $ingresosMes . '</td>';
+            $totalAnual += $ingresosMes;
         }
 
-        $totalAnual = array_sum($ingresosPorMes[$value['anio']]);
         $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;"><b>' . $totalAnual . '</b></td>';
         $plantillaFront .= '</tr>';
 
@@ -116,7 +119,6 @@ function obtenerNombreMes($mes)
     );
 
     return $meses[$mes];
-
 }
 
 ?>

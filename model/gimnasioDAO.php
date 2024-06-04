@@ -101,7 +101,8 @@ class GimnasioDAO extends Model implements CRUD
 
     public function getDataGymReport($id_usuario)
     {
-        $query = "SELECT 
+        $query = "SELECT
+    g.id_gimnasio,
     g.nombre_gimnasio,
     YEAR(ppgc.fecha_hora_pago) AS anio,
     MONTH(ppgc.fecha_hora_pago) AS mes,
