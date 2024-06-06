@@ -2,8 +2,6 @@
 
 function getPlantillaFront($reporteGanancias)
 {
-    // C:\xampp\htdocs\forcefit\public\gimnasio\1
-
     $imagenGimnasio = 'logo_gimnasio';
     $fotorutaServer = constant('URL') . 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
     $fotorutaSistem = 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
@@ -11,6 +9,11 @@ function getPlantillaFront($reporteGanancias)
     if (!file_exists($fotorutaSistem) or !is_readable($fotorutaSistem)) {
         $imagenGimnasio = 'forcefit.png';
         $fotorutaServer = constant('URL') . 'public/img/' . $imagenGimnasio;
+    } else {
+        // Crear imagen circular
+        $outputPath = 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/circular_' . $reporteGanancias[0]['logo_gimnasio'];
+        makeCircularImage($fotorutaSistem, $outputPath, 100); // Tamaño reducido a 100x100
+        $fotorutaServer = constant('URL') . $outputPath;
     }
 
     $plantillaFront = '
@@ -19,7 +22,7 @@ function getPlantillaFront($reporteGanancias)
                 <tr>
                     <td>
                         <div>
-                            <img src="' . $fotorutaServer . '" style="max-width: 200px;">
+                            <img src="' . $fotorutaServer . '" class="logo-img" style="width: 100px; height: 100px;">
                         </div>
                     </td>
                     <td class="info_empresa">
@@ -119,6 +122,36 @@ function obtenerNombreMes($mes)
     );
 
     return $meses[$mes];
+}
+
+function makeCircularImage($imagePath, $outputPath, $newSize) {
+    $src = imagecreatefromstring(file_get_contents($imagePath));
+    $width = imagesx($src);
+    $height = imagesy($src);
+    $size = min($width, $height);
+    
+    $dst = imagecreatetruecolor($newSize, $newSize);
+    imagesavealpha($dst, true);
+    $trans_colour = imagecolorallocatealpha($dst, 0, 0, 0, 127);
+    imagefill($dst, 0, 0, $trans_colour);
+
+    $radius = $newSize / 2;
+    $scale = $size / $newSize;
+
+    for ($x = 0; $x < $newSize; $x++) {
+        for ($y = 0; $y < $newSize; $y++) {
+            $dx = $x - $radius;
+            $dy = $y - $radius;
+            if (($dx * $dx + $dy * $dy) < ($radius * $radius)) {
+                $color = imagecolorat($src, ($x * $scale) + ($width - $size) / 2, ($y * $scale) + ($height - $size) / 2);
+                imagesetpixel($dst, $x, $y, $color);
+            }
+        }
+    }
+
+    imagepng($dst, $outputPath);
+    imagedestroy($src);
+    imagedestroy($dst);
 }
 
 ?>
