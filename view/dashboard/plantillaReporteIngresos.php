@@ -6,12 +6,12 @@ function getPlantillaFront($reporteGanancias)
     $fotorutaServer = constant('URL') . 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
     $fotorutaSistem = 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
 
-    if (!file_exists($fotorutaSistem) or !is_readable($fotorutaSistem)) {
+    if (empty($reporteGanancias[0]['logo_gimnasio']) || !file_exists($fotorutaSistem) || !is_readable($fotorutaSistem)) {
         $imagenGimnasio = 'forcefit.png';
         $fotorutaServer = constant('URL') . 'public/img/' . $imagenGimnasio;
     } else {
         $outputPath = 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/circular_' . $reporteGanancias[0]['logo_gimnasio'];
-        makeCircularImage($fotorutaSistem, $outputPath, 100); // Tamaño reducido a 100x100
+        makeCircularImage($fotorutaSistem, $outputPath, 200);
         $fotorutaServer = constant('URL') . $outputPath;
     }
 
@@ -21,7 +21,7 @@ function getPlantillaFront($reporteGanancias)
                 <tr>
                     <td>
                         <div>
-                            <img src="' . $fotorutaServer . '" class="logo-img" style="width: 100px; height: 100px;">
+                            <img src="' . $fotorutaServer . '" style="max-width: 100px;"> <!-- Tamaño ajustado a 100px -->
                         </div>
                     </td>
                     <td class="info_empresa">
@@ -73,13 +73,12 @@ function getPlantillaFront($reporteGanancias)
         $plantillaFront .= '<tr>';
         $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $anio . '</td>';
 
-        $totalAnual = 0;
         for ($i = 1; $i <= 12; $i++) {
             $ingresosMes = isset($meses[$i]) ? $meses[$i] : 0;
             $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;">' . $ingresosMes . '</td>';
-            $totalAnual += $ingresosMes;
         }
 
+        $totalAnual = array_sum($meses);
         $plantillaFront .= '<td style="border: 1px solid black; padding: 8px; text-align: center;"><b>' . $totalAnual . '</b></td>';
         $plantillaFront .= '</tr>';
 
@@ -123,26 +122,31 @@ function obtenerNombreMes($mes)
     return $meses[$mes];
 }
 
-function makeCircularImage($imagePath, $outputPath, $newSize) {
+function makeCircularImage($imagePath, $outputPath, $maxSize) {
     $src = imagecreatefromstring(file_get_contents($imagePath));
     $width = imagesx($src);
     $height = imagesy($src);
     $size = min($width, $height);
-    
+
+    $newSize = min($maxSize, $size);
+
     $dst = imagecreatetruecolor($newSize, $newSize);
     imagesavealpha($dst, true);
     $trans_colour = imagecolorallocatealpha($dst, 0, 0, 0, 127);
     imagefill($dst, 0, 0, $trans_colour);
 
     $radius = $newSize / 2;
-    $scale = $size / $newSize;
 
     for ($x = 0; $x < $newSize; $x++) {
         for ($y = 0; $y < $newSize; $y++) {
             $dx = $x - $radius;
             $dy = $y - $radius;
-            if (($dx * $dx + $dy * $dy) < ($radius * $radius)) {
-                $color = imagecolorat($src, ($x * $scale) + ($width - $size) / 2, ($y * $scale) + ($height - $size) / 2);
+            $distance = sqrt($dx * $dx + $dy * $dy);
+
+            if ($distance < $radius) {
+                $srcX = $width / 2 + ($dx / $radius) * ($size / 2);
+                $srcY = $height / 2 + ($dy / $radius) * ($size / 2);
+                $color = imagecolorat($src, $srcX, $srcY);
                 imagesetpixel($dst, $x, $y, $color);
             }
         }
