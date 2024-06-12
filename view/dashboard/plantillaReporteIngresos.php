@@ -1,10 +1,8 @@
 <?php
 
-
 function getPlantillaFront($reporteGanancias)
 {
-    $mpdf = new \Mpdf\Mpdf();
-
+   
     $imagenGimnasio = 'logo_gimnasio';
     $fotorutaServer = constant('URL') . 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
     $fotorutaSistem = 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/' . $reporteGanancias[0]['logo_gimnasio'];
@@ -12,17 +10,20 @@ function getPlantillaFront($reporteGanancias)
     if (empty($reporteGanancias[0]['logo_gimnasio']) || !file_exists($fotorutaSistem) || !is_readable($fotorutaSistem)) {
         $imagenGimnasio = 'forcefit.png';
         $fotorutaServer = constant('URL') . 'public/img/' . $imagenGimnasio;
-    } 
+    } else {
+        $outputPath = 'public/gimnasio/' . $reporteGanancias[0]['id_gimnasio'] . '/circular_' . $reporteGanancias[0]['logo_gimnasio'];
+        CreateImageCircular($fotorutaSistem, $outputPath, 200);
+        $fotorutaServer = constant('URL') . $outputPath;
+    }
 
     $plantillaFront = '
-    
     <body>
         <div id="page_pdf">
             <table id="factura_head">
                 <tr>
                     <td>
                         <div>
-                            <img src="' . $fotorutaServer . '" class="rounded-image">
+                            <img src="' . $fotorutaServer . '" style="max-width: 100px;">
                         </div>
                     </td>
                     <td class="info_empresa">
@@ -100,7 +101,6 @@ function getPlantillaFront($reporteGanancias)
         </div>
     ';
 
-
     return $plantillaFront;
 }
 
@@ -122,6 +122,41 @@ function obtenerNombreMes($mes)
     );
 
     return $meses[$mes];
+}
+
+function CreateImageCircular($imagePath, $outputPath, $maxSize) {
+    $src = imageCreateFromString(file_get_contents($imagePath));
+    $width = imagesX($src);
+    $height = imagesY($src);
+    $size = min($width, $height);
+
+    $newSize = min($maxSize, $size);
+
+    $imageRetouch = imagecreatetruecolor($newSize, $newSize);
+    imagesavealpha($imageRetouch, true);
+    $transColour = imagecolorallocatealpha($imageRetouch, 0, 0, 0, 127);
+    imageFill($imageRetouch, 0, 0, $transColour);
+
+    $radius = $newSize / 2;
+
+    for ($x = 0; $x < $newSize; $x++) {
+        for ($y = 0; $y < $newSize; $y++) {
+            $dX = $x - $radius;
+            $dY = $y - $radius;
+            $distance = sqrt($dX * $dX + $dY * $dY);
+
+            if ($distance < $radius) {
+                $srcX = $width / 2 + ($dX / $radius) * ($size / 2);
+                $srcY = $height / 2 + ($dY / $radius) * ($size / 2);
+                $color = imagecolorat($src, $srcX, $srcY);
+                imagesetpixel($imageRetouch, $x, $y, $color);
+            }
+        }
+    }
+
+    imagepng($imageRetouch, $outputPath);
+    imagedestroy($src);
+    imagedestroy($imageRetouch);
 }
 
 ?>
