@@ -100,13 +100,14 @@ class GimnasioDAO extends Model implements CRUD
     }
 
     public function getDataGymReport($id_usuario)
-    {
-        $query = "SELECT 
-    g.nombre_gimnasio,
-    YEAR(ppgc.fecha_hora_pago) AS anio,
-    MONTH(ppgc.fecha_hora_pago) AS mes,
-    SUM(ppgc.cantidad_pago) AS ingresos_mes,
-    gi.imagen AS logo_gimnasio
+{
+    $query = "SELECT 
+        g.id_gimnasio, 
+        g.nombre_gimnasio,
+        YEAR(ppgc.fecha_hora_pago) AS anio,
+        MONTH(ppgc.fecha_hora_pago) AS mes,
+        SUM(ppgc.cantidad_pago) AS ingresos_mes,
+        gi.imagen AS logo_gimnasio
     FROM 
         pago_plan_gym_cliente ppgc
     JOIN 
@@ -120,18 +121,18 @@ class GimnasioDAO extends Model implements CRUD
     WHERE 
         ug.id_usuario = :id_usuario
     GROUP BY 
-        g.nombre_gimnasio, YEAR(ppgc.fecha_hora_pago), MONTH(ppgc.fecha_hora_pago)
+        g.id_gimnasio, g.nombre_gimnasio, YEAR(ppgc.fecha_hora_pago), MONTH(ppgc.fecha_hora_pago)
     ORDER BY 
         anio DESC, mes DESC;";
 
-            $stmt = $this->db->conectar()->prepare($query);
-            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-            $stmt->execute();
+    $stmt = $this->db->conectar()->prepare($query);
+    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+    $stmt->execute();
 
-            $reporteGanancias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $reporteGanancias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $reporteGanancias;
-    }
+    return $reporteGanancias;
+}
+
 }
 ?>
-
