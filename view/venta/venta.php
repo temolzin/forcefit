@@ -46,7 +46,6 @@ $menu->header('ventas');
         </div>
     </div>
 </section>
-
 <!--**************MODALS*************-->
 <!--------------------------------------------------------- Modal Registrar VENTA----------------------------------------------->
 <div class="modal fade" id="modalRegistrarVenta" tabindex="-1" role="dialog" aria-labelledby="modalRegistrarVenta"
@@ -75,53 +74,52 @@ $menu->header('ventas');
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
+                                        <div class="form-group" style="float: left;">
+                                            <label>Fecha (*)</label>
+                                            <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha de la venta" value="<?php echo date('Y-m-d'); ?>" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Cliente (*)</label>
                                             <select name="id_cliente" id="id_cliente" class="form-control pagoRegistrarCliente" style="width:100%;">
-                                                <option value="default">Seleccione cliente</option>
+                                                <option value="">Seleccione cliente</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Producto (*)</label>
-                                            <select name="id_producto" id="id_producto" class="form-control pagoRegistrarProducto" style="width:100%;" onchange="actualizarPrecioUnitario()">
-                                            <option value="default">Seleccione producto</option>
+                                            <select name="id_producto" id="id_producto" class="form-control pagoRegistrarProducto" style="width:100%;" >
+                                                <option value="">Seleccione producto</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="row">
                                         <div class="form-group">
-                                            <label>Fecha (*)</label>
-                                            <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha de la venta" value="<?php echo date('Y-m-d'); ?>" />
+                                            <h4>Carrito de Compras</h4>
+                                            <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Producto</th>
+                                                    <th>Precio Unitario</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Subtotal</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="productosSeleccionados">
+                                            </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Cantidad (*)</label>
-                                            <input type="number" class="form-control" id="cantidad"
-                                                name="cantidad" placeholder="Cantidad de productos vendidos" onchange="calcularSubtotal()" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Precio Unitario (*)</label>
-                                            <input type="text" class="form-control" id="precio_Unitario"
-                                                name="precio_Unitario" placeholder="Precio unitario del producto" onchange="calcularSubtotal()" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Subtotal (*)</label>
-                                            <input type="text" class="form-control" id="subtotal"
-                                                name="subtotal" placeholder="Subtotal de la venta" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
+                                    <br><br>
+                                    <div  class="col-lg-12">
+                                        <div class="form-group" style="float: right;">
                                             <label>Total (*)</label>
-                                            <input type="text" class="form-control" id="total"
-                                                name="total" placeholder="Total de la venta" />
+                                            <input type="text" disabled class="form-control" id="totalDetalle" name="totalDetalle" placeholder="0.00" onchange="calcularSubtotal()"/>
                                         </div>
                                     </div>
                                 </div>
@@ -255,7 +253,6 @@ $menu->header('ventas');
         </div>
     </div>
 </div>
-
 <?php
 $menu->footer();
 ?>
@@ -265,43 +262,49 @@ $menu->footer();
     e.preventDefault();
     var formData = $(this).serialize();
 
-    $.ajax({
-        type: 'POST',
-        url: "<?php echo constant('URL'); ?>venta/insert",
-        data: formData,
-        success: function(response) {
-            if (response.trim() === 'ok') {
-                Swal.fire(
-                    "¡Éxito!",
-                    "La venta se ha registrado correctamente",
-                    "success"
-                ).then(function() {
-                    window.location = "<?php echo constant('URL'); ?>venta";
-                });
-            } else {
-                Swal.fire(
-                    "¡Error!",
-                    "Ha ocurrido un error al registrar la venta. " + response,
-                    "error"
-                );
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo constant('URL'); ?>venta/insert",
+            data: formData,
+            success: function(response) {
+                if (response.trim() === 'ok') {
+                    Swal.fire(
+                        "¡Éxito!",
+                        "La venta se ha registrado correctamente",
+                        "success"
+                    ).then(function() {
+                        window.location = "<?php echo constant('URL'); ?>venta";
+                    });
+                } else {
+                    Swal.fire(
+                        "¡Error!",
+                        "Ha ocurrido un error al registrar la venta. " + response,
+                        "error"
+                    );
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
             }
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
+        });
     });
-});
 
     $(document).ready(function () {
+        $('.pagoRegistrarCliente').select2({
+            dropdownParent: $('#modalRegistrarVenta')
+        });
+        $('#id_producto').select2({
+            dropdownParent: $('#modalRegistrarVenta')
+        }).on('select2:select', function(e){
+            agregarProducto();
+        });
+
         mostrarVenta();
         eliminarRegistro();
         llenarCliente();
         llenarProducto();
-        actualizarPrecioUnitario();
-        
-    
+        //actualizarPrecioUnitario();
     });
-
     
     const llenarCliente = () => {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
@@ -341,7 +344,7 @@ $menu->footer();
             $.each(data, function(key, registro) {
                 var id = registro.id_producto;
                 var nombre = registro.nombre;
-                $(".pagoRegistrarProducto").append('<option value=' + id + '>' + nombre + '</option>');
+                $(".pagoRegistrarProducto").append('<option value=' + id + ' data-precio=' + registro.precio + '>' + nombre + '</option>');
             });
             },
             error: function(data) {
@@ -361,7 +364,7 @@ $menu->footer();
         var precioUnitario = document.getElementById("precio_Unitario").value;
         var subtotal = cantidad * precioUnitario;
         document.getElementById("subtotal").value = subtotal.toFixed(2);
-        document.getElementById("total").value = subtotal.toFixed(2); 
+        document.getElementById("total").value = subtotal.toFixed(2);
     }
 
     var mostrarVenta = function() {
@@ -406,56 +409,112 @@ $menu->footer();
         lengthChange: true,
         buttons: ['copy', 'excel', 'csv', 'pdf'],
         dom: 'Bfltip'
-    });
-    obtenerdatosDT(tableVenta);
-}
-
-var obtenerdatosDT = function(table) {
-    $('#dataTableVenta tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var idEliminar = $('#idEliminarVenta').val(data.id_detalle);
-
-
-        var id_ventaDetalle = $("#id_ventaDetalle").val(data.id_venta);
-        var clienteDetalle = $("#clienteDetalle").val(data.nombre_cliente);
-        var productoDetalle = $("#productoDetalle").val(data.nombre_producto);
-        var fechaDetalle = $("#fechaDetalle").val(data.fecha);
-        var cantidadDetalle = $("#cantidadDetalle").val(data.cantidad);
-        var precioUnitarioDetalle = $("#precioUnitarioDetalle").val(data.precio_Unitario);
-        var subtotalDetalle = $("#subtotalDetalle").val(data.subtotal);
-        var totalDetalle = $("#totalDetalle").val(data.total);
-        
-    });
-}
-
-var eliminarRegistro = function() {
-    $("#formEliminarVenta").submit(function(event) {
-        event.preventDefault();
-        var datos = $('#formEliminarVenta').serialize();
-        $.ajax({
-            type: "POST",
-            url: "<?php echo constant('URL'); ?>venta/delete", 
-            data: datos,
-            success: function(data) {
-                if (data.trim() == 'ok') {
-                    Swal.fire(
-                        "¡Éxito!",
-                        "La venta ha sido eliminada correctamente",
-                        "success"
-                    ).then(function() {
-                        window.location = "<?php echo constant('URL'); ?>venta"; 
-                    })
-                } else {
-                    Swal.fire(
-                        "¡Error!",
-                        "Ha ocurrido un error al eliminar la venta. " + data,
-                        "error"
-                    );
-                }
-            },
         });
+        obtenerdatosDT(tableVenta);
+    }
+
+    var obtenerdatosDT = function(table) {
+        $('#dataTableVenta tbody').on('click', 'tr', function() {
+            var data = table.row(this).data();
+            var idEliminar = $('#idEliminarVenta').val(data.id_detalle);
+
+            var id_ventaDetalle = $("#id_ventaDetalle").val(data.id_venta);
+            var clienteDetalle = $("#clienteDetalle").val(data.nombre_cliente);
+            var productoDetalle = $("#productoDetalle").val(data.nombre_producto);
+            var fechaDetalle = $("#fechaDetalle").val(data.fecha);
+            var cantidadDetalle = $("#cantidadDetalle").val(data.cantidad);
+            var precioUnitarioDetalle = $("#precioUnitarioDetalle").val(data.precio_Unitario);
+            var subtotalDetalle = $("#subtotalDetalle").val(data.subtotal);
+            var totalDetalle = $("#totalDetalle").val(data.total);
+        });
+    }
+
+    var eliminarRegistro = function() {
+        $("#formEliminarVenta").submit(function(event) {
+            event.preventDefault();
+            var datos = $('#formEliminarVenta').serialize();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo constant('URL'); ?>venta/delete", 
+                data: datos,
+                success: function(data) {
+                    if (data.trim() == 'ok') {
+                        Swal.fire(
+                            "¡Éxito!",
+                            "La venta ha sido eliminada correctamente",
+                            "success"
+                        ).then(function() {
+                            window.location = "<?php echo constant('URL'); ?>venta"; 
+                        })
+                    } else {
+                        Swal.fire(
+                            "¡Error!",
+                            "Ha ocurrido un error al eliminar la venta. " + data,
+                            "error"
+                        );
+                    }
+                },
+            });
+        });
+    }
+
+    function agregarProducto() {
+    var selectedOption = $('#id_producto option:selected');
+    var productoId = selectedOption.val();
+    var productoNombre = selectedOption.text();
+    var precioUnitario = parseFloat(selectedOption.data('precio'));
+
+    if (!productoId) {
+        return;
+    }
+
+    var nuevaFila = $('<tr>');
+
+    var celdaProducto = $('<td>').text(productoNombre);
+    var celdaPrecio = $('<td>').text(precioUnitario.toFixed(2));
+    var celdaCantidad = $('<td>');
+    var inputCantidad = $('<input>').attr('type', 'number').val(1).attr('min', 1).on('change', function() {
+        actualizarSubtotal(this);
     });
+    celdaCantidad.append(inputCantidad);
+
+    var celdaSubtotal = $('<td>').text(precioUnitario.toFixed(2));
+
+    var celdaAcciones = $('<td>');
+    var botonEliminar = $('<button class="btn btn-danger" title="Eliminar Venta"><i class="fa fa-trash-o"></i>').on('click', function() {
+        eliminarProducto(this);
+    });
+    celdaAcciones.append(botonEliminar);
+
+    nuevaFila.append(celdaProducto, celdaPrecio, celdaCantidad, celdaSubtotal, celdaAcciones);
+
+    $('#productosSeleccionados').prepend(nuevaFila);
+
+    select.trigger('change');
+    actualizarTotal();
+}
+
+function actualizarSubtotal(input) {
+    var fila = $(input).closest('tr');
+    var precioUnitario = parseFloat(fila.find('td:nth-child(2)').text());
+    var cantidad = parseFloat($(input).val());
+    var subtotal = precioUnitario * cantidad;
+    fila.find('td:nth-child(4)').text(subtotal.toFixed(2));
+    actualizarTotal();
+}
+
+function actualizarTotal() {
+    var total = 0;
+    $('#productosSeleccionados tr').each(function() {
+        var subtotal = parseFloat($(this).find('td:nth-child(4)').text());
+        total += subtotal;
+    });
+    $('#total').val(total.toFixed(2));
+}
+
+function eliminarProducto(button) {
+    $(button).closest('tr').remove();
+    actualizarTotal();
 }
 
 </script>
-
