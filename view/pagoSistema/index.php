@@ -78,7 +78,23 @@ $menu->header('pagoSistema');
                             <div class="card-body">
                                 <div class="row">
                                 <div class="card-body">
-                                    <div class="col-lg-4">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="idUsuario">Usuario (*)</label>
+                                        <select name="idUsuario" id="idUsuario" class="form-control pagoRegistrarUsuario" style="width: 100%;">
+                                          <option value="default">Seleccione el usuario</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                    <div class="form-group">
+                                      <label for="idPlanSistema">Plan del sistema (*)</label>
+                                        <select name="idPlanSistema" id="idPlanSistema" class="form-control pagoRegistrarPlanSistema" style="width: 100%;">
+                                          <option value="default">Seleccione plan del sistema</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-3">
                                         <label>Cantidad (*)</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -87,29 +103,13 @@ $menu->header('pagoSistema');
                                             <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad del Pago">
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                         <label>Fecha de vencimiento(*)</label>
                                             <input type="date" class="form-control" id="vencimientoPago"name="vencimientoPago" placeholder="Vencimiento de pago" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                    <div class="form-group">
-                                    <label>Usuario(*)</label>
-                                    <select name="idUsuario" id="idUsuario" class="form-control pagoRegistrarUsuario" style="width:100%;">
-                                            <option value="default">Seleccione el usuario</option>
-                                     </select>
-                                    </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                    <div class="form-group">
-                                    <label>Plan del sistema(*)</label>
-                                    <select name="idPlanSistema" id="idPlanSistema" class="form-control pagoRegistrarPlanSistema" style="width:100%;">
-                                            <option value="default">Seleccione plan del sistema</option>
-                                    </select>
-                                    </div>
-                                    </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Tipo de pago (*)</label>
                                             <select name="tipoPago" id="tipoPago" class="form-control descripcion_pago">
@@ -396,6 +396,29 @@ const llenarplanSistema = () => {
     });
 }
 
+$("#idUsuario").on("change", function() {
+  var userId = $(this).val();
+
+  $.ajax({
+    url: "<?php echo constant('URL'); ?>pagoSistema/readUserPlanDetails",
+    type: "POST",
+    data: { idUsuario: userId },
+    dataType: "json",
+    success: function(data) {
+      var id = data.id_plan_sistema;
+      var nombre = data.nombre_plan_sistema;
+      $("#cantidad").val(data[0].costo);
+      var planId = data[0].id_plan_sistema;
+      var planName = data[0].nombre_plan_sistema;
+      $("#idPlanSistema option[value='" + planId + "']").text(planName);
+      $("#idPlanSistema").val(planId);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.error("AJAX error:", textStatus, errorThrown);
+    }
+  });
+});
+
 var mostrarPagoSistema = function() {
     var tablePagoSistema = $('#dataTablePagoSistema').DataTable({
         "processing": true,
@@ -665,7 +688,7 @@ var eliminarRegistro = function() {
 $(document).on('click', '.generar-recibo', function (event) {
 event.preventDefault();
 var id_pago = $(this).data('id-pago');
-var url = "<?php echo constant('URL'); ?>PagoSistema/generateReceipt";
+var url = "<?php echo constant('URL'); ?>pagoSistema/generateReceipt";
 
 $.ajax({
     type: "POST",
