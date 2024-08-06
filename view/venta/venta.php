@@ -11,9 +11,7 @@ $menu->header('ventas');
                     <h2>Ventas</h2>
                     <div class="row">
                         <div class="col-lg-12 text-right">
-                            <button class="btn btn-primary" data-toggle='modal' data-target='#modalRegistrarVenta'> <i
-                                    class="fa fa-edit"></i> Registrar Venta
-                            </button>
+                            <button class="btn btn-primary" data-toggle='modal' data-target='#modalRegistrarVenta'> <i class="fa fa-edit"></i> Registrar Venta </button>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -22,8 +20,7 @@ $menu->header('ventas');
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
-                                <table id="dataTableVenta" name="dataTableVenta"
-                                    class="table table-striped table-bordered" style="width:100%">
+                                <table id="dataTableVenta" name="dataTableVenta" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -48,20 +45,17 @@ $menu->header('ventas');
 </section>
 <!--**************MODALS*************-->
 <!--------------------------------------------------------- Modal Registrar VENTA----------------------------------------------->
-<div class="modal fade" id="modalRegistrarVenta" tabindex="-1" role="dialog" aria-labelledby="modalRegistrarVenta"
-    aria-hidden="true">
+<div class="modal fade" id="modalRegistrarVenta" tabindex="-1" role="dialog" aria-labelledby="modalRegistrarVenta" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="card-success">
                 <div class="card-header">
                     <div class="d-sm-flex align-items-center justify-content-between ">
                         <h4 class="card-title">Venta <small> &nbsp;(*) Campos requeridos</small></h4>
-                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
-                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                 </div>
-                <form role="form" id="formRegistrarVenta" enctype="multipart/form-data" name="formRegistrarVenta"
-                    method="post">
+                <form role="form" id="formRegistrarVenta" name="formRegistrarVenta" enctype="multipart/form-data" method="post">
                     <div class="card-body">
                         <div class="card">
                             <div class="card-header py-2 bg-secondary">
@@ -73,10 +67,10 @@ $menu->header('ventas');
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group" style="float: left;">
-                                            <label>Fecha (*)</label>
-                                            <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha de la venta" value="<?php echo date('Y-m-d'); ?>" />
+                                    <div class="col-lg-12">
+                                        <div class="form-group" style="float: right;">
+                                            <label>Fecha (*)</label><br>
+                                            <input disabled type="date" class="" name="fecha" id="fecha" placeholder="" value="<?php echo date('Y-m-d'); ?>" />
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +78,7 @@ $menu->header('ventas');
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Cliente (*)</label>
-                                            <select name="id_cliente" id="id_cliente" class="form-control pagoRegistrarCliente" style="width:100%;">
+                                            <select name="id_cliente" id="id_cliente" class="pagoRegistrarCliente" style="width:100%;">
                                                 <option value="">Seleccione cliente</option>
                                             </select>
                                         </div>
@@ -92,34 +86,34 @@ $menu->header('ventas');
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Producto (*)</label>
-                                            <select name="id_producto" id="id_producto" class="form-control pagoRegistrarProducto" style="width:100%;" >
+                                            <select name="id_producto" id="id_producto" class="pagoRegistrarProducto" style="width:100%;">
                                                 <option value="">Seleccione producto</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="row">
+                                    </div><br><br><br><br>
+                                    <div class="col-lg-12">
                                         <div class="form-group">
-                                            <h4>Carrito de Compras</h4>
-                                            <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Producto</th>
-                                                    <th>Precio Unitario</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Subtotal</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="productosSeleccionados">
-                                            </tbody>
-                                            </table>
+                                            <h4>Lista de Compras</h4>
+                                            <div class="table-responsive">
+                                            <table id="dataTableRegistro" name="dataTableRegistro" class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Producto</th>
+                                                            <th>Precio Unitario</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Subtotal</th>
+                                                            <th>Eliminar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="productosSeleccionados">
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <br><br>
+                                    </div><br><br>
                                     <div  class="col-lg-12">
                                         <div class="form-group" style="float: right;">
-                                            <label>Total (*)</label>
-                                            <input type="text" disabled class="form-control" id="totalDetalle" name="totalDetalle" placeholder="0.00" onchange="calcularSubtotal()"/>
+                                            <p><b>Total: </b> <span id="total">0.00</span> <input type="hidden" name="total" id="total_input" value="0.00"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -137,20 +131,17 @@ $menu->header('ventas');
     </div>
 </div>
 <!--------------------------------------------------------- Modal Detalle VENTA----------------------------------------------->
-<div class="modal fade" id="modalDetalleVenta" tabindex="-1" role="dialog" aria-labelledby="modalDetalleVenta"
-    aria-hidden="true">
+<div class="modal fade" id="modalDetalleVenta" tabindex="-1" role="dialog" aria-labelledby="modalDetalleVenta" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="card-success">
                 <div class="card-header">
                     <div class="d-sm-flex align-items-center justify-content-between ">
                         <h4 class="card-title">Detalle de Venta <small> &nbsp;(*) Campos requeridos</small></h4>
-                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal"
-                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close  d-sm-inline-block text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                 </div>
-                <form role="form" id="formDetalleVenta" enctype="multipart/form-data" name="formDetalleVenta"
-                    method="post">
+                <form role="form" id="formDetalleVenta" enctype="multipart/form-data" name="formDetalleVenta" method="post" >
                     <div class="card-body">
                         <div class="card">
                             <div class="card-header py-2 bg-secondary">
@@ -165,57 +156,49 @@ $menu->header('ventas');
                                 <div class="col-lg-2">
                                         <div class="form-group">
                                             <label>Id (*)</label>
-                                            <input type="text" disabled class="form-control" id="id_ventaDetalle"
-                                                name="id_ventaDetalle" placeholder="id" />
+                                            <input type="text" disabled class="form-control" id="id_ventaDetalle" name="id_ventaDetalle" placeholder="id" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Cliente (*)</label>
-                                            <input type="text" disabled class="form-control" id="clienteDetalle"
-                                                name="clienteDetalle" placeholder="Cliente de la venta" />
+                                            <input type="text" disabled class="form-control" id="clienteDetalle" name="clienteDetalle" placeholder="Cliente de la venta" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Producto (*)</label>
-                                            <input type="text" disabled class="form-control" id="productoDetalle"
-                                                name="productoDetalle" placeholder="Producto de la venta" />
+                                            <input type="text" disabled class="form-control" id="productoDetalle" name="productoDetalle" placeholder="Producto de la venta" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Fecha (*)</label>
-                                            <input type="text" disabled class="form-control" id="fechaDetalle"
-                                                name="fechaDetalle" placeholder="Fecha de la venta" />
+                                            <input type="text" disabled class="form-control" id="fechaDetalle" name="fechaDetalle" placeholder="Fecha de la venta" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Cantidad (*)</label>
-                                            <input type="text" disabled class="form-control" id="cantidadDetalle"
-                                                name="cantidadDetalle" placeholder="Cantidad de productos vendidos" />
+                                            <input type="text" disabled class="form-control" id="cantidadDetalle" name="cantidadDetalle" placeholder="Cantidad de productos vendidos" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Precio Unitario (*)</label>
-                                            <input type="text" disabled class="form-control" id="precioUnitarioDetalle"
-                                                name="precioUnitarioDetalle" placeholder="Precio unitario del producto" />
+                                            <input type="text" disabled class="form-control" id="precioUnitarioDetalle" name="precioUnitarioDetalle" placeholder="Precio unitario del producto" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Subtotal (*)</label>
-                                            <input type="text" disabled class="form-control" id="subtotalDetalle"
-                                                name="subtotalDetalle" placeholder="Subtotal de la venta" />
+                                            <input type="text" disabled class="form-control" id="subtotalDetalle" name="subtotalDetalle" placeholder="Subtotal de la venta" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Total (*)</label>
-                                            <input type="text" disabled class="form-control" id="totalDetalle"
-                                                name="totalDetalle" placeholder="Total de la venta" />
+                                            <input type="text" disabled class="form-control" id="totalVentaDetalle" name="totalVentaDetalle" placeholder="Total de la venta" />
                                         </div>
                                     </div>
                                 </div>
@@ -259,9 +242,28 @@ $menu->footer();
 
 <script>
     $('#formRegistrarVenta').submit(function(e) {
-    e.preventDefault();
-    var formData = $(this).serialize();
+        e.preventDefault();
+        var productos = [];
 
+        $('#productosSeleccionados tr').each(function() {
+            var producto = {
+                id_producto: $(this).find('.id_producto').text(),
+                cantidad: $(this).find('input[type="number"]').val(),
+                precio_Unitario: parseFloat($(this).find('.precio_unitario').text()),
+                subtotal: parseFloat($(this).find('.subtotal').text())
+            };
+            productos.push(producto);
+        });
+
+        var formData = {
+            id_cliente: $('#id_cliente').val(),
+            fecha: $('#fecha').val(),
+            total: $('#total_input').val(),
+            productos: JSON.stringify(productos)
+        };
+
+        console.log(formData);
+        
         $.ajax({
             type: 'POST',
             url: "<?php echo constant('URL'); ?>venta/insert",
@@ -303,7 +305,6 @@ $menu->footer();
         eliminarRegistro();
         llenarCliente();
         llenarProducto();
-        //actualizarPrecioUnitario();
     });
     
     const llenarCliente = () => {
@@ -331,6 +332,7 @@ $menu->footer();
 
     const llenarProducto = () => {
         var id_gimnasio = "<?php echo $_SESSION['id_gimnasio']; ?>"
+        
         $.ajax({
             type: "GET",
             url: "<?php echo constant('URL'); ?>venta/readProduct",
@@ -341,7 +343,9 @@ $menu->footer();
             dataType: "json",
             success: function(data) {
                 datosProductos = data; 
+                
             $.each(data, function(key, registro) {
+                
                 var id = registro.id_producto;
                 var nombre = registro.nombre;
                 $(".pagoRegistrarProducto").append('<option value=' + id + ' data-precio=' + registro.precio + '>' + nombre + '</option>');
@@ -351,20 +355,6 @@ $menu->footer();
                 console.log(data);
             }
         });
-    }
-
-    function actualizarPrecioUnitario() {
-        var idProductoSeleccionado = $("#id_producto").val();
-        var productoSeleccionado = datosProductos.find(producto => producto.id_producto == idProductoSeleccionado);
-        $("#precio_Unitario").val(productoSeleccionado.precio);
-    }
-
-    function calcularSubtotal() {
-        var cantidad = document.getElementById("cantidad").value;
-        var precioUnitario = document.getElementById("precio_Unitario").value;
-        var subtotal = cantidad * precioUnitario;
-        document.getElementById("subtotal").value = subtotal.toFixed(2);
-        document.getElementById("total").value = subtotal.toFixed(2);
     }
 
     var mostrarVenta = function() {
@@ -425,7 +415,7 @@ $menu->footer();
             var cantidadDetalle = $("#cantidadDetalle").val(data.cantidad);
             var precioUnitarioDetalle = $("#precioUnitarioDetalle").val(data.precio_Unitario);
             var subtotalDetalle = $("#subtotalDetalle").val(data.subtotal);
-            var totalDetalle = $("#totalDetalle").val(data.total);
+            var totalDetalle = $("#totalVentaDetalle").val(data.total);
         });
     }
 
@@ -459,62 +449,50 @@ $menu->footer();
     }
 
     function agregarProducto() {
-    var selectedOption = $('#id_producto option:selected');
-    var productoId = selectedOption.val();
-    var productoNombre = selectedOption.text();
-    var precioUnitario = parseFloat(selectedOption.data('precio'));
+        var selectedOption = $('#id_producto option:selected');
+        var productoId = selectedOption.val();
+        var productoNombre = selectedOption.text();
+        var precioUnitario = parseFloat(selectedOption.data('precio'));
+        
+        if (!productoId) {
+            return;
+        }
+        
+        var nuevaFila = $('<tr>');
+        nuevaFila.append('<td class="id_producto" style="display:none;">' + productoId + '</td>');
+        nuevaFila.append('<td>' + productoNombre + '</td>');
+        nuevaFila.append('<td class="precio_unitario">' + precioUnitario.toFixed(2) + '</td>');
+        nuevaFila.append('<td><input type="number" value="1" min="1" onchange="actualizarSubtotal(this)"></td>');
+        nuevaFila.append('<td class="subtotal">' + precioUnitario.toFixed(2) + '</td>');
+        nuevaFila.append('<td><button class="btn btn-danger" title="Eliminar Producto" onclick="eliminarProducto(this)"><i class="fa fa-trash-o"></i></button></td>');
 
-    if (!productoId) {
-        return;
+        $('#productosSeleccionados').prepend(nuevaFila);
+        $('#id_producto').val('').trigger('change');
+        actualizarTotal();
     }
 
-    var nuevaFila = $('<tr>');
+    function actualizarSubtotal(input) {
+        var fila = $(input).closest('tr');
+        var precioUnitario = parseFloat(fila.find('.precio_unitario').text());
+        var cantidad = parseFloat($(input).val());
+        var subtotal = precioUnitario * cantidad;
+        fila.find('.subtotal').text(subtotal.toFixed(2));
+        actualizarTotal();
+    }
 
-    var celdaProducto = $('<td>').text(productoNombre);
-    var celdaPrecio = $('<td>').text(precioUnitario.toFixed(2));
-    var celdaCantidad = $('<td>');
-    var inputCantidad = $('<input>').attr('type', 'number').val(1).attr('min', 1).on('change', function() {
-        actualizarSubtotal(this);
-    });
-    celdaCantidad.append(inputCantidad);
+    function actualizarTotal() {
+        var total = 0;
+        $('#productosSeleccionados .subtotal').each(function() {
+            total += parseFloat($(this).text());
+        });
+        
+        $('#total').text(total.toFixed(2));
+        $('#total_input').val(total.toFixed(2));
+    }
 
-    var celdaSubtotal = $('<td>').text(precioUnitario.toFixed(2));
-
-    var celdaAcciones = $('<td>');
-    var botonEliminar = $('<button class="btn btn-danger" title="Eliminar Venta"><i class="fa fa-trash-o"></i>').on('click', function() {
-        eliminarProducto(this);
-    });
-    celdaAcciones.append(botonEliminar);
-
-    nuevaFila.append(celdaProducto, celdaPrecio, celdaCantidad, celdaSubtotal, celdaAcciones);
-
-    $('#productosSeleccionados').prepend(nuevaFila);
-
-    select.trigger('change');
-    actualizarTotal();
-}
-
-function actualizarSubtotal(input) {
-    var fila = $(input).closest('tr');
-    var precioUnitario = parseFloat(fila.find('td:nth-child(2)').text());
-    var cantidad = parseFloat($(input).val());
-    var subtotal = precioUnitario * cantidad;
-    fila.find('td:nth-child(4)').text(subtotal.toFixed(2));
-    actualizarTotal();
-}
-
-function actualizarTotal() {
-    var total = 0;
-    $('#productosSeleccionados tr').each(function() {
-        var subtotal = parseFloat($(this).find('td:nth-child(4)').text());
-        total += subtotal;
-    });
-    $('#total').val(total.toFixed(2));
-}
-
-function eliminarProducto(button) {
-    $(button).closest('tr').remove();
-    actualizarTotal();
-}
+    function eliminarProducto(button) {
+        $(button).closest('tr').remove();
+        actualizarTotal();
+    }
 
 </script>
