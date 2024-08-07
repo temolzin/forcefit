@@ -9,7 +9,6 @@ class VentaDAO extends Model implements CRUD
     public function insert($data)
     {
         try {
-            
             $conexion = Conexion::getInstance();
             $conexion->beginTransaction();
             $queryVenta = $conexion->prepare('INSERT INTO venta (id_cliente, fecha, total) VALUES (:id_cliente, :fecha, :total)');
@@ -19,16 +18,22 @@ class VentaDAO extends Model implements CRUD
                 ':total' => $data['total']
             ]);
             $id_venta = $conexion->getLastInsertId();
-            $queryDetalleVenta = $conexion->prepare('INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_Unitario, subtotal) VALUES (:id_venta, :id_producto, :cantidad, :precio_Unitario, :subtotal)');
-            $queryDetalleVenta->execute([
-                ':id_venta' => $id_venta,
-                ':id_producto' => $data['id_producto'],
-                ':cantidad' => $data['cantidad'],
-                ':precio_Unitario' => $data['precio_Unitario'],
-                ':subtotal' => $data['subtotal']
-            ]);
+            foreach ($data['productos'] as $producto) {
+                $queryDetalleVenta = $conexion->prepare('INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_Unitario, subtotal) VALUES (:id_venta, :id_producto, :cantidad, :precio_Unitario, :subtotal)');
+                $queryDetalleVenta->execute([
+                    ':id_venta' => $id_venta,
+                    ':id_producto' => $producto['id_producto'],
+                    ':cantidad' => $producto['cantidad'],
+                    ':precio_Unitario' => $producto['precio_Unitario'],
+                    ':subtotal' => $producto['subtotal']
+                ]);
+                $queryActualizarProducto = $conexion->prepare('UPDATE producto SET stock = stock - :cantidad WHERE id_producto = :id_producto');
+                $queryActualizarProducto->execute([
+                    ':cantidad' => $producto['cantidad'],
+                    ':id_producto' => $producto['id_producto']
+                ]);
+            }
             $conexion->commit();
-    
             return true; 
         } catch (PDOException $e) {
             $conexion->rollBack();

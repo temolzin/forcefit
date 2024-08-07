@@ -18,32 +18,26 @@ class Venta extends Controller
 	}
 
 	public function insert()
-    {
-    
-		$id_cliente = $_POST['id_cliente'];
-		$id_producto = $_POST['id_producto'];
-		$fecha = $_POST['fecha'];
-		$total = $_POST['total'];
-		$cantidad = $_POST['cantidad'];
-		$precio_Unitario = $_POST['precio_Unitario'];
-		$subtotal = $_POST['subtotal'];
-		
-		$data = array(
-			'id_cliente' => $id_cliente,
-			'id_producto' => $id_producto,
-			'fecha' => $fecha,
-			'total' => $total,
-			'cantidad' => $cantidad,
-			'precio_Unitario' => $precio_Unitario,
-			'subtotal' => $subtotal
-		);
-		require 'model/ventaDAO.php';
-		$this->loadModel('VentaDAO');
-		$ventaDAO = new VentaDAO();
-		if ($ventaDAO->insert($data)) {
-			echo 'ok'; 
-		}
+{
+    $id_cliente = $_POST['id_cliente'];
+    $fecha = $_POST['fecha'];
+    $total = $_POST['total'];
+    $productos = json_decode($_POST['productos'], true);
+
+    $data = [
+        'id_cliente' => $id_cliente,
+        'fecha' => $fecha,
+        'total' => $total,
+        'productos' => $productos
+    ];
+
+    require 'model/ventaDAO.php';
+    $this->loadModel('VentaDAO');
+    $ventaDAO = new VentaDAO();
+    if ($ventaDAO->insert($data)) {
+        echo 'ok'; 
     }
+}
 	
 
 	function delete()
